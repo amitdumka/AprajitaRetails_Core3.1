@@ -10,6 +10,7 @@ namespace TAS_AprajiataRetails.Models.Reports
 {
     public class StaffPayments
     {
+        // Help to calculate current month payout
         public int EmpId { get; set; }
         public decimal SalaryPayment { get; set; }
         public decimal AdavcePayment { get; set; }
@@ -20,43 +21,42 @@ namespace TAS_AprajiataRetails.Models.Reports
 
     public class StaffReports
     {
-        public StaffPayments StaffPayments(AprajitaRetailsContext context, int EmpId, DateTime onDate, decimal curSalary)
+        public StaffPayments StaffPayments(AprajitaRetailsContext db, int EmpId, DateTime onDate, decimal curSalary)
         {
-            using (AprajitaRetailsContext db= context)
-            {
-                StaffPayments sPay = new StaffPayments();
-                sPay.AdavcePayment = db.StaffAdvancePayments.Where(c =>c.EmployeeId==EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount);
-                sPay.AdvaceReciepts=db.StaffAdvanceReceipts.Where(c => c.EmployeeId == EmpId && (c.ReceiptDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount);
-                sPay.SalaryPayment=db.Salaries.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount);
-                sPay.CurrentMonthSalary = curSalary;
-                sPay.NetSalary = curSalary - (sPay.SalaryPayment + sPay.AdavcePayment - sPay.AdvaceReciepts);
 
-                return sPay;
-            }
+            StaffPayments sPay = new StaffPayments
+            {
+                AdavcePayment = db.StaffAdvancePayments.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                AdvaceReciepts = db.StaffAdvanceReceipts.Where(c => c.EmployeeId == EmpId && (c.ReceiptDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                SalaryPayment = db.Salaries.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                CurrentMonthSalary = curSalary
+            };
+            sPay.NetSalary = curSalary - (sPay.SalaryPayment + sPay.AdavcePayment - sPay.AdvaceReciepts);
+
+            return sPay;
 
         }
 
-        public List<StaffPayments> AllStaffPayments(AprajitaRetailsContext context,DateTime onDate)
+        public List<StaffPayments> AllStaffPayments(AprajitaRetailsContext db, DateTime onDate)
         {
-            using (AprajitaRetailsContext db = context)
+            var emp = db.Employees.Where(c => c.IsWorking).Select(c => c.EmployeeId);
+            List<StaffPayments> lists = new List<StaffPayments>();
+            foreach (var EmpId in emp)
             {
-                var emp = db.Employees.Where(c => c.IsWorking).Select(c => c.EmployeeId);
-                List<StaffPayments> lists = new List<StaffPayments>();
-                foreach (var EmpId in emp)
+                StaffPayments sPay = new StaffPayments
                 {
-                    StaffPayments sPay = new StaffPayments();
-                    sPay.AdavcePayment = db.StaffAdvancePayments.Where(c => c.EmployeeId == EmpId &&(c.PaymentDate).Date.Month ==onDate.Date.Month).Sum(c => c.Amount);
-                    sPay.AdvaceReciepts = db.StaffAdvanceReceipts.Where(c => c.EmployeeId == EmpId && (c.ReceiptDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount);
-                    sPay.SalaryPayment = db.Salaries.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount);
-                    sPay.CurrentMonthSalary = 0;//TODO: aad option here
-                    sPay.NetSalary = sPay.CurrentMonthSalary - (sPay.SalaryPayment + sPay.AdavcePayment - sPay.AdvaceReciepts);
+                    AdavcePayment = db.StaffAdvancePayments.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == onDate.Date.Month).Sum(c => c.Amount),
+                    AdvaceReciepts = db.StaffAdvanceReceipts.Where(c => c.EmployeeId == EmpId && (c.ReceiptDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                    SalaryPayment = db.Salaries.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                    CurrentMonthSalary = 0//TODO: aad option here
+                };
+                sPay.NetSalary = sPay.CurrentMonthSalary - (sPay.SalaryPayment + sPay.AdavcePayment - sPay.AdvaceReciepts);
 
-                    lists.Add(sPay);
-                }
-                
-
-                return lists;
+                lists.Add(sPay);
             }
+
+
+            return lists;
 
         }
 
