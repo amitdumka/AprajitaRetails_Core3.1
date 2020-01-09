@@ -30,8 +30,18 @@ namespace AprajitaRetails
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AprajitaReatilsContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("AprajitaRetailsConnection")));
+            
+            services.AddDbContext<VoyagerContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("VoyagerConnection")));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
