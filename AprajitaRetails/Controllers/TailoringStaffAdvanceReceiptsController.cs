@@ -48,7 +48,7 @@ namespace AprajitaRetails.Controllers
         // GET: TailoringStaffAdvanceReceipts/Create
         public IActionResult Create()
         {
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId");
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvanceReceipt.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvanceReceipt.TailoringEmployeeId);
             return View(tailoringStaffAdvanceReceipt);
         }
 
@@ -82,7 +82,7 @@ namespace AprajitaRetails.Controllers
             {
                 return NotFound();
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvanceReceipt.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvanceReceipt.TailoringEmployeeId);
             return View(tailoringStaffAdvanceReceipt);
         }
 
@@ -118,7 +118,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvanceReceipt.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvanceReceipt.TailoringEmployeeId);
             return View(tailoringStaffAdvanceReceipt);
         }
 

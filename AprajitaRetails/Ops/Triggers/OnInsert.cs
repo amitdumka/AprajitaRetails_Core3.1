@@ -13,7 +13,7 @@ namespace AprajitaRetails.Ops.Triggers
     {
         public static void UpdateDelivery(AprajitaRetailsContext db)
         {
-            var tab = db.Deliveries.Include(c => c.Booking).OrderBy(c => c.TalioringBookingId);
+            var tab = db.TalioringDelivies.Include(c => c.Booking).OrderBy(c => c.TalioringBookingId);
             if (tab != null)
             {
                 foreach (var item in tab)

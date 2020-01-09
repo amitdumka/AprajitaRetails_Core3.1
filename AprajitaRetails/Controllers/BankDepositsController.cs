@@ -48,7 +48,7 @@ namespace AprajitaRetails.Controllers
         // GET: BankDeposits/Create
         public IActionResult Create()
         {
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId");
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
             return View(bankDeposit);
         }
 
@@ -82,7 +82,7 @@ namespace AprajitaRetails.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
             return View(bankDeposit);
         }
 
@@ -118,7 +118,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
             return View(bankDeposit);
         }
 

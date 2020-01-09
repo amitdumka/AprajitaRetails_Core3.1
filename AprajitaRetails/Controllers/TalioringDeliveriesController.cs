@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: TalioringDeliveries
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.Deliveries.Include(t => t.Booking);
+            var aprajitaRetailsContext = _context.TalioringDelivies.Include(t => t.Booking);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var talioringDelivery = await _context.Deliveries
+            var talioringDelivery = await _context.TalioringDelivies
                 .Include(t => t.Booking)
                 .FirstOrDefaultAsync(m => m.TalioringDeliveryId == id);
             if (talioringDelivery == null)
@@ -48,7 +48,7 @@ namespace AprajitaRetails.Controllers
         // GET: TalioringDeliveries/Create
         public IActionResult Create()
         {
-            ViewData["TalioringBookingId"] = new SelectList(_context.Bookings, "TalioringBookingId", "TalioringBookingId");
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TalioringBookingId"] = new SelectList(_context.Bookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
             return View(talioringDelivery);
         }
 
@@ -77,12 +77,12 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var talioringDelivery = await _context.Deliveries.FindAsync(id);
+            var talioringDelivery = await _context.TalioringDelivies.FindAsync(id);
             if (talioringDelivery == null)
             {
                 return NotFound();
             }
-            ViewData["TalioringBookingId"] = new SelectList(_context.Bookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
             return View(talioringDelivery);
         }
 
@@ -118,7 +118,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TalioringBookingId"] = new SelectList(_context.Bookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
             return View(talioringDelivery);
         }
 
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var talioringDelivery = await _context.Deliveries
+            var talioringDelivery = await _context.TalioringDelivies
                 .Include(t => t.Booking)
                 .FirstOrDefaultAsync(m => m.TalioringDeliveryId == id);
             if (talioringDelivery == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var talioringDelivery = await _context.Deliveries.FindAsync(id);
-            _context.Deliveries.Remove(talioringDelivery);
+            var talioringDelivery = await _context.TalioringDelivies.FindAsync(id);
+            _context.TalioringDelivies.Remove(talioringDelivery);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TalioringDeliveryExists(int id)
         {
-            return _context.Deliveries.Any(e => e.TalioringDeliveryId == id);
+            return _context.TalioringDelivies.Any(e => e.TalioringDeliveryId == id);
         }
     }
 }

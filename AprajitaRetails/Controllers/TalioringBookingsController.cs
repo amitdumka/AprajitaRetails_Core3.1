@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: TalioringBookings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Bookings.ToListAsync());
+            return View(await _context.TalioringBookings.ToListAsync());
         }
 
         // GET: TalioringBookings/Details/5
@@ -33,7 +33,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var talioringBooking = await _context.Bookings
+            var talioringBooking = await _context.TalioringBookings
                 .FirstOrDefaultAsync(m => m.TalioringBookingId == id);
             if (talioringBooking == null)
             {
@@ -73,7 +73,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var talioringBooking = await _context.Bookings.FindAsync(id);
+            var talioringBooking = await _context.TalioringBookings.FindAsync(id);
             if (talioringBooking == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var talioringBooking = await _context.Bookings
+            var talioringBooking = await _context.TalioringBookings
                 .FirstOrDefaultAsync(m => m.TalioringBookingId == id);
             if (talioringBooking == null)
             {
@@ -139,15 +139,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var talioringBooking = await _context.Bookings.FindAsync(id);
-            _context.Bookings.Remove(talioringBooking);
+            var talioringBooking = await _context.TalioringBookings.FindAsync(id);
+            _context.TalioringBookings.Remove(talioringBooking);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TalioringBookingExists(int id)
         {
-            return _context.Bookings.Any(e => e.TalioringBookingId == id);
+            return _context.TalioringBookings.Any(e => e.TalioringBookingId == id);
         }
     }
 }

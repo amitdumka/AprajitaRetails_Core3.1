@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: DueRecoverds
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.Recoverds.Include(d => d.DuesList);
+            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var dueRecoverd = await _context.Recoverds
+            var dueRecoverd = await _context.DueRecoverds
                 .Include(d => d.DuesList)
                 .FirstOrDefaultAsync(m => m.DueRecoverdId == id);
             if (dueRecoverd == null)
@@ -77,7 +77,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var dueRecoverd = await _context.Recoverds.FindAsync(id);
+            var dueRecoverd = await _context.DueRecoverds.FindAsync(id);
             if (dueRecoverd == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var dueRecoverd = await _context.Recoverds
+            var dueRecoverd = await _context.DueRecoverds
                 .Include(d => d.DuesList)
                 .FirstOrDefaultAsync(m => m.DueRecoverdId == id);
             if (dueRecoverd == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dueRecoverd = await _context.Recoverds.FindAsync(id);
-            _context.Recoverds.Remove(dueRecoverd);
+            var dueRecoverd = await _context.DueRecoverds.FindAsync(id);
+            _context.DueRecoverds.Remove(dueRecoverd);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DueRecoverdExists(int id)
         {
-            return _context.Recoverds.Any(e => e.DueRecoverdId == id);
+            return _context.DueRecoverds.Any(e => e.DueRecoverdId == id);
         }
     }
 }

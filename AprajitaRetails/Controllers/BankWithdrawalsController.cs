@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: BankWithdrawals
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.Withdrawals.Include(b => b.Account);
+            var aprajitaRetailsContext = _context.BankWithdrawals.Include(b => b.Account);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var bankWithdrawal = await _context.Withdrawals
+            var bankWithdrawal = await _context.BankWithdrawals
                 .Include(b => b.Account)
                 .FirstOrDefaultAsync(m => m.BankWithdrawalId == id);
             if (bankWithdrawal == null)
@@ -48,7 +48,7 @@ namespace AprajitaRetails.Controllers
         // GET: BankWithdrawals/Create
         public IActionResult Create()
         {
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId");
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
             return View(bankWithdrawal);
         }
 
@@ -77,12 +77,12 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var bankWithdrawal = await _context.Withdrawals.FindAsync(id);
+            var bankWithdrawal = await _context.BankWithdrawals.FindAsync(id);
             if (bankWithdrawal == null)
             {
                 return NotFound();
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
             return View(bankWithdrawal);
         }
 
@@ -118,7 +118,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.BankAccounts, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
             return View(bankWithdrawal);
         }
 
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var bankWithdrawal = await _context.Withdrawals
+            var bankWithdrawal = await _context.BankWithdrawals
                 .Include(b => b.Account)
                 .FirstOrDefaultAsync(m => m.BankWithdrawalId == id);
             if (bankWithdrawal == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var bankWithdrawal = await _context.Withdrawals.FindAsync(id);
-            _context.Withdrawals.Remove(bankWithdrawal);
+            var bankWithdrawal = await _context.BankWithdrawals.FindAsync(id);
+            _context.BankWithdrawals.Remove(bankWithdrawal);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BankWithdrawalExists(int id)
         {
-            return _context.Withdrawals.Any(e => e.BankWithdrawalId == id);
+            return _context.BankWithdrawals.Any(e => e.BankWithdrawalId == id);
         }
     }
 }

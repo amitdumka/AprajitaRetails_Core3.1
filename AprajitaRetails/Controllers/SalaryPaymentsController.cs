@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: SalaryPayments
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.Salaries.Include(s => s.Employee);
+            var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var salaryPayment = await _context.Salaries
+            var salaryPayment = await _context.SalaryPayments
                 .Include(s => s.Employee)
                 .FirstOrDefaultAsync(m => m.SalaryPaymentId == id);
             if (salaryPayment == null)
@@ -77,7 +77,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var salaryPayment = await _context.Salaries.FindAsync(id);
+            var salaryPayment = await _context.SalaryPayments.FindAsync(id);
             if (salaryPayment == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var salaryPayment = await _context.Salaries
+            var salaryPayment = await _context.SalaryPayments
                 .Include(s => s.Employee)
                 .FirstOrDefaultAsync(m => m.SalaryPaymentId == id);
             if (salaryPayment == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var salaryPayment = await _context.Salaries.FindAsync(id);
-            _context.Salaries.Remove(salaryPayment);
+            var salaryPayment = await _context.SalaryPayments.FindAsync(id);
+            _context.SalaryPayments.Remove(salaryPayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SalaryPaymentExists(int id)
         {
-            return _context.Salaries.Any(e => e.SalaryPaymentId == id);
+            return _context.SalaryPayments.Any(e => e.SalaryPaymentId == id);
         }
     }
 }

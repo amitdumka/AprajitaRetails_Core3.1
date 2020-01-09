@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: AccountNumbers
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.BankAccounts.Include(a => a.Bank);
+            var aprajitaRetailsContext = _context.AccountNumbers.Include(a => a.Bank);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var accountNumber = await _context.BankAccounts
+            var accountNumber = await _context.AccountNumbers
                 .Include(a => a.Bank)
                 .FirstOrDefaultAsync(m => m.AccountNumberId == id);
             if (accountNumber == null)
@@ -77,7 +77,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var accountNumber = await _context.BankAccounts.FindAsync(id);
+            var accountNumber = await _context.AccountNumbers.FindAsync(id);
             if (accountNumber == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var accountNumber = await _context.BankAccounts
+            var accountNumber = await _context.AccountNumbers
                 .Include(a => a.Bank)
                 .FirstOrDefaultAsync(m => m.AccountNumberId == id);
             if (accountNumber == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var accountNumber = await _context.BankAccounts.FindAsync(id);
-            _context.BankAccounts.Remove(accountNumber);
+            var accountNumber = await _context.AccountNumbers.FindAsync(id);
+            _context.AccountNumbers.Remove(accountNumber);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AccountNumberExists(int id)
         {
-            return _context.BankAccounts.Any(e => e.AccountNumberId == id);
+            return _context.AccountNumbers.Any(e => e.AccountNumberId == id);
         }
     }
 }

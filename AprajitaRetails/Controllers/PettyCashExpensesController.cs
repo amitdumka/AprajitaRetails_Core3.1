@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: PettyCashExpenses
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.CashExpenses.Include(p => p.PaidBy);
+            var aprajitaRetailsContext = _context.PettyCashExpenses.Include(p => p.PaidBy);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var pettyCashExpense = await _context.CashExpenses
+            var pettyCashExpense = await _context.PettyCashExpenses
                 .Include(p => p.PaidBy)
                 .FirstOrDefaultAsync(m => m.PettyCashExpenseId == id);
             if (pettyCashExpense == null)
@@ -77,7 +77,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var pettyCashExpense = await _context.CashExpenses.FindAsync(id);
+            var pettyCashExpense = await _context.PettyCashExpenses.FindAsync(id);
             if (pettyCashExpense == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var pettyCashExpense = await _context.CashExpenses
+            var pettyCashExpense = await _context.PettyCashExpenses
                 .Include(p => p.PaidBy)
                 .FirstOrDefaultAsync(m => m.PettyCashExpenseId == id);
             if (pettyCashExpense == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pettyCashExpense = await _context.CashExpenses.FindAsync(id);
-            _context.CashExpenses.Remove(pettyCashExpense);
+            var pettyCashExpense = await _context.PettyCashExpenses.FindAsync(id);
+            _context.PettyCashExpenses.Remove(pettyCashExpense);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PettyCashExpenseExists(int id)
         {
-            return _context.CashExpenses.Any(e => e.PettyCashExpenseId == id);
+            return _context.PettyCashExpenses.Any(e => e.PettyCashExpenseId == id);
         }
     }
 }

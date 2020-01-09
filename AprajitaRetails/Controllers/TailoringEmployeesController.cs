@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: TailoringEmployees
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tailors.ToListAsync());
+            return View(await _context.TailoringEmployees.ToListAsync());
         }
 
         // GET: TailoringEmployees/Details/5
@@ -33,7 +33,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var tailoringEmployee = await _context.Tailors
+            var tailoringEmployee = await _context.TailoringEmployees
                 .FirstOrDefaultAsync(m => m.TailoringEmployeeId == id);
             if (tailoringEmployee == null)
             {
@@ -73,7 +73,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var tailoringEmployee = await _context.Tailors.FindAsync(id);
+            var tailoringEmployee = await _context.TailoringEmployees.FindAsync(id);
             if (tailoringEmployee == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var tailoringEmployee = await _context.Tailors
+            var tailoringEmployee = await _context.TailoringEmployees
                 .FirstOrDefaultAsync(m => m.TailoringEmployeeId == id);
             if (tailoringEmployee == null)
             {
@@ -139,15 +139,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tailoringEmployee = await _context.Tailors.FindAsync(id);
-            _context.Tailors.Remove(tailoringEmployee);
+            var tailoringEmployee = await _context.TailoringEmployees.FindAsync(id);
+            _context.TailoringEmployees.Remove(tailoringEmployee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TailoringEmployeeExists(int id)
         {
-            return _context.Tailors.Any(e => e.TailoringEmployeeId == id);
+            return _context.TailoringEmployees.Any(e => e.TailoringEmployeeId == id);
         }
     }
 }

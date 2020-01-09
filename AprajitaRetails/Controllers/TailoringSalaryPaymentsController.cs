@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: TailoringSalaryPayments
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.TailoringSalaries.Include(t => t.Employee);
+            var aprajitaRetailsContext = _context.TailoringSalaryPayments.Include(t => t.Employee);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var tailoringSalaryPayment = await _context.TailoringSalaries
+            var tailoringSalaryPayment = await _context.TailoringSalaryPayments
                 .Include(t => t.Employee)
                 .FirstOrDefaultAsync(m => m.TailoringSalaryPaymentId == id);
             if (tailoringSalaryPayment == null)
@@ -48,7 +48,7 @@ namespace AprajitaRetails.Controllers
         // GET: TailoringSalaryPayments/Create
         public IActionResult Create()
         {
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId");
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
             return View(tailoringSalaryPayment);
         }
 
@@ -77,12 +77,12 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var tailoringSalaryPayment = await _context.TailoringSalaries.FindAsync(id);
+            var tailoringSalaryPayment = await _context.TailoringSalaryPayments.FindAsync(id);
             if (tailoringSalaryPayment == null)
             {
                 return NotFound();
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
             return View(tailoringSalaryPayment);
         }
 
@@ -118,7 +118,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.Tailors, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
             return View(tailoringSalaryPayment);
         }
 
@@ -130,7 +130,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var tailoringSalaryPayment = await _context.TailoringSalaries
+            var tailoringSalaryPayment = await _context.TailoringSalaryPayments
                 .Include(t => t.Employee)
                 .FirstOrDefaultAsync(m => m.TailoringSalaryPaymentId == id);
             if (tailoringSalaryPayment == null)
@@ -146,15 +146,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tailoringSalaryPayment = await _context.TailoringSalaries.FindAsync(id);
-            _context.TailoringSalaries.Remove(tailoringSalaryPayment);
+            var tailoringSalaryPayment = await _context.TailoringSalaryPayments.FindAsync(id);
+            _context.TailoringSalaryPayments.Remove(tailoringSalaryPayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TailoringSalaryPaymentExists(int id)
         {
-            return _context.TailoringSalaries.Any(e => e.TailoringSalaryPaymentId == id);
+            return _context.TailoringSalaryPayments.Any(e => e.TailoringSalaryPaymentId == id);
         }
     }
 }

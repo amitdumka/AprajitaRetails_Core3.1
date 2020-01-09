@@ -15,18 +15,18 @@ namespace AprajitaRetails.Ops.WidgetModel
             
             return new TailoringReport()
             {
-                TodayBooking = (int?)db.Bookings.Where(c => (c.BookingDate.Date) == (DateTime.Today)).Count() ?? 0,
-                TodayUnit = (int?)db.Bookings.Where(c => (c.BookingDate.Date) == (DateTime.Today)).Sum(c => (int?)c.TotalQty) ?? 0,
+                TodayBooking = (int?)db.TalioringBookings.Where(c => (c.BookingDate.Date) == (DateTime.Today)).Count() ?? 0,
+                TodayUnit = (int?)db.TalioringBookings.Where(c => (c.BookingDate.Date) == (DateTime.Today)).Sum(c => (int?)c.TotalQty) ?? 0,
 
-                MonthlyBooking = (int?)db.Bookings.Where(c => (c.BookingDate).Month == (DateTime.Today).Month).Count() ?? 0,
-                MonthlyUnit = (int?)db.Bookings.Where(c => (c.BookingDate).Month == (DateTime.Today).Month).Sum(c => (int?)c.TotalQty) ?? 0,
+                MonthlyBooking = (int?)db.TalioringBookings.Where(c => (c.BookingDate).Month == (DateTime.Today).Month).Count() ?? 0,
+                MonthlyUnit = (int?)db.TalioringBookings.Where(c => (c.BookingDate).Month == (DateTime.Today).Month).Sum(c => (int?)c.TotalQty) ?? 0,
 
-                YearlyBooking = (int?)db.Bookings.Where(c => (c.BookingDate).Year == (DateTime.Today).Year).Count() ?? 0,
-                YearlyUnit = (int?)db.Bookings.Where(c => (c.BookingDate).Year == (DateTime.Today).Year).Sum(c => (int?)c.TotalQty) ?? 0,
+                YearlyBooking = (int?)db.TalioringBookings.Where(c => (c.BookingDate).Year == (DateTime.Today).Year).Count() ?? 0,
+                YearlyUnit = (int?)db.TalioringBookings.Where(c => (c.BookingDate).Year == (DateTime.Today).Year).Sum(c => (int?)c.TotalQty) ?? 0,
 
-                TodaySale = (decimal?)db.Deliveries.Where(c => (c.DeliveryDate.Date) == (DateTime.Today)).Sum(c => (decimal?)c.Amount) ?? 0,
-                YearlySale = (decimal?)db.Deliveries.Where(c => (c.DeliveryDate).Year == (DateTime.Today).Year).Sum(c => (decimal?)c.Amount) ?? 0,
-                MonthlySale = (decimal?)db.Deliveries.Where(c => (c.DeliveryDate).Month == (DateTime.Today).Month).Sum(c => (decimal?)c.Amount) ?? 0,
+                TodaySale = (decimal?)db.TalioringDelivies.Where(c => (c.DeliveryDate.Date) == (DateTime.Today)).Sum(c => (decimal?)c.Amount) ?? 0,
+                YearlySale = (decimal?)db.TalioringDelivies.Where(c => (c.DeliveryDate).Year == (DateTime.Today).Year).Sum(c => (decimal?)c.Amount) ?? 0,
+                MonthlySale = (decimal?)db.TalioringDelivies.Where(c => (c.DeliveryDate).Month == (DateTime.Today).Month).Sum(c => (decimal?)c.Amount) ?? 0,
             };
 
 
@@ -55,7 +55,7 @@ namespace AprajitaRetails.Ops.WidgetModel
 
             }
 
-            var CashExp = db.CashExpenses.Where(c => (c.ExpDate) == (DateTime.Today));
+            var CashExp = db.PettyCashExpenses.Where(c => (c.ExpDate) == (DateTime.Today));
             var CashPay = db.CashPayments.Where(c => (c.PaymentDate) == (DateTime.Today));
 
             if (CashExp != null)

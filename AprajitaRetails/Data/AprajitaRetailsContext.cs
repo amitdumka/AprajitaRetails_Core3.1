@@ -1,7 +1,7 @@
 ﻿using AprajitaRetails.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Data
 {
@@ -27,7 +27,7 @@ namespace AprajitaRetails.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+           
             modelBuilder.Entity<CashInBank>()
                 .HasIndex(b => b.CIBDate)
                 .IsUnique();
@@ -52,7 +52,8 @@ namespace AprajitaRetails.Data
         //Payroll
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<SalaryPayment> Salaries { get; set; }
+        
+        public DbSet<SalaryPayment>SalaryPayments { get; set; }
         public DbSet<StaffAdvancePayment> StaffAdvancePayments { get; set; }
         public DbSet<StaffAdvanceReceipt> StaffAdvanceReceipts { get; set; }
 
@@ -61,15 +62,15 @@ namespace AprajitaRetails.Data
 
         //Banking
         public DbSet<Bank> Banks { get; set; }
-        public DbSet<AccountNumber> BankAccounts { get; set; }
+        public DbSet<AccountNumber> AccountNumbers { get; set; }
         public DbSet<BankDeposit> BankDeposits { get; set; }
-        public DbSet<BankWithdrawal> Withdrawals { get; set; }
+        public DbSet<BankWithdrawal> BankWithdrawals { get; set; }
 
 
 
         //Expenses
         public DbSet<Expense> Expenses { get; set; }
-        public DbSet<PettyCashExpense> CashExpenses { get; set; }
+        public DbSet<PettyCashExpense> PettyCashExpenses { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
 
@@ -80,13 +81,13 @@ namespace AprajitaRetails.Data
         //Tailoring
 
         public DbSet<TailorAttendance> TailorAttendances { get; set; }
-        public DbSet<TailoringEmployee> Tailors { get; set; }
-        public DbSet<TailoringSalaryPayment> TailoringSalaries { get; set; }
+        public DbSet<TailoringEmployee> TailoringEmployees { get; set; }
+        public DbSet<TailoringSalaryPayment> TailoringSalaryPayments { get; set; }
         public DbSet<TailoringStaffAdvancePayment> TailoringStaffAdvancePayments { get; set; }
         public DbSet<TailoringStaffAdvanceReceipt> TailoringStaffAdvanceReceipts { get; set; }
 
-        public DbSet<TalioringBooking> Bookings { get; set; }
-        public DbSet<TalioringDelivery> Deliveries { get; set; }
+        public DbSet<TalioringBooking> TalioringBookings { get; set; }
+        public DbSet<TalioringDelivery> TalioringDelivies { get; set; }
 
 
         //End of Day
@@ -95,8 +96,8 @@ namespace AprajitaRetails.Data
 
         //Others
 
-        public DbSet<DueRecoverd> Recoverds { get; set; }
-        public DbSet<ChequesLog> Cheques { get; set; }
+        public DbSet<DueRecoverd> DueRecoverds { get; set; }
+        public DbSet<ChequesLog> ChequesLogs { get; set; }
 
         public DbSet<MonthEnd> MonthEnds { get; set; }
 

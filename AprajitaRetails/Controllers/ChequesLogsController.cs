@@ -22,7 +22,7 @@ namespace AprajitaRetails.Controllers
         // GET: ChequesLogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cheques.ToListAsync());
+            return View(await _context.ChequesLogs.ToListAsync());
         }
 
         // GET: ChequesLogs/Details/5
@@ -33,7 +33,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var chequesLog = await _context.Cheques
+            var chequesLog = await _context.ChequesLogs
                 .FirstOrDefaultAsync(m => m.ChequesLogId == id);
             if (chequesLog == null)
             {
@@ -73,7 +73,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var chequesLog = await _context.Cheques.FindAsync(id);
+            var chequesLog = await _context.ChequesLogs.FindAsync(id);
             if (chequesLog == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var chequesLog = await _context.Cheques
+            var chequesLog = await _context.ChequesLogs
                 .FirstOrDefaultAsync(m => m.ChequesLogId == id);
             if (chequesLog == null)
             {
@@ -139,15 +139,15 @@ namespace AprajitaRetails.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var chequesLog = await _context.Cheques.FindAsync(id);
-            _context.Cheques.Remove(chequesLog);
+            var chequesLog = await _context.ChequesLogs.FindAsync(id);
+            _context.ChequesLogs.Remove(chequesLog);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ChequesLogExists(int id)
         {
-            return _context.Cheques.Any(e => e.ChequesLogId == id);
+            return _context.ChequesLogs.Any(e => e.ChequesLogId == id);
         }
     }
 }

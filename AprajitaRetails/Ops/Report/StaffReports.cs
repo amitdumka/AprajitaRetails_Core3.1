@@ -28,7 +28,7 @@ namespace TAS_AprajiataRetails.Models.Reports
             {
                 AdavcePayment = db.StaffAdvancePayments.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
                 AdvaceReciepts = db.StaffAdvanceReceipts.Where(c => c.EmployeeId == EmpId && (c.ReceiptDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
-                SalaryPayment = db.Salaries.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                SalaryPayment = db.SalaryPayments.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
                 CurrentMonthSalary = curSalary
             };
             sPay.NetSalary = curSalary - (sPay.SalaryPayment + sPay.AdavcePayment - sPay.AdvaceReciepts);
@@ -47,7 +47,7 @@ namespace TAS_AprajiataRetails.Models.Reports
                 {
                     AdavcePayment = db.StaffAdvancePayments.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == onDate.Date.Month).Sum(c => c.Amount),
                     AdvaceReciepts = db.StaffAdvanceReceipts.Where(c => c.EmployeeId == EmpId && (c.ReceiptDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
-                    SalaryPayment = db.Salaries.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
+                    SalaryPayment = db.SalaryPayments.Where(c => c.EmployeeId == EmpId && (c.PaymentDate).Date.Month == (onDate).Date.Month).Sum(c => c.Amount),
                     CurrentMonthSalary = 0//TODO: aad option here
                 };
                 sPay.NetSalary = sPay.CurrentMonthSalary - (sPay.SalaryPayment + sPay.AdavcePayment - sPay.AdvaceReciepts);
