@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AprajitaRetails.Models.SuspenseAccount>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReferanceDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCleared)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClearedDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewBy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReferanceDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OutAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCleared)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClearedDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewBy)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SuspenseAccountId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SuspenseAccountId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SuspenseAccountId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AprajitaRetails.Models.CashInBank>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CIBDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OpenningBalance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClosingBalance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashOut)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CIBDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpenningBalance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClosingBalance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CashIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CashOut)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CashInBankId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CashInBankId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CashInBankId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

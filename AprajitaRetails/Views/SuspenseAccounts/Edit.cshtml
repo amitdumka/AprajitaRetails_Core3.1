@@ -1,0 +1,64 @@
+﻿@model AprajitaRetails.Models.SuspenseAccount
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>SuspenseAccount</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SuspenseAccountId" />
+            <div class="form-group">
+                <label asp-for="EntryDate" class="control-label"></label>
+                <input asp-for="EntryDate" class="form-control" />
+                <span asp-validation-for="EntryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReferanceDetails" class="control-label"></label>
+                <input asp-for="ReferanceDetails" class="form-control" />
+                <span asp-validation-for="ReferanceDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InAmount" class="control-label"></label>
+                <input asp-for="InAmount" class="form-control" />
+                <span asp-validation-for="InAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OutAmount" class="control-label"></label>
+                <input asp-for="OutAmount" class="form-control" />
+                <span asp-validation-for="OutAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsCleared" /> @Html.DisplayNameFor(model => model.IsCleared)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClearedDetails" class="control-label"></label>
+                <input asp-for="ClearedDetails" class="form-control" />
+                <span asp-validation-for="ClearedDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewBy" class="control-label"></label>
+                <input asp-for="ReviewBy" class="form-control" />
+                <span asp-validation-for="ReviewBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

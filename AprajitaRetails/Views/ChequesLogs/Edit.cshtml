@@ -1,0 +1,89 @@
+﻿@model AprajitaRetails.Models.ChequesLog
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ChequesLog</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ChequesLogId" />
+            <div class="form-group">
+                <label asp-for="BankName" class="control-label"></label>
+                <input asp-for="BankName" class="form-control" />
+                <span asp-validation-for="BankName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountNumber" class="control-label"></label>
+                <input asp-for="AccountNumber" class="form-control" />
+                <span asp-validation-for="AccountNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChequesDate" class="control-label"></label>
+                <input asp-for="ChequesDate" class="form-control" />
+                <span asp-validation-for="ChequesDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepositDate" class="control-label"></label>
+                <input asp-for="DepositDate" class="form-control" />
+                <span asp-validation-for="DepositDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClearedDate" class="control-label"></label>
+                <input asp-for="ClearedDate" class="form-control" />
+                <span asp-validation-for="ClearedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssuedBy" class="control-label"></label>
+                <input asp-for="IssuedBy" class="form-control" />
+                <span asp-validation-for="IssuedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IssuedTo" class="control-label"></label>
+                <input asp-for="IssuedTo" class="form-control" />
+                <span asp-validation-for="IssuedTo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPDC" /> @Html.DisplayNameFor(model => model.IsPDC)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsIssuedByAprajitaRetails" /> @Html.DisplayNameFor(model => model.IsIssuedByAprajitaRetails)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDepositedOnAprajitaRetails" /> @Html.DisplayNameFor(model => model.IsDepositedOnAprajitaRetails)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarks" class="control-label"></label>
+                <input asp-for="Remarks" class="form-control" />
+                <span asp-validation-for="Remarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

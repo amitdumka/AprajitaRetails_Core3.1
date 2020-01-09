@@ -1,0 +1,90 @@
+﻿@model AprajitaRetails.Models.CurrentSalary
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CurrentSalary</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Employee.EmployeeId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BasicSalary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BasicSalary)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SundaySalary)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SundaySalary)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LPRate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LPRate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IncentiveRate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IncentiveRate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IncentiveTarget)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IncentiveTarget)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WOWBillRate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WOWBillRate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WOWBillTarget)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WOWBillTarget)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsSundayBillable)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsSundayBillable)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EffectiveDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CloseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CloseDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsEffective)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsEffective)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CurrentSalaryId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

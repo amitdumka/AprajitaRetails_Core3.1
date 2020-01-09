@@ -1,0 +1,84 @@
+﻿@model AprajitaRetails.Models.DailySale
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>DailySale</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DailySaleId" />
+            <div class="form-group">
+                <label asp-for="SaleDate" class="control-label"></label>
+                <input asp-for="SaleDate" class="form-control" />
+                <span asp-validation-for="SaleDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvNo" class="control-label"></label>
+                <input asp-for="InvNo" class="form-control" />
+                <span asp-validation-for="InvNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PayMode" class="control-label"></label>
+                <select asp-for="PayMode" class="form-control"></select>
+                <span asp-validation-for="PayMode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CashAmount" class="control-label"></label>
+                <input asp-for="CashAmount" class="form-control" />
+                <span asp-validation-for="CashAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SalesmanId" class="control-label"></label>
+                <select asp-for="SalesmanId" class="form-control" asp-items="ViewBag.SalesmanId"></select>
+                <span asp-validation-for="SalesmanId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDue" /> @Html.DisplayNameFor(model => model.IsDue)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsManualBill" /> @Html.DisplayNameFor(model => model.IsManualBill)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsTailoringBill" /> @Html.DisplayNameFor(model => model.IsTailoringBill)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsSaleReturn" /> @Html.DisplayNameFor(model => model.IsSaleReturn)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarks" class="control-label"></label>
+                <input asp-for="Remarks" class="form-control" />
+                <span asp-validation-for="Remarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

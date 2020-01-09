@@ -1,0 +1,101 @@
+﻿@model IEnumerable<AprajitaRetails.Models.CurrentSalary>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BasicSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SundaySalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LPRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IncentiveRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IncentiveTarget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WOWBillRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WOWBillTarget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsSundayBillable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EffectiveDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CloseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsEffective)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BasicSalary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SundaySalary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LPRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncentiveRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncentiveTarget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WOWBillRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WOWBillTarget)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSundayBillable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EffectiveDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CloseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEffective)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CurrentSalaryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CurrentSalaryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CurrentSalaryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

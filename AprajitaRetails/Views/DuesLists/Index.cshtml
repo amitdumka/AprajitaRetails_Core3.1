@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AprajitaRetails.Models.DuesList>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRecovered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecoveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailySale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPartialRecovery)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRecovered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecoveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DailySale.DailySaleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPartialRecovery)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DuesListId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DuesListId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DuesListId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

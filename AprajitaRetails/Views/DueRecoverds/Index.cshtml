@@ -1,0 +1,65 @@
+﻿@model IEnumerable<AprajitaRetails.Models.DueRecoverd>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaidDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DuesList)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountPaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPartialPayment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaidDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DuesList.DuesListId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountPaid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPartialPayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DueRecoverdId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DueRecoverdId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DueRecoverdId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

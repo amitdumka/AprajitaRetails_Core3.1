@@ -1,0 +1,101 @@
+﻿@model IEnumerable<AprajitaRetails.Models.ChequesLog>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BankName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChequesDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepositDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClearedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IssuedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IssuedTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPDC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsIssuedByAprajitaRetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDepositedOnAprajitaRetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChequesDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepositDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClearedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssuedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssuedTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPDC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsIssuedByAprajitaRetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDepositedOnAprajitaRetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ChequesLogId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ChequesLogId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ChequesLogId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

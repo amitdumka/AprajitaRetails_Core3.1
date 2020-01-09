@@ -1,0 +1,64 @@
+﻿@model AprajitaRetails.Models.BankWithdrawal
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BankWithdrawal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BankWithdrawalId" />
+            <div class="form-group">
+                <label asp-for="DepoDate" class="control-label"></label>
+                <input asp-for="DepoDate" class="form-control" />
+                <span asp-validation-for="DepoDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountNumberId" class="control-label"></label>
+                <select asp-for="AccountNumberId" class="form-control" asp-items="ViewBag.AccountNumberId"></select>
+                <span asp-validation-for="AccountNumberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChequeNo" class="control-label"></label>
+                <input asp-for="ChequeNo" class="form-control" />
+                <span asp-validation-for="ChequeNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SignedBy" class="control-label"></label>
+                <input asp-for="SignedBy" class="form-control" />
+                <span asp-validation-for="SignedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApprovedBy" class="control-label"></label>
+                <input asp-for="ApprovedBy" class="form-control" />
+                <span asp-validation-for="ApprovedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InNameOf" class="control-label"></label>
+                <input asp-for="InNameOf" class="form-control" />
+                <span asp-validation-for="InNameOf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

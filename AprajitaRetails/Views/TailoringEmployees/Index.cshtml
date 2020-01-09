@@ -1,0 +1,59 @@
+﻿@model IEnumerable<AprajitaRetails.Models.TailoringEmployee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoiningDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeavingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsWorking)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JoiningDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeavingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsWorking)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TailoringEmployeeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TailoringEmployeeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TailoringEmployeeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

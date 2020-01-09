@@ -31,7 +31,7 @@ namespace AprajitaRetails
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<AprajitaReatilsContext>(options =>
+            services.AddDbContext<AprajitaRetailsContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("AprajitaRetailsConnection")));
             

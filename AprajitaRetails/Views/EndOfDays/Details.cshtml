@@ -1,0 +1,66 @@
+﻿@model AprajitaRetails.Models.EndOfDay
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>EndOfDay</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EOD_Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EOD_Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Shirting)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Shirting)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Suiting)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Suiting)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.USPA)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.USPA)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FM_Arrow)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FM_Arrow)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RWT)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RWT)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Access)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Access)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CashInHand)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CashInHand)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EndOfDayId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

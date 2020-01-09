@@ -1,0 +1,87 @@
+﻿@model AprajitaRetails.Models.CurrentSalary
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CurrentSalary</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BasicSalary" class="control-label"></label>
+                <input asp-for="BasicSalary" class="form-control" />
+                <span asp-validation-for="BasicSalary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SundaySalary" class="control-label"></label>
+                <input asp-for="SundaySalary" class="form-control" />
+                <span asp-validation-for="SundaySalary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LPRate" class="control-label"></label>
+                <input asp-for="LPRate" class="form-control" />
+                <span asp-validation-for="LPRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IncentiveRate" class="control-label"></label>
+                <input asp-for="IncentiveRate" class="form-control" />
+                <span asp-validation-for="IncentiveRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IncentiveTarget" class="control-label"></label>
+                <input asp-for="IncentiveTarget" class="form-control" />
+                <span asp-validation-for="IncentiveTarget" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WOWBillRate" class="control-label"></label>
+                <input asp-for="WOWBillRate" class="form-control" />
+                <span asp-validation-for="WOWBillRate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WOWBillTarget" class="control-label"></label>
+                <input asp-for="WOWBillTarget" class="form-control" />
+                <span asp-validation-for="WOWBillTarget" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsSundayBillable" /> @Html.DisplayNameFor(model => model.IsSundayBillable)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="EffectiveDate" class="control-label"></label>
+                <input asp-for="EffectiveDate" class="form-control" />
+                <span asp-validation-for="EffectiveDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CloseDate" class="control-label"></label>
+                <input asp-for="CloseDate" class="form-control" />
+                <span asp-validation-for="CloseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsEffective" /> @Html.DisplayNameFor(model => model.IsEffective)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
