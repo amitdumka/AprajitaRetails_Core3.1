@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no" />
     <title>@ViewData["Title"] - Aprajita Retails</title>
+    <link rel="stylesheet" href="~/lib/mdb/css/mdb.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-xl navbar-toggleable-sm navbar-light bg-warning border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark   default-color lighten-4 border-bottom box-shadow mb-1">
             <div class="container-fluid">
                 <a class="navbar-brand text-danger  text-monospace" asp-area="" asp-controller="Home" asp-action="Index">Aprajita Retails</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -18,7 +19,7 @@
                 </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
+                    @*<partial name="_LoginPartial" />*@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -27,14 +28,14 @@
                         <!-- Ported Menu-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
-                            
-                                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                    <a class="dropdown-item" text-dark" asp-area="" asp-controller="Parties" asp-action="Index">Parties</a>
-                                    <a class="dropdown-item" text-dark" asp-area="" asp-controller="LedgerEntries" asp-action="Index">LedgerEntries</a>
-                                    <a class="dropdown-item" text-dark" asp-area="" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
-                                    <a class="dropdown-item" text-dark" asp-area="" asp-controller="SaleTaxTypes" asp-action="Index">OutTax</a>
-                                </div>
-                            
+
+                            <div class="dropdown-menu " aria-labelledby="dropdown01">
+                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="Parties" asp-action="Index">Parties</a>
+                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="LedgerEntries" asp-action="Index">LedgerEntries</a>
+                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
+                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="SaleTaxTypes" asp-action="Index">OutTax</a>
+                            </div>
+
                         </li>
 
                         <li class="nav-item dropdown">
@@ -120,9 +121,9 @@
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="SalesUploader" asp-action="SaleList">SalesUploader</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
-
-                                <a class="dropdown-item text-dark " asp-area="" asp-controller="Purchase List" asp-action="ListUpLoad">PurchaseUploader</a>
-
+                                
+                                <a class="dropdown-item text-dark " asp-area="" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
+                                
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
@@ -141,7 +142,7 @@
 
                             </div>
                         </li>
-                        
+
                     </ul>
                 </div>
 
@@ -154,13 +155,14 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer  font-small text-muted ">
         <div class="container">
             &copy; 2020 - Aprajita Retails - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/mdb/js/mdb.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

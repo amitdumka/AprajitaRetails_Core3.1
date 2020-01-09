@@ -9,7 +9,7 @@
 <p>
    <a  class="btn btn-primary btn-sm" asp-action="Create">Create New</a>
 </p>
-<table class="table table-sm table-responsive table-hover table-striped">
+<table class="table table-sm  w-auto table-responsive-sm table-hover table-striped table-bordered">
      <thead class="bg-success">
         <tr>
             <th>
@@ -24,31 +24,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.PayMode)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CashAmount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Salesman)
-            </th>
-            <th>
+            </th>*@
+            @*<th>
                 @Html.DisplayNameFor(model => model.IsDue)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.IsManualBill)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IsTailoringBill)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.IsSaleReturn)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Remarks)
-            </th>
-            <th></th>
+            </th>*@
+            <th ></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="cyan lighten-3">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -63,31 +63,31 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PayMode)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.CashAmount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Salesman.SalesmanId)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IsDue)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.IsManualBill)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IsTailoringBill)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.IsSaleReturn)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
-            <td>
-               <a  class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.DailySaleId">Edit</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.DailySaleId">Details</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.DailySaleId">Delete</a>
+            </td>*@
+            <td class="btn-group">
+               <a  class="btn btn-outline-secondary btn-sm" asp-action="Edit" asp-route-id="@item.DailySaleId">Edit</a> 
+               <a  class="btn btn-outline-deep-orange btn-sm" asp-action="Details" asp-route-id="@item.DailySaleId">Details</a> 
+               <a  class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.DailySaleId">Delete</a>
             </td>
         </tr>
 }
