@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-danger">Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+   <a  class="btn btn-primary btn-sm" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-sm table-responsive table-hover table-striped">
+     <thead class="bg-success">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.SaleDate)
@@ -48,7 +48,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+     <tbody class="bg-info">
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -85,9 +85,9 @@
                 @Html.DisplayFor(modelItem => item.Remarks)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DailySaleId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DailySaleId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DailySaleId">Delete</a>
+               <a  class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.DailySaleId">Edit</a> |
+               <a  class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.DailySaleId">Details</a> |
+               <a  class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.DailySaleId">Delete</a>
             </td>
         </tr>
 }

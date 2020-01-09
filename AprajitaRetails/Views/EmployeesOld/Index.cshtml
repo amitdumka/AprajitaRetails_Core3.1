@@ -1,4 +1,5 @@
-﻿@model IEnumerable<AprajitaRetails.Models.Employee>
+﻿
+@model IEnumerable<AprajitaRetails.Models.Employee>
 
 @{
     ViewBag.Title = "Index";
@@ -9,7 +10,7 @@
 <p>
      @Html.ActionLink("Create New ", "Create", new { id = 0 }, new { data_modal = "", @class="btn btn-primary btn-sm" })
 </p>
-<table class="table">
+<table class="table table-sm table-responsive table-hover table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.StaffName)
