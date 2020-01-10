@@ -8,25 +8,26 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 
-namespace AprajitaRetails.Controllers
+namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
-    public class AttendancesController : Controller
+    [Area("PayRoll")]
+    public class SalaryPaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
 
-        public AttendancesController(AprajitaRetailsContext context)
+        public SalaryPaymentsController(AprajitaRetailsContext context)
         {
             _context = context;
         }
 
-        // GET: Attendances
+        // GET: SalaryPayments
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee);
+            var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
-        // GET: Attendances/Details/5
+        // GET: SalaryPayments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +35,42 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var attendance = await _context.Attendances
-                .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceId == id);
-            if (attendance == null)
+            var salaryPayment = await _context.SalaryPayments
+                .Include(s => s.Employee)
+                .FirstOrDefaultAsync(m => m.SalaryPaymentId == id);
+            if (salaryPayment == null)
             {
                 return NotFound();
             }
 
-            return View(attendance);
+            return View(salaryPayment);
         }
 
-        // GET: Attendances/Create
+        // GET: SalaryPayments/Create
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
             return View();
         }
 
-        // POST: Attendances/Create
+        // POST: SalaryPayments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
+        public async Task<IActionResult> Create([Bind("SalaryPaymentId,EmployeeId,SalaryMonth,SalaryComponet,PaymentDate,Amount,PayMode,Details")] SalaryPayment salaryPayment)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(attendance);
+                _context.Add(salaryPayment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", attendance.EmployeeId);
-            return View(attendance);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", salaryPayment.EmployeeId);
+            return View(salaryPayment);
         }
 
-        // GET: Attendances/Edit/5
+        // GET: SalaryPayments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +78,23 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var attendance = await _context.Attendances.FindAsync(id);
-            if (attendance == null)
+            var salaryPayment = await _context.SalaryPayments.FindAsync(id);
+            if (salaryPayment == null)
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", attendance.EmployeeId);
-            return View(attendance);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", salaryPayment.EmployeeId);
+            return View(salaryPayment);
         }
 
-        // POST: Attendances/Edit/5
+        // POST: SalaryPayments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
+        public async Task<IActionResult> Edit(int id, [Bind("SalaryPaymentId,EmployeeId,SalaryMonth,SalaryComponet,PaymentDate,Amount,PayMode,Details")] SalaryPayment salaryPayment)
         {
-            if (id != attendance.AttendanceId)
+            if (id != salaryPayment.SalaryPaymentId)
             {
                 return NotFound();
             }
@@ -102,12 +103,12 @@ namespace AprajitaRetails.Controllers
             {
                 try
                 {
-                    _context.Update(attendance);
+                    _context.Update(salaryPayment);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AttendanceExists(attendance.AttendanceId))
+                    if (!SalaryPaymentExists(salaryPayment.SalaryPaymentId))
                     {
                         return NotFound();
                     }
@@ -118,11 +119,11 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", attendance.EmployeeId);
-            return View(attendance);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", salaryPayment.EmployeeId);
+            return View(salaryPayment);
         }
 
-        // GET: Attendances/Delete/5
+        // GET: SalaryPayments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +131,31 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            var attendance = await _context.Attendances
-                .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceId == id);
-            if (attendance == null)
+            var salaryPayment = await _context.SalaryPayments
+                .Include(s => s.Employee)
+                .FirstOrDefaultAsync(m => m.SalaryPaymentId == id);
+            if (salaryPayment == null)
             {
                 return NotFound();
             }
 
-            return View(attendance);
+            return View(salaryPayment);
         }
 
-        // POST: Attendances/Delete/5
+        // POST: SalaryPayments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var attendance = await _context.Attendances.FindAsync(id);
-            _context.Attendances.Remove(attendance);
+            var salaryPayment = await _context.SalaryPayments.FindAsync(id);
+            _context.SalaryPayments.Remove(salaryPayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AttendanceExists(int id)
+        private bool SalaryPaymentExists(int id)
         {
-            return _context.Attendances.Any(e => e.AttendanceId == id);
+            return _context.SalaryPayments.Any(e => e.SalaryPaymentId == id);
         }
     }
 }

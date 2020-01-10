@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 
-namespace AprajitaRetails.Controllers
+namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
+    [Area("PayRoll")]
     public class PaySlipsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
