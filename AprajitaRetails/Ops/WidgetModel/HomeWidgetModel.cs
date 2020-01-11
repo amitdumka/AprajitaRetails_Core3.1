@@ -24,9 +24,9 @@ namespace AprajitaRetails.Ops.WidgetModel
                 YearlyBooking = (int?)db.TalioringBookings.Where(c => (c.BookingDate).Year == (DateTime.Today).Year).Count() ?? 0,
                 YearlyUnit = (int?)db.TalioringBookings.Where(c => (c.BookingDate).Year == (DateTime.Today).Year).Sum(c => (int?)c.TotalQty) ?? 0,
 
-                TodaySale = (decimal?)db.TalioringDelivies.Where(c => (c.DeliveryDate.Date) == (DateTime.Today)).Sum(c => (decimal?)c.Amount) ?? 0,
-                YearlySale = (decimal?)db.TalioringDelivies.Where(c => (c.DeliveryDate).Year == (DateTime.Today).Year).Sum(c => (decimal?)c.Amount) ?? 0,
-                MonthlySale = (decimal?)db.TalioringDelivies.Where(c => (c.DeliveryDate).Month == (DateTime.Today).Month).Sum(c => (decimal?)c.Amount) ?? 0,
+                TodaySale = (decimal?)db.TailoringDeliveries.Where(c => (c.DeliveryDate.Date) == (DateTime.Today)).Sum(c => (decimal?)c.Amount) ?? 0,
+                YearlySale = (decimal?)db.TailoringDeliveries.Where(c => (c.DeliveryDate).Year == (DateTime.Today).Year).Sum(c => (decimal?)c.Amount) ?? 0,
+                MonthlySale = (decimal?)db.TailoringDeliveries.Where(c => (c.DeliveryDate).Month == (DateTime.Today).Month).Sum(c => (decimal?)c.Amount) ?? 0,
             };
 
 

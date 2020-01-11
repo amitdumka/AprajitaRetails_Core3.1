@@ -7,36 +7,25 @@ namespace AprajitaRetails.Data
 {
     public class AprajitaRetailsContext : IdentityDbContext
     {
-        //public AprajitaRetailsContext():base() 
-        //    {
-        //    }
-
-        public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options)
-            : base(options)
+        public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options) : base (options)
         {
         }
 
 
-        
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["AprajitaRetailsConnection"].ConnectionString);
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-           
-            modelBuilder.Entity<CashInBank>()
-                .HasIndex(b => b.CIBDate)
-                .IsUnique();
-            modelBuilder.Entity<CashInHand>()
-               .HasIndex(b => b.CIHDate)
-               .IsUnique();
-            modelBuilder.Entity<EndOfDay>()
-               .HasIndex(b => b.EOD_Date)
-               .IsUnique();
+            base.OnModelCreating (modelBuilder);
+
+            modelBuilder.Entity<CashInBank> ()
+                .HasIndex (b => b.CIBDate)
+                .IsUnique ();
+            modelBuilder.Entity<CashInHand> ()
+               .HasIndex (b => b.CIHDate)
+               .IsUnique ();
+            modelBuilder.Entity<EndOfDay> ()
+               .HasIndex (b => b.EOD_Date)
+               .IsUnique ();
         }
         ////Version 2
         public DbSet<DailySale> DailySales { get; set; }
@@ -52,8 +41,8 @@ namespace AprajitaRetails.Data
         //Payroll
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        
-        public DbSet<SalaryPayment>SalaryPayments { get; set; }
+
+        public DbSet<SalaryPayment> SalaryPayments { get; set; }
         public DbSet<StaffAdvancePayment> StaffAdvancePayments { get; set; }
         public DbSet<StaffAdvanceReceipt> StaffAdvanceReceipts { get; set; }
 
@@ -87,7 +76,7 @@ namespace AprajitaRetails.Data
         public DbSet<TailoringStaffAdvanceReceipt> TailoringStaffAdvanceReceipts { get; set; }
 
         public DbSet<TalioringBooking> TalioringBookings { get; set; }
-        public DbSet<TalioringDelivery> TalioringDelivies { get; set; }
+        public DbSet<TalioringDelivery> TailoringDeliveries { get; set; }
 
 
         //End of Day
