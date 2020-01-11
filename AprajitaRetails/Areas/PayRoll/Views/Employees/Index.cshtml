@@ -4,10 +4,10 @@
     ViewData["Title"] = "Employees";
 }
 
-    <h1 class="text-dark">Employees</h1>
+<h1 class="text-dark">Employees</h1>
 
 <p>
-   <a  class="btn btn-primary btn-sm" asp-action="Create" class="btn btn-primary btn-sm">Create New</a>
+    <a class="btn btn-primary btn-sm  " data_modal="" asp-action="Create">Create New</a>
 </p>
 <table class="table  table-bordered table-striped table-sm table-hover w-auto ">
     <thead class="bg-success">
@@ -30,30 +30,58 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="table-danger" >
-@foreach (var item in Model) {
-        <tr >
-            <td>
-                @Html.DisplayFor(modelItem => item.StaffName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MobileNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JoiningDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LeavingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsWorking)
-            </td>
-            <td class="btn-group ">
-                <a  class="btn btn-outline-secondary btn-sm" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
-                <a  class="btn btn-outline-deep-orange btn-sm" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
-                <a  class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody class="table-danger">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JoiningDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeavingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsWorking)
+                </td>
+                <td class="btn-group ">
+                    <a class="btn btn-outline-secondary btn-sm" id="modelButton" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
+                    <a class="btn btn-outline-deep-orange btn-sm" id="modelButton" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
+                    <a class="btn btn-outline-danger btn-sm" id="modelButton" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+<script type="text/javascript">
+
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {       
+            $('#myModalContent').load(this.href, function () {
+                $('#myModal').modal({
+                    keyboard: true
+                }, 'show');
+            });
+            return false;
+        });
+    });
+
+</script>
+}

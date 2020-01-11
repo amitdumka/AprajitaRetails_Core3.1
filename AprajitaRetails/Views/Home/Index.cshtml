@@ -10,12 +10,12 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <h2 class="text-primary">Sale Record</h2>
+        <h2 class="teal-text">Sale Record</h2>
         <p>
 
             @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
             {
-                <table class="table table-responsive table-striped text-info">
+                <table class="table table-striped text-info table-sm">
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.SaleReport.DailySale)</td>
                         <td>@Html.DisplayFor(model => model.SaleReport.DailySale)</td>
@@ -37,14 +37,14 @@
 
             <br />
         </p>
-        <p><a class="btn btn-default" href="/DailySales/Index">Details &raquo;</a></p>
+        <p><a class="btn btn-default" href="Sales/DailySales/Index">Details &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2 class="text-primary">Tailoring</h2>
+    <div class="col-md-4 ">
+        <h2 class="dark-green-ic">Tailoring</h2>
         <p>
             @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
             {
-                <table class="table table-responsive table-striped text-info">
+                <table class="table table-striped text-info table-sm">
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.TailoringReport.TodaySale)</td>
                         <td>@Html.DisplayFor(model => model.TailoringReport.TodaySale)</td>
@@ -82,43 +82,58 @@
                 <h5>  Tailoring Data (Registered Users Only).</h5>
             }
         </p>
-        <p><a class="btn btn-default" href="/TalioringBookings">Booking List &raquo;</a></p>
+        <p><a class="btn btn-default" href="Tailoring/TalioringBookings">Booking List &raquo;</a></p>
     </div>
     <div class=" col-md-4">
-        <h2 class="text-primary">Accounting</h2>
+        <h2 class="amber-text">Accounting</h2>
         <p>
             @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
             {
-                <dl class="dl-horizontal table-striped bg-info">
-                    <dt class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</dt>
-                    <dd class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</dd>
+                <table class="dl-horizontal table  table-sm  table-striped table-danger">
+                    <tr>
+                        <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</td>
+                        <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</td>
+                    @*</tr>
+                    <tr>*@
+                        <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</td>
+                        <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</td>
+                    </tr>
 
-                    <dt class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</dt>
-                    <dd class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</dd>
-
-                    <dt>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</dt>
-                    <dd>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</dd>
-
-                    <dt class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</dt>
-                    <dd class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</dd>
-
-                    <dt>@Html.DisplayNameFor(model => model.AccountsInfo.TotalCashPayments)</dt>
-                    <dd>@Html.DisplayFor(model => model.AccountsInfo.TotalCashPayments)</dd>
-
-                    <hr />
-                    <dt class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</dt>
-                    <dd class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</dd>
-
-                    <dt class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</dt>
-                    <dd class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</dd>
-
-                    <dt class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashFromBank)</dt>
-                    <dd class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashFromBank)</dd>
-                </dl>
+                    <tr>
+                        <td>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</td>
+                        <td>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</td>
+                    @*</tr>
+                    <tr>*@
+                        <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</td>
+                        <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor(model => model.AccountsInfo.TotalCashPayments)</td>
+                        <td>@Html.DisplayFor(model => model.AccountsInfo.TotalCashPayments)</td>
+                    </tr>
+                    @*<hr />*@
+                    <tr>
+                        <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</td>
+                        <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</td>
+                    @*/tr>
+                    <tr>*@
+                        <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</td>
+                        <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashFromBank)</td>
+                        <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashFromBank)</td>
+                    </tr>
+                </table>
 
             }
         </p>
-        <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="">Detail &raquo;</a></p>
     </div>
 </div>
 

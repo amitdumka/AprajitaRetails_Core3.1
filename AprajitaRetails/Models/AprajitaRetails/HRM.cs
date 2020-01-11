@@ -7,6 +7,7 @@ using System.Web;
 
 namespace AprajitaRetails.Models
 {
+    public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts,Others}
     //Payroll
     public class Employee
     {
