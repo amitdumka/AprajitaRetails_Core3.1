@@ -24,16 +24,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="DailySales" asp-action="Index">DailySale</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale</a></li>
                         <!-- Ported Menu-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
 
                             <div class="dropdown-menu " aria-labelledby="dropdown01">
-                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="Parties" asp-action="Index">Parties</a>
-                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="LedgerEntries" asp-action="Index">LedgerEntries</a>
-                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
-                                <a class="dropdown-item" text-dark" asp-area="" asp-controller="SaleTaxTypes" asp-action="Index">OutTax</a>
+                                <a class="dropdown-item" text-dark" asp-area="Accounts" asp-controller="Parties" asp-action="Index">Parties</a>
+                                <a class="dropdown-item" text-dark" asp-area="Accounts" asp-controller="LedgerEntries" asp-action="Index">LedgerEntries</a>
+                                <a class="dropdown-item" text-dark" asp-area="Accounts" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
+                                <a class="dropdown-item" text-dark" asp-area="Accounts" asp-controller="SaleTaxTypes" asp-action="Index">OutTax</a>
                             </div>
 
                         </li>
@@ -41,9 +41,9 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sale/Purchase</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ProductPurchases" asp-action="Index">ProductPurchases</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ProductItems" asp-action="Index">ProductItems</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Stocks" asp-action="Index">Stocks</a>
+                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductPurchases" asp-action="Index">ProductPurchases</a>
+                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index">ProductItems</a>
+                                <a class="dropdown-item text-dark" asp-area="Stock" asp-controller="Stocks" asp-action="Index">Stocks</a>
 
                             </div>
                         </li>
@@ -51,14 +51,14 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tailoring</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TalioringBookings" asp-action="Index">Bookings</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Bookings</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
 
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
+                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
 
 
                             </div>
@@ -66,10 +66,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banking</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="BankDeposits" asp-action="Index">Bank Deposits</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="AccountNumbers" asp-action="Index">Accounts</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ChequesLogs" asp-action="Index">Cheques</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="BankWithdrawals" asp-action="Index">Bank Withdrawals</a>
+                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankDeposits" asp-action="Index">Bank Deposits</a>
+                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="AccountNumbers" asp-action="Index">Accounts</a>
+                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="ChequesLogs" asp-action="Index">Cheques</a>
+                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankWithdrawals" asp-action="Index">Bank Withdrawals</a>
 
                             </div>
                         </li>
@@ -93,14 +93,14 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cash In/Out</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Expenses" asp-action="Index">Expenses</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="PettyCashExpenses" asp-action="Index">PettyCashExpenses</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="CashPayments" asp-action="Index">CashPayments</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="CashReceipts" asp-action="Index">CashReceipts</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Payments" asp-action="Index">Payments</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Receipts" asp-action="Index">Receipts</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="BankWithdrawals" asp-action="Index">BankWithdrawals</a>
+                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="Expenses" asp-action="Index">Expenses</a>
+                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
+                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
+                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
+                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="Payments" asp-action="Index">Payments</a>
+                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
+                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
+                                
 
                             </div>
                         </li>
@@ -110,26 +110,26 @@
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="Stores" asp-action="Index">Stores</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
+                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Create">EndOfDays</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="CashBook" asp-action="Index">CashBook</a>
+                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
 
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imports</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ExcelUploader" asp-action="Index">ExcelUploader</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="SalesUploader" asp-action="SaleList">SalesUploader</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ExcelUploader" asp-action="Index">ExcelUploader</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="SalesUploader" asp-action="SaleList">SalesUploader</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
                                 
-                                <a class="dropdown-item text-dark " asp-area="" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
+                                <a class="dropdown-item text-dark " asp-area="Voyager" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
                                 
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="ImportSaleRegisters" asp-action="Index">ImportSaleRegisters</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
+                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportSaleRegisters" asp-action="Index">ImportSaleRegisters</a>
 
 
                             </div>
