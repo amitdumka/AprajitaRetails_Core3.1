@@ -41,13 +41,13 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(employee);
+            return PartialView(employee);
         }
 
         // GET: PayRoll/Employees/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: PayRoll/Employees/Create
@@ -63,7 +63,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return PartialView(employee);
         }
 
         // GET: PayRoll/Employees/Edit/5
@@ -79,7 +79,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            return View(employee);
+            return PartialView(employee);
         }
 
         // POST: PayRoll/Employees/Edit/5
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(employee);
+            return PartialView(employee);
         }
 
         // GET: PayRoll/Employees/Delete/5
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(employee);
+            return PartialView(employee);
         }
 
         // POST: PayRoll/Employees/Delete/5

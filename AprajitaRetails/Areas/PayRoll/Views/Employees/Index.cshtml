@@ -7,7 +7,7 @@
 <h1 class="text-dark">Employees</h1>
 
 <p>
-    <a class="btn btn-primary btn-sm  " data_modal="" asp-action="Create">Create New</a>
+    <a class="btn btn-primary btn-sm" id="create" data_modal="" asp-action="Create">Create New</a>
 </p>
 <table class="table  table-bordered table-striped table-sm table-hover w-auto ">
     <thead class="bg-success">
@@ -50,19 +50,29 @@
                     @Html.DisplayFor(modelItem => item.IsWorking)
                 </td>
                 <td class="btn-group ">
-                    <a class="btn btn-outline-secondary btn-sm" id="modelButton" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
-                    <a class="btn btn-outline-deep-orange btn-sm" id="modelButton" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
-                    <a class="btn btn-outline-danger btn-sm" id="modelButton" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                    <a class="btn btn-outline-secondary btn-sm" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
+                    <a class="btn btn-outline-deep-orange btn-sm" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
+                    <a class="btn btn-outline-danger btn-sm" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 <!-- modal placeholder-->
-<div id='myModal' class='modal fade in'>
-    <div class="modal-dialog">
+<div id='myModal' class='modal fade in' tabindex="-1" role="dialog" area-labledby="myModalLable" area-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-notify " role="document" id="modalHead">
         <div class="modal-content">
-            <div id='myModalContent'></div>
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id='myModalContent' class="modal-body"  ></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+            </div>
         </div>
     </div>
 </div>
@@ -74,7 +84,25 @@
     $(function () {
         $.ajaxSetup({ cache: false });
         $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {       
+            if (this.id=="edit") {
+                $("#myModalLabel").html("Edit Items");
+                $("#modalHead").addClass("modal-warning");
+            }
+            else if (this.id == "detail") {
+                $("#myModalLabel").html("Detail Items");
+                $("#modalHead").addClass("modal-success");
+            }
+            else if (this.id == "create") {
+                $("#myModalLabel").html("Create Items");
+                $("#modalHead").addClass("modal-primary");
+            }
+            else if (this.id == "delete") {
+                $("#myModalLabel").html("Delete Items");
+                $("#modalHead").addClass("modal-info");
+                }
             $('#myModalContent').load(this.href, function () {
+                
+                
                 $('#myModal').modal({
                     keyboard: true
                 }, 'show');
