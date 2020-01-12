@@ -4,12 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">Attendances</h1>
 
 <p>
-    <a  class="btn btn-primary btn-sm" asp-action="Create">Create New</a>
+    <a class="btn btn-teal btn-sm" asp-action="Create" id="create" data_modal="">Create New</a>
+    <a class="btn btn-grey btn-sm" asp-action="Index" asp-route-id="">Today</a>
+    <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
+    <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
 </p>
-<table class="table table-sm table-responsive table-hover table-striped">
+<table class="table table-sm  table-hover table-striped table-bordered text-center">
     <thead class="bg-success">
         <tr>
             <th>
@@ -30,30 +33,86 @@
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AttDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EntryTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
-            <td>
-               <a  class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.AttendanceId">Edit</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.AttendanceId">Details</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.AttendanceId">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody class="bg-white">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntryTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td class="btn-group">
+                    <a class="btn btn-outline-amber btn-sm" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
+                    <a class="btn btn-outline-dark-green btn-sm" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a> 
+                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in' tabindex="-1" role="dialog" area-labledby="myModalLable" area-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-notify " role="document" id="modalHead">
+        <div class="modal-content card">
+            <div class="modal-header card-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id='myModalContent' class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {
+            if (this.id=="edit") {
+                $("#myModalLabel").html("Edit Items");
+                $("#modalHead").addClass("modal-warning");
+            }
+            else if (this.id == "detail") {
+                $("#myModalLabel").html("Detail Items");
+                $("#modalHead").addClass("modal-success");
+            }
+            else if (this.id == "create") {
+                $("#myModalLabel").html("Create Items");
+                $("#modalHead").addClass("modal-primary");
+            }
+            else if (this.id == "delete") {
+                $("#myModalLabel").html("Delete Items");
+                $("#modalHead").addClass("modal-info");
+                }
+            $('#myModalContent').load(this.href, function () {
+
+
+                $('#myModal').modal({
+                    keyboard: true
+                }, 'show');
+            });
+            return false;
+        });
+    });
+
+    </script>
+}

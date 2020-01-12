@@ -21,9 +21,18 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: Attendances
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
-            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee);
+            if (id == 101)
+            {
+                var aprajitaRetailsContext_all = _context.Attendances.Include(a => a.Employee).OrderByDescending(c=>c.AttDate).ThenBy(c=>c.EmployeeId);
+                return View(await aprajitaRetailsContext_all.ToListAsync());
+            }else if (id == 100)
+            {
+                var aprajitaRetailsContext_all = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                return View(await aprajitaRetailsContext_all.ToListAsync());
+            }
+            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c=>c.AttDate==DateTime.Today);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -43,14 +52,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(attendance);
+            return PartialView(attendance);
         }
 
         // GET: Attendances/Create
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            return PartialView();
         }
 
         // POST: Attendances/Create
@@ -67,7 +76,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", attendance.EmployeeId);
-            return View(attendance);
+            return PartialView(attendance);
         }
 
         // GET: Attendances/Edit/5
@@ -84,7 +93,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", attendance.EmployeeId);
-            return View(attendance);
+            return PartialView(attendance);
         }
 
         // POST: Attendances/Edit/5
@@ -120,7 +129,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", attendance.EmployeeId);
-            return View(attendance);
+            return PartialView(attendance);
         }
 
         // GET: Attendances/Delete/5
@@ -139,7 +148,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(attendance);
+            return PartialView(attendance);
         }
 
         // POST: Attendances/Delete/5

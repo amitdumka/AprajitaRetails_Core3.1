@@ -7,23 +7,199 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Triggers;
+using System.Globalization;
 
 namespace AprajitaRetails.Sales.Expenses.Controllers
 {
     [Area ("Sales")]
     public class DailySalesController : Controller
     {
-        private readonly AprajitaRetailsContext _context;
+        private readonly AprajitaRetailsContext db;
+        CultureInfo c = CultureInfo.GetCultureInfo("In");
 
+        /// <summary>
+        /// ProcessAccounts Handle Cash/Bank flow and update related tables
+        /// </summary>
+        /// <param name="dailySale"></param>
+        private void ProcessAccounts(DailySale dailySale)
+        {
+            if (!dailySale.IsSaleReturn)
+            {
+                if (!dailySale.IsDue)
+                {
+                    if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                    {
+                        Utils.UpDateCashInHand(db, dailySale.SaleDate, dailySale.CashAmount);
+
+                    }
+                    //TODO: in future make it more robust
+                    if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                    {
+                        Utils.UpDateCashInBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
+                    }
+                }
+                else
+                {
+                    decimal dueAmt;
+                    if (dailySale.Amount != dailySale.CashAmount)
+                    {
+                        dueAmt = dailySale.Amount - dailySale.CashAmount;
+                    }
+                    else
+                        dueAmt = dailySale.Amount;
+
+                    DuesList dl = new DuesList() { Amount = dueAmt, DailySale = dailySale, DailySaleId = dailySale.DailySaleId };
+                    db.DuesLists.Add(dl);
+
+                    if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                    {
+                        Utils.UpDateCashInHand(db, dailySale.SaleDate, dailySale.CashAmount);
+
+                    }
+                    //TODO: in future make it more robust
+                    if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                    {
+                        Utils.UpDateCashInBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
+                    }
+                }
+            }
+            else
+            {
+                if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                {
+                    Utils.UpDateCashOutHand(db, dailySale.SaleDate, dailySale.CashAmount);
+
+                }
+                //TODO: in future make it more robust
+                if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                {
+                    Utils.UpDateCashOutBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
+                }
+                dailySale.Amount = 0 - dailySale.Amount;
+
+            }
+
+        }
+
+        private void ProcessAccountDelete(DailySale dailySale)
+        {
+            if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+            {
+                Utils.UpDateCashInHand(db, dailySale.SaleDate, 0 - dailySale.CashAmount);
+            }
+            else if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+            {
+                Utils.UpDateCashInBank(db, dailySale.SaleDate, 0 - dailySale.CashAmount);
+            }
+            else
+            {
+                //TODO: Add this option in Create and Edit also
+                // Handle when payment is done by Coupons and Points. 
+                //Need to create table to create Coupn and Royalty point.
+                // Points will go in head for Direct Expenses 
+                // Coupon Table will be colloum for TAS Coupon and Apajita Retails. 
+                //TODO: Need to handle is. 
+                // If payment is cash and cashamount is zero then need to handle this option also 
+                // may be error entry , might be due.
+                throw new Exception();
+            }
+        }
         public DailySalesController(AprajitaRetailsContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: DailySales
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, string salesmanId, string searchString, DateTime? SaleDate)
         {
-            var aprajitaRetailsContext = _context.DailySales.Include(d => d.Salesman);
+            var dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate == DateTime.Today).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+            if (id != null && id == 101)
+            {
+                dailySales = db.DailySales.Include(d => d.Salesman).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+            }
+            
+            //Fixed Query
+            var totalSale = dailySales.Where(c => c.IsManualBill == false).Sum(c => (decimal?)c.Amount) ?? 0;
+            var totalManualSale = dailySales.Where(c => c.IsManualBill == true).Sum(c => (decimal?)c.Amount) ?? 0;
+            var totalMonthlySale = db.DailySales.Where(c => c.SaleDate.Month == DateTime.Today.Month).Sum(c => (decimal?)c.Amount) ?? 0;
+            var duesamt = db.DuesLists.Where(c => c.IsRecovered == false).Sum(c => (decimal?)c.Amount) ?? 0;
+
+            var cashinhand = (decimal)0.00;
+            try
+            {
+                cashinhand = db.CashInHands.Where(c =>c.CIHDate ==DateTime.Today).FirstOrDefault().InHand;
+            }
+            catch (Exception)
+            {
+               // Utils.ProcessOpenningClosingBalance(db, DateTime.Today, false, true);
+                new CashWork().Process_OpenningBalance(db, DateTime.Today, true);
+                cashinhand = (decimal)0.00;
+                //Log.Error("Cash In Hand is null");
+            }
+
+
+            // Fixed UI
+            ViewBag.TodaySale = totalSale;
+            ViewBag.ManualSale = totalManualSale;
+            ViewBag.MonthlySale = totalMonthlySale;
+            ViewBag.DuesAmount = duesamt;
+            ViewBag.CashInHand = cashinhand;
+
+            // By Salesman
+            var salesmanList = new List<string>();
+            var smQry = from d in db.Salesmen
+                        orderby d.SalesmanName
+                        select d.SalesmanName;
+            salesmanList.AddRange(smQry.Distinct());
+            ViewBag.salesmanId = new SelectList(salesmanList);
+
+            //By Date
+
+            var dateList = new List<DateTime>();
+            var opdQry = from d in db.DailySales
+                         orderby d.SaleDate
+                         select d.SaleDate;
+            dateList.AddRange(opdQry.Distinct());
+            ViewBag.dateID = new SelectList(dateList);
+
+            //By Invoice No Search
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var dls = db.DailySales.Include(d => d.Salesman).Where(c => c.InvNo == searchString);
+                return View(dls.ToListAsync());
+
+            }
+            else if (!String.IsNullOrEmpty(salesmanId) || SaleDate != null)
+            {
+                IEnumerable<DailySale> DailySales;
+
+                if (SaleDate != null)
+                {
+                    DailySales = db.DailySales.Include(d => d.Salesman).Where(c => (c.SaleDate) == (SaleDate)).OrderByDescending(c => c.DailySaleId);
+                }
+                else
+                {
+                    DailySales = db.DailySales.Include(d => d.Salesman).Where(c => (c.SaleDate) == (DateTime.Today)).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+                }
+
+                if (!String.IsNullOrEmpty(salesmanId))
+                {
+                    DailySales = DailySales.Where(c => c.Salesman.SalesmanName == salesmanId);
+                }
+
+                return View(DailySales);
+
+            }
+
+
+
+            return View(dailySales.ToListAsync());
+
+
+            //OrignalCode
+            var aprajitaRetailsContext = db.DailySales.Include(d => d.Salesman);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -35,7 +211,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 return NotFound();
             }
 
-            var dailySale = await _context.DailySales
+            var dailySale = await db.DailySales
                 .Include(d => d.Salesman)
                 .FirstOrDefaultAsync(m => m.DailySaleId == id);
             if (dailySale == null)
@@ -43,14 +219,14 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(dailySale);
+            return PartialView(dailySale);
         }
 
         // GET: DailySales/Create
         public IActionResult Create()
         {
-            ViewData["SalesmanId"] = new SelectList(_context.Salesmen, "SalesmanId", "SalesmanId");
-            return View();
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId");
+            return PartialView();
         }
 
         // POST: DailySales/Create
@@ -62,12 +238,12 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(dailySale);
-                await _context.SaveChangesAsync();
+                db.Add(dailySale);
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SalesmanId"] = new SelectList(_context.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
-            return View(dailySale);
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
+            return PartialView(dailySale);
         }
 
         // GET: DailySales/Edit/5
@@ -78,13 +254,13 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 return NotFound();
             }
 
-            var dailySale = await _context.DailySales.FindAsync(id);
+            var dailySale = await db.DailySales.FindAsync(id);
             if (dailySale == null)
             {
                 return NotFound();
             }
-            ViewData["SalesmanId"] = new SelectList(_context.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
-            return View(dailySale);
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
+            return PartialView(dailySale);
         }
 
         // POST: DailySales/Edit/5
@@ -103,8 +279,8 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 try
                 {
-                    _context.Update(dailySale);
-                    await _context.SaveChangesAsync();
+                    db.Update(dailySale);
+                    await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,8 +295,8 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SalesmanId"] = new SelectList(_context.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
-            return View(dailySale);
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
+            return PartialView(dailySale);
         }
 
         // GET: DailySales/Delete/5
@@ -131,7 +307,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 return NotFound();
             }
 
-            var dailySale = await _context.DailySales
+            var dailySale = await db.DailySales
                 .Include(d => d.Salesman)
                 .FirstOrDefaultAsync(m => m.DailySaleId == id);
             if (dailySale == null)
@@ -139,7 +315,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(dailySale);
+            return PartialView(dailySale);
         }
 
         // POST: DailySales/Delete/5
@@ -147,15 +323,15 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var dailySale = await _context.DailySales.FindAsync(id);
-            _context.DailySales.Remove(dailySale);
-            await _context.SaveChangesAsync();
+            var dailySale = await db.DailySales.FindAsync(id);
+            db.DailySales.Remove(dailySale);
+            await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DailySaleExists(int id)
         {
-            return _context.DailySales.Any(e => e.DailySaleId == id);
+            return db.DailySales.Any(e => e.DailySaleId == id);
         }
     }
 }

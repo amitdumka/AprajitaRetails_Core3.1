@@ -4,35 +4,35 @@
     ViewData["Title"] = "Details";
 }
 
-    <div class="">
+    <div>
         <h5 class="">Employee</h5>
         <hr />
-        <dl class="row d-lg-table-row" >
-            <dt class="col-sm-2">
+        <dl class="row" >
+            <dt class="col-lg-2">
                 @Html.DisplayNameFor(model => model.StaffName)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.StaffName)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-lg-2">
                 @Html.DisplayNameFor(model => model.MobileNo)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.MobileNo)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-lg-2">
                 @Html.DisplayNameFor(model => model.JoiningDate)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.JoiningDate)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-lg-2">
                 @Html.DisplayNameFor(model => model.LeavingDate)
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.LeavingDate)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-lg-2">
                 @Html.DisplayNameFor(model => model.IsWorking)
             </dt>
             <dd class="col-sm-10">
@@ -40,8 +40,8 @@
             </dd>
         </dl>
         <div>
-            <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@Model.EmployeeId">Edit</a> |
-            <a class="btn btn-primary btn-sm" asp-action="Index">Back to List</a>
+            <a class="btn btn-outline-blue-grey" asp-action="Edit" asp-route-id="@Model.EmployeeId">Edit</a> 
+            @*<a class="btn btn-primary btn-sm" asp-action="Index">Back to List</a>*@
         </div>
 
     </div>
