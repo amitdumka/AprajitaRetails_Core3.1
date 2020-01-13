@@ -18,93 +18,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         private readonly AprajitaRetailsContext db;
         CultureInfo c = CultureInfo.GetCultureInfo("In");
 
-        /// <summary>
-        /// ProcessAccounts Handle Cash/Bank flow and update related tables
-        /// </summary>
-        /// <param name="dailySale"></param>
-        private void ProcessAccounts(DailySale dailySale)
-        {
-            if (!dailySale.IsSaleReturn)
-            {
-                if (!dailySale.IsDue)
-                {
-                    if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
-                    {
-                        Utils.UpDateCashInHand(db, dailySale.SaleDate, dailySale.CashAmount);
-
-                    }
-                    //TODO: in future make it more robust
-                    if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
-                    {
-                        Utils.UpDateCashInBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
-                    }
-                }
-                else
-                {
-                    decimal dueAmt;
-                    if (dailySale.Amount != dailySale.CashAmount)
-                    {
-                        dueAmt = dailySale.Amount - dailySale.CashAmount;
-                    }
-                    else
-                        dueAmt = dailySale.Amount;
-
-                    DuesList dl = new DuesList() { Amount = dueAmt, DailySale = dailySale, DailySaleId = dailySale.DailySaleId };
-                    db.DuesLists.Add(dl);
-
-                    if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
-                    {
-                        Utils.UpDateCashInHand(db, dailySale.SaleDate, dailySale.CashAmount);
-
-                    }
-                    //TODO: in future make it more robust
-                    if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
-                    {
-                        Utils.UpDateCashInBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
-                    }
-                }
-            }
-            else
-            {
-                if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
-                {
-                    Utils.UpDateCashOutHand(db, dailySale.SaleDate, dailySale.CashAmount);
-
-                }
-                //TODO: in future make it more robust
-                if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
-                {
-                    Utils.UpDateCashOutBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
-                }
-                dailySale.Amount = 0 - dailySale.Amount;
-
-            }
-
-        }
-
-        private void ProcessAccountDelete(DailySale dailySale)
-        {
-            if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
-            {
-                Utils.UpDateCashInHand(db, dailySale.SaleDate, 0 - dailySale.CashAmount);
-            }
-            else if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
-            {
-                Utils.UpDateCashInBank(db, dailySale.SaleDate, 0 - dailySale.CashAmount);
-            }
-            else
-            {
-                //TODO: Add this option in Create and Edit also
-                // Handle when payment is done by Coupons and Points. 
-                //Need to create table to create Coupn and Royalty point.
-                // Points will go in head for Direct Expenses 
-                // Coupon Table will be colloum for TAS Coupon and Apajita Retails. 
-                //TODO: Need to handle is. 
-                // If payment is cash and cashamount is zero then need to handle this option also 
-                // may be error entry , might be due.
-                throw new Exception();
-            }
-        }
+        
         public DailySalesController(AprajitaRetailsContext context)
         {
             db = context;
@@ -239,6 +153,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 db.Add(dailySale);
+                new SalesManager().ProcessAccounts(db, dailySale);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -324,6 +239,8 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var dailySale = await db.DailySales.FindAsync(id);
+            new SalesManager().ProcessAccountDelete(db, dailySale);
+            
             db.DailySales.Remove(dailySale);
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

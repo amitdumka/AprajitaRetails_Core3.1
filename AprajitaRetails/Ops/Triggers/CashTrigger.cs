@@ -8,6 +8,7 @@ namespace AprajitaRetails.Ops.Triggers
 {
     public class CashTrigger
     {
+        //Create CashInHand/Bank
         public static void CreateCashInHand(AprajitaRetailsContext db, DateTime date, decimal inAmt, decimal outAmt, bool saveit = false)
         {
 
@@ -76,7 +77,7 @@ namespace AprajitaRetails.Ops.Triggers
 
 
         }
-
+        //Update CashInHand/Bank
         public static void UpdateCashInHand(AprajitaRetailsContext db, DateTime dateTime, decimal Amount, bool saveit = false)
         {
             CashInHand cashIn = db.CashInHands.Where(d => d.CIHDate == dateTime).FirstOrDefault();
@@ -106,7 +107,7 @@ namespace AprajitaRetails.Ops.Triggers
 
             }
         }
-
+        //Update CashOutHand/Bank
         public static void UpDateCashOutHand(AprajitaRetailsContext db, DateTime dateTime, decimal Amount, bool saveit = false)
         {
             CashInHand cashIn = db.CashInHands.Where(d => d.CIHDate == dateTime).FirstOrDefault();
