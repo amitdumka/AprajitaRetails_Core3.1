@@ -106,7 +106,7 @@ namespace AprajitaRetails.Ops.Triggers
         }
 
 
-        public void ProcessAccounts(AprajitaRetailsContext db, DailySale dailySale)
+        public void OnInsert(AprajitaRetailsContext db, DailySale dailySale)
         {
             if (!dailySale.IsSaleReturn)
             {
@@ -128,7 +128,7 @@ namespace AprajitaRetails.Ops.Triggers
 
         }
 
-        public void ProcessAccountDelete(AprajitaRetailsContext db, DailySale dailySale)
+        public void OnDelete(AprajitaRetailsContext db, DailySale dailySale)
         {
             //TODO: Handle for Dues 
             if (dailySale.IsSaleReturn)
@@ -162,7 +162,7 @@ namespace AprajitaRetails.Ops.Triggers
 
         }
 
-        public void ProcessAccountEdit(AprajitaRetailsContext db, DailySale dailySale)
+        public void OnUpdate(AprajitaRetailsContext db, DailySale dailySale)
         {
             var oldSale = db.DailySales.Find(dailySale.DailySaleId);
 
