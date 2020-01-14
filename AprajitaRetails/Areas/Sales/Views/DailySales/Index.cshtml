@@ -29,7 +29,7 @@
             <td class="text-success"></td>
         </tr>
         <tr class="text-danger">
-            @using (Html.BeginForm("Index", "DailySales", FormMethod.Get))
+            @using (Html.BeginForm("Index", "Sales/DailySales", FormMethod.Get))
             {
                 <td class=""><strong> Salesman: @Html.DropDownList("salesmanId", "All")</strong></td>
                 <td>
@@ -82,8 +82,8 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Salesman)
-                </th>*@
-            @*<th>
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.IsDue)
                 </th>*@
             <th>
@@ -139,9 +139,9 @@
                         @Html.DisplayFor(modelItem => item.Remarks)
                     </td>*@
                 <td class="btn-group btn-group-sm ">
-                    <a class="btn btn-outline-secondary btn-sm" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
-                    <a class="btn btn-outline-deep-orange btn-sm" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
-                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                    <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                    <a class="btn btn-outline-deep-orange" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                    <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                 </td>
             </tr>
         }

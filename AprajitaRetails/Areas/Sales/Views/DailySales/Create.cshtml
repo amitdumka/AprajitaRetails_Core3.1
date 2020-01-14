@@ -3,9 +3,6 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
 <h4>DailySale</h4>
 <hr />
 <div class="row">
@@ -38,7 +35,7 @@
                 <span asp-validation-for="CashAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SalesmanId" class="control-label"></label>
+                <label asp-for="SalesmanId" class="control-label">Salesman</label>
                 <select asp-for="SalesmanId" class ="form-control" asp-items="ViewBag.SalesmanId"></select>
             </div>
             <div class="form-group form-check">
@@ -73,9 +70,9 @@
     </div>
 </div>
 
-<div>
+@*<div>
    <a  class="btn btn-primary btn-sm" asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

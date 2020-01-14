@@ -150,7 +150,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         // GET: DailySales/Create
         public IActionResult Create()
         {
-            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId");
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName");
             return PartialView();
         }
 
@@ -168,7 +168,8 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
+            
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName", dailySale.SalesmanId);
             return PartialView(dailySale);
         }
 

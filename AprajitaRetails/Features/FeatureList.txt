@@ -1,0 +1,7 @@
+﻿PayRoll
+Calculate current month salary vs payment
+Calculate current advance to particular staff and all staff
+calculate curent month expenses, 
+calcualte profit and loss of today month year, fin year
+Duelist, Pending duelist, recovered duelist, more than 30days not recovered due list. 
+warninig message for storemanager, 
