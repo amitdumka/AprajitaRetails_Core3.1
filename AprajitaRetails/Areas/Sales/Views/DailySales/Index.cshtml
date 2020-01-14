@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AprajitaRetails.Models.DailySale>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Daily Sales";
 }
 
 <h1 class="text-danger">Daily Sales</h1>
@@ -47,19 +47,22 @@
             }
         </tr>
         <tr>
-            <th> @Html.ActionLink("Create New ", "Create", null, new { data_modal = "", @class = "btn btn-success " })</th>
-            <th> @Html.ActionLink("     All Invoice", "Index", new { id = 101 }, new { @class = "btn btn-info" })</th>
-            <th> @Html.ActionLink("     Today", "Index", new { id = 0 }, new { @class = "btn btn-info" })</th>
+            <th><a class="btn btn-success btn-sm" asp-action="Create" id="create" data_modal="">Create New</a></th>
+            <th></th>
+            <th class="btn-group btn-group-sm">
+            <a class="btn btn-outline-info " asp-action="Index" asp-route-id="101"  >All</a>
+            <a class="btn btn-outline-amber " asp-action="Index" asp-route-id="0" >Today</a>
+            <a class="btn btn-outline-deep-orange" asp-action="Index" asp-route-id="102" >Month</a></th>
         </tr>
 
     </table>
 
 </div>
 
-<p>
+@*<p>
     <a class="btn btn-teal btn-sm" asp-action="Create" id="create" data_modal="">Create New</a>
-</p>
-<table class="table table-sm  w-auto  table-hover table-striped table-bordered">
+</p>*@
+<table class="table table-sm   table-hover table-striped table-bordered">
     <thead class="bg-success">
         <tr>
             <th>
@@ -135,7 +138,7 @@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Remarks)
                     </td>*@
-                <td class="btn-group">
+                <td class="btn-group btn-group-sm ">
                     <a class="btn btn-outline-secondary btn-sm" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
                     <a class="btn btn-outline-deep-orange btn-sm" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
                     <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>

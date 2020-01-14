@@ -34,12 +34,16 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             if (id != null && id == 101)
             {
                 dailySales = db.DailySales.Include(d => d.Salesman).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+            }else if(id!=null && id == 102)
+            {
+               dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate.Month == DateTime.Today.Month).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+
             }
 
             #region FixedUI 
             //Fixed Query
-            var totalSale = dailySales.Where(c => c.IsManualBill == false).Sum(c => (decimal?)c.Amount) ?? 0;
-            var totalManualSale = dailySales.Where(c => c.IsManualBill == true).Sum(c => (decimal?)c.Amount) ?? 0;
+            var totalSale = db.DailySales.Where(c => c.IsManualBill == false).Sum(c => (decimal?)c.Amount) ?? 0;
+            var totalManualSale = db.DailySales.Where(c => c.IsManualBill == true).Sum(c => (decimal?)c.Amount) ?? 0;
             var totalMonthlySale = db.DailySales.Where(c => c.SaleDate.Month == DateTime.Today.Month).Sum(c => (decimal?)c.Amount) ?? 0;
             var duesamt = db.DuesLists.Where(c => c.IsRecovered == false).Sum(c => (decimal?)c.Amount) ?? 0;
             var cashinhand = (decimal)0.00;
