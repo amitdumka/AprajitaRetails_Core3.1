@@ -13,6 +13,7 @@ namespace AprajitaRetails.Ops.WidgetModel
         public static TailoringReport GetTailoringReport(AprajitaRetailsContext db)
         {
             
+            
             return new TailoringReport()
             {
                 TodayBooking = (int?)db.TalioringBookings.Where(c => (c.BookingDate.Date) == (DateTime.Today)).Count() ?? 0,
