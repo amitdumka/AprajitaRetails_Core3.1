@@ -26,6 +26,9 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<EndOfDay> ()
                .HasIndex (b => b.EOD_Date)
                .IsUnique ();
+            modelBuilder.Entity<TranscationMode>()
+              .HasIndex(b => b.Transcation)
+              .IsUnique();
         }
         ////Version 2
         public DbSet<DailySale> DailySales { get; set; }
@@ -89,6 +92,8 @@ namespace AprajitaRetails.Data
         public DbSet<ChequesLog> ChequesLogs { get; set; }
 
         public DbSet<MonthEnd> MonthEnds { get; set; }
+
+      
 
     }
 

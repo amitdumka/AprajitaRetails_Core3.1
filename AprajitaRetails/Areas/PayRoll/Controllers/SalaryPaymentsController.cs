@@ -43,14 +43,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(salaryPayment);
+           return PartialView(salaryPayment);
         }
 
         // GET: SalaryPayments/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+           return PartialView();
         }
 
         // POST: SalaryPayments/Create
@@ -66,8 +66,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", salaryPayment.EmployeeId);
-            return View(salaryPayment);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", salaryPayment.EmployeeId);
+           return PartialView(salaryPayment);
         }
 
         // GET: SalaryPayments/Edit/5
@@ -83,8 +83,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", salaryPayment.EmployeeId);
-            return View(salaryPayment);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", salaryPayment.EmployeeId);
+           return PartialView(salaryPayment);
         }
 
         // POST: SalaryPayments/Edit/5
@@ -119,8 +119,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", salaryPayment.EmployeeId);
-            return View(salaryPayment);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", salaryPayment.EmployeeId);
+           return PartialView(salaryPayment);
         }
 
         // GET: SalaryPayments/Delete/5
@@ -139,7 +139,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(salaryPayment);
+           return PartialView(salaryPayment);
         }
 
         // POST: SalaryPayments/Delete/5
