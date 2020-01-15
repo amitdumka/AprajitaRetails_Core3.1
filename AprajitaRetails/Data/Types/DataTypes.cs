@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, Others }
+
 public enum Genders { Male, Female, TransGender }
 public enum Units { Meters, Nos, Pcs, Packets }
 public enum TaxType {  GST, SGST, CGST, IGST, VAT }

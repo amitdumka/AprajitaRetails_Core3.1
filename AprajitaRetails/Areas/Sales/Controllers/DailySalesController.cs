@@ -186,7 +186,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 return NotFound();
             }
-            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName", dailySale.SalesmanId);
             return PartialView(dailySale);
         }
 
@@ -222,7 +222,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanId", dailySale.SalesmanId);
+            ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName", dailySale.SalesmanId);
             return PartialView(dailySale);
         }
 
