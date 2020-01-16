@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Triggers;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -77,6 +78,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(salaryPayment);
+                new PayRollManager().OnInsert(_context, salaryPayment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -117,6 +119,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
+                    new PayRollManager().OnInsert(_context, salaryPayment);
                     _context.Update(salaryPayment);
                     await _context.SaveChangesAsync();
                 }
@@ -162,6 +165,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var salaryPayment = await _context.SalaryPayments.FindAsync(id);
+            new PayRollManager().OnDelete(_context, salaryPayment);
             _context.SalaryPayments.Remove(salaryPayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
