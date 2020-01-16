@@ -21,10 +21,23 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         }
 
         // GET: TailoringSalaryPayments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
             var aprajitaRetailsContext = _context.TailoringSalaryPayments.Include(t => t.Employee);
-            return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<TailoringSalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: TailoringSalaryPayments/Details/5

@@ -21,10 +21,23 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: StaffAdvancePayments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
             var aprajitaRetailsContext = _context.StaffAdvancePayments.Include(s => s.Employee);
-            return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<StaffAdvancePayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           // return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: StaffAdvancePayments/Details/5

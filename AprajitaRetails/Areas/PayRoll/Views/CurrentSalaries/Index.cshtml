@@ -13,45 +13,45 @@
      <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Employee)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BasicSalary)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().BasicSalary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SundaySalary)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().SundaySalary)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LPRate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().LPRate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IncentiveRate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IncentiveRate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IncentiveTarget)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IncentiveTarget)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WOWBillRate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().WOWBillRate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.WOWBillTarget)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().WOWBillTarget)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsSundayBillable)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsSundayBillable)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EffectiveDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().EffectiveDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CloseDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().CloseDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsEffective)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsEffective)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>

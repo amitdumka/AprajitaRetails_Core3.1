@@ -13,12 +13,12 @@
     <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Transcation)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Transcation)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody class="bg-info">
+    <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>

@@ -13,30 +13,30 @@
      <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PayDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PayDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentPartry)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PaymentPartry)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PayMode)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PayMode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentDetails)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PaymentDetails)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaymentSlipNo)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PaymentSlipNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Remarks)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Remarks)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>

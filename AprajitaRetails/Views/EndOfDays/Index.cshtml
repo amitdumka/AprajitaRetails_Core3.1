@@ -4,74 +4,76 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">End of Day</h1>
 
 <p>
-   <a  class="btn btn-primary btn-sm" asp-action="Create">Create New</a>
+    <a class="btn btn-primary btn-sm" asp-action="Create">Create New</a>
 </p>
-<table class="table table-sm table-responsive table-hover table-striped">
-     <thead class="bg-success">
+<table class="table table-sm  table-hover table-striped">
+    <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EOD_Date)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().EOD_Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Shirting)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Shirting)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Suiting)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Suiting)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.USPA)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().USPA)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FM_Arrow)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FM_Arrow)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RWT)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().RWT)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Access)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Access)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CashInHand)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CashInHand)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EOD_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Shirting)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Suiting)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.USPA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FM_Arrow)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RWT)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Access)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CashInHand)
-            </td>
-            <td>
-               <a  class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.EndOfDayId">Edit</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.EndOfDayId">Details</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.EndOfDayId">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody class="bg-white">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EOD_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shirting)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Suiting)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.USPA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FM_Arrow)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RWT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Access)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CashInHand)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.EndOfDayId">Edit</a> |
+                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.EndOfDayId">Details</a> |
+                    <a class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.EndOfDayId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<partial name="_ModalPop" />

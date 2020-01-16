@@ -21,9 +21,22 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         }
 
         // GET: TalioringBookings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.TalioringBookings.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            return View(await PaginatedList<TalioringBooking>.CreateAsync(_context.TalioringBookings.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await _context.TalioringBookings.ToListAsync());
         }
 
         // GET: TalioringBookings/Details/5

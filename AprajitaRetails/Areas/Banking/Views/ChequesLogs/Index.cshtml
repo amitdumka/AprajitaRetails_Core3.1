@@ -13,45 +13,45 @@
      <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.BankName)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().BankName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AccountNumber)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().AccountNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChequesDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().ChequesDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DepositDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().DepositDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClearedDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().ClearedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IssuedBy)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IssuedBy)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IssuedTo)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IssuedTo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsPDC)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsPDC)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsIssuedByAprajitaRetails)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsIssuedByAprajitaRetails)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsDepositedOnAprajitaRetails)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsDepositedOnAprajitaRetails)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Remarks)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Remarks)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>

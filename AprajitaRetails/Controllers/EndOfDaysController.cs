@@ -20,9 +20,22 @@ namespace AprajitaRetails.Controllers
         }
 
         // GET: EndOfDays
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber )
         {
-            return View(await _context.EndOfDays.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            return View(await PaginatedList<EndOfDay>.CreateAsync(_context.EndOfDays.AsNoTracking(), pageNumber ?? 1, pageSize));
+           // return View(await _context.EndOfDays.ToListAsync());
         }
 
         // GET: EndOfDays/Details/5

@@ -13,27 +13,27 @@
      <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ExpDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().ExpDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Particulars)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Particulars)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaidBy)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PaidBy)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PaidTo)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().PaidTo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Remarks)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Remarks)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>

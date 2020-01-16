@@ -21,9 +21,22 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         }
 
         // GET: TailoringEmployees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.TailoringEmployees.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            return View(await PaginatedList<TailoringEmployee>.CreateAsync(_context.TailoringEmployees.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await _context.TailoringEmployees.ToListAsync());
         }
 
         // GET: TailoringEmployees/Details/5

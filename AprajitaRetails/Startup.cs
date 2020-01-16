@@ -12,6 +12,9 @@ using AprajitaRetails.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace AprajitaRetails
 {
@@ -44,6 +47,24 @@ namespace AprajitaRetails
             
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+            services.AddPortableObjectLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en-IN"),
+                new CultureInfo("en"),
+                new CultureInfo("hi-IN"),
+                new CultureInfo("hi")
+            };
+
+                options.DefaultRequestCulture = new RequestCulture("en-IN");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +88,7 @@ namespace AprajitaRetails
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseRequestLocalization();
 
             app.UseEndpoints(endpoints =>
             {

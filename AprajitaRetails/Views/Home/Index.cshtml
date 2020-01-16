@@ -1,6 +1,6 @@
 ﻿@model AprajitaRetails.Models.ViewModels.MasterViewReport
 @{
-    ViewData ["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="jumbotron text-right ">
@@ -13,7 +13,7 @@
         <h2 class="teal-text">Sale Record</h2>
         <p>
 
-            @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
+            @if (Model.SaleReport != null && Context.User.Identity.IsAuthenticated)
             {
                 <table class="table table-striped text-info table-sm">
                     <tr>
@@ -42,7 +42,7 @@
     <div class="col-md-4 ">
         <h2 class="dark-green-ic">Tailoring</h2>
         <p>
-            @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
+            @if (Model.TailoringReport != null && Context.User.Identity.IsAuthenticated)
             {
                 <table class="table table-striped text-info table-sm">
                     <tr>
@@ -87,14 +87,14 @@
     <div class=" col-md-4">
         <h2 class="amber-text">Accounting</h2>
         <p>
-            @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
+            @if (Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated)
             {
-                <table class="dl-horizontal table  table-sm  table-striped table-danger">
+                <table class="table  table-sm  table-striped">
                     <tr>
                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</td>
                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</td>
-                    @*</tr>
-                    <tr>*@
+                        @*</tr>
+                            <tr>*@
                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</td>
                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</td>
                     </tr>
@@ -102,12 +102,12 @@
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</td>
                         <td>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</td>
-                    @*</tr>
-                    <tr>*@
+                        @*</tr>
+                            <tr>*@
                         <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</td>
                         <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</td>
                     </tr>
-                    
+
                     <tr>
                         <td></td>
                         <td></td>
@@ -118,8 +118,8 @@
                     <tr>
                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</td>
                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</td>
-                    @*/tr>
-                    <tr>*@
+                        @*/tr>
+                            <tr>*@
                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</td>
                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</td>
                     </tr>
@@ -136,50 +136,55 @@
         <p><a class="btn btn-default" href="">Detail &raquo;</a></p>
     </div>
 </div>
-
+<h2 class="text-success">Employees Info</h2>
+<hr class="text-info" />
 <div class="row">
-    <h2 class="text-success">Employees Info</h2>
-    <hr class="text-info" />
-    @if ( Model.EmpInfoList != null && Model.EmpInfoList.Count > 0 && Context.User.Identity.IsAuthenticated )
+
+    @if (Model.EmpInfoList != null && Model.EmpInfoList.Count > 0 && Context.User.Identity.IsAuthenticated)
     {
-        foreach ( var item in Model.EmpInfoList )
+        foreach (var item in Model.EmpInfoList)
         {
-            <div class="col-md-4">
-                <h3 class="text-primary @*text-capitalize*@">@Html.DisplayFor(model => item.Name)</h3>
-                <p>
-                    <dl class="dl-horizontal">
-                        @*<dt>@Html.DisplayNameFor(model => item.Name)</dt>
-                            <dd>@Html.DisplayFor(model => item.Name)</dd>*@
-                        @if ( item.Present == "Present" )
-                        {
-                            <dt class="text-success">@Html.DisplayNameFor(model => item.Present)</dt>
-                            <dd class="text-success">@Html.DisplayFor(model => item.Present)</dd>
-                        }
-                        else
-                        {
-                            <dt class="text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
-                            <dd class="text-danger">@Html.DisplayFor(model => item.Present)</dd>
-                        }
-                        <dt>@Html.DisplayNameFor(model => item.PresentDays)</dt>
-                        <dd>@Html.DisplayFor(model => item.PresentDays)</dd>
-                        <dt>@Html.DisplayNameFor(model => item.AbsentDays)</dt>
-                        <dd>@Html.DisplayFor(model => item.AbsentDays)</dd>
-                        <dt>@Html.DisplayNameFor(model => item.Ratio)</dt>
-                        <dd>@Html.DisplayFor(model => item.Ratio)</dd>
-                        <dt>@Html.DisplayNameFor(model => item.NoOfBills)</dt>
-                        <dd>@Html.DisplayFor(model => item.NoOfBills)</dd>
-                        <dt>@Html.DisplayNameFor(model => item.TotalSale)</dt>
-                        <dd>@Html.DisplayFor(model => item.TotalSale)</dd>
-                    </dl>
-                </p>
-                <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+            <div class="col-md-4 ">
+                <div class="">
+                    <h3 class="deep-purple-text ">@Html.DisplayFor(model => item.Name)</h3>
+                    <div class="">
+                        <dl class="row">
+                            @if (item.Present == "Present")
+                            {
+                                <dt class="col-sm-8 text-success">@Html.DisplayNameFor(model => item.Present)</dt>
+                                <dd class="col-sm-4 text-success">@Html.DisplayFor(model => item.Present)</dd>
+                            }
+                            else
+                            {
+                                <dt class="col-sm-8 text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
+                                <dd class="col-sm-4 text-danger">@Html.DisplayFor(model => item.Present)</dd>
+                            }
+                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.PresentDays)</dt>
+                            <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)</dd>
+                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
+                            <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
+                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.Ratio)</dt>
+                            <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
+                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
+                            <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
+                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.TotalSale)</dt>
+                            <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
+                        </dl>
+                    </div>
+                    <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+                </div>
             </div>
         }
     }
     else
     {
-        <br /><br />
-        <h5>No Employee are Present Today.</h5>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <br />
+            <br />
+            <h5>No Employee are Present Today.</h5>
+        </div>
     }
 
     @*<div class="col-md-4">

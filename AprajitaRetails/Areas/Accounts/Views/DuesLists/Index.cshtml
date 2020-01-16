@@ -13,24 +13,24 @@
      <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsRecovered)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsRecovered)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RecoveryDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().RecoveryDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DailySale)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().DailySale)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsPartialRecovery)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().IsPartialRecovery)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>

@@ -21,9 +21,20 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: PayRoll/Employees
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.Employees.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            return View(await PaginatedList<Employee>.CreateAsync(_context.Employees.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await _context.Employees.ToListAsync());
         }
 
         // GET: PayRoll/Employees/Details/5

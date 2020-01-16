@@ -13,24 +13,24 @@
      <thead class="bg-success">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DeliveryDate)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().DeliveryDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Booking)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Booking)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InvNo)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().InvNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Remarks)
+               @Html.DisplayNameFor(model => model.FirstOrDefault().Remarks)
             </th>
             <th></th>
         </tr>
     </thead>
-     <tbody class="bg-info">
+     <tbody class="bg-white">
 @foreach (var item in Model) {
         <tr>
             <td>
