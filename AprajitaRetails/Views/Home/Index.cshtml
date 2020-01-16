@@ -144,30 +144,30 @@
     {
         foreach (var item in Model.EmpInfoList)
         {
-            <div class="col-md-4 ">
+            <div class="col-md-4 small">
                 <div class="">
-                    <h3 class="deep-purple-text ">@Html.DisplayFor(model => item.Name)</h3>
+                    <h4 class="deep-purple-text ">@Html.DisplayFor(model => item.Name)</h4>
                     <div class="">
-                        <dl class="row">
+                        <dl class="row ">
                             @if (item.Present == "Present")
                             {
-                                <dt class="col-sm-8 text-success">@Html.DisplayNameFor(model => item.Present)</dt>
+                                <dt class="col-sm-8 text-sm-right text-success">@Html.DisplayNameFor(model => item.Present)</dt>
                                 <dd class="col-sm-4 text-success">@Html.DisplayFor(model => item.Present)</dd>
                             }
                             else
                             {
-                                <dt class="col-sm-8 text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
+                                <dt class="col-sm-8 text-sm-right text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
                                 <dd class="col-sm-4 text-danger">@Html.DisplayFor(model => item.Present)</dd>
                             }
-                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.PresentDays)</dt>
+                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.PresentDays)</dt>
                             <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)</dd>
-                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
+                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
                             <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
-                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.Ratio)</dt>
+                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
                             <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
-                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
+                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
                             <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
-                            <dt class="col-sm-8">@Html.DisplayNameFor(model => item.TotalSale)</dt>
+                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.TotalSale)</dt>
                             <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
                         </dl>
                     </div>
