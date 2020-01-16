@@ -28,6 +28,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="LinqToExcel" Version="1.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
@@ -56,12 +57,15 @@
     <Folder Include="Areas\Purchase\Views\" />
     <Folder Include="Areas\Sales\Data\" />
     <Folder Include="Areas\Tailoring\Data\" />
+    <Folder Include="Areas\Uploader\Controllers\" />
+    <Folder Include="Areas\Uploader\Data\" />
+    <Folder Include="Areas\Uploader\Views\" />
     <Folder Include="Areas\Voyager\Controllers\" />
     <Folder Include="Areas\Voyager\Data\" />
-    <Folder Include="Areas\Voyager\Models\" />
     <Folder Include="Areas\Voyager\Views\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
+    <Folder Include="Docs\" />
   </ItemGroup>
 
 

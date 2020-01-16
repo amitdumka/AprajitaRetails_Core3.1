@@ -139,7 +139,7 @@ namespace AprajitaRetails.Ops.Triggers
             {
                 if (dailySale.IsDue)
                 {
-                    UpdateSalesRetun(db, dailySale, true);
+                    UpdateDueAmount(db, dailySale, true);
                 }
                 else
                 {
@@ -153,7 +153,7 @@ namespace AprajitaRetails.Ops.Triggers
                     // If payment is cash and cashamount is zero then need to handle this option also 
                     // may be error entry , might be due.
 
-                    throw new Exception();
+                   // throw new Exception();
                 }
 
                 UpDateAmount(db, dailySale, true);

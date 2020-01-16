@@ -9,6 +9,7 @@ using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using System.Globalization;
+using AprajitaRetails;
 
 namespace AprajitaRetails.Sales.Expenses.Controllers
 {
@@ -25,21 +26,72 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         }
 
         // GET: DailySales
-        public async Task<IActionResult> Index(int? id, string salesmanId, string searchString, DateTime? SaleDate)
+        public async Task<IActionResult> Index(int? id, string salesmanId, string currentFilter, string searchString, DateTime? SaleDate, string sortOrder, int? pageNumber)
         {
-            //For Current Day
-            var dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate == DateTime.Today).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+            ViewData["InvoiceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "inv_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["ManualSortParm"] = sortOrder == "Manual" ? "notManual_desc" : "Manual";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            
+            
+            ViewData["CurrentFilter"] = searchString;
 
-            // For All Invoice
+
+
+            //For Current Day
+            var dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate == DateTime.Today);
+            
             if (id != null && id == 101)
             {
                 dailySales = db.DailySales.Include(d => d.Salesman).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
-            }else if(id!=null && id == 102)
+            }
+            else if (id != null && id == 102)
             {
-               dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate.Month == DateTime.Today.Month).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+                dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate.Month == DateTime.Today.Month).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+
+            }
+            else
+            {
+                dailySales = dailySales.OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.InvNo == searchString);
+                //return View(await dls.ToListAsync());
+
+            }
+            else if (!String.IsNullOrEmpty(salesmanId) || SaleDate != null)
+            {
+                //IEnumerable<DailySale> DailySales;
+
+                if (SaleDate != null)
+                {
+                    dailySales = db.DailySales.Include(d => d.Salesman).Where(c => (c.SaleDate) == (SaleDate)).OrderByDescending(c => c.DailySaleId);
+                }
+                else
+                {
+                    dailySales = db.DailySales.Include(d => d.Salesman).Where(c => (c.SaleDate.Month) == (DateTime.Today.Month)).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
+                }
+
+                if (!String.IsNullOrEmpty(salesmanId))
+                {
+                    dailySales = dailySales.Where(c => c.Salesman.SalesmanName == salesmanId);
+                }
+
+                //return View(DailySales);
 
             }
 
+            // For All Invoice
+           
             #region FixedUI 
             //Fixed Query
             var totalSale = db.DailySales.Where(c => c.IsManualBill == false).Sum(c => (decimal?)c.Amount) ?? 0;
@@ -66,6 +118,11 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             ViewBag.CashInHand = cashinhand;
 
             #endregion
+           
+
+
+
+
             #region bySalesman
             // By Salesman
             var salesmanList = new List<string>();
@@ -77,54 +134,50 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
             #endregion
             #region ByDate
-            var dateList = new List<DateTime>();
-            var opdQry = from d in db.DailySales
-                         orderby d.SaleDate
-                         select d.SaleDate;
-            dateList.AddRange(opdQry.Distinct());
-            ViewBag.dateID = new SelectList(dateList);
+            //var dateList = new List<DateTime>();
+            //var opdQry = from d in db.DailySales
+            //             orderby d.SaleDate
+            //             select d.SaleDate;
+            //dateList.AddRange(opdQry.Distinct());
+            //ViewBag.dateID = new SelectList(dateList);
 
             #endregion
-            //By Date
-
-
+            
+            
             //By Invoice No Search
 
-            if (!String.IsNullOrEmpty(searchString))
+           
+
+            switch (sortOrder)
             {
-                var dls = db.DailySales.Include(d => d.Salesman).Where(c => c.InvNo == searchString);
-                return View(dls.ToListAsync());
-
+                case "Manual":
+                    dailySales = dailySales.OrderBy(c => c.IsManualBill);
+                    break;
+                case "notManual_desc":
+                    dailySales = dailySales.OrderByDescending(c => c.IsManualBill);
+                    break;
+                case "inv_desc":
+                    dailySales = dailySales.OrderByDescending(s => s.InvNo);
+                    break;
+                case "Date":
+                    dailySales = dailySales.OrderBy(s => s.SaleDate);
+                    break;
+                case "date_desc":
+                    dailySales = dailySales.OrderByDescending(s => s.SaleDate);
+                    break;
+                default:
+                    dailySales = dailySales.OrderBy(s => s.InvNo);
+                    break;
             }
-            else if (!String.IsNullOrEmpty(salesmanId) || SaleDate != null)
-            {
-                IEnumerable<DailySale> DailySales;
-
-                if (SaleDate != null)
-                {
-                    DailySales = db.DailySales.Include(d => d.Salesman).Where(c => (c.SaleDate) == (SaleDate)).OrderByDescending(c => c.DailySaleId);
-                }
-                else
-                {
-                    DailySales = db.DailySales.Include(d => d.Salesman).Where(c => (c.SaleDate) == (DateTime.Today)).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
-                }
-
-                if (!String.IsNullOrEmpty(salesmanId))
-                {
-                    DailySales = DailySales.Where(c => c.Salesman.SalesmanName == salesmanId);
-                }
-
-                return View( DailySales);
-
-            }
-
-
             //For Day or All Questry
-            return View(await dailySales.ToListAsync());
+            //return View(await dailySales.ToListAsync());
+
+            int pageSize = 10;
+            return View(await PaginatedList<DailySale>.CreateAsync(dailySales.AsNoTracking(), pageNumber ?? 1, pageSize));
 
 
             //OrignalCode
-           // var aprajitaRetailsContext = db.DailySales.Include(d => d.Salesman);
+            // var aprajitaRetailsContext = db.DailySales.Include(d => d.Salesman);
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -168,7 +221,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
+
             ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName", dailySale.SalesmanId);
             return PartialView(dailySale);
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AprajitaRetails.Models.DailySale>
+﻿@model PaginatedList<AprajitaRetails.Models.DailySale>
 
 @{
     ViewData["Title"] = "Daily Sales";
@@ -6,31 +6,32 @@
 
 <h1 class="text-danger">Daily Sales</h1>
 <div>
-    <table class="table table-sm table-striped table-bordered table-condensed  bg-white">
-        <tr class="text-primary">
-            <th>Today Sale</th>
-            <th>Manual Sale</th>
-            <th>Monthly Sale</th>
-        </tr>
-        <tr class="text-center ">
-            <td class="text-success"><b>@string.Format("{0:C}", ViewBag.TodaySale)</b></td>
-            <td class="text-success"><b>@string.Format("{0:C}", ViewBag.ManualSale)</b></td>
-            <td class="text-success"><b>@string.Format("{0:C}", ViewBag.MonthlySale)</b></td>
-        </tr>
-        <tr class="text-danger">
-            <th>Total Dues</th>
-            <th>Cash-In-Hands</th>
-            <th></th>
-        </tr>
-        <tr class="text-center ">
+    <form asp-action="Index" method="get">
+        <table class="table table-sm table-striped table-bordered table-condensed  bg-white">
+            <tr class="text-primary">
+                <th>Today Sale</th>
+                <th>Manual Sale</th>
+                <th>Monthly Sale</th>
+            </tr>
+            <tr class="text-center ">
+                <td class="text-success"><b>@string.Format("{0:C}", ViewBag.TodaySale)</b></td>
+                <td class="text-success"><b>@string.Format("{0:C}", ViewBag.ManualSale)</b></td>
+                <td class="text-success"><b>@string.Format("{0:C}", ViewBag.MonthlySale)</b></td>
+            </tr>
+            <tr class="text-danger">
+                <th>Total Dues</th>
+                <th>Cash-In-Hands</th>
+                <th></th>
+            </tr>
+            <tr class="text-center ">
 
-            <td class="text-success"> <b>@string.Format("{0:C}", ViewBag.DuesAmount) </b></td>
-            <td class="text-success"> <b>@string.Format("{0:C}", ViewBag.CashInHand)</b></td>
-            <td class="text-success"></td>
-        </tr>
-        <tr class="text-danger">
-            @using (Html.BeginForm("Index", "Sales/DailySales", FormMethod.Get))
-            {
+                <td class="text-success"> <b>@string.Format("{0:C}", ViewBag.DuesAmount) </b></td>
+                <td class="text-success"> <b>@string.Format("{0:C}", ViewBag.CashInHand)</b></td>
+                <td class="text-success"></td>
+            </tr>
+
+            <tr class="text-danger form-actions no-color">
+
                 <td class=""><strong> Salesman: @Html.DropDownList("salesmanId", "All")</strong></td>
                 <td>
                     <strong>
@@ -41,41 +42,42 @@
                 <td>
                     <strong>
                         Or
-                        <span class="glyphicon glyphicon-search"> </span>  By InvoiceNo: @Html.TextBox("SearchString") <input type="submit" value="Filter" class=" btn btn-warning " />
+                        <span class="glyphicon glyphicon-search"> </span>  By InvoiceNo: @*@Html.TextBox("SearchString")*@
+                        <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                        <input type="submit" value="Filter" class=" btn btn-warning " />
                     </strong>
                 </td>
-            }
-        </tr>
-        <tr>
-            <th><a class="btn btn-success btn-sm" asp-action="Create" id="create" data_modal="">Create New</a></th>
-            <th></th>
-            <th class="btn-group btn-group-sm">
-            <a class="btn btn-outline-info " asp-action="Index" asp-route-id="101"  >All</a>
-            <a class="btn btn-outline-amber " asp-action="Index" asp-route-id="0" >Today</a>
-            <a class="btn btn-outline-deep-orange" asp-action="Index" asp-route-id="102" >Month</a></th>
-        </tr>
 
-    </table>
+            </tr>
+
+            <tr>
+                <th><a class="btn btn-success btn-sm" asp-action="Create" id="create" data_modal="">Create New</a></th>
+                <th></th>
+                <th class="btn-group btn-group-sm">
+                    <a class="btn btn-outline-info " asp-action="Index" asp-route-id="101">All</a>
+                    <a class="btn btn-outline-amber " asp-action="Index" asp-route-id="0">Today</a>
+                    <a class="btn btn-outline-deep-orange" asp-action="Index" asp-route-id="102">Month</a>
+                </th>
+            </tr>
+
+        </table>
+    </form>
 
 </div>
 
 @*<p>
-    <a class="btn btn-teal btn-sm" asp-action="Create" id="create" data_modal="">Create New</a>
-</p>*@
+        <a class="btn btn-teal btn-sm" asp-action="Create" id="create" data_modal="">Create New</a>
+    </p>*@
 <table class="table table-sm   table-hover table-striped table-bordered">
     <thead class="bg-success">
         <tr>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">  @*@Html.DisplayNameFor(model => model.SaleDate)*@ Sale Date</a></th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["InvoiceSortParm"]">    @*@Html.DisplayNameFor(model => model.InvNo)*@  Invoice No</a>     </th>
             <th>
-                @Html.DisplayNameFor(model => model.SaleDate)
+                @*@Html.DisplayNameFor(model => model.Amount)*@ Amount
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InvNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PayMode)
+                @*@Html.DisplayNameFor(model => model.PayMode)*@ Payment Mode
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.CashAmount)
@@ -87,13 +89,13 @@
                     @Html.DisplayNameFor(model => model.IsDue)
                 </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.IsManualBill)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ManualSortParm"]"> @*@Html.DisplayNameFor(model => model.IsManualBill)*@ Manual Bill</a>
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.IsTailoringBill)
                 </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.IsSaleReturn)
+                @*@Html.DisplayNameFor(model => model.IsSaleReturn)*@ Sales Return
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.Remarks)
@@ -147,6 +149,29 @@
         }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+
+
+
 <!-- modal placeholder-->
 <div id='myModal' class='modal fade in' tabindex="-1" role="dialog" area-labledby="myModalLable" area-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-notify " role="document" id="modalHead">
@@ -170,35 +195,35 @@
 
     <script type="text/javascript">
 
-    $(function () {
-        $.ajaxSetup({ cache: false });
-        $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {
-            if (this.id=="edit") {
-                $("#myModalLabel").html("Edit Items");
-                $("#modalHead").addClass("modal-warning");
-            }
-            else if (this.id == "detail") {
-                $("#myModalLabel").html("Detail Items");
-                $("#modalHead").addClass("modal-success");
-            }
-            else if (this.id == "create") {
-                $("#myModalLabel").html("Create Items");
-                $("#modalHead").addClass("modal-primary");
-            }
-            else if (this.id == "delete") {
-                $("#myModalLabel").html("Delete Items");
-                $("#modalHead").addClass("modal-info");
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {
+                if (this.id == "edit") {
+                    $("#myModalLabel").html("Edit Items");
+                    $("#modalHead").addClass("modal-warning");
                 }
-            $('#myModalContent').load(this.href, function () {
+                else if (this.id == "detail") {
+                    $("#myModalLabel").html("Detail Items");
+                    $("#modalHead").addClass("modal-success");
+                }
+                else if (this.id == "create") {
+                    $("#myModalLabel").html("Create Items");
+                    $("#modalHead").addClass("modal-primary");
+                }
+                else if (this.id == "delete") {
+                    $("#myModalLabel").html("Delete Items");
+                    $("#modalHead").addClass("modal-info");
+                }
+                $('#myModalContent').load(this.href, function () {
 
 
-                $('#myModal').modal({
-                    keyboard: true
-                }, 'show');
+                    $('#myModal').modal({
+                        keyboard: true
+                    }, 'show');
+                });
+                return false;
             });
-            return false;
         });
-    });
 
     </script>
 }
