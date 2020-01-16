@@ -88,6 +88,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.IsDue)
                 </th>*@
+            <th>Salesman</th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["ManualSortParm"]"> @*@Html.DisplayNameFor(model => model.IsManualBill)*@ Manual Bill</a>
             </th>
@@ -106,124 +107,40 @@
     <tbody class="bg-white">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SaleDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InvNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PayMode)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.CashAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Salesman.SalesmanId)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IsDue)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsManualBill)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IsTailoringBill)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsSaleReturn)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Remarks)
-                    </td>*@
-                <td class="btn-group btn-group-sm ">
-                    <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
-                    <a class="btn btn-outline-deep-orange" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
-                    <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaleDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PayMode)
+            </td>
+            @*<td>            @Html.DisplayFor(modelItem => item.CashAmount)        </td>            *@
+            <td>
+                @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+            </td>
+            @*<td>            @Html.DisplayFor(modelItem => item.IsDue)        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.IsManualBill)
+            </td>
+            @*<td>            @Html.DisplayFor(modelItem => item.IsTailoringBill)        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.IsSaleReturn)
+            </td>
+            @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
+            <td class="btn-group btn-group-sm ">
+                <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                <a class="btn btn-outline-deep-orange" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
 
-@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>
-
-
-
-<!-- modal placeholder-->
-<div id='myModal' class='modal fade in' tabindex="-1" role="dialog" area-labledby="myModalLable" area-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-notify " role="document" id="modalHead">
-        <div class="modal-content card">
-            <div class="modal-header card-header">
-                <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id='myModalContent' class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary btn-sm">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-
-    <script type="text/javascript">
-
-        $(function () {
-            $.ajaxSetup({ cache: false });
-            $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {
-                if (this.id == "edit") {
-                    $("#myModalLabel").html("Edit Items");
-                    $("#modalHead").addClass("modal-warning");
-                }
-                else if (this.id == "detail") {
-                    $("#myModalLabel").html("Detail Items");
-                    $("#modalHead").addClass("modal-success");
-                }
-                else if (this.id == "create") {
-                    $("#myModalLabel").html("Create Items");
-                    $("#modalHead").addClass("modal-primary");
-                }
-                else if (this.id == "delete") {
-                    $("#myModalLabel").html("Delete Items");
-                    $("#modalHead").addClass("modal-info");
-                }
-                $('#myModalContent').load(this.href, function () {
-
-
-                    $('#myModal').modal({
-                        keyboard: true
-                    }, 'show');
-                });
-                return false;
-            });
-        });
-
-    </script>
-}
+<partial name="_ModalPop" />

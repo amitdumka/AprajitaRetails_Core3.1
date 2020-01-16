@@ -21,10 +21,24 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: SalaryPayments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
             var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee);
-            return View(await aprajitaRetailsContext.ToListAsync());
+
+            int pageSize = 10;
+            return View(await PaginatedList<SalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: SalaryPayments/Details/5

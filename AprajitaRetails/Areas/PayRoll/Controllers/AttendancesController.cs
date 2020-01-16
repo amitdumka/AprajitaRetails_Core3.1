@@ -21,19 +21,33 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: Attendances
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today);
             if (id == 101)
             {
-                var aprajitaRetailsContext_all = _context.Attendances.Include(a => a.Employee).OrderByDescending(c=>c.AttDate).ThenBy(c=>c.EmployeeId);
-                return View(await aprajitaRetailsContext_all.ToListAsync());
+                 aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).OrderByDescending(c=>c.AttDate).ThenBy(c=>c.EmployeeId);
+                //return View(await aprajitaRetailsContext_all.ToListAsync());
             }else if (id == 100)
             {
-                var aprajitaRetailsContext_all = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
-                return View(await aprajitaRetailsContext_all.ToListAsync());
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                //return View(await aprajitaRetailsContext_all.ToListAsync());
             }
-            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c=>c.AttDate==DateTime.Today);
-            return View(await aprajitaRetailsContext.ToListAsync());
+            
+            //return View(await aprajitaRetailsContext.ToListAsync());
+
+            int pageSize = 10;
+            return View(await PaginatedList<Attendance>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Attendances/Details/5

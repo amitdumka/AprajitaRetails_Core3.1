@@ -1,6 +1,25 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
 <!-- modal placeholder-->
 <div id='myModal' class='modal fade in' tabindex="-1" role="dialog" area-labledby="myModalLable" area-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-notify " role="document" id="modalHead">
@@ -24,35 +43,35 @@
 
     <script type="text/javascript">
 
-    $(function () {
-        $.ajaxSetup({ cache: false });
-        $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {
-            if (this.id=="edit") {
-                $("#myModalLabel").html("Edit Items");
-                $("#modalHead").addClass("modal-warning");
-            }
-            else if (this.id == "detail") {
-                $("#myModalLabel").html("Detail Items");
-                $("#modalHead").addClass("modal-success");
-            }
-            else if (this.id == "create") {
-                $("#myModalLabel").html("Create Items");
-                $("#modalHead").addClass("modal-primary");
-            }
-            else if (this.id == "delete") {
-                $("#myModalLabel").html("Delete Items");
-                $("#modalHead").addClass("modal-info");
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(document).on('click', 'a[data_modal]',/* $("a[data_modal]").on("click",*/ function (e) {
+                if (this.id == "edit") {
+                    $("#myModalLabel").html("Edit Items");
+                    $("#modalHead").addClass("modal-warning");
                 }
-            $('#myModalContent').load(this.href, function () {
+                else if (this.id == "detail") {
+                    $("#myModalLabel").html("Detail Items");
+                    $("#modalHead").addClass("modal-success");
+                }
+                else if (this.id == "create") {
+                    $("#myModalLabel").html("Create Items");
+                    $("#modalHead").addClass("modal-primary");
+                }
+                else if (this.id == "delete") {
+                    $("#myModalLabel").html("Delete Items");
+                    $("#modalHead").addClass("modal-info");
+                }
+                $('#myModalContent').load(this.href, function () {
 
 
-                $('#myModal').modal({
-                    keyboard: true
-                }, 'show');
+                    $('#myModal').modal({
+                        keyboard: true
+                    }, 'show');
+                });
+                return false;
             });
-            return false;
         });
-    });
 
     </script>
 }
