@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Expenses.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
@@ -111,6 +112,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 _context.Add(cashPayment);
                 await _context.SaveChangesAsync();
+                new ExpenseManager().OnInsert(_context, cashPayment);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation", cashPayment.TranscationModeId);
@@ -150,6 +152,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    new ExpenseManager().OnUpdate(_context, cashPayment);
                     _context.Update(cashPayment);
                     await _context.SaveChangesAsync();
                 }
@@ -196,6 +199,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             var cashPayment = await _context.CashPayments.FindAsync(id);
             _context.CashPayments.Remove(cashPayment);
+            new ExpenseManager().OnDelete(_context, cashPayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
