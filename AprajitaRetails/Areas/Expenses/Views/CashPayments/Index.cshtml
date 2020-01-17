@@ -1,15 +1,16 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.CashPayment>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cash Expenes";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">Cash Expenses</h1>
 
 <p>
-   <a  class="btn btn-primary btn-sm" asp-action="Create">Create New</a>
+    <a class="btn btn-success btn-sm" asp-action="Create" data_modal="" id="create">Create New</a>
+    <a class="btn btn-deep-orange btn-sm" asp-action="HomeExpenses" data_modal=""  id="detail">Home Expenses</a>
 </p>
-<table class="table table-sm table-responsive table-hover table-striped">
+<table class="table table-sm table-bordered table-hover table-striped rounded">
      <thead class="bg-success">
         <tr>
             <th>
@@ -37,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.PaymentDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Mode.TranscationModeId)
+                @Html.DisplayFor(modelItem => item.Mode.Transcation)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PaidTo)
@@ -48,10 +49,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SlipNo)
             </td>
-            <td>
-               <a  class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.CashPaymentId">Edit</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.CashPaymentId">Details</a> |
-               <a  class="btn btn-primary btn-sm" asp-action="Delete" asp-route-id="@item.CashPaymentId">Delete</a>
+            <td class="btn-group btn-group-sm " >
+               <a  class="btn btn-outline-amber " asp-action="Edit" asp-route-id="@item.CashPaymentId" data_modal="" id="edit">Edit</a> 
+               <a  class="btn btn-outline-info " asp-action="Details" asp-route-id="@item.CashPaymentId" data_modal="" id="detail">Details</a> 
+               <a  class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.CashPaymentId" data_modal="" id="delete">Delete</a>
             </td>
         </tr>
 }

@@ -1,0 +1,60 @@
+﻿@model PaginatedList<AprajitaRetails.Models.CashPayment>
+
+<div class="card rounded">
+    <div class="card-header"><h3 class="text-danger">Home Expenses</h3></div>
+    <div class="table-responsive">
+        <table class="table table-sm table-bordered table-hover table-striped  rounded">
+            <thead class="amber">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().PaymentDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Mode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().PaidTo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().SlipNo)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody @*class="table-danger"*@>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaymentDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mode.Transcation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaidTo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SlipNo)
+                        </td>
+                        <td class="btn-group btn-group-sm">
+                            <a class="btn btn-outline-amber " asp-action="Edit" asp-route-id="@item.CashPaymentId">Edit</a>
+                            <a class="btn btn-outline-info " asp-action="Details" asp-route-id="@item.CashPaymentId">Details</a>
+                            <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.CashPaymentId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <h5 class="text-default"> Total Amount : @ViewBag.TotalAmount</h5>
+    </div>
+</div>
+<partial name="_ModalPop" />

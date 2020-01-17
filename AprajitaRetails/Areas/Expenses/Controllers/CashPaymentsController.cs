@@ -19,12 +19,59 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             _context = context;
         }
+        public async Task<IActionResult> HomeExpenses(string currentFilter, string searchString, int? pageNumber)
+        {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var vd = _context.CashPayments.Include(c => c.Mode).Where(c => c.Mode.Transcation == "Home Expenses" && c.PaymentDate.Month == DateTime.Today.Month);
+            int pageSize = 10;
+            
+            if (vd != null)
+            {
+                var amt = vd.Sum(c => c.Amount);
+                ViewBag.TotalAmount = amt;
+                //return PartialView(await vd.ToListAsync());
+                
+                return PartialView(await PaginatedList<CashPayment>.CreateAsync(vd.AsNoTracking(), pageNumber ?? 1, pageSize));
+            }
+            return PartialView(await PaginatedList<CashPayment>.CreateAsync(vd.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //TODO: Implement for if vd/Data return is null.
+            //else
+            // return PartialView(await PaginatedList<CashPayment>.CreateAsync(new CashPayment(), pageNumber ?? 1, pageSize));
+            //return PartialView(new CashPayment());
+        }
 
         // GET: CashPayments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index( string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
             var aprajitaRetailsContext = _context.CashPayments.Include(c => c.Mode);
-            return View(await aprajitaRetailsContext.ToListAsync());
+
+            int pageSize = 10;
+            return View(await PaginatedList<CashPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+
+            //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: CashPayments/Details/5
@@ -43,14 +90,14 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(cashPayment);
+            return PartialView(cashPayment);
         }
 
         // GET: CashPayments/Create
         public IActionResult Create()
         {
-            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "TranscationModeId");
-            return View();
+            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation");
+            return PartialView();
         }
 
         // POST: CashPayments/Create
@@ -66,8 +113,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "TranscationModeId", cashPayment.TranscationModeId);
-            return View(cashPayment);
+            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation", cashPayment.TranscationModeId);
+            return PartialView(cashPayment);
         }
 
         // GET: CashPayments/Edit/5
@@ -83,8 +130,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
-            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "TranscationModeId", cashPayment.TranscationModeId);
-            return View(cashPayment);
+            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation", cashPayment.TranscationModeId);
+            return PartialView(cashPayment);
         }
 
         // POST: CashPayments/Edit/5
@@ -119,8 +166,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "TranscationModeId", cashPayment.TranscationModeId);
-            return View(cashPayment);
+            ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation", cashPayment.TranscationModeId);
+            return PartialView(cashPayment);
         }
 
         // GET: CashPayments/Delete/5
@@ -139,7 +186,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(cashPayment);
+            return PartialView(cashPayment);
         }
 
         // POST: CashPayments/Delete/5
