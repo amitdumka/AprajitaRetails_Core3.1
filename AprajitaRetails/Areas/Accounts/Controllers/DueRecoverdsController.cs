@@ -10,7 +10,7 @@ using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area ("Accounts")]
+    [Area("Accounts")]
     public class DueRecoverdsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -21,10 +21,24 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: DueRecoverds
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList);
-            return View(await aprajitaRetailsContext.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
+            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale);
+            return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return PartialView(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: DueRecoverds/Details/5
@@ -43,14 +57,17 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(dueRecoverd);
+            return PartialView(dueRecoverd);
         }
 
         // GET: DueRecoverds/Create
         public IActionResult Create()
         {
-            ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId");
-            return View();
+            var dueList = _context.DuesLists.Include(c => c.DailySale).Where(c => !c.IsRecovered).ToList();
+
+            ViewData["DuesListId"] = new SelectList(dueList, "DuesListId", "DailySale.InvNo");
+            //ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId");
+            return PartialView();
         }
 
         // POST: DueRecoverds/Create
@@ -66,8 +83,10 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId", dueRecoverd.DuesListId);
-            return View(dueRecoverd);
+            var dueList = _context.DuesLists.Include(c => c.DailySale).Where(c => !c.IsRecovered).ToList();
+            ViewData["DuesListId"] = new SelectList(dueList, "DuesListId", "DailySale.InvNo", dueRecoverd.DuesListId);
+            //ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId", dueRecoverd.DuesListId); //TODO: Make create and edit as per Create() functions
+            return PartialView(dueRecoverd);
         }
 
         // GET: DueRecoverds/Edit/5
@@ -83,8 +102,11 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-            ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId", dueRecoverd.DuesListId);
-            return View(dueRecoverd);
+            var dueList = _context.DuesLists.Include(c => c.DailySale).Where(c => !c.IsRecovered).ToList();
+            ViewData["DuesListId"] = new SelectList(dueList, "DuesListId", "DailySale.InvNo", dueRecoverd.DuesListId);
+
+            //            ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId", dueRecoverd.DuesListId);
+            return PartialView(dueRecoverd);
         }
 
         // POST: DueRecoverds/Edit/5
@@ -119,8 +141,11 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId", dueRecoverd.DuesListId);
-            return View(dueRecoverd);
+            var dueList = _context.DuesLists.Include(c => c.DailySale).Where(c => !c.IsRecovered).ToList();
+            ViewData["DuesListId"] = new SelectList(dueList, "DuesListId", "DailySale.InvNo", dueRecoverd.DuesListId);
+
+            //            ViewData["DuesListId"] = new SelectList(_context.DuesLists, "DuesListId", "DuesListId", dueRecoverd.DuesListId);
+            return PartialView(dueRecoverd);
         }
 
         // GET: DueRecoverds/Delete/5
@@ -139,7 +164,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(dueRecoverd);
+            return PartialView(dueRecoverd);
         }
 
         // POST: DueRecoverds/Delete/5
