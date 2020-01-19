@@ -10,7 +10,7 @@ using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
-    [Area ("Expenses")]
+    [Area("Expenses")]
     public class ExpensesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -21,10 +21,24 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Expenses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
             var aprajitaRetailsContext = _context.Expenses.Include(e => e.PaidBy);
-            return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<Expense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: Expenses/Details/5
@@ -43,14 +57,14 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(expense);
+            return PartialView(expense);
         }
 
         // GET: Expenses/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+            return PartialView();
         }
 
         // POST: Expenses/Create
@@ -66,8 +80,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", expense.EmployeeId);
-            return View(expense);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", expense.EmployeeId);
+            return PartialView(expense);
         }
 
         // GET: Expenses/Edit/5
@@ -83,8 +97,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", expense.EmployeeId);
-            return View(expense);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", expense.EmployeeId);
+            return PartialView(expense);
         }
 
         // POST: Expenses/Edit/5
@@ -119,8 +133,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", expense.EmployeeId);
-            return View(expense);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", expense.EmployeeId);
+            return PartialView(expense);
         }
 
         // GET: Expenses/Delete/5
@@ -139,7 +153,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(expense);
+            return PartialView(expense);
         }
 
         // POST: Expenses/Delete/5

@@ -138,5 +138,13 @@ namespace AprajitaRetails.Ops.Triggers
 
             }
         }
+
+        //Suspense
+        public static void UpdateSuspenseAccount(AprajitaRetailsContext db, DateTime dateTime, decimal Amount, bool isOut, string referanceDetails,bool isUpdate,  bool saveit = false)
+        {
+            //Implement on Edit/Update so some thing can be done for that
+            //TODO: Implement this urgent basis
+            throw  new NotImplementedException();
+        }
     }
 }

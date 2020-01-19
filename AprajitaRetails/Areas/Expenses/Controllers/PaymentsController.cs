@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Expenses.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
@@ -21,9 +22,22 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Payments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.Payments.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            return View(await PaginatedList<Payment>.CreateAsync(_context.Payments.AsNoTracking(), pageNumber ?? 1, pageSize));
+           // return PartialView(await _context.Payments.ToListAsync());
         }
 
         // GET: Payments/Details/5
@@ -41,13 +55,13 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(payment);
+            return PartialView(payment);
         }
 
         // GET: Payments/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Payments/Create
@@ -59,11 +73,13 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(payment);
                 await _context.SaveChangesAsync();
+                new ExpenseManager().OnInsert(_context, payment);
                 return RedirectToAction(nameof(Index));
             }
-            return View(payment);
+            return PartialView(payment);
         }
 
         // GET: Payments/Edit/5
@@ -79,7 +95,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
-            return View(payment);
+            return PartialView(payment);
         }
 
         // POST: Payments/Edit/5
@@ -98,6 +114,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    new ExpenseManager().OnUpdate(_context, payment);
                     _context.Update(payment);
                     await _context.SaveChangesAsync();
                 }
@@ -114,7 +131,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(payment);
+            return PartialView(payment);
         }
 
         // GET: Payments/Delete/5
@@ -132,7 +149,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(payment);
+            return PartialView(payment);
         }
 
         // POST: Payments/Delete/5
@@ -141,6 +158,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var payment = await _context.Payments.FindAsync(id);
+            new ExpenseManager().OnDelete(_context, payment);
             _context.Payments.Remove(payment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

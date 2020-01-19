@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Expenses.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
@@ -21,10 +22,25 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: PettyCashExpenses
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
             var aprajitaRetailsContext = _context.PettyCashExpenses.Include(p => p.PaidBy);
-            return View(await aprajitaRetailsContext.ToListAsync());
+
+            int pageSize = 10;
+            return View(await PaginatedList<PettyCashExpense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+            //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: PettyCashExpenses/Details/5
@@ -43,14 +59,14 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(pettyCashExpense);
+            return PartialView(pettyCashExpense);
         }
 
         // GET: PettyCashExpenses/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+            return PartialView();
         }
 
         // POST: PettyCashExpenses/Create
@@ -63,11 +79,12 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(pettyCashExpense);
+                new ExpenseManager().OnInsert(_context, pettyCashExpense);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", pettyCashExpense.EmployeeId);
-            return View(pettyCashExpense);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", pettyCashExpense.EmployeeId);
+           return PartialView(pettyCashExpense);
         }
 
         // GET: PettyCashExpenses/Edit/5
@@ -83,8 +100,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", pettyCashExpense.EmployeeId);
-            return View(pettyCashExpense);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", pettyCashExpense.EmployeeId);
+           return PartialView(pettyCashExpense);
         }
 
         // POST: PettyCashExpenses/Edit/5
@@ -103,6 +120,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    new ExpenseManager().OnUpdate(_context, pettyCashExpense);
                     _context.Update(pettyCashExpense);
                     await _context.SaveChangesAsync();
                 }
@@ -119,8 +137,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", pettyCashExpense.EmployeeId);
-            return View(pettyCashExpense);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", pettyCashExpense.EmployeeId);
+           return PartialView(pettyCashExpense);
         }
 
         // GET: PettyCashExpenses/Delete/5
@@ -139,7 +157,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-            return View(pettyCashExpense);
+           return PartialView(pettyCashExpense);
         }
 
         // POST: PettyCashExpenses/Delete/5
@@ -148,6 +166,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var pettyCashExpense = await _context.PettyCashExpenses.FindAsync(id);
+            new ExpenseManager().OnDelete(_context, pettyCashExpense);
             _context.PettyCashExpenses.Remove(pettyCashExpense);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Accounts.Models;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -21,9 +22,23 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: Receipts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            return View(await _context.Receipts.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+                       
+            return View(await PaginatedList<Receipt>.CreateAsync(_context.Receipts.AsNoTracking(), pageNumber ?? 1, pageSize));
+                       
         }
 
         // GET: Receipts/Details/5
@@ -41,13 +56,13 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(receipt);
+            return PartialView(receipt);
         }
 
         // GET: Receipts/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Receipts/Create
@@ -60,10 +75,11 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(receipt);
+                new AccountsManager().OnInsert(_context, receipt);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(receipt);
+            return PartialView(receipt);
         }
 
         // GET: Receipts/Edit/5
@@ -79,7 +95,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-            return View(receipt);
+            return PartialView(receipt);
         }
 
         // POST: Receipts/Edit/5
@@ -98,6 +114,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 try
                 {
+                    new AccountsManager().OnUpdate(_context, receipt);
                     _context.Update(receipt);
                     await _context.SaveChangesAsync();
                 }
@@ -114,7 +131,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(receipt);
+            return PartialView(receipt);
         }
 
         // GET: Receipts/Delete/5
@@ -132,7 +149,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(receipt);
+            return PartialView(receipt);
         }
 
         // POST: Receipts/Delete/5
@@ -141,6 +158,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var receipt = await _context.Receipts.FindAsync(id);
+            new AccountsManager().OnDelete(_context, receipt);
             _context.Receipts.Remove(receipt);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

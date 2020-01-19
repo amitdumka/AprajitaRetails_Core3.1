@@ -46,7 +46,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Accounts\Data\" />
-    <Folder Include="Areas\Accounts\Models\" />
     <Folder Include="Areas\Banking\Data\" />
     <Folder Include="Areas\Banking\Models\" />
     <Folder Include="Areas\Expenses\Data\" />
