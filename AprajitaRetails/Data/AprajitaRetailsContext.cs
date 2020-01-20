@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using AprajitaRetails.Models.ViewModels;
 
 namespace AprajitaRetails.Data
 {
@@ -92,6 +93,8 @@ namespace AprajitaRetails.Data
         public DbSet<ChequesLog> ChequesLogs { get; set; }
 
         public DbSet<MonthEnd> MonthEnds { get; set; }
+
+        public DbSet<AprajitaRetails.Models.ViewModels.IncomeExpensesReport> IncomeExpensesReport { get; set; }
 
       
 
