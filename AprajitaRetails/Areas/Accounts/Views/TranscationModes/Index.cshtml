@@ -1,10 +1,10 @@
-﻿@model PaginatedList<AprajitaRetails.Models.TranscationMode>
+﻿@model IEnumerable<AprajitaRetails.Models.TranscationMode>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-danger">Index</h1>
+    <h1 class="text-danger">Transcation Modes</h1>
 
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
@@ -24,7 +24,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Transcation)
             </td>
-            <td>
+            <td class="btn-group btn-group-sm">
                <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TranscationModeId">Edit</a>
                <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TranscationModeId">Details</a>
                <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TranscationModeId">Delete</a>

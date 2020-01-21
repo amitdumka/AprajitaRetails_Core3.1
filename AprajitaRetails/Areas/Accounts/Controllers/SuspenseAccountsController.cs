@@ -21,9 +21,22 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: SuspenseAccounts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-           return View(await _context.Suspenses.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            return View(await PaginatedList<SuspenseAccount>.CreateAsync(_context.Suspenses.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await _context.Suspenses.ToListAsync());
         }
 
         // GET: SuspenseAccounts/Details/5

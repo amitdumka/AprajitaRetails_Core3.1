@@ -21,9 +21,23 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: CashInBanks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-           return View(await _context.CashInBanks.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            var aprajitaRetailsContext = _context.CashInBanks.OrderByDescending(c=>c.CIBDate);
+            return View(await PaginatedList<CashInBank>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await _context.CashInBanks.ToListAsync());
         }
 
         // GET: CashInBanks/Details/5

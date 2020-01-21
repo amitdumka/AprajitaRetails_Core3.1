@@ -53,13 +53,13 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-           return PartialView(endOfDay);
+           return View(endOfDay);
         }
 
         // GET: EndOfDays/Create
         public IActionResult Create()
         {
-           return PartialView();
+           return View();
         }
 
         // POST: EndOfDays/Create
@@ -75,7 +75,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(endOfDay);
+           return View(endOfDay);
         }
 
         // GET: EndOfDays/Edit/5
@@ -91,7 +91,7 @@ namespace AprajitaRetails.Controllers
             {
                 return NotFound();
             }
-           return PartialView(endOfDay);
+           return View(endOfDay);
         }
 
         // POST: EndOfDays/Edit/5
@@ -126,7 +126,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(endOfDay);
+           return View(endOfDay);
         }
 
         // GET: EndOfDays/Delete/5
@@ -144,7 +144,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-           return PartialView(endOfDay);
+           return View(endOfDay);
         }
 
         // POST: EndOfDays/Delete/5

@@ -21,10 +21,24 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: DuesLists
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
             var aprajitaRetailsContext = _context.DuesLists.Include(d => d.DailySale);
-           return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<DuesList>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           // return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: DuesLists/Details/5
@@ -49,7 +63,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: DuesLists/Create
         public IActionResult Create()
         {
-            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId");
+            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "InvNo");
            return PartialView();
         }
 
@@ -66,7 +80,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId", duesList.DailySaleId);
+            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "InvNo", duesList.DailySaleId);
            return PartialView(duesList);
         }
 
@@ -83,7 +97,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId", duesList.DailySaleId);
+            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "InvNo", duesList.DailySaleId);
            return PartialView(duesList);
         }
 
@@ -119,7 +133,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId", duesList.DailySaleId);
+            ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "InvNo", duesList.DailySaleId);
            return PartialView(duesList);
         }
 

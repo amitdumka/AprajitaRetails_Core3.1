@@ -21,9 +21,23 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: CashInHands
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-           return View(await _context.CashInHands.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+            var aprajitaRetailsContext = _context.CashInHands.OrderByDescending(c => c.CIHDate);
+            return View(await PaginatedList<CashInHand>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await _context.CashInHands.ToListAsync());
         }
 
         // GET: CashInHands/Details/5
