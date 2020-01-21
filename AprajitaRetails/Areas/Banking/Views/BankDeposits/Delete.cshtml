@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Account)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Account.AccountNumberId)
+            @Html.DisplayFor(model => model.Account.Account)
         </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Amount)
@@ -51,7 +51,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="BankDepositId" />
-          <input type="submit" value="Delete" class="btn btn-outline-danger" /> |
+          <input type="submit" value="Delete" class="btn btn-outline-danger" /> 
       
     </form>
 </div>

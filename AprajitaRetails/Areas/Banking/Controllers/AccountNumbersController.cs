@@ -10,7 +10,7 @@ using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
-    [Area ("Banking")]
+    [Area("Banking")]
     public class AccountNumbersController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -21,10 +21,24 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: AccountNumbers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
             var aprajitaRetailsContext = _context.AccountNumbers.Include(a => a.Bank);
-           return View(await aprajitaRetailsContext.ToListAsync());
+            // return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<AccountNumber>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: AccountNumbers/Details/5
@@ -43,14 +57,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(accountNumber);
+            return PartialView(accountNumber);
         }
 
         // GET: AccountNumbers/Create
         public IActionResult Create()
         {
-            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankId");
-           return PartialView();
+            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankName");
+            return PartialView();
         }
 
         // POST: AccountNumbers/Create
@@ -66,8 +80,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankId", accountNumber.BankId);
-           return PartialView(accountNumber);
+            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankName", accountNumber.BankId);
+            return PartialView(accountNumber);
         }
 
         // GET: AccountNumbers/Edit/5
@@ -83,8 +97,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankId", accountNumber.BankId);
-           return PartialView(accountNumber);
+            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankName", accountNumber.BankId);
+            return PartialView(accountNumber);
         }
 
         // POST: AccountNumbers/Edit/5
@@ -119,8 +133,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankId", accountNumber.BankId);
-           return PartialView(accountNumber);
+            ViewData["BankId"] = new SelectList(_context.Banks, "BankId", "BankName", accountNumber.BankId);
+            return PartialView(accountNumber);
         }
 
         // GET: AccountNumbers/Delete/5
@@ -139,7 +153,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(accountNumber);
+            return PartialView(accountNumber);
         }
 
         // POST: AccountNumbers/Delete/5

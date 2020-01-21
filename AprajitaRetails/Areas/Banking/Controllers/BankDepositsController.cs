@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Banking.Models;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
-    [Area ("Banking")]
+    [Area("Banking")]
     public class BankDepositsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -21,10 +22,24 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: BankDeposits
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
             var aprajitaRetailsContext = _context.BankDeposits.Include(b => b.Account);
-           return View(await aprajitaRetailsContext.ToListAsync());
+            // return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<BankDeposit>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: BankDeposits/Details/5
@@ -43,14 +58,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(bankDeposit);
+            return PartialView(bankDeposit);
         }
 
         // GET: BankDeposits/Create
         public IActionResult Create()
         {
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId");
-           return PartialView();
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account");
+            return PartialView();
         }
 
         // POST: BankDeposits/Create
@@ -63,11 +78,12 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(bankDeposit);
+                new BankingManager().OnInsert(_context, bankDeposit);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
-           return PartialView(bankDeposit);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankDeposit.AccountNumberId);
+            return PartialView(bankDeposit);
         }
 
         // GET: BankDeposits/Edit/5
@@ -83,8 +99,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
-           return PartialView(bankDeposit);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankDeposit.AccountNumberId);
+            return PartialView(bankDeposit);
         }
 
         // POST: BankDeposits/Edit/5
@@ -103,6 +119,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 try
                 {
+                    new BankingManager().OnUpdate(_context, bankDeposit);
                     _context.Update(bankDeposit);
                     await _context.SaveChangesAsync();
                 }
@@ -119,8 +136,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
-           return PartialView(bankDeposit);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankDeposit.AccountNumberId);
+            return PartialView(bankDeposit);
         }
 
         // GET: BankDeposits/Delete/5
@@ -139,7 +156,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(bankDeposit);
+            return PartialView(bankDeposit);
         }
 
         // POST: BankDeposits/Delete/5
@@ -148,6 +165,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bankDeposit = await _context.BankDeposits.FindAsync(id);
+            new BankingManager().OnDelete(_context, bankDeposit);
             _context.BankDeposits.Remove(bankDeposit);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

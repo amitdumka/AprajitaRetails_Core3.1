@@ -18,28 +18,39 @@ namespace AprajitaRetails.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int? id)
+        public IActionResult Index(int? id, DateTime? ondate)
         {
+            DateTime onDate = DateTime.Today;
+            if (ondate != null)
+            {
+                onDate = ondate??DateTime.Today;
+            }
+
             IncomeExpensesReport ierData = null;
             IEReport dM = new IEReport();
             if (id == 1)
             {
 
-                ierData =dM.GetDailyReport(_context, DateTime.Today);
+                ierData =dM.GetDailyReport(_context, onDate);
             }else if (id == 7)
             {
                 ierData =dM.GetWeeklyReport(_context);
             }
             else if (id == 30)
             {
-                ierData =dM.GetMonthlyReport(_context, DateTime.Today);
+                ierData =dM.GetMonthlyReport(_context, onDate);
             }
             else if (id == 365)
             {
-                ierData =dM.GetYearlyReport(_context, DateTime.Today);
-            }else
+                ierData =dM.GetYearlyReport(_context, onDate);
+            }
+            else if (id == 600)
             {
-                ierData = dM.GetDailyReport(_context, DateTime.Today);
+                ierData = dM.GetYearlyReport(_context, onDate.AddDays(-365));
+            }
+            else
+            {
+                ierData = dM.GetDailyReport(_context, onDate);
             }
 
            return View(ierData);

@@ -5,14 +5,20 @@
 }
 
 <h1>Balance Sheet</h1>
-<p>
-    <div class="btn-group btn-group-sm" role="toolbar" aria-label="Sort Using">
-        <a class="btn btn-outline-deep-orange" asp-action="Index" asp-route-id="1">Today</a>
-        <a class="btn btn-outline-default" asp-action="Index" asp-route-id="7">Weekly</a>
-        <a class="btn btn-outline-green" asp-action="Index" asp-route-id="30">Monthly</a>
-        <a class="btn btn-outline-light-green" asp-action="Index" asp-route-id="365">Yearly</a>
-    </div>
-</p>
+<form asp-action="Index" method="get">
+    <p>
+
+        
+        <div class="btn-group btn-group-sm" role="group" aria-label="Sort Using">
+            <a class="btn btn-outline-deep-orange" asp-action="Index" asp-route-id="1">Today</a>
+            <a class="btn btn-outline-default" asp-action="Index" asp-route-id="7">Weekly</a>
+            <a class="btn btn-outline-green" asp-action="Index" asp-route-id="30">Monthly</a>
+            <a class="btn btn-outline-light-green" asp-action="Index" asp-route-id="365">Yearly</a>
+            <a class="btn btn-outline-light-blue" asp-action="Index" asp-route-id="600">Last Year</a>
+        </div>
+
+    </p>
+</form>
 <div>
     <h4>Income Expenses Report</h4>
     <hr />

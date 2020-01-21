@@ -1,10 +1,10 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.ChequesLog>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Cheques Log";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">Cheques Log</h1>
 
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
@@ -90,10 +90,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Remarks)
             </td>
-            <td>
-               <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.ChequesLogId">Edit</a> |
-               <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.ChequesLogId">Details</a> |
-               <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.ChequesLogId">Delete</a>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.ChequesLogId">Edit</a> 
+                <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.ChequesLogId">Details</a>
+                <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.ChequesLogId">Delete</a>
             </td>
         </tr>
 }

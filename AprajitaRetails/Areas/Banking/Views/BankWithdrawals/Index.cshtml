@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">Withdrawals</h1>
 
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.DepoDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Account.AccountNumberId)
+                @Html.DisplayFor(modelItem => item.Account.Account)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
@@ -60,10 +60,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.InNameOf)
             </td>
-            <td>
-               <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.BankWithdrawalId">Edit</a> |
-               <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.BankWithdrawalId">Details</a> |
-               <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.BankWithdrawalId">Delete</a>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.BankWithdrawalId">Edit</a> 
+                <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.BankWithdrawalId">Details</a>
+                <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.BankWithdrawalId">Delete</a>
             </td>
         </tr>
 }

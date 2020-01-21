@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Banking.Models;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
@@ -21,10 +22,24 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: BankWithdrawals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
             var aprajitaRetailsContext = _context.BankWithdrawals.Include(b => b.Account);
-           return View(await aprajitaRetailsContext.ToListAsync());
+            return View(await PaginatedList<BankWithdrawal>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: BankWithdrawals/Details/5
@@ -49,7 +64,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // GET: BankWithdrawals/Create
         public IActionResult Create()
         {
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId");
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account");
            return PartialView();
         }
 
@@ -63,10 +78,11 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(bankWithdrawal);
+                new BankingManager().OnInsert(_context, bankWithdrawal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankWithdrawal.AccountNumberId);
            return PartialView(bankWithdrawal);
         }
 
@@ -83,7 +99,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankWithdrawal.AccountNumberId);
            return PartialView(bankWithdrawal);
         }
 
@@ -103,6 +119,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 try
                 {
+                    new BankingManager().OnUpdate(_context, bankWithdrawal);
                     _context.Update(bankWithdrawal);
                     await _context.SaveChangesAsync();
                 }
@@ -119,7 +136,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
+            ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankWithdrawal.AccountNumberId);
            return PartialView(bankWithdrawal);
         }
 
@@ -148,6 +165,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bankWithdrawal = await _context.BankWithdrawals.FindAsync(id);
+            new BankingManager().OnDelete(_context, bankWithdrawal);
             _context.BankWithdrawals.Remove(bankWithdrawal);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

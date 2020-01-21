@@ -21,9 +21,23 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: Banks
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-           return View(await _context.Banks.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 10;
+
+            //return View(await _context.Banks.ToListAsync());
+            return View(await PaginatedList<Bank>.CreateAsync(_context.Banks.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Banks/Details/5
