@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Tailoring.Data;
 
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
@@ -62,7 +63,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // GET: TalioringDeliveries/Create
         public IActionResult Create()
         {
-            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId");
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings.Where(c=>!c.IsDelivered), "TalioringBookingId", "BookingSlipNo");
            return PartialView();
         }
 
@@ -76,10 +77,11 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(talioringDelivery);
+                new TailoringManager().OnUpdateData(_context, talioringDelivery, false,false);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings.Where(c => !c.IsDelivered), "TalioringBookingId", "BookingSlipNo", talioringDelivery.TalioringBookingId);
            return PartialView(talioringDelivery);
         }
 
@@ -96,7 +98,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 return NotFound();
             }
-            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "BookingSlipNo", talioringDelivery.TalioringBookingId);
            return PartialView(talioringDelivery);
         }
 
@@ -116,6 +118,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 try
                 {
+                    new TailoringManager().OnUpdateData(_context, talioringDelivery, true, false);
                     _context.Update(talioringDelivery);
                     await _context.SaveChangesAsync();
                 }
@@ -132,7 +135,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "BookingSlipNo", talioringDelivery.TalioringBookingId);
            return PartialView(talioringDelivery);
         }
 
@@ -161,6 +164,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var talioringDelivery = await _context.TailoringDeliveries.FindAsync(id);
+            new TailoringManager().OnUpdateData(_context, talioringDelivery,false, true);
             _context.TailoringDeliveries.Remove(talioringDelivery);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

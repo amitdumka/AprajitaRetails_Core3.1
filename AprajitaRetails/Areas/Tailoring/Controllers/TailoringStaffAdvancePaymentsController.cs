@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Models;
 using AprajitaRetails.Data;
+using AprajitaRetails.Areas.Tailoring.Data;
 
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
@@ -62,7 +63,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // GET: TailoringStaffAdvancePayments/Create
         public IActionResult Create()
         {
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId");
+             ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "StaffName");
            return PartialView();
         }
 
@@ -76,10 +77,11 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(tailoringStaffAdvancePayment);
+                new TailoringManager().OnInsert(_context, tailoringStaffAdvancePayment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvancePayment.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "StaffName", tailoringStaffAdvancePayment.TailoringEmployeeId);
            return PartialView(tailoringStaffAdvancePayment);
         }
 
@@ -96,7 +98,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 return NotFound();
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvancePayment.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "StaffName", tailoringStaffAdvancePayment.TailoringEmployeeId);
            return PartialView(tailoringStaffAdvancePayment);
         }
 
@@ -116,6 +118,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 try
                 {
+                    new TailoringManager().OnUpdate(_context, tailoringStaffAdvancePayment);
                     _context.Update(tailoringStaffAdvancePayment);
                     await _context.SaveChangesAsync();
                 }
@@ -132,7 +135,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringStaffAdvancePayment.TailoringEmployeeId);
+            ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "StaffName", tailoringStaffAdvancePayment.TailoringEmployeeId);
            return PartialView(tailoringStaffAdvancePayment);
         }
 
@@ -161,6 +164,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tailoringStaffAdvancePayment = await _context.TailoringStaffAdvancePayments.FindAsync(id);
+            new TailoringManager().OnDelete(_context, tailoringStaffAdvancePayment);
             _context.TailoringStaffAdvancePayments.Remove(tailoringStaffAdvancePayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

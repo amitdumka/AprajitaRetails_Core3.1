@@ -12,6 +12,7 @@ namespace AprajitaRetails.Models
         [Display(Name = "Delivery Date")]
         public DateTime DeliveryDate { get; set; }
 
+        [Display(Name = "Booking ID")]
         public int TalioringBookingId { get; set; }
         public TalioringBooking Booking { get; set; }
 

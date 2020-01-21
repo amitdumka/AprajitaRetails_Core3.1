@@ -4,10 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">Bookings</h1>
 
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
+    <a class="btn btn-outline-deep-orange btn-sm" asp-action="PendingBooking" id="detail" data_modal="">Pending Bookings</a>
 </p>
 <table class="table table-sm table-bordered table-hover table-striped">
      <thead class="bg-success">
@@ -33,7 +34,7 @@
             <th>
                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalQty)
             </th>
-            <th>
+            @*<th>
                @Html.DisplayNameFor(model => model.FirstOrDefault().ShirtQty)
             </th>
             <th>
@@ -68,7 +69,7 @@
             </th>
             <th>
                @Html.DisplayNameFor(model => model.FirstOrDefault().OthersPrice)
-            </th>
+            </th>*@
             <th>
                @Html.DisplayNameFor(model => model.FirstOrDefault().IsDelivered)
             </th>
@@ -76,75 +77,150 @@
         </tr>
     </thead>
      <tbody class="bg-white">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingSlipNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShirtQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShirtPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PantQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PantPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoatQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoatPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KurtaQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KurtaPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BundiQty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BundiPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Others)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OthersPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDelivered)
-            </td>
-            <td>
-               <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TalioringBookingId">Edit</a>
-               <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TalioringBookingId">Details</a>
-               <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TalioringBookingId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+         @foreach (var item in Model)
+         {
+             if (item.IsDelivered)
+             {
+                 <tr class="lime">
+                     <td>
+                         @Html.DisplayFor(modelItem => item.BookingDate)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.CustName)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.DeliveryDate)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.TryDate)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.BookingSlipNo)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.TotalAmount)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.TotalQty)
+                     </td>
+                     @*<td>
+                        @Html.DisplayFor(modelItem => item.ShirtQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShirtPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PantQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PantPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CoatQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CoatPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KurtaQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KurtaPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BundiQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BundiPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Others)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OthersPrice)
+                    </td>*@
+                     <td>
+                         @Html.DisplayFor(modelItem => item.IsDelivered)
+                     </td>
+                     <td class="btn-group btn-group-sm">
+                         <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TalioringBookingId">Edit</a>
+                         <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TalioringBookingId">Details</a>
+                         <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TalioringBookingId">Delete</a>
+                     </td>
+                 </tr>
+             }
+             else
+             {
+                 <tr>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.BookingDate)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.CustName)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.DeliveryDate)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.TryDate)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.BookingSlipNo)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.TotalAmount)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.TotalQty)
+                     </td>
+                     @*<td>
+                        @Html.DisplayFor(modelItem => item.ShirtQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShirtPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PantQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PantPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CoatQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CoatPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KurtaQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KurtaPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BundiQty)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BundiPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Others)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OthersPrice)
+                    </td>*@
+                     <td>
+                         @Html.DisplayFor(modelItem => item.IsDelivered)
+                     </td>
+                     <td class="btn-group btn-group-sm">
+                         <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TalioringBookingId">Edit</a>
+                         <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TalioringBookingId">Details</a>
+                         <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TalioringBookingId">Delete</a>
+                     </td>
+                 </tr>
+             }
+
+         }
+     </tbody>
 </table>
 <partial name="_ModalPop" />

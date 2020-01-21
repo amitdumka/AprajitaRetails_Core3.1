@@ -6,7 +6,7 @@
 
 
 
-<h4>TailoringSalaryPayment</h4>
+<h4>Tailoring Salary Payment</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="SalaryComponet" class="control-label"></label>
-                <select asp-for="SalaryComponet" class="form-control"></select>
+                <select asp-for="SalaryComponet" class="form-control" asp-items="Html.GetEnumSelectList<SalaryComponet>()"></select>
                 <span asp-validation-for="SalaryComponet" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PayMode" class="control-label"></label>
-                <select asp-for="PayMode" class="form-control"></select>
+                <select asp-for="PayMode" class="form-control" asp-items="Html.GetEnumSelectList<PayModes>()"></select>
                 <span asp-validation-for="PayMode" class="text-danger"></span>
             </div>
             <div class="form-group">

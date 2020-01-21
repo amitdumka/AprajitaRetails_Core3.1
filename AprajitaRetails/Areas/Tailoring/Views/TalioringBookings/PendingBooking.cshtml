@@ -1,0 +1,62 @@
+﻿@model IEnumerable<AprajitaRetails.Models.TalioringBooking>
+
+<p>
+    <h4 class="text-danger">Pending Bookings</h4>
+</p>
+<table class="table table-sm table-bordered table-hover table-striped">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingSlipNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalQty)
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody class="bg-white">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingSlipNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalQty)
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

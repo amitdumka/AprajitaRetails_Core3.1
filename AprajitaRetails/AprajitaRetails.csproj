@@ -54,7 +54,6 @@
     <Folder Include="Areas\Purchase\Models\" />
     <Folder Include="Areas\Purchase\Views\" />
     <Folder Include="Areas\Sales\Data\" />
-    <Folder Include="Areas\Tailoring\Data\" />
     <Folder Include="Areas\Uploader\Controllers\" />
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Areas\Uploader\Views\" />

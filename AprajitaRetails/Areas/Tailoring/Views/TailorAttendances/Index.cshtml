@@ -1,10 +1,10 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.TailorAttendance>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Attendance";
 }
 
-<h1 class="text-danger">Index</h1>
+<h1 class="text-danger">Tailor Attendance</h1>
 
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
@@ -34,7 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.TailoringEmployeeId)
+                @Html.DisplayFor(modelItem => item.Employee.StaffName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AttDate)
@@ -48,7 +48,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Remarks)
             </td>
-            <td>
+            <td class="btn-group btn-group-sm">
                <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TailorAttendanceId">Edit</a>
                <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TailorAttendanceId">Details</a>
                <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TailorAttendanceId">Delete</a>

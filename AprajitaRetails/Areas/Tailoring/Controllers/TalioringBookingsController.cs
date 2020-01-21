@@ -20,6 +20,15 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> PendingBooking()
+        {
+            var vd = _context.TalioringBookings.Where(c => c.IsDelivered == false);
+
+            if (vd != null)
+                return PartialView(await vd.ToListAsync());
+            else 
+                return NotFound();
+        }
         // GET: TalioringBookings
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
