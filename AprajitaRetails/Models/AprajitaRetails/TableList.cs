@@ -250,17 +250,6 @@ namespace AprajitaRetails.Models
         }
     }
 
-
-
-    public class Salesman
-    {
-        public int SalesmanId { get; set; }
-        [Display(Name = "Salesman")]
-        public string SalesmanName { get; set; }
-
-        public virtual ICollection<DailySale> DailySales { get; set; }
-    }
-
     //Banking Section
     public class Bank
     {

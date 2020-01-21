@@ -1,5 +1,4 @@
 ﻿using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Areas.Voyager.Models;
 using LinqToExcel;
 using System;
 using System.Collections.Generic;
@@ -10,14 +9,15 @@ using System.Data.OleDb;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using AprajitaRetails.Areas.Voyager.Data;
 
 namespace AprajitaRetails.Ops.Uploader
 {
     public class ExcelUploaders
     {
-        public UploadReturns UploadExcel(UploadTypes UploadType, /*HttpPostedFileBase*/IFormFile FileUpload, string targetpath, bool IsVat, bool IsLocal)
+        public UploadReturns UploadExcel(VoyagerContext _db, UploadTypes UploadType, /*HttpPostedFileBase*/IFormFile FileUpload, string targetpath, bool IsVat, bool IsLocal)
         {
-            using (VoyagerContext db = new VoyagerContext())
+            using (VoyagerContext db = _db)
             {
                 //UploadType = "InWard";
                 List<string> data = new List<string>();

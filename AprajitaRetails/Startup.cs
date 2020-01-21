@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using AprajitaRetails.Areas.Voyager.Data;
 
 namespace AprajitaRetails
 {

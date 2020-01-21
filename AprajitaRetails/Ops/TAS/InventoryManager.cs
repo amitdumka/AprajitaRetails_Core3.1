@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AprajitaRetails.Areas.Uploader.Models;
+using AprajitaRetails.Areas.Voyager.Data;
 using AprajitaRetails.Areas.Voyager.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,28 +18,28 @@ namespace AprajitaRetails.Ops.TAS
         #region HelperFunctions
         public void UpdateHSNCode(VoyagerContext db, string HSNCode, int itemCode) { }
 
-        public int GetSalesmanId(VoyagerContext db, string salesman)
+        public int GetSalesPersonId(VoyagerContext db, string salesman)
         {
             try
             {
-                var id = db.Salesmen.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesmanId;
+                var id = db.SalesPerson.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesPersonId;
                 if (id > 0)
                 {
                     return id;
                 }
                 else
                 {
-                    Salesman sm = new Salesman { SalesmanName = salesman };
-                    db.Salesmen.Add(sm); db.SaveChanges();
-                    return sm.SalesmanId;
+                    SalesPerson sm = new SalesPerson { SalesmanName = salesman };
+                    db.SalesPerson.Add(sm); db.SaveChanges();
+                    return sm.SalesPersonId;
                 }
             }
             catch (Exception)
             {
 
-                Salesman sm = new Salesman { SalesmanName = salesman };
-                db.Salesmen.Add(sm); db.SaveChanges();
-                return sm.SalesmanId;
+                SalesPerson sm = new SalesPerson { SalesmanName = salesman };
+                db.SalesPerson.Add(sm); db.SaveChanges();
+                return sm.SalesPersonId;
             }
 
         }
@@ -258,9 +259,9 @@ namespace AprajitaRetails.Ops.TAS
 
         // Converting purchase items to stock 
 
-        public int ProcessPurchaseInward(DateTime inDate, bool IsLocal)
+        public int ProcessPurchaseInward(VoyagerContext _db, DateTime inDate, bool IsLocal)
         {
-            using (VoyagerContext db = new VoyagerContext())
+            using (VoyagerContext db = _db)
             {
                 int ctr = 0;
                 var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
@@ -519,9 +520,9 @@ namespace AprajitaRetails.Ops.TAS
         #endregion
 
         #region Sale
-        public int CreateSaleEntry(DateTime onDate)
+        public int CreateSaleEntry(VoyagerContext _db, DateTime onDate)
         {
-            using (VoyagerContext db = new VoyagerContext())
+            using (VoyagerContext db =_db)
             {
                 int ctr = 0;
 
@@ -760,7 +761,7 @@ namespace AprajitaRetails.Ops.TAS
                 BillAmount = item.LineTotal,
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
-                SalesmanId = GetSalesmanId(db, item.Saleman),
+                SalesPersonId = GetSalesPersonId(db, item.Saleman),
                 SaleTaxTypeId = CreateSaleTax(db, item)
 
             };
@@ -889,28 +890,28 @@ namespace AprajitaRetails.Ops.TAS
     #region VatSalePurchase
     public class VatSalePurchase
     {
-        public int GetSalesmanId(VoyagerContext db, string salesman)
+        public int GetSalesPersonId(VoyagerContext db, string salesman)
         {
             try
             {
-                var id = db.Salesmen.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesmanId;
+                var id = db.SalesPerson.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesPersonId;
                 if (id > 0)
                 {
                     return id;
                 }
                 else
                 {
-                    Salesman sm = new Salesman { SalesmanName = salesman };
-                    db.Salesmen.Add(sm); db.SaveChanges();
-                    return sm.SalesmanId;
+                    SalesPerson sm = new SalesPerson { SalesmanName = salesman };
+                    db.SalesPerson.Add(sm); db.SaveChanges();
+                    return sm.SalesPersonId;
                 }
             }
             catch (Exception)
             {
 
-                Salesman sm = new Salesman { SalesmanName = salesman };
-                db.Salesmen.Add(sm); db.SaveChanges();
-                return sm.SalesmanId;
+                SalesPerson sm = new SalesPerson { SalesmanName = salesman };
+                db.SalesPerson.Add(sm); db.SaveChanges();
+                return sm.SalesPersonId;
             }
 
         }
@@ -1051,7 +1052,7 @@ namespace AprajitaRetails.Ops.TAS
                 BillAmount = item.LineTotal,
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
-                SalesmanId = GetSalesmanId(db, item.Saleman),
+                SalesPersonId = GetSalesPersonId(db, item.Saleman),
                 SaleTaxTypeId = CreateSaleTax(db, item)
 
             };
