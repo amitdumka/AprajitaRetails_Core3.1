@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: CashInBanks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CashInBanks.ToListAsync());
+           return View(await _context.CashInBanks.ToListAsync());
         }
 
         // GET: CashInBanks/Details/5
@@ -41,13 +41,13 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(cashInBank);
+           return PartialView(cashInBank);
         }
 
         // GET: CashInBanks/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: CashInBanks/Create
@@ -63,7 +63,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cashInBank);
+           return PartialView(cashInBank);
         }
 
         // GET: CashInBanks/Edit/5
@@ -79,7 +79,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-            return View(cashInBank);
+           return PartialView(cashInBank);
         }
 
         // POST: CashInBanks/Edit/5
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cashInBank);
+           return PartialView(cashInBank);
         }
 
         // GET: CashInBanks/Delete/5
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(cashInBank);
+           return PartialView(cashInBank);
         }
 
         // POST: CashInBanks/Delete/5

@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             var aprajitaRetailsContext = _context.TailoringDeliveries.Include(t => t.Booking);
-            return View(await PaginatedList<TalioringDelivery>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<TalioringDelivery>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -56,14 +56,14 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(talioringDelivery);
+           return PartialView(talioringDelivery);
         }
 
         // GET: TalioringDeliveries/Create
         public IActionResult Create()
         {
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId");
-            return View();
+           return PartialView();
         }
 
         // POST: TalioringDeliveries/Create
@@ -80,7 +80,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
-            return View(talioringDelivery);
+           return PartialView(talioringDelivery);
         }
 
         // GET: TalioringDeliveries/Edit/5
@@ -97,7 +97,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
-            return View(talioringDelivery);
+           return PartialView(talioringDelivery);
         }
 
         // POST: TalioringDeliveries/Edit/5
@@ -133,7 +133,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "TalioringBookingId", talioringDelivery.TalioringBookingId);
-            return View(talioringDelivery);
+           return PartialView(talioringDelivery);
         }
 
         // GET: TalioringDeliveries/Delete/5
@@ -152,7 +152,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(talioringDelivery);
+           return PartialView(talioringDelivery);
         }
 
         // POST: TalioringDeliveries/Delete/5

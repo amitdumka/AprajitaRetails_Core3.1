@@ -42,7 +42,7 @@ namespace AprajitaRetails.Controllers
                 ierData = dM.GetDailyReport(_context, DateTime.Today);
             }
 
-            return View(ierData);
+           return View(ierData);
         }
 
         public IActionResult IEReport()
@@ -56,7 +56,7 @@ namespace AprajitaRetails.Controllers
                 Yearly=dM.GetYearlyReport(_context, DateTime.Today)
             };
 
-            return View(data);
+           return View(data);
         }
 
     }

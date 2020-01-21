@@ -173,7 +173,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             //return View(await dailySales.ToListAsync());
 
             int pageSize = 10;
-            return View(await PaginatedList<DailySale>.CreateAsync(dailySales.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<DailySale>.CreateAsync(dailySales.AsNoTracking(), pageNumber ?? 1, pageSize));
 
 
             //OrignalCode

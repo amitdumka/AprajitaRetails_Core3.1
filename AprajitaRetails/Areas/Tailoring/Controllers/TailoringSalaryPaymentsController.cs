@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             var aprajitaRetailsContext = _context.TailoringSalaryPayments.Include(t => t.Employee);
-            return View(await PaginatedList<TailoringSalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<TailoringSalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -56,14 +56,14 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(tailoringSalaryPayment);
+           return PartialView(tailoringSalaryPayment);
         }
 
         // GET: TailoringSalaryPayments/Create
         public IActionResult Create()
         {
             ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId");
-            return View();
+           return PartialView();
         }
 
         // POST: TailoringSalaryPayments/Create
@@ -80,7 +80,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
-            return View(tailoringSalaryPayment);
+           return PartialView(tailoringSalaryPayment);
         }
 
         // GET: TailoringSalaryPayments/Edit/5
@@ -97,7 +97,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
             ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
-            return View(tailoringSalaryPayment);
+           return PartialView(tailoringSalaryPayment);
         }
 
         // POST: TailoringSalaryPayments/Edit/5
@@ -133,7 +133,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TailoringEmployeeId"] = new SelectList(_context.TailoringEmployees, "TailoringEmployeeId", "TailoringEmployeeId", tailoringSalaryPayment.TailoringEmployeeId);
-            return View(tailoringSalaryPayment);
+           return PartialView(tailoringSalaryPayment);
         }
 
         // GET: TailoringSalaryPayments/Delete/5
@@ -152,7 +152,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(tailoringSalaryPayment);
+           return PartialView(tailoringSalaryPayment);
         }
 
         // POST: TailoringSalaryPayments/Delete/5

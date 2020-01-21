@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: SuspenseAccounts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Suspenses.ToListAsync());
+           return View(await _context.Suspenses.ToListAsync());
         }
 
         // GET: SuspenseAccounts/Details/5
@@ -41,13 +41,13 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(suspenseAccount);
+           return PartialView(suspenseAccount);
         }
 
         // GET: SuspenseAccounts/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: SuspenseAccounts/Create
@@ -63,7 +63,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(suspenseAccount);
+           return PartialView(suspenseAccount);
         }
 
         // GET: SuspenseAccounts/Edit/5
@@ -79,7 +79,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-            return View(suspenseAccount);
+           return PartialView(suspenseAccount);
         }
 
         // POST: SuspenseAccounts/Edit/5
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(suspenseAccount);
+           return PartialView(suspenseAccount);
         }
 
         // GET: SuspenseAccounts/Delete/5
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(suspenseAccount);
+           return PartialView(suspenseAccount);
         }
 
         // POST: SuspenseAccounts/Delete/5

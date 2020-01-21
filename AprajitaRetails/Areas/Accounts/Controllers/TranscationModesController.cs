@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: TranscationModes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TranscationModes.ToListAsync());
+           return View(await _context.TranscationModes.ToListAsync());
         }
 
         // GET: TranscationModes/Details/5
@@ -41,13 +41,13 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(transcationMode);
+           return PartialView(transcationMode);
         }
 
         // GET: TranscationModes/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: TranscationModes/Create
@@ -63,7 +63,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(transcationMode);
+           return PartialView(transcationMode);
         }
 
         // GET: TranscationModes/Edit/5
@@ -79,7 +79,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-            return View(transcationMode);
+           return PartialView(transcationMode);
         }
 
         // POST: TranscationModes/Edit/5
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(transcationMode);
+           return PartialView(transcationMode);
         }
 
         // GET: TranscationModes/Delete/5
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(transcationMode);
+           return PartialView(transcationMode);
         }
 
         // POST: TranscationModes/Delete/5

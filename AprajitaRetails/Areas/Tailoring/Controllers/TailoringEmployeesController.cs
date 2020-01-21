@@ -35,7 +35,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View(await PaginatedList<TailoringEmployee>.CreateAsync(_context.TailoringEmployees.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<TailoringEmployee>.CreateAsync(_context.TailoringEmployees.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.TailoringEmployees.ToListAsync());
         }
 
@@ -54,13 +54,13 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(tailoringEmployee);
+           return PartialView(tailoringEmployee);
         }
 
         // GET: TailoringEmployees/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: TailoringEmployees/Create
@@ -76,7 +76,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tailoringEmployee);
+           return PartialView(tailoringEmployee);
         }
 
         // GET: TailoringEmployees/Edit/5
@@ -92,7 +92,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 return NotFound();
             }
-            return View(tailoringEmployee);
+           return PartialView(tailoringEmployee);
         }
 
         // POST: TailoringEmployees/Edit/5
@@ -127,7 +127,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tailoringEmployee);
+           return PartialView(tailoringEmployee);
         }
 
         // GET: TailoringEmployees/Delete/5
@@ -145,7 +145,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(tailoringEmployee);
+           return PartialView(tailoringEmployee);
         }
 
         // POST: TailoringEmployees/Delete/5

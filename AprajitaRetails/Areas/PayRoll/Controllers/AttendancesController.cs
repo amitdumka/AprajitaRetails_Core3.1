@@ -47,7 +47,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             //return View(await aprajitaRetailsContext.ToListAsync());
 
             int pageSize = 10;
-            return View(await PaginatedList<Attendance>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<Attendance>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Attendances/Details/5

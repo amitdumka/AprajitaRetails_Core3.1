@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Triggers;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -37,7 +38,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             int pageSize = 10;
             var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee);
 
-            return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             
             
         }
@@ -58,14 +59,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(staffAdvanceReceipt);
+            return PartialView(staffAdvanceReceipt);
         }
 
         // GET: StaffAdvanceReceipts/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+           return PartialView();
         }
 
         // POST: StaffAdvanceReceipts/Create
@@ -77,12 +78,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(staffAdvanceReceipt);
+                new PayRollManager().OnInsert(_context, staffAdvanceReceipt);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", staffAdvanceReceipt.EmployeeId);
-            return View(staffAdvanceReceipt);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
+           return PartialView(staffAdvanceReceipt);
         }
 
         // GET: StaffAdvanceReceipts/Edit/5
@@ -98,8 +101,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", staffAdvanceReceipt.EmployeeId);
-            return View(staffAdvanceReceipt);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
+           return PartialView(staffAdvanceReceipt);
         }
 
         // POST: StaffAdvanceReceipts/Edit/5
@@ -118,6 +121,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
+                    new PayRollManager().OnUpdate(_context, staffAdvanceReceipt);
                     _context.Update(staffAdvanceReceipt);
                     await _context.SaveChangesAsync();
                 }
@@ -134,8 +138,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", staffAdvanceReceipt.EmployeeId);
-            return View(staffAdvanceReceipt);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
+           return PartialView(staffAdvanceReceipt);
         }
 
         // GET: StaffAdvanceReceipts/Delete/5
@@ -154,7 +158,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(staffAdvanceReceipt);
+           return PartialView(staffAdvanceReceipt);
         }
 
         // POST: StaffAdvanceReceipts/Delete/5
@@ -164,6 +168,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             var staffAdvanceReceipt = await _context.StaffAdvanceReceipts.FindAsync(id);
             _context.StaffAdvanceReceipts.Remove(staffAdvanceReceipt);
+            new PayRollManager().OnDelete(_context, staffAdvanceReceipt);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

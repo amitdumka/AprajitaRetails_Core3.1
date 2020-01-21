@@ -33,7 +33,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View(await PaginatedList<Employee>.CreateAsync(_context.Employees.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<Employee>.CreateAsync(_context.Employees.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.Employees.ToListAsync());
         }
 

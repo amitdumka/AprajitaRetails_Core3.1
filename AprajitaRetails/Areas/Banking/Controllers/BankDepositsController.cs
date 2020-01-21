@@ -24,7 +24,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         public async Task<IActionResult> Index()
         {
             var aprajitaRetailsContext = _context.BankDeposits.Include(b => b.Account);
-            return View(await aprajitaRetailsContext.ToListAsync());
+           return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: BankDeposits/Details/5
@@ -43,14 +43,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(bankDeposit);
+           return PartialView(bankDeposit);
         }
 
         // GET: BankDeposits/Create
         public IActionResult Create()
         {
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId");
-            return View();
+           return PartialView();
         }
 
         // POST: BankDeposits/Create
@@ -67,7 +67,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
-            return View(bankDeposit);
+           return PartialView(bankDeposit);
         }
 
         // GET: BankDeposits/Edit/5
@@ -84,7 +84,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
-            return View(bankDeposit);
+           return PartialView(bankDeposit);
         }
 
         // POST: BankDeposits/Edit/5
@@ -120,7 +120,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankDeposit.AccountNumberId);
-            return View(bankDeposit);
+           return PartialView(bankDeposit);
         }
 
         // GET: BankDeposits/Delete/5
@@ -139,7 +139,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(bankDeposit);
+           return PartialView(bankDeposit);
         }
 
         // POST: BankDeposits/Delete/5

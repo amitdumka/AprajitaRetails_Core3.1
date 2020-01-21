@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // GET: ChequesLogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ChequesLogs.ToListAsync());
+           return View(await _context.ChequesLogs.ToListAsync());
         }
 
         // GET: ChequesLogs/Details/5
@@ -41,13 +41,13 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(chequesLog);
+           return PartialView(chequesLog);
         }
 
         // GET: ChequesLogs/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: ChequesLogs/Create
@@ -63,7 +63,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(chequesLog);
+           return PartialView(chequesLog);
         }
 
         // GET: ChequesLogs/Edit/5
@@ -79,7 +79,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-            return View(chequesLog);
+           return PartialView(chequesLog);
         }
 
         // POST: ChequesLogs/Edit/5
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(chequesLog);
+           return PartialView(chequesLog);
         }
 
         // GET: ChequesLogs/Delete/5
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(chequesLog);
+           return PartialView(chequesLog);
         }
 
         // POST: ChequesLogs/Delete/5

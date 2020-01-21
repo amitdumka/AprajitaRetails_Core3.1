@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Accounts.Models;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -37,7 +38,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             int pageSize = 10;
 
             var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale);
-            return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return PartialView(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -80,6 +81,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(dueRecoverd);
+                new AccountsManager().OnInsert(_context, dueRecoverd);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -125,6 +127,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 try
                 {
+                    new AccountsManager().OnUpdate(_context, dueRecoverd);
                     _context.Update(dueRecoverd);
                     await _context.SaveChangesAsync();
                 }
@@ -173,6 +176,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var dueRecoverd = await _context.DueRecoverds.FindAsync(id);
+            new AccountsManager().OnDelete(_context, dueRecoverd);
             _context.DueRecoverds.Remove(dueRecoverd);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

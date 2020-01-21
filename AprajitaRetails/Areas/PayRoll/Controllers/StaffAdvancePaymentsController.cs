@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Triggers;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -36,8 +37,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             var aprajitaRetailsContext = _context.StaffAdvancePayments.Include(s => s.Employee);
-            return View(await PaginatedList<StaffAdvancePayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
-           // return View(await aprajitaRetailsContext.ToListAsync());
+           return View(await PaginatedList<StaffAdvancePayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           // return PartialView(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: StaffAdvancePayments/Details/5
@@ -56,14 +57,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(staffAdvancePayment);
+            return PartialView(staffAdvancePayment);
         }
 
         // GET: StaffAdvancePayments/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+            return PartialView();
         }
 
         // POST: StaffAdvancePayments/Create
@@ -76,11 +77,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(staffAdvancePayment);
+                new PayRollManager().OnInsert(_context, staffAdvancePayment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", staffAdvancePayment.EmployeeId);
-            return View(staffAdvancePayment);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvancePayment.EmployeeId);
+            return PartialView(staffAdvancePayment);
         }
 
         // GET: StaffAdvancePayments/Edit/5
@@ -96,8 +98,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", staffAdvancePayment.EmployeeId);
-            return View(staffAdvancePayment);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvancePayment.EmployeeId);
+            return PartialView(staffAdvancePayment);
         }
 
         // POST: StaffAdvancePayments/Edit/5
@@ -116,6 +118,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
+                    new PayRollManager().OnUpdate(_context, staffAdvancePayment);
                     _context.Update(staffAdvancePayment);
                     await _context.SaveChangesAsync();
                 }
@@ -132,8 +135,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", staffAdvancePayment.EmployeeId);
-            return View(staffAdvancePayment);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvancePayment.EmployeeId);
+            return PartialView(staffAdvancePayment);
         }
 
         // GET: StaffAdvancePayments/Delete/5
@@ -152,7 +155,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(staffAdvancePayment);
+            return PartialView(staffAdvancePayment);
         }
 
         // POST: StaffAdvancePayments/Delete/5
@@ -162,6 +165,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             var staffAdvancePayment = await _context.StaffAdvancePayments.FindAsync(id);
             _context.StaffAdvancePayments.Remove(staffAdvancePayment);
+            new PayRollManager().OnDelete(_context, staffAdvancePayment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

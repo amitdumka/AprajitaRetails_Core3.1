@@ -37,7 +37,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
                        
-            return View(await PaginatedList<Receipt>.CreateAsync(_context.Receipts.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<Receipt>.CreateAsync(_context.Receipts.AsNoTracking(), pageNumber ?? 1, pageSize));
                        
         }
 

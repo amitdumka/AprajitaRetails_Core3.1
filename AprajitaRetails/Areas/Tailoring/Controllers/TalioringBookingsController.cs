@@ -35,7 +35,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View(await PaginatedList<TalioringBooking>.CreateAsync(_context.TalioringBookings.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<TalioringBooking>.CreateAsync(_context.TalioringBookings.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.TalioringBookings.ToListAsync());
         }
 
@@ -54,13 +54,13 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(talioringBooking);
+           return PartialView(talioringBooking);
         }
 
         // GET: TalioringBookings/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: TalioringBookings/Create
@@ -76,7 +76,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(talioringBooking);
+           return PartialView(talioringBooking);
         }
 
         // GET: TalioringBookings/Edit/5
@@ -92,7 +92,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 return NotFound();
             }
-            return View(talioringBooking);
+           return PartialView(talioringBooking);
         }
 
         // POST: TalioringBookings/Edit/5
@@ -127,7 +127,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(talioringBooking);
+           return PartialView(talioringBooking);
         }
 
         // GET: TalioringBookings/Delete/5
@@ -145,7 +145,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-            return View(talioringBooking);
+           return PartialView(talioringBooking);
         }
 
         // POST: TalioringBookings/Delete/5

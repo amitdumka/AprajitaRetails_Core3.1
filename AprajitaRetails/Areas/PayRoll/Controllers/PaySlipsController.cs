@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             var aprajitaRetailsContext = _context.PaySlips.Include(p => p.CurrentSalary).Include(p => p.Employee);
-            return View(await PaginatedList<PaySlip>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<PaySlip>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -57,15 +57,15 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(paySlip);
+           return PartialView(paySlip);
         }
 
         // GET: PaySlips/Create
         public IActionResult Create()
         {
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId");
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId");
-            return View();
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+           return PartialView();
         }
 
         // POST: PaySlips/Create
@@ -82,8 +82,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId", paySlip.CurrentSalaryId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", paySlip.EmployeeId);
-            return View(paySlip);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", paySlip.EmployeeId);
+           return PartialView(paySlip);
         }
 
         // GET: PaySlips/Edit/5
@@ -100,8 +100,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId", paySlip.CurrentSalaryId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", paySlip.EmployeeId);
-            return View(paySlip);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", paySlip.EmployeeId);
+           return PartialView(paySlip);
         }
 
         // POST: PaySlips/Edit/5
@@ -137,8 +137,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId", paySlip.CurrentSalaryId);
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "EmployeeId", paySlip.EmployeeId);
-            return View(paySlip);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", paySlip.EmployeeId);
+           return PartialView(paySlip);
         }
 
         // GET: PaySlips/Delete/5
@@ -158,7 +158,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            return View(paySlip);
+           return PartialView(paySlip);
         }
 
         // POST: PaySlips/Delete/5

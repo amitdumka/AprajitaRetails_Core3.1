@@ -34,8 +34,8 @@ namespace AprajitaRetails.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View(await PaginatedList<EndOfDay>.CreateAsync(_context.EndOfDays.AsNoTracking(), pageNumber ?? 1, pageSize));
-           // return View(await _context.EndOfDays.ToListAsync());
+           return View(await PaginatedList<EndOfDay>.CreateAsync(_context.EndOfDays.AsNoTracking(), pageNumber ?? 1, pageSize));
+            // return View(await _context.EndOfDays.ToListAsync());
         }
 
         // GET: EndOfDays/Details/5
@@ -53,13 +53,13 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            return View(endOfDay);
+           return PartialView(endOfDay);
         }
 
         // GET: EndOfDays/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: EndOfDays/Create
@@ -75,7 +75,7 @@ namespace AprajitaRetails.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(endOfDay);
+           return PartialView(endOfDay);
         }
 
         // GET: EndOfDays/Edit/5
@@ -91,7 +91,7 @@ namespace AprajitaRetails.Controllers
             {
                 return NotFound();
             }
-            return View(endOfDay);
+           return PartialView(endOfDay);
         }
 
         // POST: EndOfDays/Edit/5
@@ -126,7 +126,7 @@ namespace AprajitaRetails.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(endOfDay);
+           return PartialView(endOfDay);
         }
 
         // GET: EndOfDays/Delete/5
@@ -144,7 +144,7 @@ namespace AprajitaRetails.Controllers
                 return NotFound();
             }
 
-            return View(endOfDay);
+           return PartialView(endOfDay);
         }
 
         // POST: EndOfDays/Delete/5

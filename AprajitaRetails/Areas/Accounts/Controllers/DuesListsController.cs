@@ -24,7 +24,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         public async Task<IActionResult> Index()
         {
             var aprajitaRetailsContext = _context.DuesLists.Include(d => d.DailySale);
-            return View(await aprajitaRetailsContext.ToListAsync());
+           return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: DuesLists/Details/5
@@ -43,14 +43,14 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(duesList);
+           return PartialView(duesList);
         }
 
         // GET: DuesLists/Create
         public IActionResult Create()
         {
             ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId");
-            return View();
+           return PartialView();
         }
 
         // POST: DuesLists/Create
@@ -67,7 +67,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId", duesList.DailySaleId);
-            return View(duesList);
+           return PartialView(duesList);
         }
 
         // GET: DuesLists/Edit/5
@@ -84,7 +84,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
             ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId", duesList.DailySaleId);
-            return View(duesList);
+           return PartialView(duesList);
         }
 
         // POST: DuesLists/Edit/5
@@ -120,7 +120,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DailySaleId"] = new SelectList(_context.DailySales, "DailySaleId", "DailySaleId", duesList.DailySaleId);
-            return View(duesList);
+           return PartialView(duesList);
         }
 
         // GET: DuesLists/Delete/5
@@ -139,7 +139,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-            return View(duesList);
+           return PartialView(duesList);
         }
 
         // POST: DuesLists/Delete/5

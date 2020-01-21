@@ -69,7 +69,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             var aprajitaRetailsContext = _context.CashPayments.Include(c => c.Mode);
 
             int pageSize = 10;
-            return View(await PaginatedList<CashPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<CashPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
 
             //return View(await aprajitaRetailsContext.ToListAsync());

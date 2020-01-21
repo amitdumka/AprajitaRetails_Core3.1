@@ -41,26 +41,26 @@ namespace AprajitaRetails.Controllers
         public IActionResult About()
         {
             ViewBag.Message = "Aprajita Retails Daily Record.";
-            return View();
+           return View();
         }
         public IActionResult Contact()
         {
             ViewBag.Message = "Contact Us.";
-            return View();
+           return View();
         }
         public IActionResult Privacy()
         {
-            return View();
+           return View();
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+           return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         public IActionResult Chat()
         {
-            return View();
+           return View();
         }
     }
 }

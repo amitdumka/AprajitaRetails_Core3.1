@@ -15,19 +15,19 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: CashBook
         public ActionResult Index()
         {
-            return View();
+           return View();
         }
 
         // GET: CashBook/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+           return PartialView();
         }
 
         // GET: CashBook/Create
         public ActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: CashBook/Create
@@ -43,14 +43,14 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             }
             catch
             {
-                return View();
+               return PartialView();
             }
         }
 
         // GET: CashBook/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+           return PartialView();
         }
 
         // POST: CashBook/Edit/5
@@ -66,14 +66,14 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             }
             catch
             {
-                return View();
+               return PartialView();
             }
         }
 
         // GET: CashBook/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+           return PartialView();
         }
 
         // POST: CashBook/Delete/5
@@ -89,7 +89,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             }
             catch
             {
-                return View();
+               return PartialView();
             }
         }
     }

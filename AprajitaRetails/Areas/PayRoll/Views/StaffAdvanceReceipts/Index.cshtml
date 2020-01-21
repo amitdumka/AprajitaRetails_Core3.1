@@ -1,10 +1,10 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.StaffAdvanceReceipt>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Advance Receipt";
 }
 
-<h1 class="text-danger">Index</h1>
+    <h1 class="text-danger">Advance Receipt</h1>
 
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
@@ -34,7 +34,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+                @Html.DisplayFor(modelItem => item.Employee.StaffName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReceiptDate)
@@ -48,10 +48,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Details)
             </td>
-            <td>
-               <a  class="btn btn-outline-amber" id="edit" data_moda="" asp-action="Edit" asp-route-id="@item.StaffAdvanceReceiptId">Edit</a> |
-               <a  class="btn btn-outline-info" id="detail" data_moda="" asp-action="Details" asp-route-id="@item.StaffAdvanceReceiptId">Details</a> |
-               <a  class="btn btn-outline-danger" id="delete" data_moda="" asp-action="Delete" asp-route-id="@item.StaffAdvanceReceiptId">Delete</a>
+            <td class="btn-group btn-group-sm">
+               <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.StaffAdvanceReceiptId">Edit</a> 
+               <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.StaffAdvanceReceiptId">Details</a> 
+               <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.StaffAdvanceReceiptId">Delete</a>
             </td>
         </tr>
 }

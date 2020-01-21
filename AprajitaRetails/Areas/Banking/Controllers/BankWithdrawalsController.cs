@@ -24,7 +24,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         public async Task<IActionResult> Index()
         {
             var aprajitaRetailsContext = _context.BankWithdrawals.Include(b => b.Account);
-            return View(await aprajitaRetailsContext.ToListAsync());
+           return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: BankWithdrawals/Details/5
@@ -43,14 +43,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(bankWithdrawal);
+           return PartialView(bankWithdrawal);
         }
 
         // GET: BankWithdrawals/Create
         public IActionResult Create()
         {
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId");
-            return View();
+           return PartialView();
         }
 
         // POST: BankWithdrawals/Create
@@ -67,7 +67,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
-            return View(bankWithdrawal);
+           return PartialView(bankWithdrawal);
         }
 
         // GET: BankWithdrawals/Edit/5
@@ -84,7 +84,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
-            return View(bankWithdrawal);
+           return PartialView(bankWithdrawal);
         }
 
         // POST: BankWithdrawals/Edit/5
@@ -120,7 +120,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "AccountNumberId", bankWithdrawal.AccountNumberId);
-            return View(bankWithdrawal);
+           return PartialView(bankWithdrawal);
         }
 
         // GET: BankWithdrawals/Delete/5
@@ -139,7 +139,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(bankWithdrawal);
+           return PartialView(bankWithdrawal);
         }
 
         // POST: BankWithdrawals/Delete/5

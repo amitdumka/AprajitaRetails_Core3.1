@@ -38,7 +38,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee);
 
             int pageSize = 10;
-            return View(await PaginatedList<SalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<SalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 

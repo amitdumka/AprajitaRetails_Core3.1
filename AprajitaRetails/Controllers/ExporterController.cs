@@ -19,7 +19,7 @@ namespace AprajitaRetails.Controllers
         public IActionResult Index()
         {
             ViewBag.Message = XMLExporter.WriteToXML(_context);
-            return View();
+           return View();
         }
     }
 }

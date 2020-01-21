@@ -38,7 +38,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             int pageSize = 10;
                                     
             var aprajitaRetailsContext = _context.CashReceipts.Include(c => c.Mode);
-            return View(await PaginatedList<CashReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+           return View(await PaginatedList<CashReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
            // return PartialView(await aprajitaRetailsContext.ToListAsync());
         }
 

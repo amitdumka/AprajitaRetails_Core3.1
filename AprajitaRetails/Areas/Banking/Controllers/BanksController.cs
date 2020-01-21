@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // GET: Banks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Banks.ToListAsync());
+           return View(await _context.Banks.ToListAsync());
         }
 
         // GET: Banks/Details/5
@@ -41,13 +41,13 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(bank);
+           return PartialView(bank);
         }
 
         // GET: Banks/Create
         public IActionResult Create()
         {
-            return View();
+           return PartialView();
         }
 
         // POST: Banks/Create
@@ -63,7 +63,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(bank);
+           return PartialView(bank);
         }
 
         // GET: Banks/Edit/5
@@ -79,7 +79,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-            return View(bank);
+           return PartialView(bank);
         }
 
         // POST: Banks/Edit/5
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(bank);
+           return PartialView(bank);
         }
 
         // GET: Banks/Delete/5
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-            return View(bank);
+           return PartialView(bank);
         }
 
         // POST: Banks/Delete/5

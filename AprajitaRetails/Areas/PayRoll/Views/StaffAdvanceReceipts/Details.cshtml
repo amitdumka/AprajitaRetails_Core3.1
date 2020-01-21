@@ -7,14 +7,14 @@
 
 
 <div>
-    <h4>StaffAdvanceReceipt</h4>
+    <h4>Advance Receipt</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Employee)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Employee.EmployeeId)
+            @Html.DisplayFor(model => model.Employee.StaffName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ReceiptDate)
@@ -43,6 +43,6 @@
     </dl>
 </div>
 <div>
-   <a  class="btn btn-outline-amber btn-sm" asp-action="Edit" asp-route-id="@Model.StaffAdvanceReceiptId">Edit</a> |
+   <a  class="btn btn-outline-amber btn-sm" asp-action="Edit" asp-route-id="@Model.StaffAdvanceReceiptId">Edit</a> 
   
 </div>
