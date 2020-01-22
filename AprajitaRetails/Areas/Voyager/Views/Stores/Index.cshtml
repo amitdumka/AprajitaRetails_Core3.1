@@ -4,10 +4,10 @@
     ViewData["Title"] = "The Arvind Stores";
 }
 
-<h1>Stores</h1>
+<h1 class="text-danger">Stores</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-light-green" id="create" data_modal="">Create New</a>
+    <a asp-action="Create" class="btn btn-outline-light-green btn-sm" id="create" data_modal="">Create New</a>
 </p>
 <table class="table table-bordered table-hover table-sm table-striped" >
     <thead class="bg-success">
@@ -18,42 +18,42 @@
             <th>
                 @Html.DisplayNameFor(model => model.StoreName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Address)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.City)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PinCode)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StoreManagerName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.StoreManagerPhoneNo)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.PanNo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.GSTNO)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.NoOfEmployees)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.OpeningDate)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ClosingDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -66,42 +66,42 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StoreName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Address)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.City)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.PinCode)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StoreManagerName)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.StoreManagerPhoneNo)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.PanNo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.GSTNO)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.NoOfEmployees)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.OpeningDate)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ClosingDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
-            </td>
+            </td>*@
             <td class="btn-group btn-group-sm">
                 <a asp-action="Edit" asp-route-id="@item.StoreId" class="btn btn-outline-amber" id="edit" data_modal="">Edit</a> 
                 <a asp-action="Details" asp-route-id="@item.StoreId" class="btn btn-outline-info" id="detail" data_modal="">Details</a> 
@@ -111,4 +111,4 @@
 }
     </tbody>
 </table>
-<partial name="_ModalPop" />
+<partial name="_OnlyModalPopUp" />
