@@ -1,0 +1,118 @@
+﻿@model AprajitaRetails.Areas.Uploader.Models.ImportPurchase
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ImportPurchase</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GRNNo" class="control-label"></label>
+                <input asp-for="GRNNo" class="form-control" />
+                <span asp-validation-for="GRNNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GRNDate" class="control-label"></label>
+                <input asp-for="GRNDate" class="form-control" />
+                <span asp-validation-for="GRNDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceNo" class="control-label"></label>
+                <input asp-for="InvoiceNo" class="form-control" />
+                <span asp-validation-for="InvoiceNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceDate" class="control-label"></label>
+                <input asp-for="InvoiceDate" class="form-control" />
+                <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierName" class="control-label"></label>
+                <input asp-for="SupplierName" class="form-control" />
+                <span asp-validation-for="SupplierName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Barcode" class="control-label"></label>
+                <input asp-for="Barcode" class="form-control" />
+                <span asp-validation-for="Barcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StyleCode" class="control-label"></label>
+                <input asp-for="StyleCode" class="form-control" />
+                <span asp-validation-for="StyleCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemDesc" class="control-label"></label>
+                <input asp-for="ItemDesc" class="form-control" />
+                <span asp-validation-for="ItemDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MRP" class="control-label"></label>
+                <input asp-for="MRP" class="form-control" />
+                <span asp-validation-for="MRP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MRPValue" class="control-label"></label>
+                <input asp-for="MRPValue" class="form-control" />
+                <span asp-validation-for="MRPValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cost" class="control-label"></label>
+                <input asp-for="Cost" class="form-control" />
+                <span asp-validation-for="Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CostValue" class="control-label"></label>
+                <input asp-for="CostValue" class="form-control" />
+                <span asp-validation-for="CostValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxAmt" class="control-label"></label>
+                <input asp-for="TaxAmt" class="form-control" />
+                <span asp-validation-for="TaxAmt" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsVatBill" /> @Html.DisplayNameFor(model => model.IsVatBill)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsLocal" /> @Html.DisplayNameFor(model => model.IsLocal)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDataConsumed" /> @Html.DisplayNameFor(model => model.IsDataConsumed)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

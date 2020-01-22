@@ -1,0 +1,143 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.Uploader.Models.ImportPurchase>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GRNNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GRNDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Barcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StyleCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MRP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MRPValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxAmt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsVatBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsLocal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDataConsumed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImportTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GRNNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GRNDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StyleCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MRP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MRPValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxAmt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsVatBill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsLocal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDataConsumed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImportTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ImportPurchaseId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ImportPurchaseId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ImportPurchaseId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -51,9 +51,7 @@
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\Sales\Data\" />
-    <Folder Include="Areas\Uploader\Controllers\" />
     <Folder Include="Areas\Uploader\Data\" />
-    <Folder Include="Areas\Uploader\Views\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
     <Folder Include="Docs\" />
