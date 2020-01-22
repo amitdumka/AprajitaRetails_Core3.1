@@ -1,0 +1,90 @@
+﻿@model PaginatedList<AprajitaRetails.Areas.Voyager.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h1>Customers</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-light-green " id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-sm table-striped">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NoOfBills)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="bg-white">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfBills)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td class="btn-group btn-group-sm">
+                <a asp-action="Edit" asp-route-id="@item.CustomerId" class="btn btn-outline-amber " id="edit" data_modal="">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CustomerId" class="btn btn-outline-info" id="detail" data_modal="">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CustomerId" class="btn btn-outline-danger " id="delete" data_modal="">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_ModalPop" />

@@ -7,7 +7,7 @@ namespace AprajitaRetails.Areas.Voyager.Models
 {
     public class Store
     {
-        public int StoreID { get; set; }
+        public int StoreId { get; set; }
         [Display(Name = "Store Code")]
         public string StoreCode { get; set; }
         [Display(Name = "Store Name")]

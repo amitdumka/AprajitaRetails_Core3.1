@@ -6,7 +6,7 @@ namespace AprajitaRetails.Areas.Voyager.Models
 {
     public class Customer
     {
-        public int CustomerID { set; get; }
+        public int CustomerId { set; get; }
 
         [Display(Name = "First Name")]
         public string FirstName { set; get; }
