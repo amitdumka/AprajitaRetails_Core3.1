@@ -10,7 +10,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark   default-color lighten-4 border-bottom box-shadow mb-1">
+        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark fixed-top  default-color lighten-4 border-bottom box-shadow mb-1">
             <div class="container-fluid">
                 <a class="navbar-brand text-danger  text-monospace" asp-area="" asp-controller="Home" asp-action="Index">Aprajita Retails</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -31,9 +31,9 @@
 
                             <div class="dropdown-menu " aria-labelledby="dropdown01">
                                 <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Parties" asp-action="Index">Parties</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="LedgerEntries" asp-action="Index">LedgerEntries</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SaleTaxTypes" asp-action="Index">OutTax</a>
+                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="LedgerEntries" asp-action="Index">Ledger Entries</a>
+                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
+                                <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleTaxTypes" asp-action="Index">Output Tax</a>
 
                                 <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
                                 <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
@@ -51,9 +51,10 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sale/Purchase</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductPurchases" asp-action="Index">ProductPurchases</a>
-                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index">ProductItems</a>
-                                <a class="dropdown-item text-dark" asp-area="Stock" asp-controller="Stocks" asp-action="Index">Stocks</a>
+                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductPurchases" asp-action="Index">Product Purchases</a>
+                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index">Product Items</a>
+                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="Stocks" asp-action="Index">Stocks</a>
+                                <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleInvoices" asp-action="Index">Sale Invoices</a>
 
                             </div>
                         </li>
@@ -110,7 +111,7 @@
                                 <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
                                 <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
                                 <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
-                                
+
 
                             </div>
                         </li>
@@ -136,9 +137,9 @@
                                 <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
                                 <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="SalesUploader" asp-action="SaleList">SalesUploader</a>
                                 <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
-                                
+
                                 <a class="dropdown-item text-dark " asp-area="Voyager" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
-                                
+
                                 <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
                                 <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
                                 <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
@@ -163,6 +164,25 @@
 
             </div>
         </nav>
+        <div class="nav-scroller blue-gradient-rgba shadow-sm " role="toolbar">
+            <nav class="nav nav-underline">
+                <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
+                @*<a class="nav-link" href="#">
+                    DailySale
+                    <span class="badge badge-pill bg-dark align-text-bottom">27</span>
+                </a>*@
+                <a class="nav-link text-success" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">27</span></a>
+                <a class="nav-link" href="#">Sale</a>
+                <a class="nav-link" href="#">Purchase</a>
+                <a class="nav-link" href="#">Manual Bill</a>
+                <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances"  asp-action="Index">Attendence</a>
+                <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses"  asp-action="Index">Cash Expenses</a>
+                <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments"  asp-action="Index">Cash Payments</a>
+                <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings"  asp-action="Index">Booking</a>
+                <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
+            </nav>
+        </div>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -179,6 +199,15 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/mdb/js/mdb.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script>
+        (function () {
+            'use strict'
+
+            feather.replace()
+        }())
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

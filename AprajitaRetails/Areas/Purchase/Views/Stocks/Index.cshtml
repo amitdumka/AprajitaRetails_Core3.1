@@ -1,0 +1,60 @@
+﻿@model PaginatedList<AprajitaRetails.Areas.Purchase.Models.Stock>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Stocks</h1>
+
+<p>
+   <a asp-action="Create" class="btn btn-outline-light-green btn-sm" id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped tables-sm">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductItem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().SaleQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PurchaseQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Units)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+   <tbody class="bg-white">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductItem.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SaleQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Units)
+            </td>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.StockID">Edit</a> 
+                <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.StockID">Details</a> 
+               <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.StockID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_ModalPop" />

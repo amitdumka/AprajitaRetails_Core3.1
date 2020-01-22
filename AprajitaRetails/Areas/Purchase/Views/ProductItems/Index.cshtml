@@ -1,0 +1,96 @@
+﻿@model PaginatedList<AprajitaRetails.Areas.Purchase.Models.ProductItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Products</h1>
+
+<p>
+   <a asp-action="Create" class="btn btn-outline-light-green btn-sm" id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped tables-sm">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Barcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().BrandName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().StyleCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ItemDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Categorys)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MRP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TaxRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Units)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+   <tbody class="bg-white">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Barcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrandName.BrandName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StyleCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categorys)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MRP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Units)
+            </td>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.ProductItemId">Edit</a>
+                <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.ProductItemId">Details</a>
+                <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.ProductItemId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_ModalPop" />

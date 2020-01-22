@@ -1,0 +1,48 @@
+﻿@model PaginatedList<AprajitaRetails.Areas.Purchase.Models.PurchaseTaxType>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Input Taxes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-light-green btn-sm" id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped tables-sm">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TaxName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TaxType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CompositeRate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="bg-white">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompositeRate)
+            </td>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.PurchaseTaxTypeId">Edit</a>
+                <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.PurchaseTaxTypeId">Details</a>
+                <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.PurchaseTaxTypeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_ModalPop" />

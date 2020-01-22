@@ -1,0 +1,52 @@
+﻿@model AprajitaRetails.Areas.Purchase.Models.Stock
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<h4>Stock</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProductItemId" class="control-label"></label>
+                <select asp-for="ProductItemId" class ="form-control" asp-items="ViewBag.ProductItemId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SaleQty" class="control-label"></label>
+                <input asp-for="SaleQty" class="form-control" />
+                <span asp-validation-for="SaleQty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseQty" class="control-label"></label>
+                <input asp-for="PurchaseQty" class="form-control" />
+                <span asp-validation-for="PurchaseQty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Units" class="control-label"></label>
+                <select asp-for="Units" class="form-control" asp-items="Html.GetEnumSelectList<Units>()"></select>
+                <span asp-validation-for="Units" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-outline-amber" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+   
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

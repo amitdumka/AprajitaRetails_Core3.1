@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace AprajitaRetails.Areas.Voyager.Models
+namespace AprajitaRetails.Areas.Purchase.Models
 {
     public class Supplier
     {
         public int SupplierID { get; set; }
+        [Display(Name ="Suppiler")]
         public string SuppilerName { get; set; }
         public string Warehouse { get; set; }
         public ICollection<ProductPurchase> ProductPurchases { get; set; }

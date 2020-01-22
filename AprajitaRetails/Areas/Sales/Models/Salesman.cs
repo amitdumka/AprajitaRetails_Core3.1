@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AprajitaRetails.Areas.Voyager.Models
+namespace AprajitaRetails.Areas.Sales.Models
 {
     public class SalesPerson
     {

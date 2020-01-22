@@ -49,9 +49,7 @@
     <Folder Include="Areas\Banking\Data\" />
     <Folder Include="Areas\Expenses\Data\" />
     <Folder Include="Areas\PayRoll\Data\" />
-    <Folder Include="Areas\Purchase\Controllers\" />
     <Folder Include="Areas\Purchase\Data\" />
-    <Folder Include="Areas\Purchase\Views\" />
     <Folder Include="Areas\Sales\Data\" />
     <Folder Include="Areas\Uploader\Controllers\" />
     <Folder Include="Areas\Uploader\Data\" />

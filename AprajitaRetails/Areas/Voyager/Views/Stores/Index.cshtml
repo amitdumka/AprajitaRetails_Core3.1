@@ -103,9 +103,9 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>*@
             <td class="btn-group btn-group-sm">
-                <a asp-action="Edit" asp-route-id="@item.StoreId" class="btn btn-outline-amber" id="edit" data_modal="">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.StoreId" class="btn btn-outline-info" id="detail" data_modal="">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.StoreId" class="btn btn-outline-danger" id="delete" data_modal="">Delete</a>
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.StoreId" class="btn btn-outline-amber" id="edit" data_modal="">Edit</a> 
+                <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.StoreId" class="btn btn-outline-info" id="detail" data_modal="">Details</a> 
+               <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.StoreId" class="btn btn-outline-danger" id="delete" data_modal="">Delete</a>
             </td>
         </tr>
 }

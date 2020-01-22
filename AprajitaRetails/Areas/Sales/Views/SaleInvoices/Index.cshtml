@@ -1,0 +1,84 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.Sales.Models.SaleInvoice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Sale Invoices</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-light-green btn-sm" id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped tables-sm">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalItems)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalBillAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalDiscountAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoundOffAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalTaxAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalItems)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalQty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalBillAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalDiscountAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoundOffAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalTaxAmount)
+                </td>
+                <td class="btn-group btn-group-sm">
+                   <a class="btn btn-outline-amber" id="edit" data_modal=""  asp-action="Edit" asp-route-id="@item.SaleInvoiceId">Edit</a> 
+                    <a class="btn btn-outline-info" id="detail" data_modal=""asp-action="Details" asp-route-id="@item.SaleInvoiceId">Details</a> 
+                    <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.SaleInvoiceId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

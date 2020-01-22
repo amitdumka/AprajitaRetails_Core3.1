@@ -1,0 +1,36 @@
+﻿@model AprajitaRetails.Areas.Purchase.Models.PurchaseTaxType
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div>
+    <h4>PurchaseTaxType</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TaxName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TaxType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CompositeRate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CompositeRate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@Model.PurchaseTaxTypeId">Edit</a> 
+   
+</div>

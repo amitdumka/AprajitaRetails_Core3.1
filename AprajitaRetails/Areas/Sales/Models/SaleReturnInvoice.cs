@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AprajitaRetails.Areas.Voyager.Models
+namespace AprajitaRetails.Areas.Sales.Models
 {
     //Processed Tables
 

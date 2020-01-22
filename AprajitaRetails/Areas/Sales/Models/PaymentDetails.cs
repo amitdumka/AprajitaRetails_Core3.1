@@ -1,4 +1,4 @@
-﻿namespace AprajitaRetails.Areas.Voyager.Models
+﻿namespace AprajitaRetails.Areas.Sales.Models
 {
     internal class PaymentDetails
     {

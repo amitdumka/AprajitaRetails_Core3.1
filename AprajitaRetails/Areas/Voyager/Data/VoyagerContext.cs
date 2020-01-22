@@ -1,4 +1,6 @@
-﻿using AprajitaRetails.Areas.Uploader.Models;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Sales.Models;
+using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Models;
 
 using Microsoft.EntityFrameworkCore;

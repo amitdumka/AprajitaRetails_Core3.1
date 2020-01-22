@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Data;
 using AprajitaRetails.Areas.Voyager.Models;

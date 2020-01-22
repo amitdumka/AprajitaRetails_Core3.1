@@ -1,0 +1,102 @@
+﻿@model PaginatedList<AprajitaRetails.Areas.Purchase.Models.ProductPurchase>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Purchases</h1>
+
+<p>
+   <a asp-action="Create" class="btn btn-outline-light-green btn-sm" id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-striped tables-sm">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().InWardNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().InWardDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PurchaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().InvoiceNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalQty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalBasicAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ShippingCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalTax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Supplier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsPaid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+   <tbody class="bg-white">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InWardNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InWardDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalQty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalBasicAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippingCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalTax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.SuppilerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPaid)
+            </td>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.ProductPurchaseId">Edit</a>
+                <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.ProductPurchaseId">Details</a>
+                <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.ProductPurchaseId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<partial name="_ModalPop" />

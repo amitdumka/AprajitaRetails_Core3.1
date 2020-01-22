@@ -1,0 +1,72 @@
+﻿@model AprajitaRetails.Areas.Sales.Models.SaleInvoice
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>SaleInvoice</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OnDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OnDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.InvoiceNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.InvoiceNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalItems)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalItems)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalQty)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalQty)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalBillAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalBillAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalDiscountAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalDiscountAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RoundOffAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.RoundOffAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalTaxAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalTaxAmount)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SaleInvoiceId">Edit</a> 
+    <a asp-action="Index">Back to List</a>
+</div>

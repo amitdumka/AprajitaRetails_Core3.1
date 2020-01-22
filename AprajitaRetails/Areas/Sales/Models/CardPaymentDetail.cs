@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AprajitaRetails.Areas.Voyager.Models
+namespace AprajitaRetails.Areas.Sales.Models
 {
     public class CardPaymentDetail
     {
