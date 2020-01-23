@@ -100,7 +100,6 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View(md);
 
 
-
         }
 
         [HttpPost]
@@ -130,80 +129,6 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 return View(new List<ProductPurchase>());
             }
         }
-
-        //// GET: PurchaseUploader/Details/5
-        //public IActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        //// GET: PurchaseUploader/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: PurchaseUploader/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: PurchaseUploader/Edit/5
-        //public IActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: PurchaseUploader/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: PurchaseUploader/Delete/5
-        //public IActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: PurchaseUploader/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+              
     }
 }

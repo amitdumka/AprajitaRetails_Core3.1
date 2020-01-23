@@ -60,8 +60,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         [HttpPost]
         public IActionResult UploadSales(string BillType, string InterState, string UploadType, IFormFile FileUpload)
         {
-            //IFormFile FileUpload = null;//TODO: handle This
-            //IFormFile FileUpload = null;//TODO: handle This
+           
             ExcelUploaders uploader = new ExcelUploaders();
             bool IsVat = false;
             bool IsLocal = true;
@@ -102,73 +101,6 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View();
         }
 
-        //// GET: SalesUploader/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: SalesUploader/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: SalesUploader/Edit/5
-        //public IActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: SalesUploader/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: SalesUploader/Delete/5
-        //public IActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: SalesUploader/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+      
     }
 }

@@ -28,17 +28,13 @@ namespace AprajitaRetails.Ops.Uploader
                 if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                 {
                     string filename = FileUpload.FileName;
-                    //TODO: pass from calling function of http post
-                    // string targetpath = Server.MapPath("~/Doc/"); 
-                    //FileUpload.SaveAs(targetpath + filename);
-                    
-                    using (var stream = new FileStream(Path.GetTempPath()+ filename, FileMode.Create))
+
+                    string pathToExcelFile = Path.GetTempPath() + filename;
+                    using (var stream = new FileStream(pathToExcelFile, FileMode.Create))
                     {
                         FileUpload.CopyTo(stream);
                     }
-                    string pathToExcelFile = Path.GetTempPath() + filename;
-                    string sheetName = "Sheet1";
-                    var excelFile = new ExcelQueryFactory(pathToExcelFile);
+
                     if (UploadType == UploadTypes.Purchase)
                     {
                         try
@@ -53,73 +49,38 @@ namespace AprajitaRetails.Ops.Uploader
                     }
                     else if (UploadType == UploadTypes.SaleItemWise)
                     {
-                        var currentImports = from a in excelFile.Worksheet<ImportSaleItemWiseVM>(sheetName) select a;
-                        foreach (var a in currentImports)
+                        try
                         {
-                            try
-                            {
-                                a.ImportTime = DateTime.Now;
-                                a.IsDataConsumed = false;
-                                db.ImportSaleItemWises.Add(ImportSaleItemWiseVM.ToTable(a));
-                                db.SaveChanges();
-                            }
-                            catch (Exception DbEntityValidationException)
-                            {
-                                //TODO: need to handel this
-                                return UploadReturns.Error;
-                            }
+                            ImportSaleItemWise(db, pathToExcelFile, IsVat, IsLocal);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                            return UploadReturns.Error;
                         }
                     }
                     else if (UploadType == UploadTypes.SaleRegister)
                     {
-                        var currentImports = from a in excelFile.Worksheet<ImportSaleRegister>(sheetName) select a;
-                        foreach (var a in currentImports)
+                        try
                         {
-                            try
-                            {
-                                a.ImportTime = DateTime.Now;
-                                a.IsConsumed = false;
-                                db.ImportSaleRegisters.Add(a);
-                                db.SaveChanges();
-                            }
-                            catch (Exception DbEntityValidationException)
-                            {
-                                //TODO: need to handel this
-                                return UploadReturns.Error;
-                            }
+                            ImportPurchase(db, pathToExcelFile, IsVat, IsLocal);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                            return UploadReturns.Error;
                         }
                     }
                     else if (UploadType == UploadTypes.InWard)
                     {
-                        var currentImports = from a in excelFile.Worksheet<ImportInWard>(sheetName) select a;
-                        foreach (var a in currentImports)
+                        try
                         {
-                            try
-                            {
-                                // Inward No   Inward Date Invoice No  Invoice Date    Party Name  Total Qty   Total MRP Value Total Cost
-                                ImportInWard inw = new ImportInWard
-                                {
-                                    ImportDate = DateTime.Today,
-                                    InvoiceDate = a.InvoiceDate,
-                                    InvoiceNo = a.InvoiceNo,
-                                    InWardDate = a.InWardDate,
-                                    InWardNo = a.InWardNo,
-                                    PartyName = a.PartyName,
-                                    TotalCost = a.TotalCost,
-                                    TotalMRPValue = a.TotalMRPValue,
-                                    TotalQty = a.TotalQty
-                                };
-                                db.ImportInWards.Add(inw);
-                                db.SaveChanges();
-
-
-                            }
-                            catch (Exception DbEntityValidationException)
-                            {
-                                //TODO: need to handel this
-
-                                return UploadReturns.Error;
-                            }
+                            ImportPurchase(db, pathToExcelFile, IsVat, IsLocal);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Error: " + ex.Message);
+                            return UploadReturns.Error;
                         }
                     }
                     else
@@ -312,6 +273,54 @@ namespace AprajitaRetails.Ops.Uploader
 
         }//end of function
 
+        public int ImportSaleItemWise(VoyagerContext db, string fileName, bool IsVat, bool IsLocal)
+        {
+            //string rootFolder = IHostingEnvironment.WebRootPath;
+            //string fileName = @"ImportCustomers.xlsx";
+            FileInfo file = new FileInfo(fileName);
+
+            using ExcelPackage package = new ExcelPackage(file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets["Sheet1"];
+            int totalRows = workSheet.Dimension.Rows;
+
+            List<ImportSaleItemWise> saleList = new List<ImportSaleItemWise>();
+            //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
+            int xo = 0;
+            for (int i = 2; i <= totalRows; i++)
+            {
+                ImportSaleItemWise p = new ImportSaleItemWise
+                {
+                    InvoiceType = workSheet.Cells[i, 1].Value.ToString(),
+                    InvoiceDate = (DateTime)workSheet.Cells[i, 4].GetValue<DateTime>(),
+                    InvoiceNo = workSheet.Cells[i, 3].Value.ToString(),
+                    BrandName = workSheet.Cells[i, 5].Value.ToString(),
+                    Barcode = workSheet.Cells[i, 6].Value.ToString(),
+                    ProductName = workSheet.Cells[i, 7].Value.ToString(),
+                    StyleCode = workSheet.Cells[i, 8].Value.ToString(),
+                    ItemDesc = workSheet.Cells[i, 9].Value.ToString(),
+                    Quantity = (double)workSheet.Cells[i, 10].Value,
+                    MRP = (decimal)workSheet.Cells[i, 11].GetValue<decimal>(),
+                    BillAmnt = (decimal)workSheet.Cells[i, 12].GetValue<decimal>(),
+                    Discount = (decimal)workSheet.Cells[i, 13].GetValue<decimal>(),
+                    LineTotal = (decimal)workSheet.Cells[i, 14].GetValue<decimal>(),
+                    BasicRate = (decimal)workSheet.Cells[i, 15].GetValue<decimal>(),
+                    IsDataConsumed = false,
+                    ImportTime = DateTime.Today,
+                    // = IsLocal,
+                    //IsVatBill = IsVat
+                };
+
+                saleList.Add(p);
+
+
+                xo++;
+            }
+
+            db.ImportSaleItemWises.AddRange(saleList);
+            return db.SaveChanges();
+
+            //return purchaseList;
+        }
 
         public int ImportPurchase(VoyagerContext db, string fileName, bool IsVat, bool IsLocal)
         {
@@ -327,22 +336,22 @@ namespace AprajitaRetails.Ops.Uploader
 
             List<ImportPurchase> purchaseList = new List<ImportPurchase>();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
-            int xo = 0;
+
             for (int i = 2; i <= totalRows; i++)
             {
-                ImportPurchase p = new ImportPurchase
+                purchaseList.Add(new ImportPurchase
                 {
                     GRNNo = workSheet.Cells[i, 1].Value.ToString(),
-                    // GRNDate = (DateTime)workSheet.Cells[i, 2].Value,
+                    GRNDate = (DateTime)workSheet.Cells[i, 2].GetValue<DateTime>(),
                     InvoiceNo = workSheet.Cells[i, 3].Value.ToString(),
-                    // InvoiceDate = (DateTime)workSheet.Cells[i, 4].Value,
+                    InvoiceDate = (DateTime)workSheet.Cells[i, 4].GetValue<DateTime>(),
                     SupplierName = workSheet.Cells[i, 5].Value.ToString(),
                     Barcode = workSheet.Cells[i, 6].Value.ToString(),
                     ProductName = workSheet.Cells[i, 7].Value.ToString(),
                     StyleCode = workSheet.Cells[i, 8].Value.ToString(),
                     ItemDesc = workSheet.Cells[i, 9].Value.ToString(),
                     Quantity = (double)workSheet.Cells[i, 10].Value,
-                    MRP = (decimal)   workSheet.Cells[i, 11].GetValue<decimal>(),
+                    MRP = (decimal)workSheet.Cells[i, 11].GetValue<decimal>(),
                     MRPValue = (decimal)workSheet.Cells[i, 12].GetValue<decimal>(),
                     Cost = (decimal)workSheet.Cells[i, 13].GetValue<decimal>(),
                     CostValue = (decimal)workSheet.Cells[i, 14].GetValue<decimal>(),
@@ -351,14 +360,8 @@ namespace AprajitaRetails.Ops.Uploader
                     ImportTime = DateTime.Today,
                     IsLocal = IsLocal,
                     IsVatBill = IsVat
-                };
+                });
 
-                p.GRNDate = (DateTime)workSheet.Cells[i, 2].GetValue<DateTime>();
-                p.InvoiceDate = (DateTime)workSheet.Cells[i, 4].GetValue<DateTime>();
-                purchaseList.Add(p);
-
-
-                xo++;
             }
 
             db.ImportPurchases.AddRange(purchaseList);
