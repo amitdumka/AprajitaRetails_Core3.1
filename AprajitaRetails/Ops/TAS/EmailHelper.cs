@@ -77,22 +77,20 @@ namespace AprajitaRetails.Ops.TAS
 
 
 
-                using (var message = new MailMessage(fromAddress, toAddress)
+                using var message = new MailMessage (fromAddress, toAddress)
                 {
                     Subject = eMail.Subject,
                     Body = eMail.Body
-                })
-                {
-                    // create attachment and set media Type
-                    //      see http://msdn.microsoft.com/de-de/library/system.net.mime.mediatypenames.application.aspx
-                    /*Attachment data = new Attachment(
-                                             "PATH_TO_YOUR_FILE",
-                                             MediaTypeNames.Application.Octet);
-                                        // your path may look like Server.MapPath("~/file.ABC")
-                                        message.Attachments.Add(data);*/
-                    smtp.Send(message);
-                    return true;
-                }
+                };
+                // create attachment and set media Type
+                //      see http://msdn.microsoft.com/de-de/library/system.net.mime.mediatypenames.application.aspx
+                /*Attachment data = new Attachment(
+                                         "PATH_TO_YOUR_FILE",
+                                         MediaTypeNames.Application.Octet);
+                                    // your path may look like Server.MapPath("~/file.ABC")
+                                    message.Attachments.Add(data);*/
+                smtp.Send (message);
+                return true;
 
 
 

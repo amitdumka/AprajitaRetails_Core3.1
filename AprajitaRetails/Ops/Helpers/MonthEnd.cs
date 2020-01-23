@@ -50,26 +50,24 @@ namespace TAS_AprajiataRetails.Models.Helpers
         public void ProcessMonthEnd(DateTime onDate)
         {
             MonthEnd monthEnd = null;
-            using (AprajitaRetailsContext db =_db )
-            {
-                monthEnd = CalculateTotalIncome(db, onDate);
-                monthEnd = CalculateTotalExpenses(db, onDate, monthEnd);
-                monthEnd= CalculateSaleData(db, onDate, monthEnd);
-                monthEnd = CalculateSaleFinData(db, onDate, monthEnd);
-                monthEnd.EntryDate = DateTime.Today;
-
-
-            }
+            using AprajitaRetailsContext db = _db;
+            monthEnd = CalculateTotalIncome (db, onDate);
+            monthEnd = CalculateTotalExpenses (db, onDate, monthEnd);
+            monthEnd = CalculateSaleData (db, onDate, monthEnd);
+            monthEnd = CalculateSaleFinData (db, onDate, monthEnd);
+            monthEnd.EntryDate = DateTime.Today;
         }
         private MonthEnd CalculateTotalIncome(AprajitaRetailsContext db, DateTime onDate)
         {
-            
-            
-            MonthEnd monthEnd = new MonthEnd();
-            monthEnd.TotalSaleIncome = db.DailySales.Where(c =>c.SaleDate.Month ==(onDate).Month).Sum(c => c.Amount);
-            monthEnd.TotalTailoringIncome = db.DailySales.Where(c => c.IsTailoringBill &&(c.SaleDate).Month ==(onDate).Month).Sum(c => c.Amount);
-            monthEnd.TotalOtherIncome = 0; //TODO: Ohter Income group will be dealt with proper entry.
-            monthEnd.TotalRecipts = db.Receipts.Where(c =>(c.RecieptDate).Month ==(onDate).Month).Sum(c => c.Amount);
+
+
+            MonthEnd monthEnd = new MonthEnd
+            {
+                TotalSaleIncome = db.DailySales.Where (c => c.SaleDate.Month == ( onDate ).Month).Sum (c => c.Amount),
+                TotalTailoringIncome = db.DailySales.Where (c => c.IsTailoringBill && ( c.SaleDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
+                TotalOtherIncome = 0, //TODO: Ohter Income group will be dealt with proper entry.
+                TotalRecipts = db.Receipts.Where (c => ( c.RecieptDate ).Month == ( onDate ).Month).Sum (c => c.Amount)
+            };
 
             return monthEnd;
         }

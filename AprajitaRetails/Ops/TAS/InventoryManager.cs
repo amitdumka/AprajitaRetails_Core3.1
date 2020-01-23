@@ -520,42 +520,39 @@ namespace AprajitaRetails.Ops.TAS
         #region Sale
         public int CreateSaleEntry(VoyagerContext _db, DateTime onDate)
         {
-            using (VoyagerContext db =_db)
+            using VoyagerContext db = _db;
+            int ctr = 0;
+
+            //bool isVat = false;
+            if ( onDate < new DateTime (2017, 7, 1) )
             {
-                int ctr = 0;
+                //  isVat = true;
+                return -1;// TODO: Temp implemenent for vat system
+            }
 
-                //bool isVat = false;
-                if (onDate < new DateTime(2017, 7, 1))
+            SaleInvoice saleInvoice = null;
+
+            var data = db.ImportSaleItemWises.Where (c => c.IsDataConsumed == false && ( c.InvoiceDate.Date ) == ( onDate.Date )).OrderBy (c => c.InvoiceNo).ToList ();
+
+            if ( data != null )
+            {
+                foreach ( var item in data )
                 {
-                    //  isVat = true;
-                    return -1;// TODO: Temp implemenent for vat system
+                    saleInvoice = CreateSaleInvoice (db, item, saleInvoice);  //Create SaleInvoice
+                    saleInvoice.SaleItems.Add (CreateSaleItem (db, item)); // Create SaleItems
+                    ctr++;
                 }
-
-                SaleInvoice saleInvoice = null;
-
-                var data = db.ImportSaleItemWises.Where(c => c.IsDataConsumed == false && (c.InvoiceDate.Date) == (onDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
-
-                if (data != null)
+                if ( saleInvoice != null )
                 {
-                    foreach (var item in data)
-                    {
-                        saleInvoice = CreateSaleInvoice(db, item, saleInvoice);  //Create SaleInvoice
-                        saleInvoice.SaleItems.Add(CreateSaleItem(db, item)); // Create SaleItems
-                        ctr++;
-                    }
-                    if (saleInvoice != null)
-                    {
-                        db.SaleInvoices.Add(saleInvoice); // Save Last Sale Invoice
-                        db.SaveChanges();
-                    }
-                    return ctr;
-
+                    db.SaleInvoices.Add (saleInvoice); // Save Last Sale Invoice
+                    db.SaveChanges ();
                 }
-                else
-                {
-                    return ctr;
-                }
+                return ctr;
 
+            }
+            else
+            {
+                return ctr;
             }
 
 
