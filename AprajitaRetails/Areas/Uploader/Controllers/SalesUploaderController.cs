@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
+    [Area("Uploader")]
     public class SalesUploaderController : Controller
     {
         private readonly VoyagerContext db;
@@ -21,7 +22,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             db = context;
         }
         // GET: SalesUploader
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -29,7 +30,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
 
         // GET: SalesUploader/SaleList/5
-        public ActionResult SaleList(int? id)
+        public IActionResult SaleList(int? id)
         {
             var md = db.ImportSaleItemWises.Where(c => c.IsDataConsumed == false).OrderByDescending(c => c.InvoiceDate);
             return View(md);
@@ -37,7 +38,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProcessSale(string dDate)
+        public IActionResult ProcessSale(string dDate)
         {
             DateTime ddDate = DateTime.Parse(dDate).Date;
 
@@ -57,9 +58,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         }
         [HttpPost]
-        public ActionResult UploadSales(string BillType, string InterState, string UploadType/*, HttpPostedFileBase FileUpload*/)
+        public IActionResult UploadSales(string BillType, string InterState, string UploadType, IFormFile FileUpload)
         {
-            IFormFile FileUpload = null;//TODO: handle This
+            //IFormFile FileUpload = null;//TODO: handle This
+            //IFormFile FileUpload = null;//TODO: handle This
             ExcelUploaders uploader = new ExcelUploaders();
             bool IsVat = false;
             bool IsLocal = true;
@@ -80,7 +82,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             {
                 uType = UploadTypes.SaleRegister;
             }
-            UploadReturns response = uploader.UploadExcel(db,uType, FileUpload, /*Server.MapPath("~/Doc/")*/"", IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db,uType, FileUpload, "/Doc/", IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)
@@ -95,13 +97,13 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
 
         // GET: SalesUploader/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
         //// GET: SalesUploader/Create
-        //public ActionResult Create()
+        //public IActionResult Create()
         //{
         //    return View();
         //}
@@ -109,7 +111,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //// POST: SalesUploader/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
+        //public IActionResult Create(IFormCollection collection)
         //{
         //    try
         //    {
@@ -124,7 +126,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //}
 
         //// GET: SalesUploader/Edit/5
-        //public ActionResult Edit(int id)
+        //public IActionResult Edit(int id)
         //{
         //    return View();
         //}
@@ -132,7 +134,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //// POST: SalesUploader/Edit/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
+        //public IActionResult Edit(int id, IFormCollection collection)
         //{
         //    try
         //    {
@@ -147,7 +149,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //}
 
         //// GET: SalesUploader/Delete/5
-        //public ActionResult Delete(int id)
+        //public IActionResult Delete(int id)
         //{
         //    return View();
         //}
@@ -155,7 +157,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //// POST: SalesUploader/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
+        //public IActionResult Delete(int id, IFormCollection collection)
         //{
         //    try
         //    {

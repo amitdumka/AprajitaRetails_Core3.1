@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
+    [Area("Uploader")]
     public class PurchaseUploaderController : Controller
     {
         private readonly VoyagerContext db;
@@ -22,15 +23,15 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             db = context;
         }
         // GET: PurchaseUploader
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult UploadPurchase(string BillType, string InterState /*,HttpPostedFileBase FileUpload*/)
+        public IActionResult UploadPurchase(string BillType, string InterState , IFormFile FileUpload)
         {
-            IFormFile FileUpload = null ;
+           // IFormFile FileUpload = null ;
             ExcelUploaders uploader = new ExcelUploaders();
             bool IsVat = false;
             bool IsLocal = false;
@@ -46,7 +47,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 IsLocal = true;
             }
 
-            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload, /*Server.MapPath("~/Doc/")*/"", IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload, "/Docs/", IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)
@@ -58,12 +59,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         }
         // GET: PurchaseUploader/Details/5
-        public ActionResult Details(int? id)
+        public IActionResult Details(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+            if (id == null)
+            {
+                return  NotFound();
+            }
             if (id > 0)
             {
                 var productPurchases1 = db.ProductPurchases.Include(p => p.Supplier).Include(c => c.PurchaseItems).Where(c => c.ProductPurchaseId == id);
@@ -82,7 +83,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
             return View(productPurchases.ToList());
         }
-        public ActionResult ListUpload(int? id)
+        public IActionResult ListUpload(int? id)
         {
 
             if (id == 101)
@@ -104,7 +105,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProcessPurchase(string dDate)
+        public IActionResult ProcessPurchase(string dDate)
         {
             DateTime ddDate = DateTime.Parse(dDate).Date;
 
@@ -131,13 +132,13 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
 
         //// GET: PurchaseUploader/Details/5
-        //public ActionResult Details(int id)
+        //public IActionResult Details(int id)
         //{
         //    return View();
         //}
 
         //// GET: PurchaseUploader/Create
-        //public ActionResult Create()
+        //public IActionResult Create()
         //{
         //    return View();
         //}
@@ -145,7 +146,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //// POST: PurchaseUploader/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
+        //public IActionResult Create(IFormCollection collection)
         //{
         //    try
         //    {
@@ -160,7 +161,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //}
 
         //// GET: PurchaseUploader/Edit/5
-        //public ActionResult Edit(int id)
+        //public IActionResult Edit(int id)
         //{
         //    return View();
         //}
@@ -168,7 +169,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //// POST: PurchaseUploader/Edit/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
+        //public IActionResult Edit(int id, IFormCollection collection)
         //{
         //    try
         //    {
@@ -183,7 +184,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //}
 
         //// GET: PurchaseUploader/Delete/5
-        //public ActionResult Delete(int id)
+        //public IActionResult Delete(int id)
         //{
         //    return View();
         //}
@@ -191,7 +192,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         //// POST: PurchaseUploader/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
+        //public IActionResult Delete(int id, IFormCollection collection)
         //{
         //    try
         //    {

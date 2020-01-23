@@ -261,36 +261,32 @@ namespace AprajitaRetails.Ops.TAS
 
         // Converting purchase items to stock 
 
-        public int ProcessPurchaseInward(VoyagerContext _db, DateTime inDate, bool IsLocal)
+        public int ProcessPurchaseInward(VoyagerContext db, DateTime inDate, bool IsLocal)
         {
-            using (VoyagerContext db = _db)
+            
+            int ctr = 0;
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
+
+            if (data != null && data.Count() > 0)
             {
-                int ctr = 0;
-                var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
+                ProductPurchase PurchasedProduct = null;
 
-                if (data != null && data.Count() > 0)
+                foreach (var item in data)
                 {
-                    ProductPurchase PurchasedProduct = null;
-
-                    foreach (var item in data)
-                    {
-                        int pid = CreateProductItem(db, item);
-                        if (pid != -999)
-                            CreateStockItem(db, item, pid);
-                        PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct);
-                        PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
-                        item.IsDataConsumed = true;
-                        db.Entry(item).State = EntityState.Modified;
-                        ctr++;
-                    }
-                    if (PurchasedProduct != null)
-                        db.ProductPurchases.Add(PurchasedProduct);
-                    db.SaveChanges();
+                    int pid = CreateProductItem(db, item);
+                    if (pid != -999)
+                        CreateStockItem(db, item, pid);
+                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct);
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
+                    item.IsDataConsumed = true;
+                    db.Entry(item).State = EntityState.Modified;
+                    ctr++;
                 }
-                return ctr;
-
-
-            }//end of using
+                if (PurchasedProduct != null)
+                    db.ProductPurchases.Add(PurchasedProduct);
+                db.SaveChanges();
+            }
+            return ctr;
         }
 
 
