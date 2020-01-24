@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,19 +34,21 @@ namespace AprajitaRetails.Models
         public int SalesmanId { get; set; }
         public virtual Salesman Salesman { get; set; }
 
-        [Display(Name = "Is Due")]
+        [Display(Name = "Due")]
         public bool IsDue { get; set; }
 
-        [Display(Name = "Is Manual Bill")]
+        [Display(Name = "Manual Bill")]
         public bool IsManualBill { get; set; }
 
-        [Display(Name = "Is Tailoring Bill")]
+        [Display(Name = "Tailoring Bill")]
         public bool IsTailoringBill { get; set; }
 
-        [Display(Name = "Is Sale Return")]
+        [Display(Name = "Sale Return")]
         public bool IsSaleReturn { get; set; }
         public string Remarks { get; set; }
-
+        
+        [DefaultValue(false)]
+           public bool IsMatchedWithVOy { get; set; }
         //public virtual DuesList DuesList { get; set; }
 
     }

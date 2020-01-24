@@ -58,31 +58,8 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View();
 
         }
-        // GET: PurchaseUploader/Details/5
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return  NotFound();
-            }
-            if (id > 0)
-            {
-                var productPurchases1 = db.ProductPurchases.Include(p => p.Supplier).Include(c => c.PurchaseItems).Where(c => c.ProductPurchaseId == id);
-                if (productPurchases1 == null)
-                {
-                    return NotFound();
-                }
-                ViewBag.Details = "Invoice No: " + productPurchases1.FirstOrDefault().InvoiceNo;
-                return View(productPurchases1.ToList());
-            }
-            ViewBag.Details = "";
-            var productPurchases = db.ProductPurchases.Include(p => p.Supplier).Include(c => c.PurchaseItems);
-            if (productPurchases == null)
-            {
-                return NotFound();
-            }
-            return View(productPurchases.ToList());
-        }
+        
+       
         public IActionResult ListUpload(int? id)
         {
 
@@ -112,15 +89,16 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             int a = iManage.ProcessPurchaseInward(db,ddDate, false);
             //TODO: instead of product item . it should list purchase invoice with item
 
+            //TODO: Instead of displaying here. move to other page so back forward can be possible
+
             if (a > 0)
             {
 
+                return RedirectToAction ("ProcessedPurchase", new {id=a,onDate=ddDate });
 
-                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (ddDate.Date));
-                ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + a;
-                return View(dm.ToList());
-
-
+                //var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (ddDate.Date));
+                //ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + a;
+                //return View(dm.ToList());
             }
             else
             {
@@ -129,6 +107,37 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 return View(new List<ProductPurchase>());
             }
         }
-              
+        
+        public IActionResult ProcessedPurchase(int id,DateTime onDate)
+        {
+            var dm = db.ProductPurchases.Include (c => c.PurchaseItems).Where (c => c.InWardDate.Date == ( onDate.Date ));
+            ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
+            return View (dm.ToList ());            
+        }
+        // GET: PurchaseUploader/Details/5
+        public IActionResult Details(int? id)
+        {
+            if ( id == null )
+            {
+                return NotFound ();
+            }
+            if ( id > 0 )
+            {
+                var productPurchases1 = db.ProductPurchases.Include (p => p.Supplier).Include (c => c.PurchaseItems).Where (c => c.ProductPurchaseId == id);
+                if ( productPurchases1 == null )
+                {
+                    return NotFound ();
+                }
+                ViewBag.Details = "Invoice No: " + productPurchases1.FirstOrDefault ().InvoiceNo;
+                return View (productPurchases1.ToList ());
+            }
+            ViewBag.Details = "";
+            var productPurchases = db.ProductPurchases.Include (p => p.Supplier).Include (c => c.PurchaseItems);
+            if ( productPurchases == null )
+            {
+                return NotFound ();
+            }
+            return View (productPurchases.ToList ());
+        }
     }
 }

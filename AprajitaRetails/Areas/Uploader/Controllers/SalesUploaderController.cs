@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS;
 using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +17,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     public class SalesUploaderController : Controller
     {
         private readonly VoyagerContext db;
+        private readonly AprajitaRetailsContext aprajitaContext;
 
-        public SalesUploaderController(VoyagerContext context)
+        public SalesUploaderController(VoyagerContext context, AprajitaRetailsContext arContext)
         {
             db = context;
+            aprajitaContext = arContext;
         }
         // GET: SalesUploader
         public IActionResult Index()
@@ -40,10 +43,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ProcessSale(string dDate)
         {
-            DateTime ddDate = DateTime.Parse(dDate).Date;
+            DateTime ddDate = DateTime.Parse (dDate).Date;
 
             InventoryManger iManage = new InventoryManger();
-            int a = iManage.CreateSaleEntry(db,ddDate);
+            int a = iManage.CreateSaleEntry(db,ddDate, aprajitaContext);
             if (a > 0)
             {
                 var dm = db.SaleInvoices.Include(c => c.PaymentDetail).Where(c => c.OnDate == ddDate);

@@ -1,93 +1,9 @@
-﻿@model IEnumerable<AprajitaRetails.Areas.Purchase.Models.ProductPurchase>
-
+﻿
 @{
-    ViewData["Title"] = "ProcessPurchase";
+    ViewData ["Title"] = "ProcessPurchase";
 }
 
-<h2>Purchase Invoice Processed</h2>
+<h1>Process Purchase</h1>
 <p>
     <h4 class="text-center text-success"> @ViewBag.MessageHead</h4>
 </p>
-<table class="table table-bordered table-striped table-sm">
-    <thead class="table-success">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.InWardNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InWardDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PurchaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InvoiceNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalQty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalBasicAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShippingCost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalTax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Supplier)
-            </th>
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InWardNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InWardDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PurchaseDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InvoiceNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalQty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalBasicAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShippingCost)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalTax)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalAmount)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.SuppilerName)
-                </td>
-
-                <td class="btn-group btn-group-sm">
-                    <a class="btn btn-sm btn-outline-amber" asp-action="Edit" asp-route-id="@item.ProductPurchaseId">Edit</a> 
-                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.ProductPurchaseId">Details</a> 
-                   
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>

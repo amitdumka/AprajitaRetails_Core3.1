@@ -3,18 +3,15 @@
 @{
     ViewData["Title"] = "ListUpload";
 }
-
     <h2 class="purple-text">Purchase List</h2>
-
-    
+   
         <div class="btn-group btn-group-sm">
             <a class="btn btn-outline-primary" asp-action="ListUpLoad" asp-route-id="101">All</a>
             <a class="btn btn-outline-secondary" asp-action="ListUpLoad" asp-route-id="100">Processed</a>
             <a class="btn btn-outline-warning" asp-action="ListUpLoad" asp-route-id="">Pending</a>
 
         </div>     
-        <hr/>
-    
+        <hr/>   
 <table class="table table-bordered table-hover table-sm table-striped text-center">
     <thead class="bg-success">
         <tr>
@@ -87,12 +84,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CostValue)
                 </td>
-                <td class="btn-group btn-group-sm">
+                <td >
                     <form asp-action="ProcessPurchase">
                         <input type="hidden" name="dDate" value=@item.GRNDate.ToShortDateString() />
                         <input type="submit" value="Process it" class="btn btn-outline-warning btn-sm" />
                     </form>
-                    <a class="btn btn-outline-amber" asp-action="ProcessPurchase" asp-protocol="post" asp-route-dDate="@item.GRNDate.ToShortDateString()">Process</a>                   
                 </td>
             </tr>
         }
