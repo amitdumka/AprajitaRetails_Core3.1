@@ -103,6 +103,11 @@ namespace AprajitaRetails.Areas.Uploader.Models
         [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;
 
+        [DefaultValue(false)]
+        public bool IsVatBill { get; set; }
+        [DefaultValue(false)]
+        public bool IsLocal { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
                                                                   // is data imported to relevent table

@@ -39,7 +39,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
                 Saleman = data.Saleman,
                 SGST = data.SGST,
                 StyleCode = data.StyleCode,
-                Tax = data.Tax
+                Tax = data.Tax, IsLocal=data.IsLocal, IsVatBill=data.IsVatBill
             };
             return item;
         }
@@ -134,6 +134,9 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;
+
+        public bool IsVatBill { get; set; }
+        public bool IsLocal { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import

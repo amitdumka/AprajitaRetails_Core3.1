@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using LinqToExcel.Attributes;
@@ -41,6 +42,10 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         [ExcelColumn("Total Cost")]
         public decimal TotalCost { get; set; }
+        
+        [DefaultValue(false)]
+        public bool IsDataConsumed { get; set; } = false;// is data imported to relevent table
+
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? ImportDate { get; set; } = DateTime.Now;
