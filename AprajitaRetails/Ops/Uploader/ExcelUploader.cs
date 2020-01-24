@@ -129,44 +129,60 @@ namespace AprajitaRetails.Ops.Uploader
                 //Style Code 9	Quantity 10	MRP	11 Discount Amt 12	Basic Amt 13	Tax Amt 14	SGST Amt 15	
                 //CGST Amt 16	CESS Amt 17	Line Total 18	Round Off 19	Bill Amt 20	Payment Mode 21	SalesMan Name 22	//
                 //Coupon %	Coupon Amt	SUB TYPE	Bill Discount	LP Flag	Inst Order CD	TAILORING FLAG
-                ImportSaleItemWise p = new ImportSaleItemWise
+
+                try
                 {
-                    InvoiceNo = workSheet.Cells[i, 1].Value.ToString(),
-                    InvoiceDate = (DateTime)workSheet.Cells[i, 2].GetValue<DateTime>(),
-                    InvoiceType = workSheet.Cells[i, 3].Value.ToString(),
+                    
+                    ImportSaleItemWise p = new ImportSaleItemWise
+                    {
+                        InvoiceNo = (workSheet.Cells [i, 1].Value ?? string.Empty ).ToString (),
+                        InvoiceDate = (DateTime) workSheet.Cells [i, 2].GetValue<DateTime> (),
+                        InvoiceType = (workSheet.Cells [i, 3].Value ?? string.Empty ).ToString (),
 
-                    BrandName = workSheet.Cells[i, 4].Value.ToString(),
-                    ProductName = workSheet.Cells[i, 5].Value.ToString(),
-                    ItemDesc = workSheet.Cells[i, 6].Value.ToString(),
-                    HSNCode = workSheet.Cells[i, 7].Value.ToString(),
-                    Barcode = workSheet.Cells[i, 8].Value.ToString(),
+                        BrandName = (workSheet.Cells [i, 4].Value ?? string.Empty ).ToString (),
+                        ProductName =( workSheet.Cells [i, 5].Value ?? string.Empty ).ToString (),
+                        ItemDesc = (workSheet.Cells [i, 6].Value ?? string.Empty ).ToString (),
+                       
+                        Barcode =(workSheet.Cells [i, 8].Value ?? string.Empty ).ToString (),
 
-                    StyleCode = workSheet.Cells[i, 9].Value.ToString(),
-                    Quantity = (double)workSheet.Cells[i, 10].Value,
-                    MRP = (decimal)workSheet.Cells[i, 11].GetValue<decimal>(),
-                    Discount = (decimal)workSheet.Cells[i, 12].GetValue<decimal>(),
-                    BasicRate = (decimal)workSheet.Cells[i, 13].GetValue<decimal>(),
-                    Tax = (decimal)workSheet.Cells[i, 14].GetValue<decimal>(),
-                    SGST = (decimal)workSheet.Cells[i, 15].GetValue<decimal>(),
+                        StyleCode =( workSheet.Cells [i, 9].Value ?? string.Empty ).ToString (),
+                        PaymentType = (workSheet.Cells [i, 21].Value ?? string.Empty ).ToString (),
+                        Saleman =( workSheet.Cells [i, 22].Value ?? string.Empty ).ToString (),
 
-                    CGST = (decimal)workSheet.Cells[i, 16].GetValue<decimal>(),
-                    //CESS = (decimal)workSheet.Cells[i, 17].GetValue<decimal>(),
-                    LineTotal = (decimal)workSheet.Cells[i, 18].GetValue<decimal>(),
-                    RoundOff = (decimal)workSheet.Cells[i, 19].GetValue<decimal>(),
-                    BillAmnt = (decimal)workSheet.Cells[i, 20].GetValue<decimal>(),
-                    PaymentType = workSheet.Cells[i, 21].Value.ToString(),
-                    Saleman = workSheet.Cells[i, 22].Value.ToString(),
+                        IsDataConsumed = false,
+                        ImportTime = DateTime.Today,
+                        IsLocal = IsLocal,
+                        IsVatBill = IsVat
+                    
+                    };
 
-                    IsDataConsumed = false,
-                    ImportTime = DateTime.Today,
-                    IsLocal = IsLocal,
-                    IsVatBill = IsVat
-                };
+                    p.HSNCode = (workSheet.Cells [i, 7].Value ?? string.Empty).ToString ();
+                    p.Quantity = (double) workSheet.Cells [i, 10].GetValue<double> ();
+                    p.MRP = (decimal) workSheet.Cells [i, 11].GetValue<decimal> ();
+                    p.Discount = (decimal) workSheet.Cells [i, 12].GetValue<decimal> ();
+                    p.BasicRate = (decimal) workSheet.Cells [i, 13].GetValue<decimal> ();
+                    p.Tax = (decimal) workSheet.Cells [i, 14].GetValue<decimal> ();
+                    p.SGST = (decimal) workSheet.Cells [i, 15].GetValue<decimal> ();
 
-                saleList.Add(p);
+                    p.CGST = (decimal) workSheet.Cells [i, 16].GetValue<decimal> ();
+                    //p.CESS = (decimal)workSheet.Cells[i, 17].GetValue<decimal>();
+                    p.LineTotal = (decimal) workSheet.Cells [i, 18].GetValue<decimal> ();
+                    p.RoundOff = (decimal) workSheet.Cells [i, 19].GetValue<decimal> ();
+                    p.BillAmnt = (decimal) workSheet.Cells [i, 20].GetValue<decimal> ();
+                    
+
+                    saleList.Add (p);
 
 
-                xo++;
+                    xo++;
+                }
+                catch ( Exception ex )
+                {
+                    Console.WriteLine ("Error: " + ex.Message);
+                   // return UploadReturns.Error;
+                    throw;
+                }
+                
             }
 
             db.ImportSaleItemWises.AddRange(saleList);

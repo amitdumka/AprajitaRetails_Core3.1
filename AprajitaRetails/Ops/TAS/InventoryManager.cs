@@ -518,9 +518,9 @@ namespace AprajitaRetails.Ops.TAS
         #endregion
 
         #region Sale
-        public int CreateSaleEntry(VoyagerContext _db, DateTime onDate)
+        public int CreateSaleEntry(VoyagerContext db, DateTime onDate)
         {
-            using VoyagerContext db = _db;
+            
             int ctr = 0;
 
             //bool isVat = false;
@@ -798,8 +798,17 @@ namespace AprajitaRetails.Ops.TAS
             // Always GST and with Local Sale
 
             //Calulate Rate
-            decimal rate = 0;
-            rate = ((item.SGST + item.CGST) * 100) / item.BasicRate;
+            decimal rate = 0; 
+            try
+            {
+                rate = ( ( item.SGST + item.CGST ) * 100 ) / item.BasicRate;
+            }
+            catch ( DivideByZeroException )
+            {
+
+                rate = 0;
+            }
+           
             int taxId = 1;
 
             try
