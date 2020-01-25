@@ -9,6 +9,8 @@ namespace AprajitaRetails.Areas.Sales.Models
         [Display(Name = "Salesman")]
         public string SalesmanName { get; set; }
         public virtual ICollection<SaleItem> SaleItems { get; set; }
+        public virtual ICollection<ManualSaleItem> ManualSaleItems { get; set; }
+
     }
 
 

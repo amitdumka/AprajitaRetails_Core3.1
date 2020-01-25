@@ -28,6 +28,7 @@ namespace AprajitaRetails.Areas.Sales.Models
         public virtual CardPaymentDetail CardDetails { get; set; }
 
         public virtual SaleInvoice SaleInvoice { get; set; }
+        public virtual ManualInvoice ManaulInvoice { get; set; }
 
     }
 

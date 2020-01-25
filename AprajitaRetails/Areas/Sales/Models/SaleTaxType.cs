@@ -16,6 +16,7 @@ namespace AprajitaRetails.Areas.Sales.Models
 
         //Navigation
         public ICollection<SaleItem> SaleItems { get; set; }
+        public ICollection<ManualSaleItem> ManualSaleItems { get; set; }
     }
 
 
