@@ -4,14 +4,16 @@ using AprajitaRetails.Areas.Voyager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations.Voyager
 {
     [DbContext(typeof(VoyagerContext))]
-    partial class VoyagerContextModelSnapshot : ModelSnapshot
+    [Migration("20200125175127_Onetowthere")]
+    partial class Onetowthere
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,40 +310,6 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.ToTable("CardPaymentDetails");
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.ManualCardPaymentDetail", b =>
-                {
-                    b.Property<int>("ManualCardPaymentDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("AuthCode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CardType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LastDigit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ManualSaleInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ManualSalePaymentDetailId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ManualCardPaymentDetailId");
-
-                    b.HasIndex("ManualSalePaymentDetailId")
-                        .IsUnique()
-                        .HasFilter("[ManualSalePaymentDetailId] IS NOT NULL");
-
-                    b.ToTable("ManualCardPaymentDetail");
-                });
-
             modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.ManualInvoice", b =>
                 {
                     b.Property<int>("ManualInvoiceId")
@@ -435,28 +403,6 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.HasIndex("SalesPersonId");
 
                     b.ToTable("ManualSaleItem");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.ManualSalePaymentDetail", b =>
-                {
-                    b.Property<int>("ManualSalePaymentDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("CardAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("CashAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("MixAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("PayMode")
-                        .HasColumnType("int");
-
-                    b.HasKey("ManualSalePaymentDetailId");
-
-                    b.ToTable("ManualSalePaymentDetail");
                 });
 
             modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.SaleInvoice", b =>
@@ -1046,13 +992,6 @@ namespace AprajitaRetails.Migrations.Voyager
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.ManualCardPaymentDetail", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.ManualSalePaymentDetail", "SalePaymentDetail")
-                        .WithOne("CardDetails")
-                        .HasForeignKey("AprajitaRetails.Areas.Sales.Models.ManualCardPaymentDetail", "ManualSalePaymentDetailId");
-                });
-
             modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.ManualSaleItem", b =>
                 {
                     b.HasOne("AprajitaRetails.Areas.Sales.Models.ManualInvoice", "SaleInvoice")
@@ -1074,15 +1013,6 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.HasOne("AprajitaRetails.Areas.Sales.Models.SalesPerson", "Salesman")
                         .WithMany("ManualSaleItems")
                         .HasForeignKey("SalesPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.ManualSalePaymentDetail", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.ManualInvoice", "ManualInvoice")
-                        .WithOne("PaymentDetail")
-                        .HasForeignKey("AprajitaRetails.Areas.Sales.Models.ManualSalePaymentDetail", "ManualSalePaymentDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
