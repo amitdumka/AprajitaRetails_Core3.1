@@ -4,6 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 //http://abctutorial.com/Post/35/mvc-5-master-details-using-jquery-ajax
+//https://demo.aspnetawesome.com/GridNestingDemo#Master-detail-grid
+//https://www.codeproject.com/Articles/531916/Master-Details-using-ASP-NET-MVC
+//https://www.codeproject.com/Tips/1057064/MVC-Master-Detail-Example-with-Partial-View-and-Mo
+//https://www.youtube.com/watch?v=ir9cMbNQP4w
+//https://www.youtube.com/watch?v=wQZRC7vXT08
+//http://www.dotnetawesome.com/2016/07/advance-master-details-entry-form-in-mvc.html
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
     public class ManualInvoiceController : Controller
