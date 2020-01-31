@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="oldDataBackup\**" />
+    <Content Remove="oldDataBackup\**" />
+    <EmbeddedResource Remove="oldDataBackup\**" />
+    <None Remove="oldDataBackup\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Areas\PayRoll\Views\Employees\EmpDetails.cshtml" />
   </ItemGroup>
 
@@ -31,22 +38,25 @@
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="LinqToExcel" Version="1.11.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Extensions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.44" />
