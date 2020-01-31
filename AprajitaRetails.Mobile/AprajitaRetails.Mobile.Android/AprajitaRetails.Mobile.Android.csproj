@@ -85,11 +85,5 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AprajitaRetails.Mobile\AprajitaRetails.Mobile.csproj">
-      <Project>{1B7BA3B6-8233-4D9C-AD0E-F7E64CE85ABE}</Project>
-      <Name>AprajitaRetails.Mobile</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
