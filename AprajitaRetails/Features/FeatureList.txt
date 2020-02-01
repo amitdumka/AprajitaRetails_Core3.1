@@ -5,3 +5,7 @@ calculate curent month expenses,
 calcualte profit and loss of today month year, fin year
 Duelist, Pending duelist, recovered duelist, more than 30days not recovered due list. 
 warninig message for storemanager, 
+
+
+
+tailoring and staff attendce of staff for month and year should be shown as it was in old 

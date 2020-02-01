@@ -28,12 +28,16 @@ namespace AprajitaRetails.Controllers
         {
             MasterViewReport reportView = new MasterViewReport
             {
-                
+
                 SaleReport = SaleWidgetModel.GetSaleRecord (_context),
                 TailoringReport = HomeWidgetModel.GetTailoringReport (_context),
                 EmpInfoList = HomeWidgetModel.GetEmpInfo (_context),
                 AccountsInfo = HomeWidgetModel.GetAccoutingRecord (_context)
             };
+
+
+
+            
             return View (reportView);
             
         }

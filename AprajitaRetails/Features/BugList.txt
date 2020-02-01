@@ -1,1 +1,10 @@
 ﻿Filter Button on DailySale not working
+
+1)staff attendence got bug while deleting
+2)tailoring attendce , sorting should decremental 
+3)it should have sorting option 
+
+4) daily sale cashinbank not update while in selecting card
+
+
+
