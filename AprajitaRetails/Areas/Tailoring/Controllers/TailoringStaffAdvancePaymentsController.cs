@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.TailoringStaffAdvancePayments.Include(t => t.Employee);
+            var aprajitaRetailsContext = _context.TailoringStaffAdvancePayments.Include(t => t.Employee).OrderByDescending (c => c.PaymentDate);
            return View(await PaginatedList<TailoringStaffAdvancePayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }

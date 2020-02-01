@@ -1,4 +1,4 @@
-﻿1)Filter Button on DailySale not working
+﻿
 4) daily sale cashinbank not update while in selecting card
 
 

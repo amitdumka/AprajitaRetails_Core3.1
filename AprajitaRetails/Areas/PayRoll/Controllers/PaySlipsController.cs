@@ -35,7 +35,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.PaySlips.Include(p => p.CurrentSalary).Include(p => p.Employee);
+            var aprajitaRetailsContext = _context.PaySlips.Include(p => p.CurrentSalary).Include(p => p.Employee).OrderByDescending (c => c.OnDate);
            return View(await PaginatedList<PaySlip>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }

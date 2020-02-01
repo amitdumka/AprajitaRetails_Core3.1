@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.TailoringStaffAdvanceReceipts.Include(t => t.Employee);
+            var aprajitaRetailsContext = _context.TailoringStaffAdvanceReceipts.Include(t => t.Employee).OrderByDescending (c => c.ReceiptDate);
            return View(await PaginatedList<TailoringStaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }

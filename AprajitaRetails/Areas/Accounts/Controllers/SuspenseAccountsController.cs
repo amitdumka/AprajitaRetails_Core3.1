@@ -35,7 +35,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View(await PaginatedList<SuspenseAccount>.CreateAsync(_context.Suspenses.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprajitaretailscontext = _context.Suspenses.OrderByDescending (c => c.EntryDate);
+            return View(await PaginatedList<SuspenseAccount>.CreateAsync(aprajitaretailscontext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.Suspenses.ToListAsync());
         }
 

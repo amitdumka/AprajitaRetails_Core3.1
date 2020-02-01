@@ -34,7 +34,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var vd = _context.CashPayments.Include(c => c.Mode).Where(c => c.Mode.Transcation == "Home Expenses" && c.PaymentDate.Month == DateTime.Today.Month);
+            var vd = _context.CashPayments.Include(c => c.Mode).Where(c => c.Mode.Transcation == "Home Expenses" && c.PaymentDate.Month == DateTime.Today.Month).OrderByDescending(c=>c.PaymentDate);
             int pageSize = 10;
             
             if (vd != null)
@@ -45,7 +45,9 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 
                 return PartialView(await PaginatedList<CashPayment>.CreateAsync(vd.AsNoTracking(), pageNumber ?? 1, pageSize));
             }
+            
             return PartialView(await PaginatedList<CashPayment>.CreateAsync(vd.AsNoTracking(), pageNumber ?? 1, pageSize));
+           
             //TODO: Implement for if vd/Data return is null.
             //else
             // return PartialView(await PaginatedList<CashPayment>.CreateAsync(new CashPayment(), pageNumber ?? 1, pageSize));
@@ -66,7 +68,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
 
 
             ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.CashPayments.Include(c => c.Mode);
+            var aprajitaRetailsContext = _context.CashPayments.Include(c => c.Mode).OrderByDescending(c=>c.PaymentDate);
 
             int pageSize = 10;
            return View(await PaginatedList<CashPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));

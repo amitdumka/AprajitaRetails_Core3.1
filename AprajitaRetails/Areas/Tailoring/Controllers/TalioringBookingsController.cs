@@ -44,7 +44,8 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-           return View(await PaginatedList<TalioringBooking>.CreateAsync(_context.TalioringBookings.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprcontext = _context.TalioringBookings.OrderByDescending (c => c.BookingDate).ThenBy(c=>c.DeliveryDate);
+           return View(await PaginatedList<TalioringBooking>.CreateAsync(aprcontext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.TalioringBookings.ToListAsync());
         }
 

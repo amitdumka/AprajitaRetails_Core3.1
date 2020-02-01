@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.TailoringDeliveries.Include(t => t.Booking);
+            var aprajitaRetailsContext = _context.TailoringDeliveries.Include(t => t.Booking).OrderByDescending (c => c.DeliveryDate);
            return View(await PaginatedList<TalioringDelivery>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }

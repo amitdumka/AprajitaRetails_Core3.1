@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee);
+            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).OrderByDescending (c => c.ReceiptDate);
 
            return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             

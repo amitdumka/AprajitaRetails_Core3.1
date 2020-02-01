@@ -37,7 +37,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale);
+            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale).OrderByDescending (c => c.PaidDate);
            return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return PartialView(await aprajitaRetailsContext.ToListAsync());
         }

@@ -37,7 +37,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.BankDeposits.Include(b => b.Account);
+            var aprajitaRetailsContext = _context.BankDeposits.Include(b => b.Account).OrderByDescending(c=>c.DepoDate);
             // return View(await aprajitaRetailsContext.ToListAsync());
             return View(await PaginatedList<BankDeposit>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }

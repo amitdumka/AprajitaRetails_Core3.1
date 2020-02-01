@@ -35,7 +35,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.CashInHands.OrderByDescending(c => c.CIHDate);
+            var aprajitaRetailsContext = _context.CashInHands.OrderByDescending(c => c.CIHDate).OrderByDescending (c => c.CIHDate);
             return View(await PaginatedList<CashInHand>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.CashInHands.ToListAsync());
         }

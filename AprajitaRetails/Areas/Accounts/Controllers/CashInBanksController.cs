@@ -35,7 +35,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.CashInBanks.OrderByDescending(c=>c.CIBDate);
+            var aprajitaRetailsContext = _context.CashInBanks.OrderByDescending(c=>c.CIBDate).OrderByDescending(c=>c.CIBDate);
             return View(await PaginatedList<CashInBank>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.CashInBanks.ToListAsync());
         }

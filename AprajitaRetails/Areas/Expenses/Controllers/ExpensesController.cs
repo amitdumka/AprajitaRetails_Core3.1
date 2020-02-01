@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.Expenses.Include(e => e.PaidBy);
+            var aprajitaRetailsContext = _context.Expenses.Include(e => e.PaidBy).OrderByDescending(c=>c.ExpDate);
            return View(await PaginatedList<Expense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
