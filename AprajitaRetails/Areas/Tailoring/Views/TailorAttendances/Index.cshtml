@@ -7,7 +7,10 @@
 <h1 class="text-danger">Tailor Attendance</h1>
 
 <p>
-    <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
+    <a class="btn btn-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
+    <a class="btn btn-orange btn-sm" asp-action="Index" asp-route-id="">Today</a>
+    <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
+    <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
 </p>
 <table class="table table-sm table-bordered table-hover table-striped">
      <thead class="bg-success">
@@ -49,9 +52,10 @@
                 @Html.DisplayFor(modelItem => item.Remarks)
             </td>
             <td class="btn-group btn-group-sm">
-               <a  class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TailorAttendanceId">Edit</a>
-               <a  class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TailorAttendanceId">Details</a>
-               <a  class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TailorAttendanceId">Delete</a>
+                <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.TailorAttendanceId">Edit</a>
+                <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.TailorAttendanceId">Details</a>
+                <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.TailorAttendanceId">Delete</a>
+                <a class="btn btn-outline-default" asp-action="EmpDetails" asp-route-id="@item.TailorAttendanceId" id="detail" data_modal="">List</a>
             </td>
         </tr>
 }

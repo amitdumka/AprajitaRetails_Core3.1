@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AprajitaRetails.Models.Attendance>
+@{
+    ViewData ["Title"] = "Attendance Details";
+}
+
+<h3 class="text-danger">Attendance of Emp: <strong class="text-info">@ViewBag.EmpName</strong></h3>
+<hr />
+
+<div class="table">
+    <ul>
+
+        <li class="text-success"> <strong class="text-warning">Present/HalfDay: </strong>@ViewBag.Present / @ViewBag.HalfDays</li>
+        <li class="text-success"> <strong class="text-warning">Sundays/Present: </strong> @ViewBag.Sundays / @ViewBag.SundayPresent</li>
+        <li class="text-success"> <strong class="text-warning">Absent:</strong> @ViewBag.Absent </li>
+
+        <li class="text-success"> <strong class="text-warning">Working Days/Total Present: </strong> @ViewBag.WorkingDays / @ViewBag.Total</li>
+
+    </ul>
+
+
+</div>
+<table class="table table-bordered table-condensed table-hover">
+    <tr class="table-danger">
+
+        <th>
+            @Html.DisplayNameFor(model => model.AttDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntryTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </th>
+
+    </tr>
+
+    @foreach ( var item in Model )
+    {
+        <tr class="bg-light">
+
+            <td>
+                @Html.DisplayFor(modelItem => item.AttDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryTime)
+            </td>
+            @if ( item.Status == AttUnits.Absent )
+            {
+                <td class="text-danger">
+
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            }
+            else
+            {
+                <td class="text-primary">
+
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+
+        </tr>
+    }
+
+</table>

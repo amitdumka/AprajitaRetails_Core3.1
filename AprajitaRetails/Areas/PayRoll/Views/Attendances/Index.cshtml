@@ -7,8 +7,8 @@
 <h1 class="text-danger">Attendances</h1>
 
 <p>
-    <a class="btn btn-teal btn-sm" asp-action="Create" id="create" data_modal="">Create New</a>
-    <a class="btn btn-grey btn-sm" asp-action="Index" asp-route-id="">Today</a>
+    <a class="btn btn-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
+    <a class="btn btn-orange btn-sm" asp-action="Index" asp-route-id="">Today</a>
     <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
     <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
 </p>
@@ -52,10 +52,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Remarks)
                 </td>
-                <td class="btn-group">
-                    <a class="btn btn-outline-amber btn-sm" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
-                    <a class="btn btn-outline-dark-green btn-sm" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
-                    <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
+                <td class="btn-group btn-group-sm">
+                    <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
+                    <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
+                    <a class="btn btn-outline-default" asp-action="EmpDetails"  asp-route-id="@item.AttendanceId" id="detail" data_modal="">List</a>
                 </td>
             </tr>
         }

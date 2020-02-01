@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using TAS_AprajiataRetails.Models.Helpers;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -34,6 +35,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today);
+
             if (id == 101)
             {
                  aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).OrderByDescending(c=>c.AttDate).ThenBy(c=>c.EmployeeId);
@@ -50,6 +52,45 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
            return View(await PaginatedList<Attendance>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+
+        public async Task<IActionResult> EmpDetails(int? id)
+        {
+            if ( id == null )
+            {
+                return NotFound();
+            }
+            //Attendance attendance = db.Attendances.Include (c => c.Employee).Where (c => c.AttendanceId == id).FirstOrDefault ();
+
+            var empid = _context.Attendances.Find (id).EmployeeId;
+            var attList = _context.Attendances.Include (c => c.Employee)
+                .Where (c => c.EmployeeId == empid && c.AttDate.Month ==  DateTime.Today.Month)
+                .OrderBy (c => c.AttDate);
+
+            var p = attList.Where (c => c.Status == AttUnits.Present).Count ();
+            var a = attList.Where (c => c.Status == AttUnits.Absent).Count ();
+            int noofdays = DateTime.DaysInMonth (DateTime.Today.Year, DateTime.Today.Month);
+            int noofsunday = DateHelper.CountDays (DayOfWeek.Sunday, DateTime.Today);
+            int sunPresent = attList.Where (c => c.Status == AttUnits.Sunday).Count ();
+            int halfDays = attList.Where (c => c.Status == AttUnits.HalfDay).Count ();
+            int totalAtt = p + sunPresent + ( halfDays / 2 );
+
+            ViewBag.Present = p;
+            ViewBag.Absent = a;
+            ViewBag.WorkingDays = noofdays;
+            ViewBag.Sundays = noofsunday;
+            ViewBag.SundayPresent = sunPresent;
+            ViewBag.HalfDays = halfDays;
+            ViewBag.Total = totalAtt;
+
+
+            if ( attList == null )
+            {
+                return NotFound ();
+            }
+            if ( attList.Any () )
+                ViewBag.EmpName = attList.First ().Employee.StaffName;
+            return PartialView (await attList.ToListAsync());
+        }
         // GET: Attendances/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -58,9 +99,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-            var attendance = await _context.Attendances
-                .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceId == id);
+            var attendance = await _context.Attendances.Include(a => a.Employee).FirstOrDefaultAsync(m => m.AttendanceId == id);
             if (attendance == null)
             {
                 return NotFound();
