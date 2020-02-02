@@ -19,6 +19,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 
 using System.Net;
 using System.Net.Mail;
+using AprajitaRetails.Areas.Chat.Models.Hubs;
 
 namespace AprajitaRetails
 {
@@ -48,7 +49,7 @@ namespace AprajitaRetails
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+            services.AddSignalR ();
 
             //Email Service added
             //services.AddScoped<SmtpClient> ((serviceProvider) =>
@@ -122,7 +123,11 @@ namespace AprajitaRetails
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseRequestLocalization();
+            app.UseSignalR (route =>
+            {
+                route.MapHub<ChatHub> ("/Chat/ARChat/Index");
 
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -64,6 +64,7 @@ namespace AprajitaRetails.Ops.TAS.Mails
     }
 }
 
+//https://github.com/jstedfast/MailKit
 
 //S.No Email Provider SMTP Server(Host ) Port Number
 //1	Gmail smtp.gmail.com  587
@@ -71,3 +72,54 @@ namespace AprajitaRetails.Ops.TAS.Mails
 //3	Yahoo Mail  smtp.mail.yahoo.com 465
 //5	Hotmail smtp.live.com   465
 //6	Office365.com smtp.office365.com  587
+
+
+//public static void Main(string [] args)
+//{ // Retrieving Messages (via Pop3)
+//    using ( var client = new Pop3Client () )
+//    {
+//        // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+//        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+//        client.Connect ("pop.friends.com", 110, false);
+
+//        client.Authenticate ("joey", "password");
+
+//        for ( int i = 0 ; i < client.Count ; i++ )
+//        {
+//            var message = client.GetMessage (i);
+//            Console.WriteLine ("Subject: {0}", message.Subject);
+//        }
+
+//        client.Disconnect (true);
+//    }
+//}
+
+//IMAP
+//public static void Main(string [] args)
+//{
+//    using ( var client = new ImapClient () )
+//    {
+//        // For demo-purposes, accept all SSL certificates
+//        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+//        client.Connect ("imap.friends.com", 993, true);
+
+//        client.Authenticate ("joey", "password");
+
+//        // The Inbox folder is always available on all IMAP servers...
+//        var inbox = client.Inbox;
+//        inbox.Open (FolderAccess.ReadOnly);
+
+//        Console.WriteLine ("Total messages: {0}", inbox.Count);
+//        Console.WriteLine ("Recent messages: {0}", inbox.Recent);
+
+//        for ( int i = 0 ; i < inbox.Count ; i++ )
+//        {
+//            var message = inbox.GetMessage (i);
+//            Console.WriteLine ("Subject: {0}", message.Subject);
+//        }
+
+//        client.Disconnect (true);
+//    }
+//}

@@ -32,6 +32,11 @@
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
     <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\signalr\signalr.min.js" />
+    <None Include="wwwroot\signalr\signalr.js" />
+    <None Include="wwwroot\signalr\signalr.js.map" />
+    <None Include="wwwroot\signalr\signalr.min.js" />
+    <None Include="wwwroot\signalr\signalr.min.js.map" />
   </ItemGroup>
 
 
@@ -71,6 +76,7 @@
   <ItemGroup>
     <Folder Include="Areas\Accounts\Data\" />
     <Folder Include="Areas\Banking\Data\" />
+    <Folder Include="Areas\Chat\Data\" />
     <Folder Include="Areas\Expenses\Data\" />
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />

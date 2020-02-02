@@ -5,3 +5,22 @@ calculate curent month expenses,
 calcualte profit and loss of today month year, fin year
 Duelist, Pending duelist, recovered duelist, more than 30days not recovered due list. 
 warninig message for storemanager, 
+
+
+
+MLOgs  or status on mail
+1 on wow bill
+2 on LP
+3 on expenese above 100 rs, 
+4 staff payment 
+5 dues bill
+6 manual bill
+7 dues recovery
+8 end of days
+9 diffenece in cash in hand 
+10 negative cash in hand
+11 bank deposit and width
+12 payment to arvind
+
+on try catch , when ever error happends on app, send error mail
+

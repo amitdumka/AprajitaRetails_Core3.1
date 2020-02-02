@@ -16,7 +16,7 @@ namespace AprajitaRetails.Ops.Triggers
                 if ( attendance.Status != AttUnits.Present )
                 {
                     var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                    MyMail.SendEmail (sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + "on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                    MyMail.SendEmail (sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
                 }
                 else if ( attendance.Status == AttUnits.Sunday )
                 {
@@ -25,13 +25,13 @@ namespace AprajitaRetails.Ops.Triggers
             } else if ( isDeleted )
             {
                 var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                MyMail.SendEmail (sName + " Attendance Report status for delete.", sName + " is deleted and current status was " + attendance.Status + "on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                MyMail.SendEmail (sName + " Attendance Report status for delete.", sName + " is deleted and current status was " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
 
             }else if ( isUpdated )
             {
                 var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
                 var before = db.Attendances.Where (c => c.AttendanceId == attendance.AttendanceId).Select (c => c.Status).FirstOrDefault ();
-                MyMail.SendEmail (sName + " Attendance Report  status for Updated Record. It was "+before, sName + " is updated and current status is " + attendance.Status + "on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                MyMail.SendEmail (sName + " Attendance Report  status for Updated Record. It was "+before, sName + " is updated and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
 
             }
 
