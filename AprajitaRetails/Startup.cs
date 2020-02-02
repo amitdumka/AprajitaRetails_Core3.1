@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using AprajitaRetails.Areas.Voyager.Data;
 
+using System.Net;
+using System.Net.Mail;
+
 namespace AprajitaRetails
 {
     public class Startup
@@ -46,6 +49,35 @@ namespace AprajitaRetails
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
+
+            //Email Service added
+            //services.AddScoped<SmtpClient> ((serviceProvider) =>
+            //{
+            //    var config = serviceProvider.GetRequiredService<IConfiguration> ();
+            //    return new SmtpClient ()
+            //    {
+            //        Host = config.GetValue<String> ("Email:Smtp:Host"),
+            //        Port = config.GetValue<int> ("Email:Smtp:Port"),
+            //        Credentials = new NetworkCredential (
+            //                config.GetValue<String> ("Email:Smtp:Username"),
+            //                config.GetValue<String> ("Email:Smtp:Password")
+            //            )
+            //    };
+            //});
+
+            //services.AddTransient<SmtpClient> ((serviceProvider) =>
+            //{
+            //    var config = serviceProvider.GetRequiredService<IConfiguration> ();
+            //    return new SmtpClient ()
+            //    {
+            //        Host = config.GetValue<String> ("Email:Smtp:Host"),
+            //        Port = config.GetValue<int> ("Email:Smtp:Port"),
+            //        Credentials = new NetworkCredential (
+            //                config.GetValue<String> ("Email:Smtp:Username"),
+            //                config.GetValue<String> ("Email:Smtp:Password")
+            //            )
+            //    };
+            //});
             services.AddControllersWithViews();
             services.AddRazorPages();
 

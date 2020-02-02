@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using TAS_AprajiataRetails.Models.Helpers;
+using AprajitaRetails.Ops.TAS.Mails;
+using AprajitaRetails.Ops.Triggers;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -126,6 +128,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 _context.Add(attendance);
                 await _context.SaveChangesAsync();
+                new PayRollManager ().ONInsertOrUpdate (_context, attendance,false,false);
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
@@ -165,6 +169,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
+                    new PayRollManager ().ONInsertOrUpdate (_context, attendance, false, true);
                     _context.Update(attendance);
                     await _context.SaveChangesAsync();
                 }
@@ -210,6 +215,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var attendance = await _context.Attendances.FindAsync(id);
+            new PayRollManager ().ONInsertOrUpdate (_context, attendance, true, false);
             _context.Attendances.Remove(attendance);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
