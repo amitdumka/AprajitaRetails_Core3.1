@@ -20,6 +20,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 using System.Net;
 using System.Net.Mail;
 using AprajitaRetails.Areas.Chat.Models.Hubs;
+using Microsoft.AspNetCore.Http;
 
 namespace AprajitaRetails
 {
@@ -35,6 +36,13 @@ namespace AprajitaRetails
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions> (options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -48,37 +56,11 @@ namespace AprajitaRetails
                    Configuration.GetConnectionString("VoyagerConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                 
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+           
             services.AddSignalR ();
-
-            //Email Service added
-            //services.AddScoped<SmtpClient> ((serviceProvider) =>
-            //{
-            //    var config = serviceProvider.GetRequiredService<IConfiguration> ();
-            //    return new SmtpClient ()
-            //    {
-            //        Host = config.GetValue<String> ("Email:Smtp:Host"),
-            //        Port = config.GetValue<int> ("Email:Smtp:Port"),
-            //        Credentials = new NetworkCredential (
-            //                config.GetValue<String> ("Email:Smtp:Username"),
-            //                config.GetValue<String> ("Email:Smtp:Password")
-            //            )
-            //    };
-            //});
-
-            //services.AddTransient<SmtpClient> ((serviceProvider) =>
-            //{
-            //    var config = serviceProvider.GetRequiredService<IConfiguration> ();
-            //    return new SmtpClient ()
-            //    {
-            //        Host = config.GetValue<String> ("Email:Smtp:Host"),
-            //        Port = config.GetValue<int> ("Email:Smtp:Port"),
-            //        Credentials = new NetworkCredential (
-            //                config.GetValue<String> ("Email:Smtp:Username"),
-            //                config.GetValue<String> ("Email:Smtp:Password")
-            //            )
-            //    };
-            //});
+                         
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -115,8 +97,14 @@ namespace AprajitaRetails
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            
+            
+            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy ();
 
             app.UseRouting();
 

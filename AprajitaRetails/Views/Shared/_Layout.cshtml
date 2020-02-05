@@ -169,17 +169,17 @@
             <nav class="nav nav-underline">
                 <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                 @*<a class="nav-link" href="#">
-                    DailySale
-                    <span class="badge badge-pill bg-dark align-text-bottom">27</span>
-                </a>*@
+                        DailySale
+                        <span class="badge badge-pill bg-dark align-text-bottom">27</span>
+                    </a>*@
                 <a class="nav-link text-success" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">27</span></a>
                 <a class="nav-link" href="#">Sale</a>
                 <a class="nav-link" href="#">Purchase</a>
                 <a class="nav-link" href="#">Manual Bill</a>
-                <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances"  asp-action="Index">Attendence</a>
-                <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses"  asp-action="Index">Cash Expenses</a>
-                <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments"  asp-action="Index">Cash Payments</a>
-                <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings"  asp-action="Index">Booking</a>
+                <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendence</a>
+                <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
+                <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
+                <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
                 <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
             </nav>
         </div>
@@ -202,6 +202,8 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
     <script>
         (function () {
             'use strict'

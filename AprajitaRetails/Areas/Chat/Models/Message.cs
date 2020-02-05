@@ -6,10 +6,6 @@ using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Chat.Models
 {
-    public class AppUser
-    {
-    }
-
     public class Message
     {
         public int MessageId { get; set; }
@@ -17,5 +13,10 @@ namespace AprajitaRetails.Areas.Chat.Models
         public string UserName { get; set; }
         public string Text { get; set; }
         public DateTime When { get; set; }
+        public string UserID { get; set; }
+        public Message()
+        {
+            When = DateTime.Now;
+        }
     }
 }

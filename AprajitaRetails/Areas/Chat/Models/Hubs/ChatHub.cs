@@ -8,9 +8,16 @@ namespace AprajitaRetails.Areas.Chat.Models.Hubs
 {
     public class ChatHub : Hub
     {
+        public async Task SendMessage(Message message) =>
+            await Clients.All.SendAsync ("receiveMessage", message);
+    }
+
+    public class ChatHubOld : Hub
+    {
 
 
-        public async Task SendMessage(Message message) => await Clients.All.SendAsync ("receiveMessage", message);
+        public async Task SendMessage(Message message) =>
+            await Clients.All.SendAsync ("receiveMessage", message);
         public Task SendPrivateMessage(string user, string message)
         {
             return Clients.User (user).SendAsync ("ReceiveMessage", message);
