@@ -24,137 +24,165 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale</a></li>
-                        <!-- Ported Menu-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
+                        @if ( Context.User.Identity.IsAuthenticated )
+                        {
+                            <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale</a></li>
+                            <!-- Ported Menu-->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
 
-                            <div class="dropdown-menu " aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Parties" asp-action="Index">Parties</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="LedgerEntries" asp-action="Index">Ledger Entries</a>
-                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
-                                <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleTaxTypes" asp-action="Index">Output Tax</a>
+                                <div class="dropdown-menu " aria-labelledby="dropdown01">
+                                    @if ( Context.User.IsInRole ("Admin") )
+                                    {
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Parties" asp-action="Index">Parties</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="LedgerEntries" asp-action="Index">Ledger Entries</a>
+                                        <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
+                                        <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleTaxTypes" asp-action="Index">Output Tax</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInHands" asp-action="Index">Cash-In-Hands</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInBanks" asp-action="Index">Cash-In-Banks</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="TranscationModes" asp-action="Index">Trans Modes</a>
+                                    }
 
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DuesLists" asp-action="Index">Dues List</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInHands" asp-action="Index">Cash-In-Hands</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInBanks" asp-action="Index">Cash-In-Banks</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="TranscationModes" asp-action="Index">Trans Modes</a>
-                            </div>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DuesLists" asp-action="Index">Dues List</a>
+                                </div>
 
-                        </li>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sale/Purchase</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductPurchases" asp-action="Index">Product Purchases</a>
-                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index">Product Items</a>
-                                <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="Stocks" asp-action="Index">Stocks</a>
-                                <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleInvoices" asp-action="Index">Sale Invoices</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sale/Purchase</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductPurchases" asp-action="Index">Product Purchases</a>
+                                    <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index">Product Items</a>
+                                    <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="Stocks" asp-action="Index">Stocks</a>
+                                    <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleInvoices" asp-action="Index">Sale Invoices</a>
 
-                            </div>
-                        </li>
-                        <!--Porting toBeDone-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tailoring</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Bookings</a>
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
+                                </div>
+                            </li>
 
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
-                                <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
-
-
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banking</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankDeposits" asp-action="Index">Bank Deposits</a>
-                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="AccountNumbers" asp-action="Index">Accounts</a>
-                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="ChequesLogs" asp-action="Index">Cheques</a>
-                                <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankWithdrawals" asp-action="Index">Bank Withdrawals</a>
-
-                            </div>
-                        </li>
-                        <!--New To Added-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PayRoll</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Employees" asp-action="Index">Employees</a>
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendances</a>
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="SalaryPayments" asp-action="Index">Salary</a>
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvancePayments" asp-action="Index">Advance Payments</a>
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="CurrentSalaries" asp-action="Index">Current Salary</a>
-                                <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="PaySlips" asp-action="Index">PaySlip</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tailoring</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Bookings</a>
+                                    <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
+                                    <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
+                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                                    {
+                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
+                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
+                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
+                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
 
 
-                            </div>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cash In/Out</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="Expenses" asp-action="Index">Expenses</a>
-                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
-                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
-                                <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="Payments" asp-action="Index">Payments</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
+                                    }
 
 
-                            </div>
-                        </li>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banking</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankDeposits" asp-action="Index">Bank Deposits</a>
+                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                                    {
+                                        <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="AccountNumbers" asp-action="Index">Accounts</a>
+                                        <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="ChequesLogs" asp-action="Index">Cheques</a>
+                                        <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankWithdrawals" asp-action="Index">Bank Withdrawals</a>
+                                    }
+                                </div>
+                            </li>
+                            <!--New To Added-->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PayRoll</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                                    {
+                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Employees" asp-action="Index">Employees</a>
+                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="SalaryPayments" asp-action="Index">Salary</a>
+                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvancePayments" asp-action="Index">Advance Payments</a>
+                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
+                                        @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
+                                        {
+                                            <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="CurrentSalaries" asp-action="Index">Current Salary</a>
+                                        }
+                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="PaySlips" asp-action="Index">PaySlip</a>
+                                    }
+                                    <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendances</a>
+                                </div>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Stores" asp-action="Index">Stores</a>
-                                <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Customers" asp-action="Index">Customers</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Create">EndOfDays</a>
-                                <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
-                                <span class="dropdown-divider"></span>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="Index">Income Expense Report</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="IEReport">Balance Sheet</a>
-                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Exporter" asp-action="Index">Exporter</a>
-                                <a class="dropdown-item text-dark" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>
-
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imports</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ExcelUploader" asp-action="Index">ExcelUploader</a>
-
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="SaleList">Sale List</a>
-
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
-                                <a class="dropdown-item text-dark " asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
-
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
-                                <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleRegisters" asp-action="Index">ImportSaleRegisters</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cash In/Out</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                    <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="Expenses" asp-action="Index">Expenses</a>
+                                    <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
+                                    <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
+                                    <a class="dropdown-item text-dark" asp-area="Expenses" asp-controller="Payments" asp-action="Index">Payments</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
 
 
-                            </div>
-                        </li>
+                                </div>
+                            </li>
+                            @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                        @if ( Context.User.IsInRole ("Admin") )
+                                        {
+                                            <a class="dropdown-item text-dark" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>
+                                            <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Stores" asp-action="Index">Stores</a>
+                                        }
+                                        @if ( Context.User.IsInRole ("PowerUser") || Context.User.IsInRole ("Admin") )
+                                        {
+                                            <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
+                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="Index">Income Expense Report</a>
+                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="IEReport">Balance Sheet</a>
+                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="Exporter" asp-action="Index">Exporter</a>
+
+                                        }
+
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
+                                        <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Create">EndOfDays</a>
+                                        <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Customers" asp-action="Index">Customers</a>
+
+
+                                    </div>
+                                </li>
+                            }
+                            @if ( Context.User.IsInRole ("Admin") )
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imports</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ExcelUploader" asp-action="Index">ExcelUploader</a>
+
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="SaleList">Sale List</a>
+
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
+                                        <a class="dropdown-item text-dark " asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
+
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleRegisters" asp-action="Index">ImportSaleRegisters</a>
+
+
+                                    </div>
+                                </li>
+                            }
+                        }
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Supports</a>
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a class="dropdown-item text-dark" asp-area="Chat" asp-controller="ARChat" asp-action="Index">Chat</a>
+                                @*<a class="dropdown-item text-dark" asp-area="Chat" asp-controller="ARChat" asp-action="Index">Chat</a>*@
                                 <a class="dropdown-item text-success" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
                                 <a class="dropdown-item text-primary" asp-area="" asp-controller="Home" asp-action="Contact">Contact Us</a>
                                 <a class="dropdown-item text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -167,25 +195,27 @@
 
             </div>
         </nav>
-        <div class="nav-scroller blue-gradient-rgba shadow-sm " role="toolbar">
-            <nav class="nav nav-underline">
-                <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
-                @*<a class="nav-link" href="#">
+        @if ( Context.User.Identity.IsAuthenticated )
+        {
+            <div class="nav-scroller blue-gradient-rgba shadow-sm " role="toolbar">
+                <nav class="nav nav-underline">
+                    <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
+                    @*<a class="nav-link" href="#">
                         DailySale
                         <span class="badge badge-pill bg-dark align-text-bottom">27</span>
                     </a>*@
-                <a class="nav-link text-success" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">27</span></a>
-                <a class="nav-link" href="#">Sale</a>
-                <a class="nav-link" href="#">Purchase</a>
-                <a class="nav-link" href="#">Manual Bill</a>
-                <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendence</a>
-                <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
-                <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
-                <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
-                <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
-            </nav>
-        </div>
-
+                    <a class="nav-link text-success" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">27</span></a>
+                    <a class="nav-link" href="#">Sale</a>
+                    <a class="nav-link" href="#">Purchase</a>
+                    <a class="nav-link" href="#">Manual Bill</a>
+                    <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendence</a>
+                    <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
+                    <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
+                    <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
+                    <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
+                </nav>
+            </div>
+        }
     </header>
     <div class="container">
         <main role="main" class="pb-3">

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
     [Area ("Expenses")]
+    [Authorize ]
     public class CashPaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

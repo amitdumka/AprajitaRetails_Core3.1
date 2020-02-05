@@ -19,7 +19,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 
 using System.Net;
 using System.Net.Mail;
-using AprajitaRetails.Areas.Chat.Models.Hubs;
+//using AprajitaRetails.Areas.Chat.Models.Hubs;
 using Microsoft.AspNetCore.Http;
 
 namespace AprajitaRetails
@@ -59,7 +59,7 @@ namespace AprajitaRetails
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
 
-            services.AddSignalR ();
+           // services.AddSignalR ();
 
             services.AddControllersWithViews ();
             services.AddRazorPages ();
@@ -103,10 +103,10 @@ namespace AprajitaRetails
             app.UseAuthentication ();
             app.UseAuthorization ();
             app.UseRequestLocalization ();
-            app.UseSignalR (route =>
-            {
-                route.MapHub<ChatHub> ("/Chat/ARChat/Index");
-            });
+            //app.UseSignalR (route =>
+            //{
+            //    route.MapHub<ChatHub> ("/Chat/ARChat/Index");
+            //});
             app.UseEndpoints (endpoints =>
              {
                  endpoints.MapControllerRoute (

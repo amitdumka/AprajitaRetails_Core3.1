@@ -11,6 +11,7 @@ using AprajitaRetails.Models;
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
     [Area("Expenses")]
+    [Authorize]
     public class ExpensesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

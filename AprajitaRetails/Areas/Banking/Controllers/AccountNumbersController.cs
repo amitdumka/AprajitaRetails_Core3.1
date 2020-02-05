@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
     [Area("Banking")]
-    [Authorize(Roles = "Admin,PowerUser")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class AccountNumbersController : Controller
     {
         private readonly AprajitaRetailsContext _context;

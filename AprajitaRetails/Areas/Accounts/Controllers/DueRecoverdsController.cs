@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
     [Area("Accounts")]
+    [Authorize ]
     public class DueRecoverdsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

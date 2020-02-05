@@ -12,6 +12,7 @@ using AprajitaRetails.Areas.Tailoring.Data;
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
     [Area ("Tailoring")]
+    [Authorize]
     public class TailoringStaffAdvancePaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

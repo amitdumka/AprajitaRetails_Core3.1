@@ -12,6 +12,8 @@ using AprajitaRetails.Areas.Banking.Models;
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
     [Area ("Banking")]
+
+    [Authorize(Roles ="Admin,PowerUser,StoreManager")]
     public class BankWithdrawalsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

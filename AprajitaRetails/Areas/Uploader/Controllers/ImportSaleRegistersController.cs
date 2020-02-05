@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
     [Area("Uploader")]
+    [Authorize]
     public class ImportSaleRegistersController : Controller
     {
         private readonly VoyagerContext _context;

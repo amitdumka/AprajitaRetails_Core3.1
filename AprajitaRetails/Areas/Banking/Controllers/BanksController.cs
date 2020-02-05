@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
     [Area ("Banking")]
+
+    [Authorize(Roles ="Admin,PowerUser,StoreManager")]
     public class BanksController : Controller
     {
         private readonly AprajitaRetailsContext _context;

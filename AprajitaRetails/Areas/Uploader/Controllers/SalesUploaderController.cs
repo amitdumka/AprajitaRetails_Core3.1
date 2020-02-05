@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
     [Area("Uploader")]
+    [Authorize]
     public class SalesUploaderController : Controller
     {
         private readonly VoyagerContext db;

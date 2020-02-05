@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
     [Area ("Accounts")]
+    [Authorize ]
     public class CashBookController : Controller
     {
 

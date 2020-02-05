@@ -11,6 +11,7 @@ using AprajitaRetails.Models;
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
     [Area ("Tailoring")]
+    [Authorize]
     public class TailoringEmployeesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

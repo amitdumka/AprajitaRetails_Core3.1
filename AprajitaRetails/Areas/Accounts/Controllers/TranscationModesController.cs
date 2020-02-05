@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
     [Area ("Accounts")]
+
+    [Authorize(Roles ="Admin")]
     public class TranscationModesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

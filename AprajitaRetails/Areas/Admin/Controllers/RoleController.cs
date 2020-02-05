@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AprajitaRetails.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 namespace AprajitaRetails.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
+    [Authorize(Roles="Admin,PowerUser")]
     public class RoleController : Controller
     {
         RoleManager<IdentityRole> roleManager;
@@ -40,6 +43,8 @@ namespace AprajitaRetails.Areas.Admin.Controllers
 
             return View (onRols);
         }
+
+        [Authorize(Roles ="Admin")]
         public IActionResult AssignRole()
         {
             //var roles = roleManager.Roles.ToList ();
@@ -53,6 +58,8 @@ namespace AprajitaRetails.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> AssignRole([Bind ("UserId,RoleId")] RoleUserView  ruView)
         {
             if ( ModelState.IsValid )

@@ -11,6 +11,7 @@ using AprajitaRetails.Models;
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
     [Area ("Banking")]
+    [Authorize (Roles = "Admin,PowerUser,StoreManager")]
     public class ChequesLogsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

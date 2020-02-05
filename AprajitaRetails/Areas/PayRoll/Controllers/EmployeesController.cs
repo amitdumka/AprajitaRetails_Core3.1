@@ -11,6 +11,7 @@ using AprajitaRetails.Models;
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
     [Area("PayRoll")]
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

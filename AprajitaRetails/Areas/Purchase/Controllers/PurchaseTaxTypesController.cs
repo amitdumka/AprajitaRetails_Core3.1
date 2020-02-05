@@ -11,6 +11,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
     [Area("Purchase")]
+    [Authorize]
     public class PurchaseTaxTypesController : Controller
     {
         private readonly VoyagerContext _context;

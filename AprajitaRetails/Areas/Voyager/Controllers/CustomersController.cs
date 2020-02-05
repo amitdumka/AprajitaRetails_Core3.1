@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
     [Area("Voyager")]
+    [Authorize]
     public class CustomersController : Controller
     {
         private readonly VoyagerContext _context;

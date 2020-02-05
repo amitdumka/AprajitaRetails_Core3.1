@@ -15,6 +15,7 @@ using AprajitaRetails;
 namespace AprajitaRetails.Sales.Expenses.Controllers
 {
     [Area ("Sales")]
+    [Authorize]
     public class DailySalesController : Controller
     {
         private readonly AprajitaRetailsContext db;

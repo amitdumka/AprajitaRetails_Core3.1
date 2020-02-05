@@ -11,6 +11,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
     [Area("Uploader")]
+    [Authorize]
     public class ImportInWardsController : Controller
     {
         private readonly VoyagerContext _context;

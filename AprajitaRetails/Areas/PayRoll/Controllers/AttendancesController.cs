@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
     [Area ("PayRoll")]
+    [Authorize]
     public class AttendancesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

@@ -12,6 +12,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
     [Area ("Sales")]
+    [Authorize]
     public class SaleInvoicesController : Controller
     {
         private readonly VoyagerContext _context;

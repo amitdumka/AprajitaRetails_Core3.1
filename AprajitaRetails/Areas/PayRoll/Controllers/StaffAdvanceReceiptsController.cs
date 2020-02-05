@@ -12,6 +12,7 @@ using AprajitaRetails.Ops.Triggers;
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
     [Area("PayRoll")]
+    [Authorize]
     public class StaffAdvanceReceiptsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

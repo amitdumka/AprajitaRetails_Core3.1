@@ -12,6 +12,7 @@ using TAS_AprajiataRetails.Models.Helpers;
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
     [Area ("Tailoring")]
+    [Authorize]
     public class TailorAttendancesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

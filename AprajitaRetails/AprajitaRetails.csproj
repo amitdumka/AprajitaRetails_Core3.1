@@ -6,9 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Chat\**" />
     <Compile Remove="oldDataBackup\**" />
+    <Content Remove="Areas\Chat\**" />
     <Content Remove="oldDataBackup\**" />
+    <EmbeddedResource Remove="Areas\Chat\**" />
     <EmbeddedResource Remove="oldDataBackup\**" />
+    <None Remove="Areas\Chat\**" />
     <None Remove="oldDataBackup\**" />
   </ItemGroup>
 
@@ -78,7 +82,6 @@
     <Folder Include="Areas\Accounts\Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Banking\Data\" />
-    <Folder Include="Areas\Chat\Data\" />
     <Folder Include="Areas\Expenses\Data\" />
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />
