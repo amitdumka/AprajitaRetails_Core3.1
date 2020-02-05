@@ -11,20 +11,20 @@ namespace AprajitaRetails.Areas.Admin.Ops
 {
     public static class Seed
     {
-        public static async Task CreateRoles(IServiceProvider serviceProvider, IConfiguration Configuration)
+        public static async Task CreateRoles(IServiceProvider serviceProvider)
         {
             //adding custom roles
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string[] roleNames = { "Admin", "StoreManager", "Salesman", "Accountant", "RemoteAccountant", "Member", "PowerUser" };
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>> ();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>> ();
+            string [] roleNames = { "Admin", "StoreManager", "Salesman", "Accountant", "RemoteAccountant", "Member", "PowerUser" };
             IdentityResult roleResult;
-            foreach (var roleName in roleNames)
+            foreach ( var roleName in roleNames )
             {
                 //creating the roles and seeding them to the database
-                var roleExist = await RoleManager.RoleExistsAsync(roleName);
-                if (!roleExist)
+                var roleExist = await RoleManager.RoleExistsAsync (roleName);
+                if ( !roleExist )
                 {
-                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                    roleResult = await RoleManager.CreateAsync (new IdentityRole (roleName));
                 }
             }
             //creating a super user who could maintain the web app
@@ -33,19 +33,24 @@ namespace AprajitaRetails.Areas.Admin.Ops
                 UserName = "Admin",
                 Email = "Admin@AprajitaRetails.In"
             };
-            string UserPassword = "Admin1234";
-            var _user = await UserManager.FindByEmailAsync("Admin@AprajitaRetails.In");
-            if (_user == null)
+            string UserPassword = "Admin@1234";
+            var _user = await UserManager.FindByEmailAsync ("Admin@AprajitaRetails.In");
+            if ( _user == null )
             {
-                var createPowerUser = await UserManager.CreateAsync(poweruser, UserPassword);
-                if (createPowerUser.Succeeded)
+                var createPowerUser = await UserManager.CreateAsync (poweruser, UserPassword);
+                if ( createPowerUser.Succeeded )
                 {
                     //here we tie the new user to the "Admin" role 
-                    await UserManager.AddToRoleAsync(poweruser, "Admin");
-                    }
+                    await UserManager.AddToRoleAsync (poweruser, "Admin");
+                    //TODO: Need to Update Confirmed Email. 
+
+                    var userId = await UserManager.GetUserIdAsync (poweruser);
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync (poweruser);
+                    var result = await UserManager.ConfirmEmailAsync (poweruser, code);
+                }
             }
         }
 
-    }//end of AdminHelper
+    }//end of Seed
 
 }

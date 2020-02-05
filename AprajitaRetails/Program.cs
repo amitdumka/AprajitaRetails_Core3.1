@@ -24,7 +24,7 @@ namespace AprajitaRetails
                 {
                     var serviceProvider = services.GetRequiredService<IServiceProvider>();
                     var configuration = services.GetRequiredService<IConfiguration>();
-                    Seed.CreateRoles(serviceProvider, configuration).Wait();
+                    Seed.CreateRoles(serviceProvider).Wait();
                 }
                 catch (Exception exception)
                 {
