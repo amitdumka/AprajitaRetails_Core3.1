@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-AprajitaRetails-F93500E7-2BD5-4D60-BD3E-33D8F8342F26</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/0f8366b7-5786-420b-a174-2f0057b0d6f1/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/AprajitaRetails</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +49,7 @@
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="LinqToExcel" Version="1.11.0" />
     <PackageReference Include="MailKit" Version="2.5.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
@@ -114,6 +116,11 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

@@ -81,6 +81,7 @@ namespace AprajitaRetails
                  options.SupportedCultures = supportedCultures;
                  options.SupportedUICultures = supportedCultures;
              });
+            services.AddApplicationInsightsTelemetry ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
