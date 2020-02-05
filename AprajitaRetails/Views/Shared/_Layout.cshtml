@@ -138,6 +138,7 @@
                                         {
                                             <a class="dropdown-item text-dark" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>
                                             <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Stores" asp-action="Index">Stores</a>
+                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Index">EndOfDays List</a>
                                         }
                                         @if ( Context.User.IsInRole ("PowerUser") || Context.User.IsInRole ("Admin") )
                                         {

@@ -35,7 +35,7 @@ namespace AprajitaRetails.Models
         public DateTime EffectiveDate { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime CloseDate { get; set; }
+        public DateTime? CloseDate { get; set; }
 
         public bool IsEffective { get; set; }
 
