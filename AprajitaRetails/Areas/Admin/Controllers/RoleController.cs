@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AprajitaRetails.Areas.Admin.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.Admin.Controllers
 {
@@ -12,9 +15,11 @@ namespace AprajitaRetails.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         RoleManager<IdentityRole> roleManager;
-        public RoleController(RoleManager<IdentityRole> roleManager)
+        UserManager<IdentityUser> UserManager;
+        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> um)
         {
             this.roleManager = roleManager;
+            UserManager = um;
         }
         // GET: Role
         public ActionResult Index()
@@ -24,11 +29,65 @@ namespace AprajitaRetails.Areas.Admin.Controllers
         }
 
         // GET: Role/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> DetailsAsync(string id)
         {
+            
+            var roles = roleManager.FindByIdAsync(id).Result;
+            var onRols =   UserManager.GetUsersInRoleAsync (roles.Name).Result;
+            ViewBag.RoleName = roles.Name;
+
+
+
+            return View (onRols);
+        }
+        public IActionResult AssignRole()
+        {
+            //var roles = roleManager.Roles.ToList ();
+            //var userList = UserManager.Users.ToList ();
+            
+            ViewData ["RoleId"] = new SelectList (roleManager.Roles, "Id", "Name");
+            ViewData ["UserId"] = new SelectList (UserManager.Users, "Id", "UserName");
+
+
             return View ();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignRole([Bind ("UserId,RoleId")] RoleUserView  ruView)
+        {
+            if ( ModelState.IsValid )
+            {
+                var _user = await UserManager.FindByIdAsync (ruView.UserId);
+                var _role = await roleManager.FindByIdAsync (ruView.RoleId);
+                if ( _user != null  && _role !=null)
+                {
+                  var a=await UserManager.AddToRoleAsync (_user, _role.Name );
+                    if ( a.Succeeded )
+                    {
+                        return RedirectToAction ("Index");
+                    }
+                    else
+                    {
+                        ViewData ["RoleId"] = new SelectList (roleManager.Roles, "Id", "Name", ruView.RoleId);
+                        ViewData ["UserId"] = new SelectList (UserManager.Users, "Id", "UserName", ruView.UserId);
+                        ViewBag.ErrorMessage = "Failed to assign, try again";
+                        return View (ruView);
+                    }
 
+                }
+                else
+                {
+                    ViewData ["RoleId"] = new SelectList (roleManager.Roles, "Id", "Name", ruView.RoleId);
+                    ViewData ["UserId"] = new SelectList (UserManager.Users, "Id", "UserName", ruView.UserId);
+                    ViewBag.ErrorMessage = "role or  user not found, try again";
+                    return View (ruView);
+                }
+            }
+            ViewData ["RoleId"] = new SelectList (roleManager.Roles, "Id", "Name", ruView.RoleId);
+            ViewData ["UserId"] = new SelectList (UserManager.Users, "Id", "UserName",ruView.UserId);
+            return View (ruView);
+
+        }
         // GET: Role/Create
         public ActionResult Create()
         {

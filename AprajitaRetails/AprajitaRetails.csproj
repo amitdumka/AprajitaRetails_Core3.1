@@ -77,7 +77,6 @@
   <ItemGroup>
     <Folder Include="Areas\Accounts\Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Banking\Data\" />
     <Folder Include="Areas\Chat\Data\" />
     <Folder Include="Areas\Expenses\Data\" />

@@ -136,13 +136,13 @@
                 </td>
                 @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
             <td class="btn-group btn-group-sm ">
-               // @if ( ( await AuthorizationService.AuthorizeAsync (User, "Admin") ).Succeeded )
+                @if ( Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
                 {
                     <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
                 }
 
                 <a class="btn btn-outline-deep-orange" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
-             //   @if ( ( await AuthorizationService.AuthorizeAsync (User, "Admin") ).Succeeded )
+               @if ( Context.User.IsInRole("Admin") )
                 {
                     <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                 }
