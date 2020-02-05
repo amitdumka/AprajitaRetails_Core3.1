@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,7 +90,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         }
 
         // GET: TalioringBookings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -110,7 +110,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TalioringBookingId,BookingDate,CustName,DeliveryDate,TryDate,BookingSlipNo,TotalAmount,TotalQty,ShirtQty,ShirtPrice,PantQty,PantPrice,CoatQty,CoatPrice,KurtaQty,KurtaPrice,BundiQty,BundiPrice,Others,OthersPrice,IsDelivered")] TalioringBooking talioringBooking)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("TalioringBookingId,BookingDate,CustName,DeliveryDate,TryDate,BookingSlipNo,TotalAmount,TotalQty,ShirtQty,ShirtPrice,PantQty,PantPrice,CoatQty,CoatPrice,KurtaQty,KurtaPrice,BundiQty,BundiPrice,Others,OthersPrice,IsDelivered")] TalioringBooking talioringBooking)
         {
             if (id != talioringBooking.TalioringBookingId)
             {
@@ -141,7 +141,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         }
 
         // GET: TalioringBookings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -161,7 +161,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // POST: TalioringBookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var talioringBooking = await _context.TalioringBookings.FindAsync(id);
             _context.TalioringBookings.Remove(talioringBooking);

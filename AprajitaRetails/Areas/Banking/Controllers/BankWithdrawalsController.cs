@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -87,7 +87,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: BankWithdrawals/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -108,7 +108,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BankWithdrawalId,DepoDate,AccountNumberId,Amount,ChequeNo,SignedBy,ApprovedBy,InNameOf")] BankWithdrawal bankWithdrawal)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("BankWithdrawalId,DepoDate,AccountNumberId,Amount,ChequeNo,SignedBy,ApprovedBy,InNameOf")] BankWithdrawal bankWithdrawal)
         {
             if (id != bankWithdrawal.BankWithdrawalId)
             {
@@ -141,7 +141,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: BankWithdrawals/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -162,7 +162,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // POST: BankWithdrawals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bankWithdrawal = await _context.BankWithdrawals.FindAsync(id);
             new BankingManager().OnDelete(_context, bankWithdrawal);

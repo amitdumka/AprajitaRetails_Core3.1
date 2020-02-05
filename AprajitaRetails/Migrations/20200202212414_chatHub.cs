@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AprajitaRetails.Migrations

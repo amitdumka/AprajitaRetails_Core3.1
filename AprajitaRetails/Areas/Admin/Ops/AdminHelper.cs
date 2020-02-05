@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;

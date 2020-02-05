@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Voyager.Data;
 using AprajitaRetails.Areas.Voyager.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
@@ -67,7 +69,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         }
 
         // GET: Voyager/Stores/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -87,7 +89,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StoreId,StoreCode,StoreName,Address,City,PinCode,PhoneNo,StoreManagerName,StoreManagerPhoneNo,PanNo,GSTNO,NoOfEmployees,OpeningDate,ClosingDate,Status")] Store store)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("StoreId,StoreCode,StoreName,Address,City,PinCode,PhoneNo,StoreManagerName,StoreManagerPhoneNo,PanNo,GSTNO,NoOfEmployees,OpeningDate,ClosingDate,Status")] Store store)
         {
             if (id != store.StoreId)
             {
@@ -118,7 +120,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         }
 
         // GET: Voyager/Stores/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -138,7 +140,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         // POST: Voyager/Stores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var store = await _context.Stores.FindAsync(id);
             _context.Stores.Remove(store);

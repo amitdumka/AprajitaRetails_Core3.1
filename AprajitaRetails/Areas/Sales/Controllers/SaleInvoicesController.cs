@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
-    [Area("Sales")]
+    [Area ("Sales")]
     public class SaleInvoicesController : Controller
     {
         private readonly VoyagerContext _context;
@@ -23,31 +24,31 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // GET: Sales/SaleInvoices
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SaleInvoices.ToListAsync());
+            return View (await _context.SaleInvoices.ToListAsync ());
         }
 
         // GET: Sales/SaleInvoices/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var saleInvoice = await _context.SaleInvoices
-                .FirstOrDefaultAsync(m => m.SaleInvoiceId == id);
-            if (saleInvoice == null)
+                .FirstOrDefaultAsync (m => m.SaleInvoiceId == id);
+            if ( saleInvoice == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            return View(saleInvoice);
+            return View (saleInvoice);
         }
 
         // GET: Sales/SaleInvoices/Create
         public IActionResult Create()
         {
-            return View();
+            return View ();
         }
 
         // POST: Sales/SaleInvoices/Create
@@ -55,31 +56,32 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SaleInvoiceId,CustomerId,OnDate,InvoiceNo,TotalItems,TotalQty,TotalBillAmount,TotalDiscountAmount,RoundOffAmount,TotalTaxAmount")] SaleInvoice saleInvoice)
+        public async Task<IActionResult> Create([Bind ("SaleInvoiceId,CustomerId,OnDate,InvoiceNo,TotalItems,TotalQty,TotalBillAmount,TotalDiscountAmount,RoundOffAmount,TotalTaxAmount")] SaleInvoice saleInvoice)
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
-                _context.Add(saleInvoice);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Add (saleInvoice);
+                await _context.SaveChangesAsync ();
+                return RedirectToAction (nameof (Index));
             }
-            return View(saleInvoice);
+            return View (saleInvoice);
         }
 
         // GET: Sales/SaleInvoices/Edit/5
+        [Authorize (Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            var saleInvoice = await _context.SaleInvoices.FindAsync(id);
-            if (saleInvoice == null)
+            var saleInvoice = await _context.SaleInvoices.FindAsync (id);
+            if ( saleInvoice == null )
             {
-                return NotFound();
+                return NotFound ();
             }
-            return View(saleInvoice);
+            return View (saleInvoice);
         }
 
         // POST: Sales/SaleInvoices/Edit/5
@@ -87,68 +89,71 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SaleInvoiceId,CustomerId,OnDate,InvoiceNo,TotalItems,TotalQty,TotalBillAmount,TotalDiscountAmount,RoundOffAmount,TotalTaxAmount")] SaleInvoice saleInvoice)
+        [Authorize (Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind ("SaleInvoiceId,CustomerId,OnDate,InvoiceNo,TotalItems,TotalQty,TotalBillAmount,TotalDiscountAmount,RoundOffAmount,TotalTaxAmount")] SaleInvoice saleInvoice)
         {
-            if (id != saleInvoice.SaleInvoiceId)
+            if ( id != saleInvoice.SaleInvoiceId )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
                 try
                 {
-                    _context.Update(saleInvoice);
-                    await _context.SaveChangesAsync();
+                    _context.Update (saleInvoice);
+                    await _context.SaveChangesAsync ();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch ( DbUpdateConcurrencyException )
                 {
-                    if (!SaleInvoiceExists(saleInvoice.SaleInvoiceId))
+                    if ( !SaleInvoiceExists (saleInvoice.SaleInvoiceId) )
                     {
-                        return NotFound();
+                        return NotFound ();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
-            return View(saleInvoice);
+            return View (saleInvoice);
         }
 
         // GET: Sales/SaleInvoices/Delete/5
+        [Authorize (Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var saleInvoice = await _context.SaleInvoices
-                .FirstOrDefaultAsync(m => m.SaleInvoiceId == id);
-            if (saleInvoice == null)
+                .FirstOrDefaultAsync (m => m.SaleInvoiceId == id);
+            if ( saleInvoice == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            return View(saleInvoice);
+            return View (saleInvoice);
         }
 
         // POST: Sales/SaleInvoices/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName ("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize (Roles = "Admin,PowerUser")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var saleInvoice = await _context.SaleInvoices.FindAsync(id);
-            _context.SaleInvoices.Remove(saleInvoice);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var saleInvoice = await _context.SaleInvoices.FindAsync (id);
+            _context.SaleInvoices.Remove (saleInvoice);
+            await _context.SaveChangesAsync ();
+            return RedirectToAction (nameof (Index));
         }
 
         private bool SaleInvoiceExists(int id)
         {
-            return _context.SaleInvoices.Any(e => e.SaleInvoiceId == id);
+            return _context.SaleInvoices.Any (e => e.SaleInvoiceId == id);
         }
     }
 }

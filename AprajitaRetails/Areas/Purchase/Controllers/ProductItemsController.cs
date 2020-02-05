@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -85,7 +85,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/ProductItems/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -106,7 +106,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Units")] ProductItem productItem)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Units")] ProductItem productItem)
         {
             if (id != productItem.ProductItemId)
             {
@@ -138,7 +138,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/ProductItems/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -159,7 +159,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // POST: Purchase/ProductItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var productItem = await _context.ProductItems.FindAsync(id);
             _context.ProductItems.Remove(productItem);

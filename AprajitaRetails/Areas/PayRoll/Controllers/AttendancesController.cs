@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +11,11 @@ using AprajitaRetails.Models;
 using TAS_AprajiataRetails.Models.Helpers;
 using AprajitaRetails.Ops.TAS.Mails;
 using AprajitaRetails.Ops.Triggers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
-    [Area("PayRoll")]
+    [Area ("PayRoll")]
     public class AttendancesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -26,7 +28,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: Attendances
         public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, int? pageNumber)
         {
-            if (searchString != null)
+            if ( searchString != null )
             {
                 pageNumber = 1;
             }
@@ -35,23 +37,24 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 searchString = currentFilter;
             }
 
-            ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today);
+            ViewData ["CurrentFilter"] = searchString;
+            var aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).Where (c => c.AttDate == DateTime.Today);
 
-            if (id == 101)
+            if ( id == 101 )
             {
-                 aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).OrderByDescending(c=>c.AttDate).ThenBy(c=>c.EmployeeId);
-                //return View(await aprajitaRetailsContext_all.ToListAsync());
-            }else if (id == 100)
-            {
-                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
                 //return View(await aprajitaRetailsContext_all.ToListAsync());
             }
-            
+            else if ( id == 100 )
+            {
+                aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).Where (c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
+                //return View(await aprajitaRetailsContext_all.ToListAsync());
+            }
+
             //return View(await aprajitaRetailsContext.ToListAsync());
 
             int pageSize = 10;
-           return View(await PaginatedList<Attendance>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View (await PaginatedList<Attendance>.CreateAsync (aprajitaRetailsContext.AsNoTracking (), pageNumber ?? 1, pageSize));
         }
 
 
@@ -59,13 +62,13 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
             //Attendance attendance = db.Attendances.Include (c => c.Employee).Where (c => c.AttendanceId == id).FirstOrDefault ();
 
             var empid = _context.Attendances.Find (id).EmployeeId;
             var attList = _context.Attendances.Include (c => c.Employee)
-                .Where (c => c.EmployeeId == empid && c.AttDate.Month ==  DateTime.Today.Month)
+                .Where (c => c.EmployeeId == empid && c.AttDate.Month == DateTime.Today.Month)
                 .OrderBy (c => c.AttDate);
 
             var p = attList.Where (c => c.Status == AttUnits.Present).Count ();
@@ -91,30 +94,30 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             if ( attList.Any () )
                 ViewBag.EmpName = attList.First ().Employee.StaffName;
-            return PartialView (await attList.ToListAsync());
+            return PartialView (await attList.ToListAsync ());
         }
         // GET: Attendances/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            var attendance = await _context.Attendances.Include(a => a.Employee).FirstOrDefaultAsync(m => m.AttendanceId == id);
-            if (attendance == null)
+            var attendance = await _context.Attendances.Include (a => a.Employee).FirstOrDefaultAsync (m => m.AttendanceId == id);
+            if ( attendance == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            return PartialView(attendance);
+            return PartialView (attendance);
         }
 
         // GET: Attendances/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
-            return PartialView();
+            ViewData ["EmployeeId"] = new SelectList (_context.Employees, "EmployeeId", "StaffName");
+            return PartialView ();
         }
 
         // POST: Attendances/Create
@@ -122,35 +125,36 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
+        public async Task<IActionResult> Create([Bind ("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
-                _context.Add(attendance);
-                await _context.SaveChangesAsync();
-                new PayRollManager ().ONInsertOrUpdate (_context, attendance,false,false);
+                _context.Add (attendance);
+                await _context.SaveChangesAsync ();
+                new PayRollManager ().ONInsertOrUpdate (_context, attendance, false, false);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
-            return PartialView(attendance);
+            ViewData ["EmployeeId"] = new SelectList (_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
+            return PartialView (attendance);
         }
 
         // GET: Attendances/Edit/5
+        [Authorize (Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            var attendance = await _context.Attendances.FindAsync(id);
-            if (attendance == null)
+            var attendance = await _context.Attendances.FindAsync (id);
+            if ( attendance == null )
             {
-                return NotFound();
+                return NotFound ();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
-            return PartialView(attendance);
+            ViewData ["EmployeeId"] = new SelectList (_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
+            return PartialView (attendance);
         }
 
         // POST: Attendances/Edit/5
@@ -158,72 +162,72 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
+         [Authorize (Roles = "Admin,PowerUser")]   [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
         {
-            if (id != attendance.AttendanceId)
+            if ( id != attendance.AttendanceId )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
                 try
                 {
                     new PayRollManager ().ONInsertOrUpdate (_context, attendance, false, true);
-                    _context.Update(attendance);
-                    await _context.SaveChangesAsync();
+                    _context.Update (attendance);
+                    await _context.SaveChangesAsync ();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch ( DbUpdateConcurrencyException )
                 {
-                    if (!AttendanceExists(attendance.AttendanceId))
+                    if ( !AttendanceExists (attendance.AttendanceId) )
                     {
-                        return NotFound();
+                        return NotFound ();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
-            return PartialView(attendance);
+            ViewData ["EmployeeId"] = new SelectList (_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
+            return PartialView (attendance);
         }
 
         // GET: Attendances/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var attendance = await _context.Attendances
-                .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceId == id);
-            if (attendance == null)
+                .Include (a => a.Employee)
+                .FirstOrDefaultAsync (m => m.AttendanceId == id);
+            if ( attendance == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            return PartialView(attendance);
+            return PartialView (attendance);
         }
 
         // POST: Attendances/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName ("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var attendance = await _context.Attendances.FindAsync(id);
+            var attendance = await _context.Attendances.FindAsync (id);
             new PayRollManager ().ONInsertOrUpdate (_context, attendance, true, false);
-            _context.Attendances.Remove(attendance);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            _context.Attendances.Remove (attendance);
+            await _context.SaveChangesAsync ();
+            return RedirectToAction (nameof (Index));
         }
 
         private bool AttendanceExists(int id)
         {
-            return _context.Attendances.Any(e => e.AttendanceId == id);
+            return _context.Attendances.Any (e => e.AttendanceId == id);
         }
     }
 }

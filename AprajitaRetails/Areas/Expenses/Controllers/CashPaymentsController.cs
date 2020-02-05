@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Areas.Expenses.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
@@ -122,7 +123,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: CashPayments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -143,7 +144,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CashPaymentId,PaymentDate,TranscationModeId,PaidTo,Amount,SlipNo")] CashPayment cashPayment)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("CashPaymentId,PaymentDate,TranscationModeId,PaidTo,Amount,SlipNo")] CashPayment cashPayment)
         {
             if (id != cashPayment.CashPaymentId)
             {
@@ -176,7 +177,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: CashPayments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -197,7 +198,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // POST: CashPayments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cashPayment = await _context.CashPayments.FindAsync(id);
             _context.CashPayments.Remove(cashPayment);

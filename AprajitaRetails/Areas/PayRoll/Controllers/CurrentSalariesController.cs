@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,7 +84,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: CurrentSalaries/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -105,7 +105,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CurrentSalaryId,EmployeeId,BasicSalary,SundaySalary,LPRate,IncentiveRate,IncentiveTarget,WOWBillRate,WOWBillTarget,IsSundayBillable,EffectiveDate,CloseDate,IsEffective")] CurrentSalary currentSalary)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("CurrentSalaryId,EmployeeId,BasicSalary,SundaySalary,LPRate,IncentiveRate,IncentiveTarget,WOWBillRate,WOWBillTarget,IsSundayBillable,EffectiveDate,CloseDate,IsEffective")] CurrentSalary currentSalary)
         {
             if (id != currentSalary.CurrentSalaryId)
             {
@@ -137,7 +137,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: CurrentSalaries/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -158,7 +158,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // POST: CurrentSalaries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var currentSalary = await _context.CurrentSalaries.FindAsync(id);
             _context.CurrentSalaries.Remove(currentSalary);

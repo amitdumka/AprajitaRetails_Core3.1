@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -89,7 +89,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: StaffAdvanceReceipts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -110,7 +110,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffAdvanceReceiptId,EmployeeId,ReceiptDate,Amount,PayMode,Details")] StaffAdvanceReceipt staffAdvanceReceipt)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("StaffAdvanceReceiptId,EmployeeId,ReceiptDate,Amount,PayMode,Details")] StaffAdvanceReceipt staffAdvanceReceipt)
         {
             if (id != staffAdvanceReceipt.StaffAdvanceReceiptId)
             {
@@ -143,7 +143,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: StaffAdvanceReceipts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -164,7 +164,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // POST: StaffAdvanceReceipts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var staffAdvanceReceipt = await _context.StaffAdvanceReceipts.FindAsync(id);
             _context.StaffAdvanceReceipts.Remove(staffAdvanceReceipt);

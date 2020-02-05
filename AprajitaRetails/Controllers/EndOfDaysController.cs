@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Controllers
 {
@@ -20,9 +21,9 @@ namespace AprajitaRetails.Controllers
         }
 
         // GET: EndOfDays
-        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber )
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            if (searchString != null)
+            if ( searchString != null )
             {
                 pageNumber = 1;
             }
@@ -32,34 +33,34 @@ namespace AprajitaRetails.Controllers
             }
 
 
-            ViewData["CurrentFilter"] = searchString;
+            ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
-           return View(await PaginatedList<EndOfDay>.CreateAsync(_context.EndOfDays.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View (await PaginatedList<EndOfDay>.CreateAsync (_context.EndOfDays.AsNoTracking (), pageNumber ?? 1, pageSize));
             // return View(await _context.EndOfDays.ToListAsync());
         }
 
         // GET: EndOfDays/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var endOfDay = await _context.EndOfDays
-                .FirstOrDefaultAsync(m => m.EndOfDayId == id);
-            if (endOfDay == null)
+                .FirstOrDefaultAsync (m => m.EndOfDayId == id);
+            if ( endOfDay == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-           return View(endOfDay);
+            return View (endOfDay);
         }
 
         // GET: EndOfDays/Create
         public IActionResult Create()
         {
-           return View();
+            return View ();
         }
 
         // POST: EndOfDays/Create
@@ -67,31 +68,32 @@ namespace AprajitaRetails.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EndOfDayId,EOD_Date,Shirting,Suiting,USPA,FM_Arrow,RWT,Access,CashInHand")] EndOfDay endOfDay)
+        public async Task<IActionResult> Create([Bind ("EndOfDayId,EOD_Date,Shirting,Suiting,USPA,FM_Arrow,RWT,Access,CashInHand")] EndOfDay endOfDay)
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
-                _context.Add(endOfDay);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Add (endOfDay);
+                await _context.SaveChangesAsync ();
+                return RedirectToAction (nameof (Index));
             }
-           return View(endOfDay);
+            return View (endOfDay);
         }
 
         // GET: EndOfDays/Edit/5
+        [Authorize (Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            var endOfDay = await _context.EndOfDays.FindAsync(id);
-            if (endOfDay == null)
+            var endOfDay = await _context.EndOfDays.FindAsync (id);
+            if ( endOfDay == null )
             {
-                return NotFound();
+                return NotFound ();
             }
-           return View(endOfDay);
+            return View (endOfDay);
         }
 
         // POST: EndOfDays/Edit/5
@@ -99,68 +101,68 @@ namespace AprajitaRetails.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EndOfDayId,EOD_Date,Shirting,Suiting,USPA,FM_Arrow,RWT,Access,CashInHand")] EndOfDay endOfDay)
+         [Authorize (Roles = "Admin,PowerUser")]   [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("EndOfDayId,EOD_Date,Shirting,Suiting,USPA,FM_Arrow,RWT,Access,CashInHand")] EndOfDay endOfDay)
         {
-            if (id != endOfDay.EndOfDayId)
+            if ( id != endOfDay.EndOfDayId )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
                 try
                 {
-                    _context.Update(endOfDay);
-                    await _context.SaveChangesAsync();
+                    _context.Update (endOfDay);
+                    await _context.SaveChangesAsync ();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch ( DbUpdateConcurrencyException )
                 {
-                    if (!EndOfDayExists(endOfDay.EndOfDayId))
+                    if ( !EndOfDayExists (endOfDay.EndOfDayId) )
                     {
-                        return NotFound();
+                        return NotFound ();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
-           return View(endOfDay);
+            return View (endOfDay);
         }
 
         // GET: EndOfDays/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var endOfDay = await _context.EndOfDays
-                .FirstOrDefaultAsync(m => m.EndOfDayId == id);
-            if (endOfDay == null)
+                .FirstOrDefaultAsync (m => m.EndOfDayId == id);
+            if ( endOfDay == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-           return View(endOfDay);
+            return View (endOfDay);
         }
 
         // POST: EndOfDays/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName ("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var endOfDay = await _context.EndOfDays.FindAsync(id);
-            _context.EndOfDays.Remove(endOfDay);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var endOfDay = await _context.EndOfDays.FindAsync (id);
+            _context.EndOfDays.Remove (endOfDay);
+            await _context.SaveChangesAsync ();
+            return RedirectToAction (nameof (Index));
         }
 
         private bool EndOfDayExists(int id)
         {
-            return _context.EndOfDays.Any(e => e.EndOfDayId == id);
+            return _context.EndOfDays.Any (e => e.EndOfDayId == id);
         }
     }
 }

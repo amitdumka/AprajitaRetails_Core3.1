@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -67,7 +67,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
 
         // GET: Uploader/ImportInWards/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -87,7 +87,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImportInWardId,InWardNo,InWardDate,InvoiceNo,InvoiceDate,PartyName,TotalQty,TotalMRPValue,TotalCost,ImportDate")] ImportInWard importInWard)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ImportInWardId,InWardNo,InWardDate,InvoiceNo,InvoiceDate,PartyName,TotalQty,TotalMRPValue,TotalCost,ImportDate")] ImportInWard importInWard)
         {
             if (id != importInWard.ImportInWardId)
             {
@@ -118,7 +118,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
 
         // GET: Uploader/ImportInWards/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -138,7 +138,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // POST: Uploader/ImportInWards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var importInWard = await _context.ImportInWards.FindAsync(id);
             _context.ImportInWards.Remove(importInWard);

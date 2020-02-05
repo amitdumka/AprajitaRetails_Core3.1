@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Areas.Banking.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
@@ -87,7 +88,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: BankDeposits/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -108,7 +109,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BankDepositId,DepoDate,AccountNumberId,Amount,PayMode,Details,Remarks")] BankDeposit bankDeposit)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("BankDepositId,DepoDate,AccountNumberId,Amount,PayMode,Details,Remarks")] BankDeposit bankDeposit)
         {
             if (id != bankDeposit.BankDepositId)
             {
@@ -141,7 +142,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: BankDeposits/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -162,7 +163,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // POST: BankDeposits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bankDeposit = await _context.BankDeposits.FindAsync(id);
             new BankingManager().OnDelete(_context, bankDeposit);

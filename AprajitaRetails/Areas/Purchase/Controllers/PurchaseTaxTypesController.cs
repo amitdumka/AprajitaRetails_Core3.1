@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,7 +81,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/PurchaseTaxTypes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -101,7 +101,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PurchaseTaxTypeId,TaxName,TaxType,CompositeRate")] PurchaseTaxType purchaseTaxType)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("PurchaseTaxTypeId,TaxName,TaxType,CompositeRate")] PurchaseTaxType purchaseTaxType)
         {
             if (id != purchaseTaxType.PurchaseTaxTypeId)
             {
@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/PurchaseTaxTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -152,7 +152,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // POST: Purchase/PurchaseTaxTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var purchaseTaxType = await _context.PurchaseTaxTypes.FindAsync(id);
             _context.PurchaseTaxTypes.Remove(purchaseTaxType);

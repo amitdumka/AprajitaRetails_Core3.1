@@ -1,7 +1,9 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.DailySale>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
-    ViewData["Title"] = "Daily Sales";
+    ViewData ["Title"] = "Daily Sales";
 }
 
 <h1 class="text-danger">Daily Sales</h1>
@@ -35,8 +37,8 @@
                 <td class=""><strong> Salesman: @Html.DropDownList("salesmanId", "All")</strong></td>
                 <td>
                     <strong>
-                        By Date: @Html.EditorFor(model => model.FirstOrDefault().SaleDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString() } })
-                        @Html.ValidationMessageFor(model => model.FirstOrDefault().SaleDate, "", new { @class = "text-danger" })
+                        By Date: @Html.EditorFor(model => model.FirstOrDefault ().SaleDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString () } })
+                        @Html.ValidationMessageFor(model => model.FirstOrDefault ().SaleDate, "", new { @class = "text-danger" })
                     </strong>
                 </td>
                 <td>
@@ -105,40 +107,47 @@
         </tr>
     </thead>
     <tbody class="bg-white">
-        @foreach (var item in Model)
+        @foreach ( var item in Model )
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SaleDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PayMode)
-            </td>
-            @*<td>            @Html.DisplayFor(modelItem => item.CashAmount)        </td>            *@
-            <td>
-                @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
-            </td>
-            @*<td>            @Html.DisplayFor(modelItem => item.IsDue)        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.IsManualBill)
-            </td>
-            @*<td>            @Html.DisplayFor(modelItem => item.IsTailoringBill)        </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.IsSaleReturn)
-            </td>
-            @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaleDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayMode)
+                </td>
+                @*<td>            @Html.DisplayFor(modelItem => item.CashAmount)        </td>            *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+                </td>
+                @*<td>            @Html.DisplayFor(modelItem => item.IsDue)        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsManualBill)
+                </td>
+                @*<td>            @Html.DisplayFor(modelItem => item.IsTailoringBill)        </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsSaleReturn)
+                </td>
+                @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
             <td class="btn-group btn-group-sm ">
-                <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+               // @if ( ( await AuthorizationService.AuthorizeAsync (User, "Admin") ).Succeeded )
+                {
+                    <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                }
+
                 <a class="btn btn-outline-deep-orange" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
-                <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+             //   @if ( ( await AuthorizationService.AuthorizeAsync (User, "Admin") ).Succeeded )
+                {
+                    <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                }
             </td>
-        </tr>
+            </tr>
         }
     </tbody>
 </table>

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -67,7 +68,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
 
         // GET: Uploader/ImportSaleItemWises/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -87,7 +88,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ImportSaleItemWiseId,InvoiceDate,InvoiceNo,InvoiceType,BrandName,ProductName,ItemDesc,HSNCode,Barcode,StyleCode,Quantity,MRP,Discount,BasicRate,Tax,SGST,CGST,LineTotal,RoundOff,BillAmnt,PaymentType,Saleman,IsDataConsumed,ImportTime")] ImportSaleItemWise importSaleItemWise)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ImportSaleItemWiseId,InvoiceDate,InvoiceNo,InvoiceType,BrandName,ProductName,ItemDesc,HSNCode,Barcode,StyleCode,Quantity,MRP,Discount,BasicRate,Tax,SGST,CGST,LineTotal,RoundOff,BillAmnt,PaymentType,Saleman,IsDataConsumed,ImportTime")] ImportSaleItemWise importSaleItemWise)
         {
             if (id != importSaleItemWise.ImportSaleItemWiseId)
             {
@@ -118,7 +119,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
 
         // GET: Uploader/ImportSaleItemWises/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -138,7 +139,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // POST: Uploader/ImportSaleItemWises/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var importSaleItemWise = await _context.ImportSaleItemWises.FindAsync(id);
             _context.ImportSaleItemWises.Remove(importSaleItemWise);

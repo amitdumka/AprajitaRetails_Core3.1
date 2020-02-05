@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AprajitaRetails.Models

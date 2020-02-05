@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,7 +84,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Payments/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -104,7 +104,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PayDate,PaymentPartry,PayMode,PaymentDetails,Amount,PaymentSlipNo,Remarks")] Payment payment)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PayDate,PaymentPartry,PayMode,PaymentDetails,Amount,PaymentSlipNo,Remarks")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
@@ -136,7 +136,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Payments/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -156,7 +156,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // POST: Payments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var payment = await _context.Payments.FindAsync(id);
             new ExpenseManager().OnDelete(_context, payment);
