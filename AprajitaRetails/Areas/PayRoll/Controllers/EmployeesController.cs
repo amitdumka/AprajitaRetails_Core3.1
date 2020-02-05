@@ -59,6 +59,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: PayRoll/Employees/Create
         public IActionResult Create()
         {
+           
             return PartialView();
         }
 
@@ -67,7 +68,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +100,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking")] Employee employee)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category")] Employee employee)
         {
             if (id != employee.EmployeeId)
             {

@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AprajitaRetails.Models
 {
-    //Payroll
+    
     public class Employee
     {
         public int EmployeeId { get; set; }
@@ -24,7 +25,9 @@ namespace AprajitaRetails.Models
 
         [Display(Name = "Is Working")]
         public bool IsWorking { get; set; }
-
+        [Display (Name ="Job Category")]
+        [DefaultValue(0)]
+        public EmpType Category { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
         public ICollection<SalaryPayment> SalaryPayments { get; set; }
         public ICollection<StaffAdvancePayment> AdvancePayments { get; set; }

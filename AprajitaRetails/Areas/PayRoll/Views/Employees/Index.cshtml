@@ -27,34 +27,38 @@
             <th>
                @Html.DisplayNameFor(model => model.FirstOrDefault().IsWorking)
             </th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Category)</th>
             <th></th>
         </tr>
     </thead>
     <tbody class="table-danger">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StaffName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MobileNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JoiningDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeavingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsWorking)
-                </td>
-                <td class="btn-group ">
-                    <a class="btn btn-outline-secondary btn-sm" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
-                    <a class="btn btn-outline-deep-orange btn-sm" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
-                    <a class="btn btn-outline-danger btn-sm" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StaffName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JoiningDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeavingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsWorking)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td class="btn-group ">
+                <a class="btn btn-outline-secondary btn-sm" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
+                <a class="btn btn-outline-deep-orange btn-sm" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
+                <a class="btn btn-outline-danger btn-sm" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
