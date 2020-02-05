@@ -53,10 +53,18 @@
                     @Html.DisplayFor(modelItem => item.Remarks)
                 </td>
                 <td class="btn-group btn-group-sm">
-                    <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
+                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser")  )
+                    {
+                        <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
+                    }
+
                     <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
-                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
-                    <a class="btn btn-outline-default" asp-action="EmpDetails"  asp-route-id="@item.AttendanceId" id="detail" data_modal="">List</a>
+                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser")  )
+                    {
+                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
+                    }
+
+                    <a class="btn btn-outline-default" asp-action="EmpDetails" asp-route-id="@item.AttendanceId" id="detail" data_modal="">List</a>
                 </td>
             </tr>
         }

@@ -229,7 +229,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         }
 
         // GET: DailySales/Edit/5
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize (Roles = "Admin,PowerUser,StoreManager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if ( id == null )
@@ -251,7 +251,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize (Roles = "Admin,PowerUser,StoreManager")]
         public async Task<IActionResult> Edit(int id, [Bind ("DailySaleId,SaleDate,InvNo,Amount,PayMode,CashAmount,SalesmanId,IsDue,IsManualBill,IsTailoringBill,IsSaleReturn,Remarks")] DailySale dailySale)
         {
             if ( id != dailySale.DailySaleId )

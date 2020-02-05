@@ -141,7 +141,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: Attendances/Edit/5
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize (Roles = "Admin,PowerUser,StoreManager")]
         public async Task<IActionResult> Edit(int? id)
         {
             if ( id == null )
@@ -163,7 +163,9 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
+        [Authorize (Roles = "Admin,PowerUser, StoreManager")]
+        
+        public async Task<IActionResult> Edit(int id, [Bind ("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
         {
             if ( id != attendance.AttendanceId )
             {
@@ -196,7 +198,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: Attendances/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize (Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if ( id == null )
             {
@@ -217,7 +220,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // POST: Attendances/Delete/5
         [HttpPost, ActionName ("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize (Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var attendance = await _context.Attendances.FindAsync (id);
             new PayRollManager ().ONInsertOrUpdate (_context, attendance, true, false);

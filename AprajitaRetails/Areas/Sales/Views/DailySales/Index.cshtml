@@ -1,7 +1,4 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.DailySale>
-@using Microsoft.AspNetCore.Authorization
-@inject IAuthorizationService AuthorizationService
-
 @{
     ViewData ["Title"] = "Daily Sales";
 }
@@ -136,7 +133,7 @@
                 </td>
                 @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
             <td class="btn-group btn-group-sm ">
-                @if ( Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
+                @if ( Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser")|| Context.User.IsInRole("StoreManager"))
                 {
                     <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
                 }
