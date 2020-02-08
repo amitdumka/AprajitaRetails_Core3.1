@@ -1,28 +1,33 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using MimeKit;
 
 namespace AprajitaRetails.Ops.TAS.Mails
 {
-
+     public  class MailConfig
+    {
+        public  const string UserName = "kumar_amit_dumka@yahoo.co.uk";
+        public  const string Password = "sjipkhwnjnztjmmk";
+        public const string SMTPAddress = "smtp.mail.yahoo.com";
+        public const int SMTPPort = 465;
+        public const bool SSL = true;
+    }
 
     public static class MyMail
     {
         public static void SendEmail(string subjects, string messages, string toAddress)
         {
             var message = new MimeMessage ();
-            message.From.Add (new MailboxAddress ("Aprajita Retails", "aprajitaretailsdumka@gmail.com"));
+            message.From.Add (new MailboxAddress ("Aprajita Retails", MailConfig.UserName));
             message.To.Add (new MailboxAddress (/*"",*/toAddress));
             message.Subject = subjects;
             message.Body = new TextPart ("plain") { Text = messages };
 
-            using var client = new SmtpClient
-            {
-                // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
-                ServerCertificateValidationCallback = (s, c, h, e) => true
-            };
-            client.Connect ("smtp.gmail.com", 25, false);
+            // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
+            using var client = new SmtpClient{ ServerCertificateValidationCallback = (s, c, h, e) => true };
+            client.Connect (MailConfig.SMTPAddress,MailConfig.SMTPPort, SecureSocketOptions.Auto);
             // Note: only needed if the SMTP server requires authentication
-            client.Authenticate ("aprajitaretailsdumka@gmail.com", "ferrari265");
+            client.Authenticate (MailConfig.UserName, MailConfig.Password);
             client.Send (message);
             client.Disconnect (true);
         }
@@ -34,7 +39,7 @@ namespace AprajitaRetails.Ops.TAS.Mails
         {
 
             var message = new MimeMessage ();
-            message.From.Add (new MailboxAddress ("Aprajita Retails", "aprajitaretailsdumka@gmail.com"));
+            message.From.Add (new MailboxAddress ("Aprajita Retails", MailConfig.UserName));
             message.To.Add (new MailboxAddress (/*"",*/"amitnarayansah@gmail.com"));
             if ( subjects != null )
                 message.Subject = "AprajitaRetails " + subjects + " ";
@@ -47,9 +52,9 @@ namespace AprajitaRetails.Ops.TAS.Mails
                 // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
                 ServerCertificateValidationCallback = (s, c, h, e) => true
             };
-            client.Connect ("smtp.gmail.com", 25, false);
+            client.Connect (MailConfig.SMTPAddress, MailConfig.SMTPPort, MailConfig.SSL);
             // Note: only needed if the SMTP server requires authentication
-            client.Authenticate ("aprajitaretailsdumka@gmail.com", "ferrari265");
+            client.Authenticate (MailConfig.UserName, MailConfig.Password);
             client.Send (message);
             client.Disconnect (true);
 
