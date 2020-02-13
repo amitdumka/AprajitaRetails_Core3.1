@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,8 +26,10 @@ namespace AprajitaRetails.Areas.StoneWorks.Models
         public double Qty { get; set; }
         public decimal Rate { get; set; }
         public decimal Payment { get; set; }
-        public DateTime PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
         public string Remarks { get; set; }
+        public string TruckNo { get; set; }
+        public bool IsOwnTruck { get; set; }
     }
     public class RawStock
     {
@@ -45,6 +48,7 @@ namespace AprajitaRetails.Areas.StoneWorks.Models
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public string Remarks { get; set; }
+        public bool IsOnVechile { get; set; }
 
     }
 
@@ -58,19 +62,54 @@ namespace AprajitaRetails.Areas.StoneWorks.Models
 
     }
 
-    public class SpareParts :BasicExpenses 
+    public class SparePart : BasicEntry
     {
+        public int SparePartId { get; set; }
 
     }
-    public class RepairCost : BasicExpenses { }
+    public class RepairCost : BasicEntry
+    {
+        public int RepairCostId { get; set; }
+    }
     public class StaffSalary { }
     public class DailyAttendance { }
-    public class ElectricityBill : BasicExpenses { }
-    public class Fooding:BasicExpenses { }
-    public class Truck { }
+    public class ElectricityBill : BasicEntry
+    {
+        public int ElectricityBillId { get; set; }
+    }
+    public class Fooding : BasicEntry
+    {
 
-    public class ChipSales {
-        public int SalesId { get; set; }
+        public int FoodingId { get; set; }
+    }
+    public class Truck
+    {
+        public int TruckId { get; set; }
+        public string TruckNumber { get; set; }
+        public string ChasisNo { get; set; }
+        public string EngineNo { get; set; }
+
+        public DateTime DateofRegistration { get; set; }
+        public DateTime InsuranceExpiryDate { get; set; }
+        public DateTime LastServiceDate { get; set; }
+        public bool IsHired { get; set; }
+        public string OwnerName { get; set; }
+    }
+    public class HiredTruck
+    {
+        public int HiredTruckId { get; set; }
+        [ForeignKey("Truck")]
+        public int TruckId { get; set; }
+        public string HiredFrom { get; set; }
+        public decimal Rate { get; set; }
+        public DateTime HiredDate { get; set; }
+        public DateTime? SurrenderDate { get; set; }
+        public virtual Truck Trucks { get; set; }
+    }
+
+    public class ChipSales
+    {
+        public int ChipSalesId { get; set; }
         public DateTime OnDate { get; set; }
         public string PartyName { get; set; }
         public string TruckNumber { get; set; }
@@ -91,7 +130,7 @@ namespace AprajitaRetails.Areas.StoneWorks.Models
 
 
 
-    public class BasicExpenses
+    public class BasicEntry
     {
         public DateTime OnDate { get; set; }
         public string Particulars { get; set; }

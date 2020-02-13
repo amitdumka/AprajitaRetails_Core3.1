@@ -88,9 +88,6 @@
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\Sales\Data\" />
-    <Folder Include="Areas\StoneWorks\Controllers\" />
-    <Folder Include="Areas\StoneWorks\Data\" />
-    <Folder Include="Areas\StoneWorks\Views\" />
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />

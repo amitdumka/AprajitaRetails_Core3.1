@@ -4,6 +4,7 @@ using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Models;
 
 using Microsoft.EntityFrameworkCore;
+using AprajitaRetails.Areas.StoneWorks.Models;
 
 namespace AprajitaRetails.Areas.Voyager.Data
 {
@@ -55,7 +56,11 @@ namespace AprajitaRetails.Areas.Voyager.Data
 
         public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
         public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
-    }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Bolder> Bolder { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Fuel> Fuel { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.FuelConsumtion> FuelConsumtion { get; set; }
+
+          }
 
 
 }
