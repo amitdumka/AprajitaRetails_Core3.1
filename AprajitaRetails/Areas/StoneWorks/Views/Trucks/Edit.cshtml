@@ -1,0 +1,69 @@
+﻿@model AprajitaRetails.Areas.StoneWorks.Models.Truck
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Truck</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TruckId" />
+            <div class="form-group">
+                <label asp-for="TruckNumber" class="control-label"></label>
+                <input asp-for="TruckNumber" class="form-control" />
+                <span asp-validation-for="TruckNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerName" class="control-label"></label>
+                <input asp-for="OwnerName" class="form-control" />
+                <span asp-validation-for="OwnerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ChasisNo" class="control-label"></label>
+                <input asp-for="ChasisNo" class="form-control" />
+                <span asp-validation-for="ChasisNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineNo" class="control-label"></label>
+                <input asp-for="EngineNo" class="form-control" />
+                <span asp-validation-for="EngineNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateofRegistration" class="control-label"></label>
+                <input asp-for="DateofRegistration" class="form-control" />
+                <span asp-validation-for="DateofRegistration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InsuranceExpiryDate" class="control-label"></label>
+                <input asp-for="InsuranceExpiryDate" class="form-control" />
+                <span asp-validation-for="InsuranceExpiryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastServiceDate" class="control-label"></label>
+                <input asp-for="LastServiceDate" class="form-control" />
+                <span asp-validation-for="LastServiceDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsHired" /> @Html.DisplayNameFor(model => model.IsHired)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

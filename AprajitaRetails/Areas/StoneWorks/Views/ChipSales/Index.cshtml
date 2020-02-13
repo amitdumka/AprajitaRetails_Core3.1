@@ -1,0 +1,119 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.StoneWorks.Models.ChipSales>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TruckNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PartyMobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverMobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaidAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClearDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillMaker)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SlipNo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TruckNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartyMobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverMobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaidAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClearDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BillMaker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SlipNo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ChipSalesId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ChipSalesId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ChipSalesId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
