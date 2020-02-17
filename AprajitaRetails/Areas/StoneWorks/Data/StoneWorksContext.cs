@@ -16,6 +16,14 @@ namespace AprajitaRetails.Areas.StoneWorks.Data
         //StoneWorks
         public DbSet<DailyLabor> DailyLabor { get; set; }
         public DbSet<Bolder> Bolders { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Bolder> Bolder { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Fuel> Fuel { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.FuelConsumtion> FuelConsumtion { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.ChipSales> ChipSales { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Truck> Truck { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.HiredTruck> HiredTruck { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Staff> Staff { get; set; }
+        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.StaffSalary> StaffSalary { get; set; }
 
     }
 }

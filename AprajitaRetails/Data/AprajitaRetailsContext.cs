@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using AprajitaRetails.Models.ViewModels;
+using AprajitaRetails.Areas.AddressBook.Models;
 //using AprajitaRetails.Areas.Chat.Models;
 
 namespace AprajitaRetails.Data
@@ -119,6 +120,8 @@ namespace AprajitaRetails.Data
         public DbSet<MonthEnd> MonthEnds { get; set; }
 
         public DbSet<AprajitaRetails.Models.ViewModels.IncomeExpensesReport> IncomeExpensesReport { get; set; }
+
+        public DbSet<AprajitaRetails.Areas.AddressBook.Models.Contact> Contact { get; set; }
 
        // public DbSet<Message> Messages { get; set; }
 

@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.StoneWorks.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Areas.StoneWorks.Data;
 
 namespace AprajitaRetails.Areas.StoneWorks.Controllers
 {
     [Area("StoneWorks")]
     public class FuelConsumtionsController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly StoneWorksContext _context;
 
-        public FuelConsumtionsController(VoyagerContext context)
+        public FuelConsumtionsController(StoneWorksContext context)
         {
             _context = context;
         }

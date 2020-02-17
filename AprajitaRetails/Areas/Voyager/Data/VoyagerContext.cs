@@ -10,15 +10,15 @@ namespace AprajitaRetails.Areas.Voyager.Data
 {
     public class VoyagerContext : DbContext
     {
-        public VoyagerContext(DbContextOptions<VoyagerContext> options) : base(options)
+        public VoyagerContext(DbContextOptions<VoyagerContext> options) : base (options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
+            base.OnModelCreating (modelBuilder);
+            modelBuilder.Entity<SalesPerson> ().HasData (new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
+            modelBuilder.Entity<SalesPerson> ().HasData (new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
+            modelBuilder.Entity<SalesPerson> ().HasData (new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
         }
         public DbSet<Store> Stores { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -56,16 +56,9 @@ namespace AprajitaRetails.Areas.Voyager.Data
 
         public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
         public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Bolder> Bolder { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Fuel> Fuel { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.FuelConsumtion> FuelConsumtion { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.ChipSales> ChipSales { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Truck> Truck { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.HiredTruck> HiredTruck { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.Staff> Staff { get; set; }
-        public DbSet<AprajitaRetails.Areas.StoneWorks.Models.StaffSalary> StaffSalary { get; set; }
+        //StoneWorks
 
-          }
+    }
 
 
 }

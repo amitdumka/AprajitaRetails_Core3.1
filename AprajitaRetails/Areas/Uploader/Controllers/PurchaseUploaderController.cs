@@ -17,7 +17,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     [Authorize]
     public class PurchaseUploaderController : Controller
     {
-        private readonly VoyagerContext db;
+       VoyagerContext db;
 
         public PurchaseUploaderController(VoyagerContext context)
         {

@@ -5,29 +5,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.StoneWorks.Models;
-using AprajitaRetails.Areas.Voyager.Data;
-using AprajitaRetails.Areas.StoneWorks.Data;
+using AprajitaRetails.Areas.AddressBook.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 
-namespace AprajitaRetails.Areas.StoneWorks.Controllers
+namespace AprajitaRetails.Areas.AddressBook.Controllers
 {
-    [Area("StoneWorks")]
-    public class ChipSalesController : Controller
+    [Area("AddressBook")]
+    [Authorize]
+    public class ContactsController : Controller
     {
-        private readonly StoneWorksContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public ChipSalesController(StoneWorksContext context)
+        public ContactsController(AprajitaRetailsContext context)
         {
             _context = context;
         }
 
-        // GET: StoneWorks/ChipSales
+        // GET: AddressBook/Contacts
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ChipSales.ToListAsync());
+            var vm = _context.Contact.OrderBy(c=>c.FirstName).ThenBy(c=>c.LastName);
+            return View(await vm.ToListAsync());
         }
 
-        // GET: StoneWorks/ChipSales/Details/5
+        // GET: AddressBook/Contacts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,39 +37,39 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
                 return NotFound();
             }
 
-            var chipSales = await _context.ChipSales
-                .FirstOrDefaultAsync(m => m.ChipSalesId == id);
-            if (chipSales == null)
+            var contact = await _context.Contact
+                .FirstOrDefaultAsync(m => m.ContactId == id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return View(chipSales);
+            return PartialView (contact);
         }
 
-        // GET: StoneWorks/ChipSales/Create
+        // GET: AddressBook/Contacts/Create
         public IActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
-        // POST: StoneWorks/ChipSales/Create
+        // POST: AddressBook/Contacts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ChipSalesId,OnDate,PartyName,TruckNumber,PartyMobileNo,DriverName,DriverMobileNo,Size,Quantity,Rate,Amount,PaidAmount,ClearDate,Remarks,BillMaker,SlipNo")] ChipSales chipSales)
+        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(chipSales);
+                _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(chipSales);
+            return PartialView(contact);
         }
 
-        // GET: StoneWorks/ChipSales/Edit/5
+        // GET: AddressBook/Contacts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,22 +77,22 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
                 return NotFound();
             }
 
-            var chipSales = await _context.ChipSales.FindAsync(id);
-            if (chipSales == null)
+            var contact = await _context.Contact.FindAsync(id);
+            if (contact == null)
             {
                 return NotFound();
             }
-            return View(chipSales);
+            return PartialView(contact);
         }
 
-        // POST: StoneWorks/ChipSales/Edit/5
+        // POST: AddressBook/Contacts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ChipSalesId,OnDate,PartyName,TruckNumber,PartyMobileNo,DriverName,DriverMobileNo,Size,Quantity,Rate,Amount,PaidAmount,ClearDate,Remarks,BillMaker,SlipNo")] ChipSales chipSales)
+        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
         {
-            if (id != chipSales.ChipSalesId)
+            if (id != contact.ContactId)
             {
                 return NotFound();
             }
@@ -99,12 +101,12 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
             {
                 try
                 {
-                    _context.Update(chipSales);
+                    _context.Update(contact);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChipSalesExists(chipSales.ChipSalesId))
+                    if (!ContactExists(contact.ContactId))
                     {
                         return NotFound();
                     }
@@ -115,10 +117,10 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(chipSales);
+            return PartialView(contact);
         }
 
-        // GET: StoneWorks/ChipSales/Delete/5
+        // GET: AddressBook/Contacts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,30 +128,30 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
                 return NotFound();
             }
 
-            var chipSales = await _context.ChipSales
-                .FirstOrDefaultAsync(m => m.ChipSalesId == id);
-            if (chipSales == null)
+            var contact = await _context.Contact
+                .FirstOrDefaultAsync(m => m.ContactId == id);
+            if (contact == null)
             {
                 return NotFound();
             }
 
-            return View(chipSales);
+            return PartialView(contact);
         }
 
-        // POST: StoneWorks/ChipSales/Delete/5
+        // POST: AddressBook/Contacts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var chipSales = await _context.ChipSales.FindAsync(id);
-            _context.ChipSales.Remove(chipSales);
+            var contact = await _context.Contact.FindAsync(id);
+            _context.Contact.Remove(contact);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ChipSalesExists(int id)
+        private bool ContactExists(int id)
         {
-            return _context.ChipSales.Any(e => e.ChipSalesId == id);
+            return _context.Contact.Any(e => e.ContactId == id);
         }
     }
 }

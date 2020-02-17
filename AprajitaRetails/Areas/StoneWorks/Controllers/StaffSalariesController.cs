@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.StoneWorks.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Areas.StoneWorks.Data;
 
 namespace AprajitaRetails.Areas.StoneWorks.Controllers
 {
     [Area("StoneWorks")]
     public class StaffSalariesController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly StoneWorksContext _context;
 
-        public StaffSalariesController(VoyagerContext context)
+        public StaffSalariesController(StoneWorksContext context)
         {
             _context = context;
         }
@@ -23,8 +24,8 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
         // GET: StoneWorks/StaffSalaries
         public async Task<IActionResult> Index()
         {
-            var voyagerContext = _context.StaffSalary.Include(s => s.Staff);
-            return View(await voyagerContext.ToListAsync());
+            var StoneWorksContext = _context.StaffSalary.Include(s => s.Staff);
+            return View(await StoneWorksContext.ToListAsync());
         }
 
         // GET: StoneWorks/StaffSalaries/Details/5

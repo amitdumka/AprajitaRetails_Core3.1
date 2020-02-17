@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.StoneWorks.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Areas.StoneWorks.Data;
 
 namespace AprajitaRetails.Areas.StoneWorks.Controllers
 {
     [Area("StoneWorks")]
     public class HiredTrucksController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly StoneWorksContext _context;
 
-        public HiredTrucksController(VoyagerContext context)
+        public HiredTrucksController(StoneWorksContext context)
         {
             _context = context;
         }
@@ -23,8 +24,8 @@ namespace AprajitaRetails.Areas.StoneWorks.Controllers
         // GET: StoneWorks/HiredTrucks
         public async Task<IActionResult> Index()
         {
-            var voyagerContext = _context.HiredTruck.Include(h => h.Trucks);
-            return View(await voyagerContext.ToListAsync());
+            var StoneWorksContext = _context.HiredTruck.Include(h => h.Trucks);
+            return View(await StoneWorksContext.ToListAsync());
         }
 
         // GET: StoneWorks/HiredTrucks/Details/5
