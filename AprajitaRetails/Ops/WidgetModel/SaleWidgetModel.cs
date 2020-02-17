@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.WidgetModel
 {
-    public class SaleWidgetModel
+    public static class SaleWidgetModel
     {
         public static DailySaleReport GetSaleRecord(AprajitaRetailsContext db)
         {

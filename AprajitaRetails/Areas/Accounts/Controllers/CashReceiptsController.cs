@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using AprajitaRetails.Areas.Accounts.Models;
+using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Areas.Accounts.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -35,7 +32,6 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 searchString = currentFilter;
             }
-
 
             ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
@@ -72,7 +68,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // POST: CashReceipts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -108,7 +104,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // POST: CashReceipts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]

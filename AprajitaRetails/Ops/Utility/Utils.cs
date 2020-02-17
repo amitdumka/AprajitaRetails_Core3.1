@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.Utility
 {
-    public class Utils
+    public static class Utils
     {
         public static string GetMemberName<T, TValue>(Expression<Func<T, TValue>> memberAccess)
         {
@@ -33,7 +33,7 @@ namespace AprajitaRetails.Ops.Utility
             if (memberExpression != null)
                 return memberExpression.Member.Name;
 
-            throw new InvalidOperationException("Member expression expected");
+            throw new InvalidOperationException("Member expression expected.");
         }
     }
 

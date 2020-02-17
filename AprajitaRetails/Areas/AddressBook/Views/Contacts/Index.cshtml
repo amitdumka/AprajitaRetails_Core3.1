@@ -27,9 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EMailAddress)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Remarks)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -51,9 +51,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EMailAddress)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
+            </td>*@
             <td class="btn-group  btn-group-sm">
                 <a asp-action="Edit" asp-route-id="@item.ContactId" class="btn btn-outline-secondary " id="edit" data_modal="">Edit</a> 
                 <a asp-action="Details" asp-route-id="@item.ContactId" class="btn btn-outline-deep-orange "id="detail" data_modal="" >Details</a> 

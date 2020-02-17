@@ -22,7 +22,7 @@ namespace AprajitaRetails.Ops.Uploader
                 IList<ImportPurchase> purchaseList = db.ImportPurchases.ToList();
 
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Purchase");
-                int totalRows = purchaseList.Count();
+                int totalRows = purchaseList.Count;
 
                 worksheet.Cells[1, 1].Value = "Bardcode";
                 worksheet.Cells[1, 2].Value = "MRP";

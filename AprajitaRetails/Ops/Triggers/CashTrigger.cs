@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace AprajitaRetails.Ops.Triggers
 {
-    public class CashTrigger
+    public static class CashTrigger
     {
         //Create CashInHand/Bank
         public static void CreateCashInHand(AprajitaRetailsContext db, DateTime date, decimal inAmt, decimal outAmt, bool saveit = false)

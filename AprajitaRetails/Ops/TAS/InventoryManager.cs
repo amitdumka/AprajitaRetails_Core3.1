@@ -988,7 +988,7 @@ namespace AprajitaRetails.Ops.TAS
     }
 
 
-    public class SalePurchaseManager
+    public static class SalePurchaseManager
     {
         /// <summary>
         /// UpDate Stock when Sale or Purchase Happen

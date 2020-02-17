@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace AprajitaRetails.Ops.Helpers
 {
-    public class XMLExporter
+    public static class XMLExporter
     {
         public static string WriteToXML(AprajitaRetailsContext db)
         {

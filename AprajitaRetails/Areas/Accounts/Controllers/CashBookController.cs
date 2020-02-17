@@ -1,34 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
     [Area ("Accounts")]
-    [Authorize ]
+    [Authorize]
     public class CashBookController : Controller
     {
-
         //TODO: Implement CashBook from TAS project
         // GET: CashBook
         public ActionResult Index()
         {
-           return View();
+            return View ();
         }
 
         // GET: CashBook/Details/5
         public ActionResult Details(int id)
         {
-           return PartialView();
+            return PartialView ();
         }
 
         // GET: CashBook/Create
         public ActionResult Create()
         {
-           return PartialView();
+            return PartialView ();
         }
 
         // POST: CashBook/Create
@@ -40,18 +36,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
             catch
             {
-               return PartialView();
+                return PartialView ();
             }
         }
 
         // GET: CashBook/Edit/5
         public ActionResult Edit(int id)
         {
-           return PartialView();
+            return PartialView ();
         }
 
         // POST: CashBook/Edit/5
@@ -63,18 +59,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
             catch
             {
-               return PartialView();
+                return PartialView ();
             }
         }
 
         // GET: CashBook/Delete/5
         public ActionResult Delete(int id)
         {
-           return PartialView();
+            return PartialView ();
         }
 
         // POST: CashBook/Delete/5
@@ -86,11 +82,11 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
             catch
             {
-               return PartialView();
+                return PartialView ();
             }
         }
     }

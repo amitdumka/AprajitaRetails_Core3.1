@@ -33,7 +33,7 @@ public enum BankPayModes { Cash, Card, Cheques, RTGS, NEFT, IMPS, Wallets, Other
 
 public enum UploadTypes { Purchase, SaleRegister, SaleItemWise, InWard, Customer }
 
-public class UploadType
+public static class UploadType
 {
 
     public static List<string> Types = new List<string> { "Purchase", "SaleItemWise", "SaleRegister", "InWard", "Customer" };
@@ -43,7 +43,7 @@ public enum UploadReturns { Success, Error, FileNotFound, NotExcelType, ImportNo
 
 
 //public enum Genders { Male, Female, TransGender }
-//public enum Units { Nos, Meters, Pcs, Packets }
+//public enum Units { Nos, Meters, PCs, Packets }
 //public enum TaxType { GST, SGST, CGST, IGST, VAT }
 
 

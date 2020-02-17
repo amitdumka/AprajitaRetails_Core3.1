@@ -4,7 +4,7 @@ using MimeKit;
 
 namespace AprajitaRetails.Ops.TAS.Mails
 {
-     public  class MailConfig
+     public static class MailConfig
     {
         public  const string UserName = "kumar_amit_dumka@yahoo.co.uk";
         public  const string Password = "sjipkhwnjnztjmmk";

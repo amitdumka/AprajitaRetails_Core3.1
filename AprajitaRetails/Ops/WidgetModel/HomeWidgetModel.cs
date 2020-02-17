@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AprajitaRetails.Ops.WidgetModel
 {
-    public class HomeWidgetModel
+    public static class HomeWidgetModel
     {
         public static TailoringReport GetTailoringReport(AprajitaRetailsContext db)
         {
@@ -139,7 +139,7 @@ namespace AprajitaRetails.Ops.WidgetModel
                         {
                             var ts = totalSale.Where(c => c.StaffName == info.Name).ToList();
                             info.TotalSale = (decimal?)ts.Sum(c => (decimal?)c.Amount) ?? 0;
-                            info.NoOfBills = (int?)ts.Count() ?? 0;
+                            info.NoOfBills = (int?) ts.Count ?? 0;
                         }
 
                         if (info.PresentDays > 0 && info.TotalSale > 0)

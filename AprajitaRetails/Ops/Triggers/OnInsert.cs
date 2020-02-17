@@ -9,7 +9,7 @@ namespace AprajitaRetails.Ops.Triggers
     public class OnUpdate { }
     public class OnDelete { }
 
-    public class TailoringWork
+    public static class TailoringWork
     {
         public static void UpdateDelivery(AprajitaRetailsContext db)
         {

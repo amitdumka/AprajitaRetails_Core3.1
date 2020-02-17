@@ -19,7 +19,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
     public class DailySalesController : Controller
     {
         private readonly AprajitaRetailsContext db;
-        readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
+       // private readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
 
 
         public DailySalesController(AprajitaRetailsContext context)
