@@ -85,7 +85,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             {
                 uType = UploadTypes.SaleRegister;
             }
-            UploadReturns response = uploader.UploadExcel(db,uType, FileUpload, "/Doc/", IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db,uType, FileUpload, IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)

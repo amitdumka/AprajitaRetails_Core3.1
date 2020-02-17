@@ -19,7 +19,7 @@ namespace AprajitaRetails.Ops.Uploader
 {
     public class ExcelUploaders
     {
-        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload, string targetpath, bool IsVat, bool IsLocal)
+        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload, bool IsVat, bool IsLocal)
         {
 
             //UploadType = "InWard";
@@ -329,7 +329,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        public UploadReturns UploadAddressBook(AprajitaRetailsContext db, IFormFile FileUpload, string targetpath)
+        public UploadReturns UploadAddressBook(AprajitaRetailsContext db, IFormFile FileUpload)
         {
             if ( FileUpload != null )
             {

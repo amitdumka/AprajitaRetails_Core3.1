@@ -48,7 +48,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 IsLocal = true;
             }
 
-            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload, "/Docs/", IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload, IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)
