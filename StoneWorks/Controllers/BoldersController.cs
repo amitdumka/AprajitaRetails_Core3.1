@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.AddressBook.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Authorization;
-// https://www.mikesdotnetting.com/article/256/entity-framework-recipe-alphabetical-paging-in-asp-net-mvc
-//Alphabet order pagitnation
-namespace AprajitaRetails.Areas.AddressBook.Controllers
-{
-    [Area("AddressBook")]
-    [Authorize]
-    public class ContactsController : Controller
-    {
-        private readonly AprajitaRetailsContext _context;
+using StoneWorks.Data;
+using StoneWorks.Models;
 
-        public ContactsController(AprajitaRetailsContext context)
+namespace  StoneWorks.Controllers
+{
+    
+    public class BoldersController : Controller
+    {
+        private readonly StoneWorksContext _context;
+
+        public BoldersController(StoneWorksContext context)
         {
             _context = context;
         }
 
-        // GET: AddressBook/Contacts
+        // GET: StoneWorks/Bolders
         public async Task<IActionResult> Index()
         {
-            var vm = _context.Contact.OrderBy(c=>c.FirstName).ThenBy(c=>c.LastName);
-            return View(await vm.ToListAsync());
+            return View(await _context.Bolder.ToListAsync());
         }
 
-        // GET: AddressBook/Contacts/Details/5
+        // GET: StoneWorks/Bolders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,39 +32,39 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var bolder = await _context.Bolder
+                .FirstOrDefaultAsync(m => m.BolderId == id);
+            if (bolder == null)
             {
                 return NotFound();
             }
 
-            return PartialView (contact);
+            return View(bolder);
         }
 
-        // GET: AddressBook/Contacts/Create
+        // GET: StoneWorks/Bolders/Create
         public IActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
-        // POST: AddressBook/Contacts/Create
+        // POST: StoneWorks/Bolders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Create([Bind("BolderId,OnDate,VendorName,Qty,Rate,Payment,PaymentDate,Remarks,TruckNo,IsOwnTruck")] Bolder bolder)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                _context.Add(bolder);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            return View(bolder);
         }
 
-        // GET: AddressBook/Contacts/Edit/5
+        // GET: StoneWorks/Bolders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +72,22 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
+            var bolder = await _context.Bolder.FindAsync(id);
+            if (bolder == null)
             {
                 return NotFound();
             }
-            return PartialView(contact);
+            return View(bolder);
         }
 
-        // POST: AddressBook/Contacts/Edit/5
+        // POST: StoneWorks/Bolders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("BolderId,OnDate,VendorName,Qty,Rate,Payment,PaymentDate,Remarks,TruckNo,IsOwnTruck")] Bolder bolder)
         {
-            if (id != contact.ContactId)
+            if (id != bolder.BolderId)
             {
                 return NotFound();
             }
@@ -102,12 +96,12 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
             {
                 try
                 {
-                    _context.Update(contact);
+                    _context.Update(bolder);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.ContactId))
+                    if (!BolderExists(bolder.BolderId))
                     {
                         return NotFound();
                     }
@@ -118,10 +112,10 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            return View(bolder);
         }
 
-        // GET: AddressBook/Contacts/Delete/5
+        // GET: StoneWorks/Bolders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +123,30 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var bolder = await _context.Bolder
+                .FirstOrDefaultAsync(m => m.BolderId == id);
+            if (bolder == null)
             {
                 return NotFound();
             }
 
-            return PartialView(contact);
+            return View(bolder);
         }
 
-        // POST: AddressBook/Contacts/Delete/5
+        // POST: StoneWorks/Bolders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
-            _context.Contact.Remove(contact);
+            var bolder = await _context.Bolder.FindAsync(id);
+            _context.Bolder.Remove(bolder);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContactExists(int id)
+        private bool BolderExists(int id)
         {
-            return _context.Contact.Any(e => e.ContactId == id);
+            return _context.Bolder.Any(e => e.BolderId == id);
         }
     }
 }

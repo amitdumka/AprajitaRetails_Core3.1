@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoneWorks", "StoneWorks\StoneWorks.csproj", "{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,18 @@ Global
 		{8437F74E-F5A1-4734-BE4D-E248C8B4D19D}.Release|iPhone.Build.0 = Release|Any CPU
 		{8437F74E-F5A1-4734-BE4D-E248C8B4D19D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{8437F74E-F5A1-4734-BE4D-E248C8B4D19D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Release|iPhone.Build.0 = Release|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{C7FE93CB-5AF5-4E7F-AE70-6C6110129876}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

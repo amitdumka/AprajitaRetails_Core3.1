@@ -5,32 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.AddressBook.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Authorization;
-// https://www.mikesdotnetting.com/article/256/entity-framework-recipe-alphabetical-paging-in-asp-net-mvc
-//Alphabet order pagitnation
-namespace AprajitaRetails.Areas.AddressBook.Controllers
-{
-    [Area("AddressBook")]
-    [Authorize]
-    public class ContactsController : Controller
-    {
-        private readonly AprajitaRetailsContext _context;
+using  StoneWorks.Models;
+ 
+using  StoneWorks.Data;
 
-        public ContactsController(AprajitaRetailsContext context)
+namespace  StoneWorks.Controllers
+{
+    
+    public class StaffsController : Controller
+    {
+        private readonly StoneWorksContext _context;
+
+        public StaffsController(StoneWorksContext context)
         {
             _context = context;
         }
 
-        // GET: AddressBook/Contacts
+        // GET: StoneWorks/Staffs
         public async Task<IActionResult> Index()
         {
-            var vm = _context.Contact.OrderBy(c=>c.FirstName).ThenBy(c=>c.LastName);
-            return View(await vm.ToListAsync());
+            return View(await _context.Staff.ToListAsync());
         }
 
-        // GET: AddressBook/Contacts/Details/5
+        // GET: StoneWorks/Staffs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,39 +35,39 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var staff = await _context.Staff
+                .FirstOrDefaultAsync(m => m.StaffId == id);
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            return PartialView (contact);
+            return View(staff);
         }
 
-        // GET: AddressBook/Contacts/Create
+        // GET: StoneWorks/Staffs/Create
         public IActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
-        // POST: AddressBook/Contacts/Create
+        // POST: StoneWorks/Staffs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Create([Bind("StaffId,StaffName,DateofBirth,JoiningDate,MonthlySalary,IsWorking,LeavingDate")] Staff staff)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                _context.Add(staff);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            return View(staff);
         }
 
-        // GET: AddressBook/Contacts/Edit/5
+        // GET: StoneWorks/Staffs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +75,22 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
+            var staff = await _context.Staff.FindAsync(id);
+            if (staff == null)
             {
                 return NotFound();
             }
-            return PartialView(contact);
+            return View(staff);
         }
 
-        // POST: AddressBook/Contacts/Edit/5
+        // POST: StoneWorks/Staffs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("StaffId,StaffName,DateofBirth,JoiningDate,MonthlySalary,IsWorking,LeavingDate")] Staff staff)
         {
-            if (id != contact.ContactId)
+            if (id != staff.StaffId)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
             {
                 try
                 {
-                    _context.Update(contact);
+                    _context.Update(staff);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.ContactId))
+                    if (!StaffExists(staff.StaffId))
                     {
                         return NotFound();
                     }
@@ -118,10 +115,10 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            return View(staff);
         }
 
-        // GET: AddressBook/Contacts/Delete/5
+        // GET: StoneWorks/Staffs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +126,30 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var staff = await _context.Staff
+                .FirstOrDefaultAsync(m => m.StaffId == id);
+            if (staff == null)
             {
                 return NotFound();
             }
 
-            return PartialView(contact);
+            return View(staff);
         }
 
-        // POST: AddressBook/Contacts/Delete/5
+        // POST: StoneWorks/Staffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
-            _context.Contact.Remove(contact);
+            var staff = await _context.Staff.FindAsync(id);
+            _context.Staff.Remove(staff);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContactExists(int id)
+        private bool StaffExists(int id)
         {
-            return _context.Contact.Any(e => e.ContactId == id);
+            return _context.Staff.Any(e => e.StaffId == id);
         }
     }
 }

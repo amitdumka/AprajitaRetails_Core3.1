@@ -5,32 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.AddressBook.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Authorization;
-// https://www.mikesdotnetting.com/article/256/entity-framework-recipe-alphabetical-paging-in-asp-net-mvc
-//Alphabet order pagitnation
-namespace AprajitaRetails.Areas.AddressBook.Controllers
-{
-    [Area("AddressBook")]
-    [Authorize]
-    public class ContactsController : Controller
-    {
-        private readonly AprajitaRetailsContext _context;
+using  StoneWorks.Models;
+ 
+using  StoneWorks.Data;
 
-        public ContactsController(AprajitaRetailsContext context)
+namespace  StoneWorks.Controllers
+{
+    
+    public class FuelsController : Controller
+    {
+        private readonly StoneWorksContext _context;
+
+        public FuelsController(StoneWorksContext context)
         {
             _context = context;
         }
 
-        // GET: AddressBook/Contacts
+        // GET: StoneWorks/Fuels
         public async Task<IActionResult> Index()
         {
-            var vm = _context.Contact.OrderBy(c=>c.FirstName).ThenBy(c=>c.LastName);
-            return View(await vm.ToListAsync());
+            return View(await _context.Fuel.ToListAsync());
         }
 
-        // GET: AddressBook/Contacts/Details/5
+        // GET: StoneWorks/Fuels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,39 +35,39 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var fuel = await _context.Fuel
+                .FirstOrDefaultAsync(m => m.FuelId == id);
+            if (fuel == null)
             {
                 return NotFound();
             }
 
-            return PartialView (contact);
+            return View(fuel);
         }
 
-        // GET: AddressBook/Contacts/Create
+        // GET: StoneWorks/Fuels/Create
         public IActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
-        // POST: AddressBook/Contacts/Create
+        // POST: StoneWorks/Fuels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Create([Bind("FuelId,OnDate,PartyName,Qty,Amount,PaymentDate,Remarks,IsOnVechile")] Fuel fuel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                _context.Add(fuel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            return View(fuel);
         }
 
-        // GET: AddressBook/Contacts/Edit/5
+        // GET: StoneWorks/Fuels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +75,22 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
+            var fuel = await _context.Fuel.FindAsync(id);
+            if (fuel == null)
             {
                 return NotFound();
             }
-            return PartialView(contact);
+            return View(fuel);
         }
 
-        // POST: AddressBook/Contacts/Edit/5
+        // POST: StoneWorks/Fuels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("FuelId,OnDate,PartyName,Qty,Amount,PaymentDate,Remarks,IsOnVechile")] Fuel fuel)
         {
-            if (id != contact.ContactId)
+            if (id != fuel.FuelId)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
             {
                 try
                 {
-                    _context.Update(contact);
+                    _context.Update(fuel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.ContactId))
+                    if (!FuelExists(fuel.FuelId))
                     {
                         return NotFound();
                     }
@@ -118,10 +115,10 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            return View(fuel);
         }
 
-        // GET: AddressBook/Contacts/Delete/5
+        // GET: StoneWorks/Fuels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +126,30 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var fuel = await _context.Fuel
+                .FirstOrDefaultAsync(m => m.FuelId == id);
+            if (fuel == null)
             {
                 return NotFound();
             }
 
-            return PartialView(contact);
+            return View(fuel);
         }
 
-        // POST: AddressBook/Contacts/Delete/5
+        // POST: StoneWorks/Fuels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
-            _context.Contact.Remove(contact);
+            var fuel = await _context.Fuel.FindAsync(id);
+            _context.Fuel.Remove(fuel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContactExists(int id)
+        private bool FuelExists(int id)
         {
-            return _context.Contact.Any(e => e.ContactId == id);
+            return _context.Fuel.Any(e => e.FuelId == id);
         }
     }
 }

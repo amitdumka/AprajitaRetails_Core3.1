@@ -5,32 +5,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.AddressBook.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Authorization;
-// https://www.mikesdotnetting.com/article/256/entity-framework-recipe-alphabetical-paging-in-asp-net-mvc
-//Alphabet order pagitnation
-namespace AprajitaRetails.Areas.AddressBook.Controllers
-{
-    [Area("AddressBook")]
-    [Authorize]
-    public class ContactsController : Controller
-    {
-        private readonly AprajitaRetailsContext _context;
+using  StoneWorks.Models;
+ 
+using  StoneWorks.Data;
 
-        public ContactsController(AprajitaRetailsContext context)
+namespace  StoneWorks.Controllers
+{
+    
+    public class HiredTrucksController : Controller
+    {
+        private readonly StoneWorksContext _context;
+
+        public HiredTrucksController(StoneWorksContext context)
         {
             _context = context;
         }
 
-        // GET: AddressBook/Contacts
+        // GET: StoneWorks/HiredTrucks
         public async Task<IActionResult> Index()
         {
-            var vm = _context.Contact.OrderBy(c=>c.FirstName).ThenBy(c=>c.LastName);
-            return View(await vm.ToListAsync());
+            var StoneWorksContext = _context.HiredTruck.Include(h => h.Trucks);
+            return View(await StoneWorksContext.ToListAsync());
         }
 
-        // GET: AddressBook/Contacts/Details/5
+        // GET: StoneWorks/HiredTrucks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,39 +36,42 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var hiredTruck = await _context.HiredTruck
+                .Include(h => h.Trucks)
+                .FirstOrDefaultAsync(m => m.HiredTruckId == id);
+            if (hiredTruck == null)
             {
                 return NotFound();
             }
 
-            return PartialView (contact);
+            return View(hiredTruck);
         }
 
-        // GET: AddressBook/Contacts/Create
+        // GET: StoneWorks/HiredTrucks/Create
         public IActionResult Create()
         {
-            return PartialView();
+            ViewData["TruckId"] = new SelectList(_context.Truck, "TruckId", "TruckId");
+            return View();
         }
 
-        // POST: AddressBook/Contacts/Create
+        // POST: StoneWorks/HiredTrucks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Create([Bind("HiredTruckId,TruckId,HiredFrom,Rate,HiredDate,SurrenderDate")] HiredTruck hiredTruck)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(contact);
+                _context.Add(hiredTruck);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            ViewData["TruckId"] = new SelectList(_context.Truck, "TruckId", "TruckId", hiredTruck.TruckId);
+            return View(hiredTruck);
         }
 
-        // GET: AddressBook/Contacts/Edit/5
+        // GET: StoneWorks/HiredTrucks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,22 +79,23 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
+            var hiredTruck = await _context.HiredTruck.FindAsync(id);
+            if (hiredTruck == null)
             {
                 return NotFound();
             }
-            return PartialView(contact);
+            ViewData["TruckId"] = new SelectList(_context.Truck, "TruckId", "TruckId", hiredTruck.TruckId);
+            return View(hiredTruck);
         }
 
-        // POST: AddressBook/Contacts/Edit/5
+        // POST: StoneWorks/HiredTrucks/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("HiredTruckId,TruckId,HiredFrom,Rate,HiredDate,SurrenderDate")] HiredTruck hiredTruck)
         {
-            if (id != contact.ContactId)
+            if (id != hiredTruck.HiredTruckId)
             {
                 return NotFound();
             }
@@ -102,12 +104,12 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
             {
                 try
                 {
-                    _context.Update(contact);
+                    _context.Update(hiredTruck);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ContactExists(contact.ContactId))
+                    if (!HiredTruckExists(hiredTruck.HiredTruckId))
                     {
                         return NotFound();
                     }
@@ -118,10 +120,11 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return PartialView(contact);
+            ViewData["TruckId"] = new SelectList(_context.Truck, "TruckId", "TruckId", hiredTruck.TruckId);
+            return View(hiredTruck);
         }
 
-        // GET: AddressBook/Contacts/Delete/5
+        // GET: StoneWorks/HiredTrucks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,30 +132,31 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+            var hiredTruck = await _context.HiredTruck
+                .Include(h => h.Trucks)
+                .FirstOrDefaultAsync(m => m.HiredTruckId == id);
+            if (hiredTruck == null)
             {
                 return NotFound();
             }
 
-            return PartialView(contact);
+            return View(hiredTruck);
         }
 
-        // POST: AddressBook/Contacts/Delete/5
+        // POST: StoneWorks/HiredTrucks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
-            _context.Contact.Remove(contact);
+            var hiredTruck = await _context.HiredTruck.FindAsync(id);
+            _context.HiredTruck.Remove(hiredTruck);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ContactExists(int id)
+        private bool HiredTruckExists(int id)
         {
-            return _context.Contact.Any(e => e.ContactId == id);
+            return _context.HiredTruck.Any(e => e.HiredTruckId == id);
         }
     }
 }

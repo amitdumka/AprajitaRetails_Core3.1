@@ -1,0 +1,59 @@
+﻿@model IEnumerable< StoneWorks.Models.HiredTruck>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HiredFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HiredDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurrenderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Trucks)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HiredFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HiredDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurrenderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trucks.TruckId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HiredTruckId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.HiredTruckId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HiredTruckId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
