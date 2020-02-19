@@ -85,7 +85,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Accounts\Data\" />
     <Folder Include="Areas\AddressBook\Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Banking\Data\" />
