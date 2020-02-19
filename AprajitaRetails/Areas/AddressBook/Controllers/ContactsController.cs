@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 //Alphabet order pagitnation
 namespace AprajitaRetails.Areas.AddressBook.Controllers
 {
-    [Area("AddressBook")]
+    [Area ("AddressBook")]
     [Authorize]
     public class ContactsController : Controller
     {
@@ -24,25 +24,65 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
         }
 
         // GET: AddressBook/Contacts
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string currentFilter, string searchString, string sortOrder, int? pageNumber)
         {
-            var vm = _context.Contact.OrderBy(c=>c.FirstName).ThenBy(c=>c.LastName);
-            return View(await vm.ToListAsync());
+
+            ViewData ["FirstNameParm"] = String.IsNullOrEmpty (sortOrder) ? "fn_desc" : "";
+            ViewData ["LastNameParm"] = sortOrder == "ln_asc" ? "fn_desc" : "ln_asc";
+
+            if ( searchString != null )
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+
+            ViewData ["CurrentFilter"] = searchString;
+            var vm = _context.Contact.OrderBy (c => c.FirstName);
+            if ( !String.IsNullOrEmpty (searchString) )
+            {
+                vm = _context.Contact.Where (c => c.FirstName.Contains (searchString)).OrderBy (c => c.FirstName);
+
+
+            }
+            switch ( sortOrder )
+            {
+                case "fn_desc":
+                    vm = vm.OrderByDescending (c => c.FirstName);
+                    break;
+                case "ln_desc":
+                    vm = vm.OrderByDescending (c => c.LastName);
+                    break;
+                case "ln_asc":
+                    vm = vm.OrderBy (c => c.LastName);
+                    break;
+                default:
+                    vm = vm.OrderBy (c => c.FirstName);
+                    break;
+            }
+
+            int pageSize = 10;
+            return View (await PaginatedList<Contact>.CreateAsync (vm.AsNoTracking (), pageNumber ?? 1, pageSize));
+
+            //return View (await vm.ToListAsync ());
         }
 
         // GET: AddressBook/Contacts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+                .FirstOrDefaultAsync (m => m.ContactId == id);
+            if ( contact == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             return PartialView (contact);
@@ -51,7 +91,7 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
         // GET: AddressBook/Contacts/Create
         public IActionResult Create()
         {
-            return PartialView();
+            return PartialView ();
         }
 
         // POST: AddressBook/Contacts/Create
@@ -59,31 +99,31 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Create([Bind ("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
         {
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
-                _context.Add(contact);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                _context.Add (contact);
+                await _context.SaveChangesAsync ();
+                return RedirectToAction (nameof (Index));
             }
-            return PartialView(contact);
+            return PartialView (contact);
         }
 
         // GET: AddressBook/Contacts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
+            var contact = await _context.Contact.FindAsync (id);
+            if ( contact == null )
             {
-                return NotFound();
+                return NotFound ();
             }
-            return PartialView(contact);
+            return PartialView (contact);
         }
 
         // POST: AddressBook/Contacts/Edit/5
@@ -91,68 +131,68 @@ namespace AprajitaRetails.Areas.AddressBook.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind ("ContactId,FirstName,LastName,MobileNo,PhoneNo,EMailAddress,Remarks")] Contact contact)
         {
-            if (id != contact.ContactId)
+            if ( id != contact.ContactId )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            if (ModelState.IsValid)
+            if ( ModelState.IsValid )
             {
                 try
                 {
-                    _context.Update(contact);
-                    await _context.SaveChangesAsync();
+                    _context.Update (contact);
+                    await _context.SaveChangesAsync ();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch ( DbUpdateConcurrencyException )
                 {
-                    if (!ContactExists(contact.ContactId))
+                    if ( !ContactExists (contact.ContactId) )
                     {
-                        return NotFound();
+                        return NotFound ();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
-            return PartialView(contact);
+            return PartialView (contact);
         }
 
         // GET: AddressBook/Contacts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if ( id == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
             var contact = await _context.Contact
-                .FirstOrDefaultAsync(m => m.ContactId == id);
-            if (contact == null)
+                .FirstOrDefaultAsync (m => m.ContactId == id);
+            if ( contact == null )
             {
-                return NotFound();
+                return NotFound ();
             }
 
-            return PartialView(contact);
+            return PartialView (contact);
         }
 
         // POST: AddressBook/Contacts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName ("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
-            _context.Contact.Remove(contact);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var contact = await _context.Contact.FindAsync (id);
+            _context.Contact.Remove (contact);
+            await _context.SaveChangesAsync ();
+            return RedirectToAction (nameof (Index));
         }
 
         private bool ContactExists(int id)
         {
-            return _context.Contact.Any(e => e.ContactId == id);
+            return _context.Contact.Any (e => e.ContactId == id);
         }
     }
 }
