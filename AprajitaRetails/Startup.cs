@@ -54,6 +54,9 @@ namespace AprajitaRetails
             services.AddDbContext<VoyagerContext> (options =>
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("VoyagerConnection")));
+            services.AddDbContext<VoyagerContext>(options =>
+              options.UseSqlServer(
+                  Configuration.GetConnectionString("AccountsConnection")));
 
             services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole> ()
