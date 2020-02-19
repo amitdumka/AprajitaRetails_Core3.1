@@ -1,0 +1,57 @@
+﻿@model AprajitaRetails.Areas.Voyager.Models.ArvindPayment
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<h4 class="green-text">Arvind Payment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ArvindPaymentId" />
+            <div class="form-group">
+                <label asp-for="Arvind" class="control-label"></label>
+                <select asp-for="Arvind" class="form-control" asp-items="Html.GetEnumSelectList<ArvindAccount>()"></select>
+                <span asp-validation-for="Arvind" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OnDate" class="control-label"></label>
+                <input asp-for="OnDate" class="form-control" />
+                <span asp-validation-for="OnDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceNo" class="control-label"></label>
+                <input asp-for="InvoiceNo" class="form-control" />
+                <span asp-validation-for="InvoiceNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BankDetails" class="control-label"></label>
+                <input asp-for="BankDetails" class="form-control" />
+                <span asp-validation-for="BankDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarks" class="control-label"></label>
+                <input asp-for="Remarks" class="form-control" />
+                <span asp-validation-for="Remarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

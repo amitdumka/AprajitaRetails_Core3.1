@@ -1,0 +1,68 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.Voyager.Models.ArvindPayment>
+
+@{
+    ViewData ["Title"] = "Arvind Payments";
+}
+
+<h1 class="deep-purple-text">Arvind Mill Payments</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-light-green  btn-sm" id="create" data_modal="">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-sm table-striped text-center">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Arvind)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BankDetails)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ( var item in Model )
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Arvind)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BankDetails)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td class="btn-group btn-group-sm">
+                    <a class="btn btn-outline-amber" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.ArvindPaymentId" class="btn btn-outline-amber " id="edit" data_modal="">Edit</a>
+                    <a class="btn btn-outline-info" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.ArvindPaymentId" class="btn btn-outline-info" id="detail" data_modal="">Details</a>
+                    <a class="btn btn-outline-danger" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.ArvindPaymentId" class="btn btn-outline-danger " id="delete" data_modal="">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_OnlyModalPopUp" />

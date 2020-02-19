@@ -5,9 +5,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no" />
     <title>@ViewData["Title"] - Aprajita Retails</title>
+    
     <link rel="stylesheet" href="~/lib/mdb/css/mdb.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 <body>
@@ -200,7 +202,7 @@
         </nav>
         @if ( Context.User.Identity.IsAuthenticated )
         {
-            <div class="nav-scroller blue-gradient-rgba shadow-sm " role="toolbar">
+            <div class="nav-scroller   aqua-gradient-rgba shadow-sm " role="toolbar">
                 <nav class="nav nav-underline">
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                     @*<a class="nav-link" href="#">
@@ -211,12 +213,13 @@
                     <a class="nav-link" href="#">Sale</a>
                     <a class="nav-link" href="#">Purchase</a>
                     <a class="nav-link" href="#">Manual Bill</a>
-                    <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendence</a>
+                    <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendance</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
                     <a class="nav-link" asp-area="AddressBook" asp-controller="Contacts" asp-action="Index">AddressBook</a>
+                    <a class="nav-link " asp-area="Voyager" asp-controller="ArvindPayments" asp-action="Index">Arvind Payments</a>
                 </nav>
             </div>
         }

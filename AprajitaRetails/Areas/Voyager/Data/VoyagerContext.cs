@@ -56,6 +56,8 @@ namespace AprajitaRetails.Areas.Voyager.Data
 
         public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
         public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
+
+        public DbSet<ArvindPayment> ArvindPayments { get; set; }
         //StoneWorks
 
     }

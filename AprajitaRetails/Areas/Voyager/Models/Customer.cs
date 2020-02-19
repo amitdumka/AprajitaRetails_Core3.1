@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +32,4 @@ namespace AprajitaRetails.Areas.Voyager.Models
         public string FullName { get { return FirstName + " " + LastName; } }
 
     }
-
-
 }
