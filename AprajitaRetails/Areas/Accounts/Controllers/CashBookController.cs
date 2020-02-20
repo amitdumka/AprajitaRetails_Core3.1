@@ -1,30 +1,54 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AprajitaRetails.Ops.Utility;
+using AprajitaRetails.Data;
+using System;
+using AprajitaRetails.Models.ViewModels;
+using System.Collections.Generic;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area ("Accounts")]
+    [Area("Accounts")]
     [Authorize]
     public class CashBookController : Controller
     {
+        private readonly AprajitaRetailsContext db;
+        public CashBookController(AprajitaRetailsContext context)
+        {
+            db = context;
+        }
+
         //TODO: Implement CashBook from TAS project
         // GET: CashBook
-        public ActionResult Index()
+        public IActionResult Index(int? id)
         {
-            return View ();
+            CashBookManager manager = new CashBookManager();
+            List<CashBook> cashList;
+            if (id == 101)
+            {
+                cashList = manager.GetDailyCashBook(db, DateTime.Now);
+            }
+            else
+            {
+                cashList = manager.GetMontlyCashBook(db, DateTime.Now);
+            }
+            if (cashList != null)
+                return View(cashList);
+            else 
+                return NotFound();
         }
 
         // GET: CashBook/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
-            return PartialView ();
+            return PartialView();
         }
 
         // GET: CashBook/Create
         public ActionResult Create()
         {
-            return PartialView ();
+            return PartialView();
         }
 
         // POST: CashBook/Create
@@ -36,18 +60,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction (nameof (Index));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return PartialView ();
+                return PartialView();
             }
         }
 
         // GET: CashBook/Edit/5
         public ActionResult Edit(int id)
         {
-            return PartialView ();
+            return PartialView();
         }
 
         // POST: CashBook/Edit/5
@@ -59,18 +83,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction (nameof (Index));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return PartialView ();
+                return PartialView();
             }
         }
 
         // GET: CashBook/Delete/5
         public ActionResult Delete(int id)
         {
-            return PartialView ();
+            return PartialView();
         }
 
         // POST: CashBook/Delete/5
@@ -82,11 +106,11 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction (nameof (Index));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return PartialView ();
+                return PartialView();
             }
         }
     }
