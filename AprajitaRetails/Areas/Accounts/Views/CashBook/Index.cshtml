@@ -1,57 +1,79 @@
 ﻿@model IEnumerable<AprajitaRetails.Models.ViewModels.CashBook>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData ["Title"] = "Cash Book";
 }
 
-<h1>Cash Book</h1>
+<h2 class="green-text">Cash Book</h2>
 
-<
-<table class="table table-sm table-bordered table-hover">
-    <thead class="table-secondary">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Particulars)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CashIn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CashOut)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CashBalance)
-            </th>
-            @*<th></th>*@
-        </tr>
-    </thead>
-    <tbody class="table-danger">
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Particulars)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CashIn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CashOut)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CashBalance)
-            </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
-        </tr>
-}
-    </tbody>
-</table>
+<form asp-action="Index" method="get">
+    <div class="form form-check">
+        <div class="form-group form-row  ">
+
+            <div class="control-label col-md-2 text-danger ">CashBook :</div>
+            <div class="col-md-10  ">
+               
+
+                @Html.RadioButton("ModeType", "MonthWise", true) <b class="text-primary">Month Wise </b>
+                @Html.RadioButton("ModeType", "DayWise", false)<b class="text-success"> DayWise</b>
+
+            </div>
+        </div>
+        <div class="form-group">
+            
+            <strong> By Date:</strong> @Html.EditorFor(model => model.FirstOrDefault ().EDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString (), @class="form-control-sm " } })
+                @Html.ValidationMessageFor(model => model.FirstOrDefault ().EDate, "", new { @class = "text-danger" })
+            
+            <input type="submit" value="Get" class=" btn btn-outline-warning btn-sm " />
+        </div>
+    </div>
+</form>
+    <table class="table table-sm table-bordered table-hover">
+        <thead class="table-secondary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Particulars)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CashIn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CashOut)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CashBalance)
+                </th>
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody class="table-danger">
+            @foreach ( var item in Model )
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Particulars)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CashIn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CashOut)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CashBalance)
+                    </td>
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>

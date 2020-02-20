@@ -9,8 +9,8 @@ using System.Collections.Generic;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area("Accounts")]
-    [Authorize]
+    [Area ("Accounts")]
+    [Authorize (Roles = "Admin,PowerUser,StoreManager")]
     public class CashBookController : Controller
     {
         private readonly AprajitaRetailsContext db;
@@ -21,34 +21,43 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
         //TODO: Implement CashBook from TAS project
         // GET: CashBook
-        public IActionResult Index(int? id)
+        public IActionResult Index(int? id, DateTime? EDate, string ModeType)
         {
-            CashBookManager manager = new CashBookManager();
+            CashBookManager manager = new CashBookManager ();
             List<CashBook> cashList;
-            if (id == 101)
+            if ( EDate != null )
             {
-                cashList = manager.GetDailyCashBook(db, DateTime.Now);
+                if ( ModeType == "MonthWise" )
+                    cashList = manager.GetMontlyCashBook (db, EDate.Value.Date);
+                else
+                    cashList = manager.GetDailyCashBook (db, EDate.Value.Date);
+
+            }
+            else if ( id == 101 )
+            {
+                cashList = manager.GetDailyCashBook (db, DateTime.Now);
             }
             else
             {
-                cashList = manager.GetMontlyCashBook(db, DateTime.Now);
+                cashList = manager.GetMontlyCashBook (db, DateTime.Now);
             }
-            if (cashList != null)
-                return View(cashList);
-            else 
-                return NotFound();
+
+            if ( cashList != null )
+                return View (cashList);
+            else
+                return NotFound ();
         }
 
         // GET: CashBook/Details/5
         public IActionResult Details(int id)
         {
-            return PartialView();
+            return PartialView ();
         }
 
         // GET: CashBook/Create
         public ActionResult Create()
         {
-            return PartialView();
+            return PartialView ();
         }
 
         // POST: CashBook/Create
@@ -60,18 +69,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
             catch
             {
-                return PartialView();
+                return PartialView ();
             }
         }
 
         // GET: CashBook/Edit/5
         public ActionResult Edit(int id)
         {
-            return PartialView();
+            return PartialView ();
         }
 
         // POST: CashBook/Edit/5
@@ -83,18 +92,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
             catch
             {
-                return PartialView();
+                return PartialView ();
             }
         }
 
         // GET: CashBook/Delete/5
         public ActionResult Delete(int id)
         {
-            return PartialView();
+            return PartialView ();
         }
 
         // POST: CashBook/Delete/5
@@ -106,11 +115,11 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction (nameof (Index));
             }
             catch
             {
-                return PartialView();
+                return PartialView ();
             }
         }
     }

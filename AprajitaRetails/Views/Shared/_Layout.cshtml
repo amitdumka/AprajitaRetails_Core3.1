@@ -43,10 +43,14 @@
                                         <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
                                         <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleTaxTypes" asp-action="Index">Output Tax</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
-                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
+
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInHands" asp-action="Index">Cash-In-Hands</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInBanks" asp-action="Index">Cash-In-Banks</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="TranscationModes" asp-action="Index">Trans Modes</a>
+                                    }
+                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") )
+                                    {
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
                                     }
 
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
@@ -219,7 +223,12 @@
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
                     <a class="nav-link" asp-area="AddressBook" asp-controller="Contacts" asp-action="Index">AddressBook</a>
-                    <a class="nav-link " asp-area="Voyager" asp-controller="ArvindPayments" asp-action="Index">Arvind Payments</a>
+
+                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") )
+                    {
+                        <a class="nav-link" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
+                        <a class="nav-link " asp-area="Voyager" asp-controller="ArvindPayments" asp-action="Index">Arvind Payments</a>
+                    }
                 </nav>
             </div>
         }

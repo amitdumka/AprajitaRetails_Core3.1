@@ -11,28 +11,40 @@ namespace AprajitaRetails.Ops.Triggers
     public class PayRollManager
     {
         public void ONInsertOrUpdate(AprajitaRetailsContext db, Attendance attendance, bool isDeleted,bool isUpdated)
-        {   if(!isDeleted && !isUpdated )
+        {
+
+            try
             {
-                if ( attendance.Status != AttUnits.Present )
+                if ( !isDeleted && !isUpdated )
+                {
+                    if ( attendance.Status != AttUnits.Present )
+                    {
+                        var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
+                        MyMail.SendEmail (sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                    }
+                    else if ( attendance.Status == AttUnits.Sunday )
+                    {
+                        //TODO: do Some  things
+                    }
+                }
+                else if ( isDeleted )
                 {
                     var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                    MyMail.SendEmail (sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                    MyMail.SendEmail (sName + " Attendance Report status for delete.", sName + " is deleted and current status was " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+
                 }
-                else if ( attendance.Status == AttUnits.Sunday )
+                else if ( isUpdated )
                 {
-                    //TODO: do Some  things
+                    var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
+                    var before = db.Attendances.Where (c => c.AttendanceId == attendance.AttendanceId).Select (c => c.Status).FirstOrDefault ();
+                    MyMail.SendEmail (sName + " Attendance Report  status for Updated Record. It was " + before, sName + " is updated and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+
                 }
-            } else if ( isDeleted )
+            }
+            catch ( Exception ex )
             {
-                var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                MyMail.SendEmail (sName + " Attendance Report status for delete.", sName + " is deleted and current status was " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
 
-            }else if ( isUpdated )
-            {
-                var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                var before = db.Attendances.Where (c => c.AttendanceId == attendance.AttendanceId).Select (c => c.Status).FirstOrDefault ();
-                MyMail.SendEmail (sName + " Attendance Report  status for Updated Record. It was "+before, sName + " is updated and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
-
+                Console.WriteLine ("Error :" + ex.Message);
             }
 
         }
