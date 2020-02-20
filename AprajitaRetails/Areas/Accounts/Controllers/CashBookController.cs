@@ -19,12 +19,28 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             db = context;
         }
 
-        //TODO: Implement CashBook from TAS project
+       
         // GET: CashBook
-        public IActionResult Index(int? id, DateTime? EDate, string ModeType)
+        public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType)
         {
             CashBookManager manager = new CashBookManager ();
             List<CashBook> cashList;
+            if(!String.IsNullOrEmpty(OpsType) )
+            {
+                if ( OpsType == "Correct" )
+                {
+                    //TODO: Implement Correct cash in hand
+                    ViewBag.Message = "Cash Book Correction: ";
+                    if ( ModeType == "MonthWise" )
+                        manager.CorrectCashInHands (db, EDate.Value.Date, false);
+                    else
+                        manager.CorrectCashInHands (db, EDate.Value.Date, true);
+                }
+                else
+                { ViewBag.Message = ""; }
+            }
+
+
             if ( EDate != null )
             {
                 if ( ModeType == "MonthWise" )

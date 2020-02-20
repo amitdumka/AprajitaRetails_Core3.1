@@ -12,24 +12,39 @@
 
             <div class="control-label col-md-2 text-danger ">CashBook :</div>
             <div class="col-md-10  ">
-               
+
 
                 @Html.RadioButton("ModeType", "MonthWise", true) <b class="text-primary">Month Wise </b>
                 @Html.RadioButton("ModeType", "DayWise", false)<b class="text-success"> DayWise</b>
 
             </div>
         </div>
+        @if ( Context.User.IsInRole ("Admin") )
+        {
+            <div class="form-group form-row  ">
+
+                <div class="control-label col-md-2 text-danger ">Mode :</div>
+                <div class="col-md-10  ">
+
+
+                    @Html.RadioButton("OpsType", "List", true) <b class="text-primary">Listing</b>
+                    @Html.RadioButton("OpsType", "Correct", false)<b class="text-success"> Correction</b>
+
+                </div>
+            </div>
+        }
         <div class="form-group">
-            
-            <strong> By Date:</strong> @Html.EditorFor(model => model.FirstOrDefault ().EDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString (), @class="form-control-sm " } })
-                @Html.ValidationMessageFor(model => model.FirstOrDefault ().EDate, "", new { @class = "text-danger" })
-            
+
+            <strong> By Date:</strong> @Html.EditorFor(model => model.FirstOrDefault ().EDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString (), @class = "form-control-sm " } })
+            @Html.ValidationMessageFor(model => model.FirstOrDefault ().EDate, "", new { @class = "text-danger" })
+
             <input type="submit" value="Get" class=" btn btn-outline-warning btn-sm " />
         </div>
     </div>
+    <p class="text-warning">@ViewBag.Message</p>
 </form>
     <table class="table table-sm table-bordered table-hover">
-        <thead class="table-secondary">
+        <thead class="table-primary text-center text-monospace font-weight-bolder text-success">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.EDate)
@@ -43,37 +58,53 @@
                 <th>
                     @Html.DisplayNameFor(model => model.CashOut)
                 </th>
-                <th>
+                <th class="text-danger">
                     @Html.DisplayNameFor(model => model.CashBalance)
                 </th>
-                @*<th></th>*@
+                
             </tr>
         </thead>
-        <tbody class="table-danger">
+        <tbody class="table-secondary">
             @foreach ( var item in Model )
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EDate)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Particulars)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CashIn)
+                </td>
+                @if ( item.CashOut > 0 )
+                {
+                    <td class="text-danger">
+                        @Html.DisplayFor(modelItem => item.CashOut)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Particulars)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CashIn)
-                    </td>
+                }
+                else
+                {
                     <td>
                         @Html.DisplayFor(modelItem => item.CashOut)
                     </td>
-                    <td>
+                }
+
+                @if ( item.CashBalance < 0 )
+                {
+                    <td class="text-danger">
                         @Html.DisplayFor(modelItem => item.CashBalance)
                     </td>
-                    @*<td>
-                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                        </td>*@
-                </tr>
+
+                }
+                else
+                {
+                    <td class="text-success">
+                        @Html.DisplayFor(modelItem => item.CashBalance)
+                    </td>
+                }
+
+            </tr>
             }
         </tbody>
     </table>
