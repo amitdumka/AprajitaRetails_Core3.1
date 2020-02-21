@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData ["Title"] = "GiniBot";
+}
+
+<h1>GiniBot</h1>
+
+<form asp-action="Index" method="get" >
+    <div>
+        Message: <input type="text" value="" name="TXTMessage" />
+        <input type="submit" name="submit" value="send" />
+
+    </div>
+    <div>
+        <p class="text-left text-danger">@ViewBag.SendMessage</p>
+        <p class="text-right text-success">@ViewBag.RecMessage</p>
+    </div>
+
+</form>
+
+
+@*@section Scripts{
+    <script async src="https://telegram.org/js/telegram-widget.js?7" data-telegram-login="GiniBot" data-size="medium" data-radius="14" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+    <script type="text/javascript">
+  function onTelegramAuth(user) {
+    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', #' + user.username : '') + ')');
+  }
+    </script>
+}*@

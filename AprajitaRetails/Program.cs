@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
+using AprajitaRetails.Ops.Bot.BasicBot;
+using Microsoft.Owin.Hosting;
 
 namespace AprajitaRetails
 {
@@ -33,19 +35,9 @@ namespace AprajitaRetails
                     logger.LogError(exception, "An error occurred while creating roles");
                 }
             }
-            try
-            {
-                var botClient = new TelegramBotClient("YOUR_ACCESS_TOKEN_HERE");
-                var me = botClient.GetMeAsync().Result;
-                Console.WriteLine(
-                  $"Hello, World! I am user {me.Id} and my name is {me.FirstName}."
-                );
-            }
-            catch (Exception ex)
-            {
 
-                Console.WriteLine("Error :"+ex.Message);
-            }
+            
+
             host.Run();
         }
 

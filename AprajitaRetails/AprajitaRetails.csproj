@@ -52,12 +52,16 @@
 
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
     <PackageReference Include="LinqToExcel" Version="1.11.0" />
-    <PackageReference Include="MailKit" Version="2.5.0" />
+    <PackageReference Include="MailKit" Version="2.5.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Owin" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.Extensions" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
@@ -74,8 +78,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Owin.Hosting" Version="4.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
-    <PackageReference Include="MimeKit" Version="2.5.0" />
+    <PackageReference Include="MimeKit" Version="2.5.1" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.44" />
@@ -90,6 +95,8 @@
     <Folder Include="Areas\AddressBook\Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Banking\Data\" />
+    <Folder Include="Areas\Bot\Data\" />
+    <Folder Include="Areas\Bot\Models\" />
     <Folder Include="Areas\Expenses\Data\" />
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />

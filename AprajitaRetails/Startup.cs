@@ -21,6 +21,8 @@ using System.Net;
 using System.Net.Mail;
 //using AprajitaRetails.Areas.Chat.Models.Hubs;
 using Microsoft.AspNetCore.Http;
+using AprajitaRetails.Ops.Bot.Telegram;
+using AprajitaRetails.Ops.Service;
 
 namespace AprajitaRetails
 {
@@ -85,6 +87,16 @@ namespace AprajitaRetails
                  options.SupportedUICultures = supportedCultures;
              });
             services.AddApplicationInsightsTelemetry ();
+            
+            services.AddScoped<IUpdateService, UpdateService> ();
+            services.AddSingleton<IBotService, BotService> ();
+            services.Configure<BotConfiguration> (Configuration.GetSection ("BotConfiguration"));
+
+            services
+                .AddControllers ()
+                .AddNewtonsoftJson ();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
