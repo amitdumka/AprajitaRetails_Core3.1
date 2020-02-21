@@ -4,6 +4,7 @@ using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Models;
 
 using Microsoft.EntityFrameworkCore;
+using AprajitaRetails.Models;
 
 
 namespace AprajitaRetails.Areas.Voyager.Data
@@ -58,6 +59,8 @@ namespace AprajitaRetails.Areas.Voyager.Data
         public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
 
         public DbSet<ArvindPayment> ArvindPayments { get; set; }
+
+       // public DbSet<AprajitaRetails.Models.TelegramAuthUser> TelegramAuthUser { get; set; }
         //StoneWorks
 
     }

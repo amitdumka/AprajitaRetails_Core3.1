@@ -105,6 +105,9 @@
     <Folder Include="Areas\Expenses\Data\" />
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />
+    <Folder Include="Areas\RestAPI\Data\" />
+    <Folder Include="Areas\RestAPI\Models\" />
+    <Folder Include="Areas\RestAPI\Views\" />
     <Folder Include="Areas\Sales\Data\" />
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Models\Accounts\" />
