@@ -82,6 +82,7 @@
     <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="17.4.0.44" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="OrchardCore.Localization.Core" Version="1.0.0-beta1-3383" />
+    <PackageReference Include="Telegram.Bot" Version="15.3.0" />
   </ItemGroup>
 
 
