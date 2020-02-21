@@ -1,138 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using System.IO;
-using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-using Microsoft.Extensions.Options;
-using MihaZupan;
-using System.Web.Http;
-using File = System.IO.File;
 using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Ops.Bot.Manager;
 
-namespace AprajitaRetails.Ops.Bot.BasicBot
-{
-    public static class Bot
-    {
-        public static readonly TelegramBotClient Api = new TelegramBotClient ("1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o");
-        public class WebHookController : ApiController
-        {
-            public async Task<IHttpActionResult> Post(Update update)
-            {
-                var message = update.Message;
 
-                Console.WriteLine ("Received Message from {0}", message.Chat.Id);
-
-                if ( message.Type == MessageType.Text )
-                {
-                    // Echo each Message
-                    await Bot.Api.SendTextMessageAsync (message.Chat.Id, message.Text);
-                }
-                else if ( message.Type == MessageType.Photo )
-                {
-                    // Download Photo
-                    var file = await Bot.Api.GetFileAsync (message.Photo.LastOrDefault ()?.FileId);
-
-                    var filename = file.FileId + "." + file.FilePath.Split ('.').Last ();
-
-                    using ( var saveImageStream = File.Open (filename, FileMode.Create) )
-                    {
-                        await Bot.Api.DownloadFileAsync (file.FilePath, saveImageStream);
-                    }
-
-                    await Bot.Api.SendTextMessageAsync (message.Chat.Id, "Thx for the Pics");
-                }
-
-                return Ok ();
-            }
-        }
-    }
-}
-namespace AprajitaRetails.Ops.Service
-{
-    public class BotConfiguration
-    {
-        public string BotToken { get; set; }
-
-        public string Socks5Host { get; set; }
-
-        public int Socks5Port { get; set; }
-    }
-    public interface IBotService
-    {
-        TelegramBotClient Client { get; }
-    }
-    public interface IUpdateService
-    {
-        Task EchoAsync(Update update);
-    }
-    public class BotService : IBotService
-    {
-        private readonly BotConfiguration _config;
-
-        public BotService(IOptions<BotConfiguration> config)
-        {
-            _config = config.Value;
-            // use proxy if configured in appsettings.*.json
-            Client = string.IsNullOrEmpty (_config.Socks5Host)
-                ? new TelegramBotClient (_config.BotToken)
-                : new TelegramBotClient (
-                    _config.BotToken,
-                    new HttpToSocks5Proxy (_config.Socks5Host, _config.Socks5Port));
-        }
-
-        public TelegramBotClient Client { get; }
-    }
-    public class UpdateService : IUpdateService
-    {
-        private readonly IBotService _botService;
-        private readonly ILogger<UpdateService> _logger;
-
-        public UpdateService(IBotService botService, ILogger<UpdateService> logger)
-        {
-            _botService = botService;
-            _logger = logger;
-        }
-
-        public async Task EchoAsync(Update update)
-        {
-            if ( update.Type != UpdateType.Message )
-                return;
-
-            var message = update.Message;
-
-            _logger.LogInformation ("Received Message from {0}", message.Chat.Id);
-
-            switch ( message.Type )
-            {
-                case MessageType.Text:
-                    // Echo each Message
-                    await _botService.Client.SendTextMessageAsync (message.Chat.Id, message.Text);
-                    break;
-
-                case MessageType.Photo:
-                    // Download Photo
-                    var fileId = message.Photo.LastOrDefault ()?.FileId;
-                    var file = await _botService.Client.GetFileAsync (fileId);
-
-                    var filename = file.FileId + "." + file.FilePath.Split ('.').Last ();
-                    using ( var saveImageStream = System.IO.File.Open (filename, FileMode.Create) )
-                    {
-                        await _botService.Client.DownloadFileAsync (file.FilePath, saveImageStream);
-                    }
-
-                    await _botService.Client.SendTextMessageAsync (message.Chat.Id, "Thx for the Pics");
-                    break;
-            }
-        }
-    }
-}
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
 
@@ -143,7 +16,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
     /// </summary>
     public class BotGini
     {
-        GiniHandler handler;
+        static GiniHandler handler;
         static ITelegramBotClient botClient;
         private const string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
         public void AssignHandler(EventHandler<MessageEventArgs> OnMessage_Handler) { botClient.OnMessage += OnMessage_Handler; }
@@ -222,137 +95,9 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 
         }
     }
-
-    public class GiniHandler
-    {
-        private  static AprajitaRetailsContext db;
-
-        public GiniHandler(AprajitaRetailsContext con)
-        {
-            db = con;
-        }
-
-        const string usage = "Usage:\n" +
-                        "/register   - send register\n" +
-                        "/help - Help Message\n" +
-
-                        "/request  - request Information";
-
-        private static async void SecondLevelHandler(Message message, string text)
-        {
-            if ( text.StartsWith ("/mobile ") )
-            {
-                string [] d = text.Split (",");
-                string mob = d [0].Replace ("/mobile", "").Trim ();
-                string pass = d [1];
-
-                if ( TelegramManager.AddUser (db, message, mob, pass) )
-                {
-                    await BotGini.SendMessage (message.Chat.Id, "Congrats, Now You can use this service!");
-                }
-                else
-                {
-                    await BotGini.SendMessage (message.Chat.Id, "Sorry, Some error occured while registering you, Kindly try again or contact admin!");
-                }
-            }else if(text.StartsWith("/staffName ") )
-            {
-
-            }
-            else
-            {
-                await BotGini.SendMessage (message.Chat.Id, "Command NotSupported");
-                await BotGini.SendMessage (message.Chat.Id, usage);
-            }
-
-        }
-        public static async void OnMessage(object sender, MessageEventArgs e)
-        {
-            if ( e.Message.Text != null )
-            {
-                switch ( e.Message.Text )
-                {
-                    case "/":
-                        break;
-                    case "/ATT":
-                        break;
-                    case "/sale":
-                        break;
-                    case "/todaysale":
-                        break;
-                    case "/yearlysale":
-                        break;
-                    case "/incentive":
-                        break;
-                    case "/LP":
-                        break;
-                    case "/staffinfo":
-                        break;
-                    case "/myInfo":
-                        break;
-                    case "/register":
-                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
-                        break;
-                    case "/help":
-                        await BotGini.SendMessage (e.Message.Chat.Id, usage);
-                        break;
-                    default:
-                        SecondLevelHandler (e.Message, e.Message.Text);
-                        break;
-                }
-
-            }
-
-
-
-        }
-    }
 }
 
-namespace AprajitaRetails.Ops.Bot.Manager
-{
-    public static class TelegramManager
-    {
-        public static bool AddUser(AprajitaRetailsContext db, Message message, string mobileNo, string passwd)
-        {
-            TelegramAuthUser user = new TelegramAuthUser
-            {
-                TelegramChatId = message.Chat.Id,
-                TelegramUserName = message.Chat.FirstName + " " + message.Chat.LastName,
-                MobileNo = mobileNo,
-                EmpType = EmpType.Others,
-                Password = passwd
 
-            };
-
-            var emp = db.Employees.Where (c => c.MobileNo == mobileNo).FirstOrDefault ();
-            if ( emp != null )
-            {
-                user.EmpType = emp.Category;
-                user.EmployeeId = emp.EmployeeId;
-
-            }
-            else
-            {
-                return false;
-            }
-            db.TelegramAuthUsers.Add (user);
-            if ( db.SaveChanges () > 0 )
-                return true;
-            else
-                return false;
-
-        }
-        public static TelegramAuthUser GetUser(AprajitaRetailsContext db, long chatId)
-        {
-            var user = db.TelegramAuthUsers.Where (c => c.TelegramChatId == chatId).FirstOrDefault ();
-            if ( user != null )
-            { return user; }
-            else
-                return null;
-
-        }
-    }
-}
 
 
 //TODO:
