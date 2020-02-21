@@ -143,9 +143,27 @@ namespace AprajitaRetails.Ops.Bot.Telegram
     /// </summary>
     public class BotGini
     {
+        GiniHandler handler;
         static ITelegramBotClient botClient;
         private const string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
         public void AssignHandler(EventHandler<MessageEventArgs> OnMessage_Handler) { botClient.OnMessage += OnMessage_Handler; }
+        public async Task SetupGini(AprajitaRetailsContext db)
+        {
+            if ( botClient == null )
+            {
+                botClient = new TelegramBotClient (AccessToken);
+                var me = botClient.GetMeAsync ().Result;
+                Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+                handler = new GiniHandler (db);
+                botClient.OnMessage += GiniHandler.OnMessage;
+                botClient.StartReceiving ();
+
+            }
+            else
+            {
+                botClient.OnMessage += GiniHandler.OnMessage;
+            }
+        }
         public async Task SetupGini(EventHandler<MessageEventArgs> OnMessage_Handler = null, string Token = AccessToken)
         {
             if ( botClient == null )
@@ -174,7 +192,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             if ( e.Message.Text != null )
             {
                 Console.WriteLine ($"Received a text message in chat {e.Message.Chat.Id}.");
-                await botClient.SendTextMessageAsync (chatId: e.Message.Chat, text: "You said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
+                await botClient.SendTextMessageAsync (chatId: e.Message.Chat, text: "User said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
             }
 
 
@@ -207,7 +225,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 
     public class GiniHandler
     {
-        static AprajitaRetailsContext db;
+        private  static AprajitaRetailsContext db;
 
         public GiniHandler(AprajitaRetailsContext con)
         {
@@ -247,7 +265,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             }
 
         }
-        private static async void OnMessage(object sender, MessageEventArgs e)
+        public static async void OnMessage(object sender, MessageEventArgs e)
         {
             if ( e.Message.Text != null )
             {
@@ -282,8 +300,6 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         break;
                 }
 
-
-                await BotGini.SendMessage (chatId: e.Message.Chat.Id, message: "You said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
             }
 
 
