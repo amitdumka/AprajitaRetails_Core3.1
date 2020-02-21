@@ -39,7 +39,7 @@ public static class UploadType
     public static List<string> Types = new List<string> { "Purchase", "SaleItemWise", "SaleRegister", "InWard", "Customer" };
 }
 public enum UploadReturns { Success, Error, FileNotFound, NotExcelType, ImportNotSupported }
-
+public  enum LoginRole { Admin, StoreManager, Salesman, Accountant, RemoteAccountant, Member, PowerUser };
 
 
 //public enum Genders { Male, Female, TransGender }

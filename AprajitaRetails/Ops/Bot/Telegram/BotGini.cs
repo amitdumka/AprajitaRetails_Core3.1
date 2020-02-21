@@ -12,6 +12,9 @@ using Microsoft.Extensions.Options;
 using MihaZupan;
 using System.Web.Http;
 using File = System.IO.File;
+using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Bot.Manager;
 
 namespace AprajitaRetails.Ops.Bot.BasicBot
 {
@@ -150,12 +153,15 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 botClient = new TelegramBotClient (AccessToken);
                 var me = botClient.GetMeAsync ().Result;
                 Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+
                 if ( OnMessage_Handler == null )
                     botClient.OnMessage += Bot_OnMessage;
                 else
                     botClient.OnMessage += OnMessage_Handler;
                 botClient.StartReceiving ();
-            } else
+
+            }
+            else
             {
                 if ( OnMessage_Handler == null )
                     botClient.OnMessage += Bot_OnMessage;
@@ -170,6 +176,9 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 Console.WriteLine ($"Received a text message in chat {e.Message.Chat.Id}.");
                 await botClient.SendTextMessageAsync (chatId: e.Message.Chat, text: "You said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
             }
+
+
+
         }
         /// <summary>
         /// Send Message to User
@@ -192,10 +201,144 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 await botClient.SendTextMessageAsync (chatId: chatId, text: message);
 
             }
-            
+
+        }
+    }
+
+    public class GiniHandler
+    {
+        static AprajitaRetailsContext db;
+
+        public GiniHandler(AprajitaRetailsContext con)
+        {
+            db = con;
+        }
+
+        const string usage = "Usage:\n" +
+                        "/register   - send register\n" +
+                        "/help - Help Message\n" +
+
+                        "/request  - request Information";
+
+        private static async void SecondLevelHandler(Message message, string text)
+        {
+            if ( text.StartsWith ("/mobile ") )
+            {
+                string [] d = text.Split (",");
+                string mob = d [0].Replace ("/mobile", "").Trim ();
+                string pass = d [1];
+
+                if ( TelegramManager.AddUser (db, message, mob, pass) )
+                {
+                    await BotGini.SendMessage (message.Chat.Id, "Congrats, Now You can use this service!");
+                }
+                else
+                {
+                    await BotGini.SendMessage (message.Chat.Id, "Sorry, Some error occured while registering you, Kindly try again or contact admin!");
+                }
+            }else if(text.StartsWith("/staffName ") )
+            {
+
+            }
+            else
+            {
+                await BotGini.SendMessage (message.Chat.Id, "Command NotSupported");
+                await BotGini.SendMessage (message.Chat.Id, usage);
+            }
+
+        }
+        private static async void OnMessage(object sender, MessageEventArgs e)
+        {
+            if ( e.Message.Text != null )
+            {
+                switch ( e.Message.Text )
+                {
+                    case "/":
+                        break;
+                    case "/ATT":
+                        break;
+                    case "/sale":
+                        break;
+                    case "/todaysale":
+                        break;
+                    case "/yearlysale":
+                        break;
+                    case "/incentive":
+                        break;
+                    case "/LP":
+                        break;
+                    case "/staffinfo":
+                        break;
+                    case "/myInfo":
+                        break;
+                    case "/register":
+                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
+                        break;
+                    case "/help":
+                        await BotGini.SendMessage (e.Message.Chat.Id, usage);
+                        break;
+                    default:
+                        SecondLevelHandler (e.Message, e.Message.Text);
+                        break;
+                }
+
+
+                await BotGini.SendMessage (chatId: e.Message.Chat.Id, message: "You said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
+            }
+
+
+
         }
     }
 }
+
+namespace AprajitaRetails.Ops.Bot.Manager
+{
+    public static class TelegramManager
+    {
+        public static bool AddUser(AprajitaRetailsContext db, Message message, string mobileNo, string passwd)
+        {
+            TelegramAuthUser user = new TelegramAuthUser
+            {
+                TelegramChatId = message.Chat.Id,
+                TelegramUserName = message.Chat.FirstName + " " + message.Chat.LastName,
+                MobileNo = mobileNo,
+                EmpType = EmpType.Others,
+                Password = passwd
+
+            };
+
+            var emp = db.Employees.Where (c => c.MobileNo == mobileNo).FirstOrDefault ();
+            if ( emp != null )
+            {
+                user.EmpType = emp.Category;
+                user.EmployeeId = emp.EmployeeId;
+
+            }
+            else
+            {
+                return false;
+            }
+            db.TelegramAuthUsers.Add (user);
+            if ( db.SaveChanges () > 0 )
+                return true;
+            else
+                return false;
+
+        }
+        public static TelegramAuthUser GetUser(AprajitaRetailsContext db, long chatId)
+        {
+            var user = db.TelegramAuthUsers.Where (c => c.TelegramChatId == chatId).FirstOrDefault ();
+            if ( user != null )
+            { return user; }
+            else
+                return null;
+
+        }
+    }
+}
+
+
 //TODO:
 // Add Passport Suuport.
 //Add File Upload Support
@@ -263,3 +406,9 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 //);
 
 //7
+
+//https://92796f08.ngrok.io/key: url, value:https://92796f08.ngrok.io/api/update
+
+//https://yoursubdomain.ngrok.io/api/update
+
+

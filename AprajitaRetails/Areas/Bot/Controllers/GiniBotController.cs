@@ -12,7 +12,9 @@ namespace AprajitaRetails.Areas.Bot.Controllers
     public class GiniBotController : Controller
     {
         BotGini bot;
-      static   string Msg = "";
+        static   string Msg = "";
+        static long LastChatId = 1024002424;
+        
         public GiniBotController()
         {
             // bot = new BotGini ();
@@ -25,12 +27,11 @@ namespace AprajitaRetails.Areas.Bot.Controllers
             if ( !string.IsNullOrEmpty (TXTMessage) )
             {
                 bot = new BotGini ();
-                bot.SetupGini (Bot_OnMessage);
-                ViewBag.SendMessage = TXTMessage;
-               await BotGini.SendMessage (00917667178482, TXTMessage);
-                ViewBag.RecMessage = Msg;
-                
-
+               await  bot.SetupGini (Bot_OnMessage);
+               ViewBag.SendMessage = TXTMessage + ViewBag.SendMessage;
+               await BotGini.SendMessage (LastChatId, TXTMessage);
+               ViewBag.RecMessage = Msg ;
+               
             }
             return View();
         }
@@ -38,10 +39,9 @@ namespace AprajitaRetails.Areas.Bot.Controllers
         {
             if ( e.Message.Text != null )
             {
-                Console.WriteLine ($"Received a text message in chat {e.Message.Chat.Id}.");
-
-                 Msg=( e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
-
+                Msg=( "Id(" + e.Message.Chat.Id + "):" + e.Message.Text );
+                LastChatId = e.Message.Chat.Id;
+               
             }
         }
     }

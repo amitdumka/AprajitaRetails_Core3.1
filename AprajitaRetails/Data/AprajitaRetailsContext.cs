@@ -125,7 +125,7 @@ namespace AprajitaRetails.Data
 
        // public DbSet<Message> Messages { get; set; }
 
-      
+          public DbSet<TelegramAuthUser> TelegramAuthUsers { get; set; }
 
     }
 
