@@ -92,6 +92,7 @@
     <PackageReference Include="TDLib.Native" Version="1.6.0" />
     <PackageReference Include="Telegram" Version="1.0.1" />
     <PackageReference Include="Telegram.Bot" Version="15.3.0" />
+    <PackageReference Include="TLSharp" Version="0.1.0.470" />
     <PackageReference Include="TWCore.Bot.Telegram" Version="2.1.181" />
   </ItemGroup>
 

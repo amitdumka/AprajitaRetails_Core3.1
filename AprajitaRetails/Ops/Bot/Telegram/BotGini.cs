@@ -4,10 +4,33 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using AprajitaRetails.Data;
-
+using System.Net.Http;
+using System.Net;
 
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
+    public class GiniChannel
+    {
+        static string Channel = "@AprajitaRetails";
+        static string PublicChannel = "@TheArvindStoreDumka";
+        static string token = "";
+
+        public static void SendToChannel(string message)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var res = httpClient.GetAsync(
+                    $"https://api.telegram.org/bot{token}/sendMessage?chat_id={Channel}&text=ololo"
+                    ).Result;
+                if (res.StatusCode == HttpStatusCode.OK)
+                { /* done, go check your channel */ }
+                else
+                { /* something went wrong */ }
+            }
+        }
+    }
+    //https://api.telegram.org/bot{my_bot_token}/getWebhookInfo
+    //https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/setWebhook?url=https://www.example.com/my-telegram-bot
 
 
     /// <summary>
@@ -22,14 +45,14 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         public void AssignHandler(EventHandler<MessageEventArgs> OnMessage_Handler) { botClient.OnMessage += OnMessage_Handler; }
         public async Task SetupGini(AprajitaRetailsContext db)
         {
-            if ( botClient == null )
+            if (botClient == null)
             {
-                botClient = new TelegramBotClient (AccessToken);
-                var me = botClient.GetMeAsync ().Result;
-                Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
-                handler = new GiniHandler (db);
+                botClient = new TelegramBotClient(AccessToken);
+                var me = botClient.GetMeAsync().Result;
+                Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+                handler = new GiniHandler(db);
                 botClient.OnMessage += GiniHandler.OnMessage;
-                botClient.StartReceiving ();
+                botClient.StartReceiving();
 
             }
             else
@@ -39,22 +62,22 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         }
         public async Task SetupGini(EventHandler<MessageEventArgs> OnMessage_Handler = null, string Token = AccessToken)
         {
-            if ( botClient == null )
+            if (botClient == null)
             {
-                botClient = new TelegramBotClient (AccessToken);
-                var me = botClient.GetMeAsync ().Result;
-                Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+                botClient = new TelegramBotClient(AccessToken);
+                var me = botClient.GetMeAsync().Result;
+                Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
 
-                if ( OnMessage_Handler == null )
+                if (OnMessage_Handler == null)
                     botClient.OnMessage += Bot_OnMessage;
                 else
                     botClient.OnMessage += OnMessage_Handler;
-                botClient.StartReceiving ();
+                botClient.StartReceiving();
 
             }
             else
             {
-                if ( OnMessage_Handler == null )
+                if (OnMessage_Handler == null)
                     botClient.OnMessage += Bot_OnMessage;
                 else
                     botClient.OnMessage += OnMessage_Handler;
@@ -62,10 +85,10 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         }
         private static async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
-            if ( e.Message.Text != null )
+            if (e.Message.Text != null)
             {
-                Console.WriteLine ($"Received a text message in chat {e.Message.Chat.Id}.");
-                await botClient.SendTextMessageAsync (chatId: e.Message.Chat, text: "User said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
+                Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
+                await botClient.SendTextMessageAsync(chatId: e.Message.Chat, text: "User said:\n" + e.Message.Text + "(chatId:" + e.Message.Chat.Id + ")");
             }
 
 
@@ -78,7 +101,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         /// <param name="message">Message to user</param>
         public static async Task SendMessage(long chatId, string message)
         {
-            await botClient.SendTextMessageAsync (chatId: chatId, text: message);
+            await botClient.SendTextMessageAsync(chatId: chatId, text: message);
         }
         /// <summary>
         /// It Send messages to List of users.
@@ -87,9 +110,9 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         /// <param name="message">Message</param>
         public static async void SendMessage(List<long> chatIds, string message)
         {
-            foreach ( var chatId in chatIds )
+            foreach (var chatId in chatIds)
             {
-                await botClient.SendTextMessageAsync (chatId: chatId, text: message);
+                await botClient.SendTextMessageAsync(chatId: chatId, text: message);
 
             }
 
