@@ -1,16 +1,17 @@
 ﻿@model IEnumerable<AprajitaRetails.Areas.Uploader.Models.ImportSaleItemWise>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData ["Title"] = "Sales Item Wise (Import List)";
 }
 
-<h1>Index</h1>
+    <h2>Sales Item Wise (Import List)</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table table-sm table-striped table-hover table-bordered">
+    <thead class="table-info">
+
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceDate)
@@ -21,18 +22,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceType)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.BrandName)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ItemDesc)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HSNCode)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Barcode)
             </th>
@@ -45,19 +46,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.MRP)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Discount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BasicRate)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Tax)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SGST)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CGST)
             </th>
             <th>
@@ -65,14 +66,14 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RoundOff)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.BillAmnt)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PaymentType)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Saleman)
             </th>
             <th>
@@ -80,12 +81,13 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImportTime)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <tbody class="table-success">
+        @foreach ( var item in Model )
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.InvoiceDate)
@@ -96,18 +98,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.InvoiceType)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BrandName)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.BrandName)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ItemDesc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HSNCode)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.ItemDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HSNCode)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Barcode)
             </td>
@@ -120,48 +122,48 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MRP)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BasicRate)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Discount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BasicRate)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Tax)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SGST)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CGST)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LineTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoundOff)
-            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.CGST)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LineTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoundOff)
+        </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.BillAmnt)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PaymentType)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Saleman)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDataConsumed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImportTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ImportSaleItemWiseId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ImportSaleItemWiseId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ImportSaleItemWiseId">Delete</a>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Saleman)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDataConsumed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImportTime)
+        </td>*@
+            <td class="btn-group btn-group-sm">
+                 <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.ImportSaleItemWiseId">Edit</a>
+                 <a class="btn btn-outline-info"asp-action="Details" asp-route-id="@item.ImportSaleItemWiseId">Details</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ImportSaleItemWiseId">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

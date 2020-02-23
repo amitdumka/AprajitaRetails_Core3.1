@@ -1,16 +1,18 @@
 ﻿@model IEnumerable<AprajitaRetails.Areas.Uploader.Models.ImportInWard>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData ["Title"] = "Purchase InWard";
 }
 
-<h1>Index</h1>
+<h1>Purchase Inward List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+<table class="table table-sm table-striped table-hover table-bordered">
+    <thead class="table-info">
+
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.InWardNo)
@@ -42,8 +44,9 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <tbody class="table-success">
+        @foreach ( var item in Model )
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.InWardNo)
@@ -72,12 +75,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ImportDate)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ImportInWardId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ImportInWardId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ImportInWardId">Delete</a>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.ImportInWardId">Edit</a>
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ImportInWardId">Details</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ImportInWardId">Delete</a>
             </td>
+           
         </tr>
-}
+        }
     </tbody>
 </table>

@@ -88,13 +88,13 @@ namespace AprajitaRetails
              });
             services.AddApplicationInsightsTelemetry ();
             
-            services.AddScoped<IUpdateService, UpdateService> ();
-            services.AddSingleton<IBotService, BotService> ();
-            services.Configure<BotConfiguration> (Configuration.GetSection ("BotConfiguration"));
+            //services.AddScoped<IUpdateService, UpdateService> ();
+            //services.AddSingleton<IBotService, BotService> ();
+            //services.Configure<BotConfiguration> (Configuration.GetSection ("BotConfiguration"));
 
-            services
-                .AddControllers ()
-                .AddNewtonsoftJson ();
+            //services
+            //    .AddControllers ()
+            //    .AddNewtonsoftJson ();
 
 
         }
@@ -119,10 +119,7 @@ namespace AprajitaRetails
             app.UseAuthentication ();
             app.UseAuthorization ();
             app.UseRequestLocalization ();
-            //app.UseSignalR (route =>
-            //{
-            //    route.MapHub<ChatHub> ("/Chat/ARChat/Index");
-            //});
+            
             app.UseEndpoints (endpoints =>
              {
                  endpoints.MapControllerRoute (

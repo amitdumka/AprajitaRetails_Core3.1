@@ -25,6 +25,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // GET: Uploader/ImportPurchases
         public async Task<IActionResult> Index()
         {
+            //TODO: Make options to list comsumesed and to comsumed and other options all. 
             return View(await _context.ImportPurchases.ToListAsync());
         }
 
