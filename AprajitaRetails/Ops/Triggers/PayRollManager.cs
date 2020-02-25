@@ -1,5 +1,6 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Bot;
 using AprajitaRetails.Ops.TAS.Mails;
 using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
@@ -17,15 +18,17 @@ namespace AprajitaRetails.Ops.Triggers
             {
                 if ( !isDeleted && !isUpdated )
                 {
+                    var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
                     if ( attendance.Status != AttUnits.Present )
                     {
-                        var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
+                       
                         MyMail.SendEmail (sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
                     }
                     else if ( attendance.Status == AttUnits.Sunday )
                     {
                         //TODO: do Some  things
                     }
+                    HRMBot.NotifyStaffAttandance (db,sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);
                 }
                 else if ( isDeleted )
                 {
@@ -38,7 +41,7 @@ namespace AprajitaRetails.Ops.Triggers
                     var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
                     var before = db.Attendances.Where (c => c.AttendanceId == attendance.AttendanceId).Select (c => c.Status).FirstOrDefault ();
                     MyMail.SendEmail (sName + " Attendance Report  status for Updated Record. It was " + before, sName + " is updated and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
-
+                    HRMBot.NotifyStaffAttandance (db, sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);
                 }
             }
             catch ( Exception ex )
@@ -51,13 +54,18 @@ namespace AprajitaRetails.Ops.Triggers
         public void OnInsert(AprajitaRetailsContext db, StaffAdvanceReceipt salPayment)
         {
             UpdateInAmount(db, salPayment.Amount, salPayment.PayMode,salPayment.ReceiptDate, false);
+            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Receipt: "+salPayment.Details,true);
+            
         }
         public void OnInsert(AprajitaRetailsContext db, StaffAdvancePayment salPayment)
         {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
+            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Payment: " + salPayment.Details);
         }
         public void OnInsert(AprajitaRetailsContext db, SalaryPayment salPayment) {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
+            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Salary payment for month of " + salPayment.SalaryMonth+"  details: " + salPayment.Details);
+            ;
         }
                 
         public void OnDelete(AprajitaRetailsContext db, SalaryPayment salPayment) {
@@ -80,6 +88,7 @@ namespace AprajitaRetails.Ops.Triggers
                 UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
             }
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
+            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Salary payment for month of " + salPayment.SalaryMonth + "  details: " + salPayment.Details);
         }
        
         public void OnUpdate(AprajitaRetailsContext db, StaffAdvancePayment salPayment) {
@@ -89,6 +98,7 @@ namespace AprajitaRetails.Ops.Triggers
                 UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
             }
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
+            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Payment: " + salPayment.Details);
         }
         public void OnUpdate(AprajitaRetailsContext db, StaffAdvanceReceipt salPayment) {
 
@@ -98,6 +108,7 @@ namespace AprajitaRetails.Ops.Triggers
                 UpdateInAmount(db, old.Amount, old.PayMode, old.ReceiptDate, true);
             }
             UpdateInAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.ReceiptDate, false);
+            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Receipt: " + salPayment.Details, true);
         }
 
         //private void UpDateSalaryAmount(AprajitaRetailsContext db, SalaryPayment salPayment, bool IsEdit)

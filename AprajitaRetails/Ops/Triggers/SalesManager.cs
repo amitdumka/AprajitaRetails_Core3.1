@@ -1,5 +1,6 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Bot;
 using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -125,7 +126,7 @@ namespace AprajitaRetails.Ops.Triggers
                 UpdateSalesRetun(db, dailySale, false);
 
             }
-
+            SaleBot.NotifySale (db, dailySale.SalesmanId, dailySale.Amount);
         }
 
         public void OnDelete(AprajitaRetailsContext db, DailySale dailySale)
@@ -194,9 +195,9 @@ namespace AprajitaRetails.Ops.Triggers
                 UpDateAmount(db, dailySale, false);
             }
 
+            SaleBot.NotifySale (db,  dailySale.SalesmanId, dailySale.Amount);
 
 
-            
         }
     }
 }
