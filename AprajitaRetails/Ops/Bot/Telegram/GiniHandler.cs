@@ -58,7 +58,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 
                     case "/todaysale":
                         var data1 = ApiHelper.GetSaleData (e.Message.Chat.Id, true);
-                        string msg1 = "Current MonthSale: \n";
+                        string msg1 = "Today Sale: \n";
                         if ( data1 != null )
                         {
                             foreach ( var item in data1 )

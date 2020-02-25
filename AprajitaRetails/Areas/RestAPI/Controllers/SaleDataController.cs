@@ -38,7 +38,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             {
                 if(staff.EmpType==EmpType.StoreManager || staff.EmpType == EmpType.Owner )
                 {
-                    var emps = db.Salesmen.Select (c => new { c.SalesmanId, c.SalesmanName });
+                    var emps = db.Salesmen.Select (c => new { c.SalesmanId, c.SalesmanName }).ToList();
                     foreach ( var emp in emps )
                     {
                         var amount = db.DailySales.Include (c => c.Salesman).Where (c => c.Salesman.SalesmanName == emp.SalesmanName && c.SaleDate.Month==DateTime.Today.Month).Sum (c => c.Amount);
@@ -67,7 +67,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             {
                 if ( staff.EmpType == EmpType.StoreManager || staff.EmpType == EmpType.Owner )
                 {
-                    var emps = db.Salesmen.Select (c => new { c.SalesmanId, c.SalesmanName });
+                    var emps = db.Salesmen.Select (c => new { c.SalesmanId, c.SalesmanName }).ToList();
                     foreach ( var emp in emps )
                     {
                         var amount = db.DailySales.Include (c => c.Salesman).Where (c => c.Salesman.SalesmanName == emp.SalesmanName && c.SaleDate.Date == DateTime.Today.Date).Sum (c => c.Amount);

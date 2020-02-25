@@ -31,6 +31,7 @@ namespace AprajitaRetails.Ops.Bot.Manager
     }
     public class ApiHelper
     {
+       // public const string Url = "https://www.aprajitaretails.in/api/";
         public const string Url = "https://localhost:44334/api/";
         public static Employee GetEmployee(string mobileNo)
         {
