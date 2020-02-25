@@ -90,10 +90,10 @@ namespace AprajitaRetails
              });
             services.AddApplicationInsightsTelemetry ();
 
-            //services.AddScoped<IUpdateService, UpdateService> ();
-           services.AddSingleton<IGiniService, GiniService> ();
-            //services.AddSingleton<IGiniService> ( sp=> new GiniService());
-            //services.Configure<BotConfiguration> (Configuration.GetSection ("BotConfiguration"));
+            
+            services.AddSingleton<IGiniService, GiniService> ();
+           
+            
 
             services.AddControllers ().AddNewtonsoftJson ();
 

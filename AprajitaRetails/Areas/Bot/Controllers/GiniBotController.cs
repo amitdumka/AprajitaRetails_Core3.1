@@ -27,7 +27,7 @@ namespace AprajitaRetails.Areas.Bot.Controllers
             if ( !string.IsNullOrEmpty (TXTMessage) )
             {
                 bot = new BotGini ();
-                bot.SetupGini (_db);
+                bot.SetupGini ();
                 ViewBag.SendMessage = TXTMessage + ViewBag.SendMessage;
                 await BotGini.SendMessage (LastChatId, TXTMessage);
                 ViewBag.RecMessage = Msg;

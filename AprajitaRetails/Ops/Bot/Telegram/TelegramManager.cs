@@ -11,100 +11,27 @@ namespace AprajitaRetails.Ops.Bot.Manager
 {   //TODO:Create API To Insert and fetch Data 
     public static class TelegramManager
     {
-        private static bool IsUserPresent(AprajitaRetailsContext db, string MobileNo)
-        {
-            var ctr = db.TelegramAuthUsers.Where (c => c.MobileNo == MobileNo).Count ();
-            if ( ctr == null || ctr <= 0 )
-                return false;
-            else
-            {
-                return true;
-            }
-        }
-        public static bool AddUser(AprajitaRetailsContext db, Message message, string mobileNo, string passwd)
-        {
-            if ( !IsUserPresent (db, mobileNo) )
-            {
-                TelegramAuthUser user = new TelegramAuthUser
-                {
-                    TelegramChatId = message.Chat.Id,
-                    MobileNo = mobileNo,
-                    EmpType = EmpType.Others,
-                    Password = passwd
-                };
-                var emp = db.Employees.Where (c => c.MobileNo == mobileNo).FirstOrDefault ();
-                if ( emp != null )
-                {
-                    user.EmpType = emp.Category;
-                    user.EmployeeId = emp.EmployeeId;
-                    user.TelegramUserName = emp.StaffName;
-                }
-                else
-                {
-                    return false;
-                }
-                db.TelegramAuthUsers.Add (user);
-                if ( db.SaveChanges () > 0 )
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static TelegramAuthUser GetUser(AprajitaRetailsContext db, long chatId)
-        {
-            var user = db.TelegramAuthUsers.Where (c => c.TelegramChatId == chatId).FirstOrDefault ();
-            if ( user != null )
-            { return user; }
-            else
-                return null;
-
-        }
-
+       
         public static bool AddUserByApi(Message message, string mobileNo, string passwd)
         {
-         
-            if ( !ApiHelper.GetIsUserPresent(  mobileNo) )
+            TelegramAuthUser user = new TelegramAuthUser
             {
-                TelegramAuthUser user = new TelegramAuthUser
-                {
-                    TelegramChatId = message.Chat.Id,
-                    MobileNo = mobileNo,
-                    EmpType = EmpType.Others,
-                    Password = passwd
-                };
-                var emp = ApiHelper.GetEmployee(mobileNo);
-                if ( emp != null )
-                {
-                    user.EmpType = emp.Category;
-                    user.EmployeeId = emp.EmployeeId;
-                    user.TelegramUserName = emp.StaffName;
-                }
-                else
-                {
-                    return false;
-                }
+                TelegramChatId = message.Chat.Id,
+                MobileNo = mobileNo,
+                Password = passwd,
+                TelegramUserName = "AddInfo"
+            };
 
-                return ApiHelper.AddTelegramUser (user);
-                
-            }
-            else
-            {
-                return false;
-            }
+
+            return ApiHelper.AddTelegramUser(user);
 
         }
 
 
     }
-
-
     public class ApiHelper
     {
-        public const string Url = "http://localhost:44334/api/";
+        public const string Url = "https://localhost:44334/api/";
         public static Employee GetEmployee(string mobileNo)
         {
 
@@ -112,7 +39,29 @@ namespace AprajitaRetails.Ops.Bot.Manager
             {
                 client.BaseAddress = new Uri (Url);
                 //HTTP GET
-                var responseTask = client.GetAsync ("Employees/?mobileNo=" + mobileNo);
+                var responseTask = client.GetAsync ("Employees/" + mobileNo);
+                responseTask.Wait ();
+                var result = responseTask.Result;
+                if ( result.IsSuccessStatusCode )
+                {
+                    var readTask = result.Content.ReadAsAsync<Employee> ();
+                    readTask.Wait ();
+                    return readTask.Result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        public static Employee GetEmployee(int id)
+        {
+
+            using ( var client = new HttpClient () )
+            {
+                client.BaseAddress = new Uri (Url);
+                //HTTP GET
+                var responseTask = client.GetAsync ("Employees/" + id);
                 responseTask.Wait ();
                 var result = responseTask.Result;
                 if ( result.IsSuccessStatusCode )
@@ -135,7 +84,7 @@ namespace AprajitaRetails.Ops.Bot.Manager
             {
                 client.BaseAddress = new Uri (Url);
                 //HTTP GET
-                var responseTask = client.GetAsync ("TelegramAuthUser/?mobileNo=" + MobileNo);
+                var responseTask = client.GetAsync ("TelegramAuthUsers/" + MobileNo);
                 responseTask.Wait ();
                 var result = responseTask.Result;
                 if ( result.IsSuccessStatusCode )
@@ -156,12 +105,8 @@ namespace AprajitaRetails.Ops.Bot.Manager
             using ( var client = new HttpClient () )
             {
                 client.BaseAddress = new Uri (Url + "TelegramAuthUsers");
-                //client.BaseAddress = new Uri ("http://localhost:64189/api/student");
-
-                //HTTP POST
                 var postTask = client.PostAsJsonAsync<TelegramAuthUser> ("TelegramAuthUsers", authUser);
                 postTask.Wait ();
-
                 var result = postTask.Result;
                 if ( result.IsSuccessStatusCode )
                 {
@@ -169,6 +114,49 @@ namespace AprajitaRetails.Ops.Bot.Manager
                 }
                 else
                     return false;
+            }
+        }
+
+        public static SortedList<string, decimal> GetSaleData(long chatid)
+        {
+            using ( var client = new HttpClient () )
+            {
+                client.BaseAddress = new Uri (Url);
+                //HTTP GET
+                var responseTask = client.GetAsync ("SaleData/" + chatid   );
+                responseTask.Wait ();
+                var result = responseTask.Result;
+                if ( result.IsSuccessStatusCode )
+                {
+                    var readTask = result.Content.ReadAsAsync<SortedList<string, decimal>> ();
+                    readTask.Wait ();
+                    return readTask.Result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        public static SortedList<string, decimal> GetSaleData(long chatid, bool today)
+        {
+            using ( var client = new HttpClient () )
+            {
+                client.BaseAddress = new Uri (Url);
+                //HTTP GET
+                var responseTask = client.GetAsync ("SaleData/" + chatid+"/1");
+                responseTask.Wait ();
+                var result = responseTask.Result;
+                if ( result.IsSuccessStatusCode )
+                {
+                    var readTask = result.Content.ReadAsAsync<SortedList<string, decimal>> ();
+                    readTask.Wait ();
+                    return readTask.Result;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

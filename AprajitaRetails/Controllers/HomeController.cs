@@ -17,12 +17,12 @@ namespace AprajitaRetails.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AprajitaRetailsContext _context;
-        private static GiniService _gini;
-        public HomeController(AprajitaRetailsContext context,ILogger<HomeController> logger)
+        private static IGiniService _gini;
+        public HomeController(AprajitaRetailsContext context,ILogger<HomeController> logger, IGiniService gini)
         {
             _logger = logger;
             _context = context;
-            _gini = new GiniService ();
+           _gini = gini;
 
         }
 

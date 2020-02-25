@@ -29,7 +29,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         }
 
         // GET: api/Employees/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);

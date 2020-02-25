@@ -9,21 +9,36 @@ namespace AprajitaRetails.Ops.Bot.TelgramService
 {
     public interface IGiniService
     {
-        public Gini Gini { get; }
+         Gini Gini { get; }
+         bool IsRunning { get; set; }
     }
     public class GiniService : IGiniService
     {
-        
-        public GiniService() => Gini.Start ();
+
+        public GiniService()
+        {
+            if ( !IsRunning )
+            {
+                Gini.Start ();
+                IsRunning = true;
+            }
+        }
 
         public void StartMe()
         {
-            Gini.Start ();
+            if ( !IsRunning )
+            {
+                Gini.Start ();
+                IsRunning = true;
+            }
         }
         public void StopMe()
         {
             Gini.Stop ();
+            IsRunning = false;
         }
         public Gini Gini { get; }
+
+        public bool IsRunning { get; set; }
     }
 }

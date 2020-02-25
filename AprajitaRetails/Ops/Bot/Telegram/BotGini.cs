@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AprajitaRetails.Data;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using AprajitaRetails.Data;
-using AprajitaRetails.Ops.Bot.Telegram;
 
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
@@ -15,10 +14,8 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         public static readonly long AmitKumarChatId = 775142634;
     }
 
-
     //https://api.telegram.org/bot{my_bot_token}/getWebhookInfo
     //https://api.telegram.org/bot123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11/setWebhook?url=https://www.example.com/my-telegram-bot
-
 
     /// <summary>
     /// This Class is main class for BotGini which will send telegram update to users on events.
@@ -26,30 +23,15 @@ namespace AprajitaRetails.Ops.Bot.Telegram
     /// </summary>
     public class BotGini
     {
-        static GiniHandler handler;
-        static ITelegramBotClient botClient;
+        private static GiniHandler handler;
+        private static ITelegramBotClient botClient;
 
-        public void AssignHandler(EventHandler<MessageEventArgs> OnMessageHandler) { botClient.OnMessage += OnMessageHandler; }
-        public void SetupGini(AprajitaRetailsContext db)
+        public void AssignHandler(EventHandler<MessageEventArgs> OnMessageHandler)
         {
-            if ( botClient == null )
-            {
-                botClient = new TelegramBotClient (BotConfig.AccessToken);
-                var me = botClient.GetMeAsync ().Result;
-                Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
-                handler = new GiniHandler (db);
-                botClient.OnMessage += GiniHandler.OnMessageHandler;
-              
-
-            }
-            else
-            {
-                botClient.OnMessage += GiniHandler.OnMessageHandler;
-            }
-            botClient.StartReceiving ();
-
+            botClient.OnMessage += OnMessageHandler;
         }
-        public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler = null)
+
+            public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler = null)
         {
             if ( botClient == null )
             {
@@ -63,13 +45,13 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 }
                 else
                     botClient.OnMessage += OnMessageHandler;
-               
             }
             else
             {
                 if ( OnMessageHandler == null )
                 {
-                    handler = new GiniHandler ();
+                    if ( handler == null )
+                        handler = new GiniHandler ();
                     botClient.OnMessage += GiniHandler.OnMessageWithApi;
                 }
                 else
@@ -87,6 +69,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         {
             await botClient.SendTextMessageAsync (chatId: chatId, text: message);
         }
+
         /// <summary>
         /// It Send messages to List of users.
         /// </summary>
@@ -97,9 +80,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             foreach ( var chatId in chatIds )
             {
                 await botClient.SendTextMessageAsync (chatId: chatId, text: message);
-
             }
-
         }
 
         public void StopGini()
@@ -108,46 +89,41 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             {
                 botClient.StopReceiving ();
                 botClient = null;
-
             }
         }
-
     }
+
     public class Gini
     {
-        static BotGini bot;
-       public static void Start()
-       {
-           bot = new BotGini ();
-           bot.SetupGini ();
-           _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
-       }
-        public static void Start(AprajitaRetailsContext db)
+        private static BotGini bot;
+
+        public static void Start()
         {
-
-            bot = new BotGini ();
-            bot.SetupGini (db);
-            _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
-
+            if ( bot == null )
+            {
+                bot = new BotGini ();
+                bot.SetupGini ();
+                _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
+            }
+            else
+                bot.SetupGini ();
         }
+
+       
+
         public static void Stop()
         {
             _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is stopping");
             bot.StopGini ();
         }
-
     }
 }
-
-
-
 
 //TODO:
 // Add Passport Suuport.
 //Add File Upload Support
-// Add AI Comand Support LIke my Addtance , total Sale, For Sale Staff, 
+// Add AI Comand Support LIke my Addtance , total Sale, For Sale Staff,
 // Command For StoreManager Like Attance of Staff, sale, Dues Pendinng Order, Alerts, Etc.
-
 
 //List of Options to send message Implement which ever is requried
 //1 Formated Text
@@ -171,7 +147,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 //  parseMode: ParseMode.Html
 //);
 
-//3 Contacts 
+//3 Contacts
 //Message msg = await botClient.SendContactAsync(
 //    chatId: e.Message.Chat.Id,
 //    phoneNumber: "+1234567890",
@@ -192,7 +168,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 //            "END:VCARD"
 //);
 
-//5 Map Location 
+//5 Map Location
 //Message msg = await botClient.SendVenueAsync(
 //    chatId: e.Message.Chat.Id,
 //    latitude: 50.0840172f,
@@ -213,5 +189,3 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 //https://92796f08.ngrok.io/key: url, value:https://92796f08.ngrok.io/api/update
 
 //https://yoursubdomain.ngrok.io/api/update
-
-

@@ -3,6 +3,18 @@ using Microsoft.Extensions.Options;
 using MihaZupan;
 namespace AprajitaRetails.Ops.Service
 {
+    public class BotConfiguration
+    {
+        public string BotToken { get; set; }
+
+        public string Socks5Host { get; set; }
+
+        public int Socks5Port { get; set; }
+    }
+    public interface IBotService
+    {
+        TelegramBotClient Client { get; }
+    }
     public class BotService : IBotService
     {
         private readonly BotConfiguration _config;
