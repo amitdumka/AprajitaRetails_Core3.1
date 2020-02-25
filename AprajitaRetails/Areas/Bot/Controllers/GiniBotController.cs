@@ -14,7 +14,7 @@ namespace AprajitaRetails.Areas.Bot.Controllers
     {
         BotGini bot;
         static string Msg = "";
-        static long LastChatId = 1024002424;
+        static long LastChatId = BotConfig.AmitKumarChatId;
         private readonly AprajitaRetailsContext _db;
         public GiniBotController(AprajitaRetailsContext db)
         {
@@ -35,6 +35,53 @@ namespace AprajitaRetails.Areas.Bot.Controllers
             }
             return View ();
         }
+        public static async void OnMessageHandler(object sender, MessageEventArgs e)
+        {
+            await BotGini.SendMessage (e.Message.Chat.Id, "We got Message from you, We are processing Kindly wait....");
+            if ( e.Message.Text != null )
+            {
+                switch ( e.Message.Text )
+                {
+                    case "/":
+                        break;
 
+                    case "/ATT":
+                        break;
+
+                    case "/sale":
+                        break;
+
+                    case "/todaysale":
+                        break;
+
+                    case "/yearlysale":
+                        break;
+
+                    case "/incentive":
+                        break;
+
+                    case "/LP":
+                        break;
+
+                    case "/staffinfo":
+                        break;
+
+                    case "/myInfo":
+                        break;
+
+                    case "/register":
+                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
+                        break;
+
+                    case "/help":
+                        await BotGini.SendMessage (e.Message.Chat.Id, "Helping");
+                        break;
+
+                    default:
+                        await BotGini.SendMessage (e.Message.Chat.Id, "You Said:"+e.Message.Text);
+                        break;
+                }
+            }
+        }
     }
 }

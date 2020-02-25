@@ -41,6 +41,20 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
             return employee;
         }
+        // GET: api/Employees/5
+        [HttpGet ("{mobileNo}")]
+        public async Task<ActionResult<Employee>> GetEmployee(string mobileNo)
+        {
+            var employee = await _context.Employees.Where (c => c.MobileNo == mobileNo).FirstOrDefaultAsync ();
+            ;
+
+            if ( employee == null )
+            {
+                return NotFound ();
+            }
+
+            return employee;
+        }
 
         // PUT: api/Employees/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for

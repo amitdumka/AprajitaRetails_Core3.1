@@ -1,22 +1,124 @@
-﻿using Telegram.Bot.Args;
-using Telegram.Bot.Types;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.Manager;
+using Telegram.Bot.Args;
+using Telegram.Bot.Types;
+
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
     public class GiniHandler
     {
-        private  static AprajitaRetailsContext db;
+        private const string usage = "Usage:\n" +
+                        "/register   - send register\n" +
+                        "/help - Help Message\n" +
+                        "/request  - request Information";
+
+        private static AprajitaRetailsContext db;
+
+        public GiniHandler()
+        {
+        }
 
         public GiniHandler(AprajitaRetailsContext con)
         {
             db = con;
         }
+        public static async void OnMessageHandler(object sender, MessageEventArgs e)
+        {
+          //  await BotGini.SendMessage (e.Message.Chat.Id, "We got Message from you, We are processing Kindly wait....");
+            if ( e.Message.Text != null )
+            {
+                switch ( e.Message.Text )
+                {
+                    case "/":
+                        break;
 
-        const string usage = "Usage:\n" +
-                        "/register   - send register\n" +
-                        "/help - Help Message\n" +
-                        "/request  - request Information";
+                    case "/ATT":
+                        break;
+
+                    case "/sale":
+                        break;
+
+                    case "/todaysale":
+                        break;
+
+                    case "/yearlysale":
+                        break;
+
+                    case "/incentive":
+                        break;
+
+                    case "/LP":
+                        break;
+
+                    case "/staffinfo":
+                        break;
+
+                    case "/myInfo":
+                        break;
+
+                    case "/register":
+                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
+                        break;
+
+                    case "/help":
+                        await BotGini.SendMessage (e.Message.Chat.Id, usage);
+                        break;
+
+                    default:
+                        SecondLevelHandler (e.Message, e.Message.Text);
+                        break;
+                }
+            }
+        }
+
+        public static async void OnMessageWithApi(object sender, MessageEventArgs e)
+        {
+           // await BotGini.SendMessage (e.Message.Chat.Id, "We got Message from you, We are processing Kindly wait....");
+            if ( e.Message.Text != null )
+            {
+                switch ( e.Message.Text )
+                {
+                    case "/":
+                        break;
+
+                    case "/ATT":
+                        break;
+
+                    case "/sale":
+                        break;
+
+                    case "/todaysale":
+                        break;
+
+                    case "/yearlysale":
+                        break;
+
+                    case "/incentive":
+                        break;
+
+                    case "/LP":
+                        break;
+
+                    case "/staffinfo":
+                        break;
+
+                    case "/myInfo":
+                        break;
+
+                    case "/register":
+                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
+                        break;
+
+                    case "/help":
+                        await BotGini.SendMessage (e.Message.Chat.Id, usage);
+                        break;
+
+                    default:
+                        SecondLevelHandlerWithApi (e.Message, e.Message.Text);
+                        break;
+                }
+            }
+        }
 
         private static async void SecondLevelHandler(Message message, string text)
         {
@@ -34,57 +136,41 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 {
                     await BotGini.SendMessage (message.Chat.Id, "Sorry, Either User is already registered or  some error occurred while registering you, Kindly try again or contact admin!");
                 }
-            }else if(text.StartsWith("/staffName ") )
+            }
+            else if ( text.StartsWith ("/staffName ") )
             {
-
             }
             else
             {
                 await BotGini.SendMessage (message.Chat.Id, "Command NotSupported");
                 await BotGini.SendMessage (message.Chat.Id, usage);
             }
-
         }
-        public static async void OnMessage(object sender, MessageEventArgs e)
+        private static async void SecondLevelHandlerWithApi(Message message, string text)
         {
-            if ( e.Message.Text != null )
+            if ( text.StartsWith ("/mobile ") )
             {
-                switch ( e.Message.Text )
+                string [] d = text.Split (" ");
+                string mob = d [1].Trim ();
+                string pass = d [2].Trim ();
+
+                if ( TelegramManager.AddUserByApi (message, mob, pass) )
                 {
-                    case "/":
-                        break;
-                    case "/ATT":
-                        break;
-                    case "/sale":
-                        break;
-                    case "/todaysale":
-                        break;
-                    case "/yearlysale":
-                        break;
-                    case "/incentive":
-                        break;
-                    case "/LP":
-                        break;
-                    case "/staffinfo":
-                        break;
-                    case "/myInfo":
-                        break;
-                    case "/register":
-                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
-                        break;
-                    case "/help":
-                        await BotGini.SendMessage (e.Message.Chat.Id, usage);
-                        break;
-                    default:
-                        SecondLevelHandler (e.Message, e.Message.Text);
-                        break;
+                    await BotGini.SendMessage (message.Chat.Id, "Congrats, Now You can use this service!");
                 }
-
+                else
+                {
+                    await BotGini.SendMessage (message.Chat.Id, "Sorry, Either User is already registered or  some error occurred while registering you, Kindly try again or contact admin!");
+                }
             }
-
-
-
+            else if ( text.StartsWith ("/staffName ") )
+            {
+            }
+            else
+            {
+                await BotGini.SendMessage (message.Chat.Id, "Command NotSupported");
+                await BotGini.SendMessage (message.Chat.Id, usage);
+            }
         }
     }
 }
-

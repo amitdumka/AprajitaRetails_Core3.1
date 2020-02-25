@@ -12,7 +12,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
     {
         public static readonly string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
         public static readonly string BotName = "Gini_ARBot";
-
+        public static readonly long AmitKumarChatId = 775142634;
     }
 
 
@@ -38,31 +38,44 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 var me = botClient.GetMeAsync ().Result;
                 Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
                 handler = new GiniHandler (db);
-                botClient.OnMessage += GiniHandler.OnMessage;
-                botClient.StartReceiving ();
+                botClient.OnMessage += GiniHandler.OnMessageHandler;
+              
 
             }
             else
             {
-                botClient.OnMessage += GiniHandler.OnMessage;
+                botClient.OnMessage += GiniHandler.OnMessageHandler;
             }
+            botClient.StartReceiving ();
 
-            
         }
-        public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler)
+        public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler = null)
         {
             if ( botClient == null )
             {
                 botClient = new TelegramBotClient (BotConfig.AccessToken);
                 var me = botClient.GetMeAsync ().Result;
                 Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
-                botClient.OnMessage += OnMessageHandler;
-                botClient.StartReceiving ();
+                if ( OnMessageHandler == null )
+                {
+                    handler = new GiniHandler ();
+                    botClient.OnMessage += GiniHandler.OnMessageWithApi;
+                }
+                else
+                    botClient.OnMessage += OnMessageHandler;
+               
             }
             else
             {
-                botClient.OnMessage += OnMessageHandler;
+                if ( OnMessageHandler == null )
+                {
+                    handler = new GiniHandler ();
+                    botClient.OnMessage += GiniHandler.OnMessageWithApi;
+                }
+                else
+                    botClient.OnMessage += OnMessageHandler;
             }
+            botClient.StartReceiving ();
         }
 
         /// <summary>
@@ -88,30 +101,38 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             }
 
         }
-        
+
         public void StopGini()
         {
             if ( botClient != null )
             {
                 botClient.StopReceiving ();
                 botClient = null;
-                
+
             }
         }
-    
+
     }
     public class Gini
     {
         static BotGini bot;
+       public static void Start()
+       {
+           bot = new BotGini ();
+           bot.SetupGini ();
+           _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
+       }
         public static void Start(AprajitaRetailsContext db)
         {
-           
+
             bot = new BotGini ();
             bot.SetupGini (db);
-            
-        }
-        public static void Stop() {
+            _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
 
+        }
+        public static void Stop()
+        {
+            _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is stopping");
             bot.StopGini ();
         }
 

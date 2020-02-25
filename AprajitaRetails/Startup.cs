@@ -1,4 +1,5 @@
-using Microsoft.AspNetCore.Authorization;    using System;
+using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ using System.Net.Mail;
 using Microsoft.AspNetCore.Http;
 using AprajitaRetails.Ops.Bot.Telegram;
 using AprajitaRetails.Ops.Service;
+using AprajitaRetails.Ops.Bot.TelgramService;
 
 namespace AprajitaRetails
 {
@@ -56,15 +58,15 @@ namespace AprajitaRetails
             services.AddDbContext<VoyagerContext> (options =>
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("VoyagerConnection")));
-            services.AddDbContext<VoyagerContext>(options =>
-              options.UseSqlServer(
-                  Configuration.GetConnectionString("AccountsConnection")));
+            services.AddDbContext<VoyagerContext> (options =>
+               options.UseSqlServer (
+                   Configuration.GetConnectionString ("AccountsConnection")));
 
             services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
 
-           // services.AddSignalR ();
+            // services.AddSignalR ();
 
             services.AddControllersWithViews ();
             services.AddRazorPages ();
@@ -87,14 +89,13 @@ namespace AprajitaRetails
                  options.SupportedUICultures = supportedCultures;
              });
             services.AddApplicationInsightsTelemetry ();
-            
+
             //services.AddScoped<IUpdateService, UpdateService> ();
-            //services.AddSingleton<IBotService, BotService> ();
+           services.AddSingleton<IGiniService, GiniService> ();
+            //services.AddSingleton<IGiniService> ( sp=> new GiniService());
             //services.Configure<BotConfiguration> (Configuration.GetSection ("BotConfiguration"));
 
-            //services
-            //    .AddControllers ()
-            //    .AddNewtonsoftJson ();
+            services.AddControllers ().AddNewtonsoftJson ();
 
 
         }
@@ -119,7 +120,7 @@ namespace AprajitaRetails
             app.UseAuthentication ();
             app.UseAuthorization ();
             app.UseRequestLocalization ();
-            
+
             app.UseEndpoints (endpoints =>
              {
                  endpoints.MapControllerRoute (

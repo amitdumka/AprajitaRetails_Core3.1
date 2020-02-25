@@ -9,6 +9,7 @@ using AprajitaRetails.Models;
 using AprajitaRetails.Models.ViewModels;
 using AprajitaRetails.Ops.WidgetModel;
 using AprajitaRetails.Data;
+using AprajitaRetails.Ops.Bot.TelgramService;
 
 namespace AprajitaRetails.Controllers
 {
@@ -16,11 +17,12 @@ namespace AprajitaRetails.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AprajitaRetailsContext _context;
-
+        private static GiniService _gini;
         public HomeController(AprajitaRetailsContext context,ILogger<HomeController> logger)
         {
             _logger = logger;
             _context = context;
+            _gini = new GiniService ();
 
         }
 
