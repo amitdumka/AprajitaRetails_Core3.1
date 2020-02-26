@@ -35,9 +35,6 @@ namespace AprajitaRetails
                     logger.LogError(exception, "An error occurred while creating roles");
                 }
             }
-
-            
-
             host.Run();
         }
 

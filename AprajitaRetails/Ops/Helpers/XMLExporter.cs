@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Ops.Helpers
 {
@@ -15,25 +16,29 @@ namespace AprajitaRetails.Ops.Helpers
     {
         public static string WriteToXML(AprajitaRetailsContext db)
         {
-            var p = db.Employees;
-            string json = JsonConvert.SerializeObject(p);
+            var p1 = db.Employees;
+            string json = JsonConvert.SerializeObject(p1);
+
             
+            
+           
+
+            using ( MemoryStream stream = new MemoryStream () )
+            {
+                var serializer = new XmlSerializer (typeof (List<EndOfDay>));
+                var p = db.EndOfDays.ToList();
+                serializer.Serialize (stream, p);
+
+                stream.Seek (0, SeekOrigin.Begin);
+                using ( StreamReader reader = new StreamReader (stream) )
+                {
+                    string xml = reader.ReadToEnd ();
+
+                    json+="\nXML Party Down\n"+ xml;
+                }
+                  
+            }
             return json;
-            //using (MemoryStream stream = new MemoryStream())
-            //{
-            //    var serializer = new XmlSerializer(typeof(TranscationMode));
-            //    var p = db.TranscationModes.First();
-            //    serializer.Serialize(stream, p);
-               
-            //    stream.Seek(0, SeekOrigin.Begin);
-            //    using (StreamReader reader = new StreamReader(stream))
-            //    {
-            //        string xml = reader.ReadToEnd();
-
-            //        return xml;
-            //    }
-
-            //}
         }
     
     

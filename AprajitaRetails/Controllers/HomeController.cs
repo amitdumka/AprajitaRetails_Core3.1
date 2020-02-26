@@ -38,7 +38,7 @@ namespace AprajitaRetails.Controllers
             };
 
 
-
+            ViewBag.SaleData =(int) reportView.SaleReport.DailySale;
             
             return View (reportView);
             

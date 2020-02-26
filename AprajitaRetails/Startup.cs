@@ -1,13 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using Microsoft.Extensions.Configuration;
@@ -17,14 +11,10 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using AprajitaRetails.Areas.Voyager.Data;
-
-using System.Net;
-using System.Net.Mail;
 //using AprajitaRetails.Areas.Chat.Models.Hubs;
 using Microsoft.AspNetCore.Http;
-using AprajitaRetails.Ops.Bot.Telegram;
-using AprajitaRetails.Ops.Service;
 using AprajitaRetails.Ops.Bot.TelgramService;
+using AprajitaRetails.Areas.Accounts.Data;
 
 namespace AprajitaRetails
 {
@@ -58,7 +48,7 @@ namespace AprajitaRetails
             services.AddDbContext<VoyagerContext> (options =>
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("VoyagerConnection")));
-            services.AddDbContext<VoyagerContext> (options =>
+            services.AddDbContext<AccountsContext> (options =>
                options.UseSqlServer (
                    Configuration.GetConnectionString ("AccountsConnection")));
 

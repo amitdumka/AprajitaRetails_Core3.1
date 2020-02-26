@@ -210,11 +210,8 @@
             <div class="nav-scroller   aqua-gradient-rgba shadow-sm " role="toolbar">
                 <nav class="nav nav-underline">
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
-                    @*<a class="nav-link" href="#">
-            DailySale
-            <span class="badge badge-pill bg-dark align-text-bottom">27</span>
-        </a>*@
-                    <a class="nav-link text-success" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">27</span></a>
+                   
+                    <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
                     <a class="nav-link" href="#">Sale</a>
                     <a class="nav-link" href="#">Purchase</a>
                     <a class="nav-link" href="#">Manual Bill</a>
