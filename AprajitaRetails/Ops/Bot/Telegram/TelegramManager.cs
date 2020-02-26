@@ -31,8 +31,8 @@ namespace AprajitaRetails.Ops.Bot.Manager
     }
     public class ApiHelper
     {
-        public const string Url = "https://www.aprajitaretails.in/api/";
-       // public const string Url = "https://localhost:44334/api/";
+       // public const string Url = "https://www.aprajitaretails.in/api/";
+        public const string Url = "https://localhost:44334/api/";
         public static Employee GetEmployee(string mobileNo)
         {
 
@@ -117,7 +117,27 @@ namespace AprajitaRetails.Ops.Bot.Manager
                     return false;
             }
         }
-
+        public static string GetMyInfo(long chatid)
+        {
+            using ( var client = new HttpClient () )
+            {
+                client.BaseAddress = new Uri (Url);
+                //HTTP GET
+                var responseTask = client.GetAsync ("ARInfo/" + chatid);
+                responseTask.Wait ();
+                var result = responseTask.Result;
+                if ( result.IsSuccessStatusCode )
+                {
+                    var readTask = result.Content.ReadAsStringAsync ();
+                    readTask.Wait ();
+                    return readTask.Result;
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+        }
         public static SortedList<string, decimal> GetSaleData(long chatid)
         {
             using ( var client = new HttpClient () )

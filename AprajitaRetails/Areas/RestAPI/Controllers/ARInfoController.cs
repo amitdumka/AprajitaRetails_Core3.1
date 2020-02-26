@@ -21,20 +21,20 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
         // GET: api/ARInfo
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetARInfo()
         {
             return new string [] { "value1", "value2" };
         }
 
+        //// GET: api/ARInfo/5
+        //[HttpGet ("{id:int}")]
+        //public string GetARInfo(int id)
+        //{
+        //    return "value";
+        //}
         // GET: api/ARInfo/5
-        [HttpGet ("{id:int}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        // GET: api/ARInfo/5
-        [HttpGet ("{myInfo:long}", Name = "Get")]
-        public string GetMyInfo(long myInfo)
+        [HttpGet ("{myInfo:long}")]
+        public string GetARInfo(long myInfo)
         {   
             //TODO: add Total Sale, total Attendance, leaves, incentive, Lp  etc. Dues, Adances
             var emp = db.TelegramAuthUsers.Where (c => c.TelegramChatId == myInfo).FirstOrDefault ();
@@ -47,8 +47,8 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                 return "Error";
         }
         // GET: api/ARInfo/5
-        [HttpGet ("{myInfo}/{staffInfo}", Name = "Get")]
-        public string GetStaffInfo(string staffInfo)
+        [HttpGet ("{myInfo}/{staffInfo}")]
+        public string GetARInfo(string staffInfo)
         {
             return "value";
         }
@@ -61,13 +61,13 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
         // PUT: api/ARInfo/5
         [HttpPut ("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void PutARInfo(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete ("{id}")]
-        public void Delete(int id)
+        public void DeleteARInfo(int id)
         {
         }
     }

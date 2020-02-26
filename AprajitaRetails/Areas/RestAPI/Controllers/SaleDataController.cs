@@ -21,14 +21,14 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         }
         // GET: api/SaleData
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetSaleData()
         {
             return new string [] { "value1", "value2" };
         }
 
         // GET: api/SaleData/5
-        [HttpGet ("{id}", Name = "Get")]
-        public SortedList<string, decimal> Get(long id)
+        [HttpGet ("{id}" )]
+        public SortedList<string, decimal> GetSaleData(long id)
         {
             SortedList<string, decimal> empData = new SortedList<string, decimal> ();
 
@@ -60,7 +60,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             return empData;
         }
         [HttpGet ("{id}/{today}", Name = "GetSaleData")]
-        public SortedList<string, decimal> Get(long id, int today)
+        public SortedList<string, decimal> GetSaleData(long id, int today)
         {
             SortedList<string, decimal> empData = new SortedList<string, decimal> ();
 
@@ -93,19 +93,19 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
         // POST: api/SaleData
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void PostSaleData([FromBody] string value)
         {
         }
 
         // PUT: api/SaleData/5
         [HttpPut ("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void PutSaleData(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete ("{id}")]
-        public void Delete(int id)
+        public void DeleteSaleData(int id)
         {
         }
     }

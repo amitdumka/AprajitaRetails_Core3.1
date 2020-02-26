@@ -14,8 +14,8 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         private const string requestUsage = "requests:\n" +
             "/sale    -Sale Data of Current Month\n" +
             "/ATT     - Get Current month Attendances\n" +
-            "/todaysale - Get Current date sale\n" +
-            "/myinfo    - get Your Information";
+            "/todaySale - Get Current date sale\n" +
+            "/myInfo    - get Your Information";
 
 
         public static async void OnMessageWithApi(object sender, MessageEventArgs e)
@@ -51,7 +51,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         await BotGini.SendMessage (e.Message.Chat.Id, msg);
                         break;
 
-                    case "/todaysale":
+                    case "/todaySale":
                         var data1 = ApiHelper.GetSaleData (e.Message.Chat.Id, true);
                         string msg1 = "Today Sale: \n";
                         if ( data1 != null )
@@ -70,7 +70,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         await BotGini.SendMessage (e.Message.Chat.Id, msg1);
                         break;
 
-                    case "/yearlysale":
+                    case "/yearlySale":
                         break;
 
                     case "/incentive":
@@ -79,10 +79,12 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                     case "/LP":
                         break;
 
-                    case "/staffinfo":
+                    case "/staffInfo":
                         break;
 
                     case "/myInfo":
+                        var myinfo = ApiHelper.GetMyInfo (e.Message.Chat.Id);                        
+                        await BotGini.SendMessage (e.Message.Chat.Id, myinfo);
                         break;
 
                     case "/register":
