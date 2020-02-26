@@ -4,14 +4,16 @@ using AprajitaRetails.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations
 {
     [DbContext(typeof(AprajitaRetailsContext))]
-    partial class AprajitaRetailsContextModelSnapshot : ModelSnapshot
+    [Migration("20200226045900_Todomessage")]
+    partial class Todomessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1397,7 +1399,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<DateTime>("OnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("OverDate")
+                    b.Property<DateTime>("OverDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")

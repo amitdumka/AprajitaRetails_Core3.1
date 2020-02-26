@@ -10,7 +10,7 @@ namespace AprajitaRetails.Data
 {
     public class AprajitaRetailsContext : DbContext
     {
-        public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options) : base (options)
+        public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options) : base(options)
         {
         }
 
@@ -18,17 +18,17 @@ namespace AprajitaRetails.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating (modelBuilder);
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<CashInBank> ()
-                .HasIndex (b => b.CIBDate)
-                .IsUnique ();
-            modelBuilder.Entity<CashInHand> ()
-               .HasIndex (b => b.CIHDate)
-               .IsUnique ();
-            modelBuilder.Entity<EndOfDay> ()
-               .HasIndex (b => b.EOD_Date)
-               .IsUnique ();
+            modelBuilder.Entity<CashInBank>()
+                .HasIndex(b => b.CIBDate)
+                .IsUnique();
+            modelBuilder.Entity<CashInHand>()
+               .HasIndex(b => b.CIHDate)
+               .IsUnique();
+            modelBuilder.Entity<EndOfDay>()
+               .HasIndex(b => b.EOD_Date)
+               .IsUnique();
             modelBuilder.Entity<TranscationMode>()
               .HasIndex(b => b.Transcation)
               .IsUnique();
@@ -45,7 +45,7 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 6, BankName = "Axis" });
             modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 7, BankName = "HDFC" });
 
-            modelBuilder.Entity<TranscationMode>().HasData( new TranscationMode {TranscationModeId=1, Transcation="Home Expenses" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 1, Transcation = "Home Expenses" });
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 2, Transcation = "Other Home Expenses" });
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 3, Transcation = "Mukesh(Home Staff)" });
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 4, Transcation = "Amit Kumar" });
@@ -123,10 +123,10 @@ namespace AprajitaRetails.Data
 
         public DbSet<AprajitaRetails.Areas.AddressBook.Models.Contact> Contact { get; set; }
 
-       // public DbSet<Message> Messages { get; set; }
+        // public DbSet<Message> Messages { get; set; }
 
-          public DbSet<TelegramAuthUser> TelegramAuthUsers { get; set; }
-
+        public DbSet<TelegramAuthUser> TelegramAuthUsers { get; set; }
+        public DbSet<ToDoMessage> ToDoMessages { get; set; }
     }
 
 }

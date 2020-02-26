@@ -13,11 +13,13 @@ namespace AprajitaRetails.Ops.Bot
         public string MobileNo { get; set; }
         public long ChatId { get; set; }
         private static BotGini Bot;
+ 
         public static BotUser GetEmp(AprajitaRetailsContext db, int empId)
         {
-            if ( Bot == null )
+            if (!BotGini.IsGiniRunning() && Bot == null )
             {
                 Bot = new BotGini ();
+                Bot.SetupGini();
             }
 
             BotUser emp = db.TelegramAuthUsers.Where (c => c.EmployeeId == empId).Select (c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId }).FirstOrDefault ();
@@ -25,9 +27,10 @@ namespace AprajitaRetails.Ops.Bot
         }
         public static BotUser GetEmp(AprajitaRetailsContext db, int staffId, bool IsStaffId)
         {
-            if ( Bot == null )
+            if (!BotGini.IsGiniRunning() && Bot == null )
             {
                 Bot = new BotGini ();
+                Bot.SetupGini();
             }
             string StaffName = db.Salesmen.Find (staffId).SalesmanName;
             BotUser emp = db.TelegramAuthUsers.Where (c => c.TelegramUserName == StaffName).Select (c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId }).FirstOrDefault ();
@@ -42,18 +45,12 @@ namespace AprajitaRetails.Ops.Bot
     {
         public static async void NotifySale(AprajitaRetailsContext db, int staffId, decimal amount)
         {
-
-
             var emp = BotUser.GetEmp (db, staffId, true);
             if ( emp != null )
             {
                 string msg = "You have made a Sale of Amount Rs. " + amount + "on date " + DateTime.Today;
                 await BotGini.SendMessage (emp.ChatId, msg);
-
             }
-
-
-
         }
     }
 
@@ -76,7 +73,6 @@ namespace AprajitaRetails.Ops.Bot
                     msg += "present and entry time is " + time + ", and Sunday is marked.";
                 msg += "    (Date:" + DateTime.Today.Date + ").";
                 await BotGini.SendMessage (emp.ChatId, msg);
-
             }
 
         }

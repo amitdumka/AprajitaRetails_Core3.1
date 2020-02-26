@@ -31,16 +31,16 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             botClient.OnMessage += OnMessageHandler;
         }
 
-            public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler = null)
+        public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler = null)
         {
-            if ( botClient == null )
+            if (botClient == null)
             {
-                botClient = new TelegramBotClient (BotConfig.AccessToken);
-                var me = botClient.GetMeAsync ().Result;
-                Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
-                if ( OnMessageHandler == null )
+                botClient = new TelegramBotClient(BotConfig.AccessToken);
+                var me = botClient.GetMeAsync().Result;
+                Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+                if (OnMessageHandler == null)
                 {
-                    handler = new GiniHandler ();
+                    handler = new GiniHandler();
                     botClient.OnMessage += GiniHandler.OnMessageWithApi;
                 }
                 else
@@ -48,16 +48,18 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             }
             else
             {
-                if ( OnMessageHandler == null )
+                if (OnMessageHandler == null)
                 {
-                    if ( handler == null )
-                        handler = new GiniHandler ();
-                    botClient.OnMessage += GiniHandler.OnMessageWithApi;
+                    if (handler == null)
+                    {
+                        handler = new GiniHandler();
+                        botClient.OnMessage += GiniHandler.OnMessageWithApi;
+                    }
                 }
                 else
                     botClient.OnMessage += OnMessageHandler;
             }
-            botClient.StartReceiving ();
+            botClient.StartReceiving();
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         /// <param name="message">Message to user</param>
         public static async Task SendMessage(long chatId, string message)
         {
-            await botClient.SendTextMessageAsync (chatId: chatId, text: message);
+            await botClient.SendTextMessageAsync(chatId: chatId, text: message);
         }
 
         /// <summary>
@@ -77,20 +79,27 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         /// <param name="message">Message</param>
         public static async void SendMessage(List<long> chatIds, string message)
         {
-            foreach ( var chatId in chatIds )
+            foreach (var chatId in chatIds)
             {
-                await botClient.SendTextMessageAsync (chatId: chatId, text: message);
+                await botClient.SendTextMessageAsync(chatId: chatId, text: message);
             }
         }
 
         public void StopGini()
         {
-            if ( botClient != null )
+            if (botClient != null)
             {
-                botClient.StopReceiving ();
+                botClient.StopReceiving();
                 botClient = null;
             }
         }
+
+        public static bool IsGiniRunning()
+        {
+            if (botClient == null || !botClient.IsReceiving || botClient.BotId <= 0) return false;
+            else return true;
+        }
+
     }
 
     public class Gini
@@ -99,22 +108,22 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 
         public static void Start()
         {
-            if ( bot == null )
+            if (bot == null)
             {
-                bot = new BotGini ();
-                bot.SetupGini ();
-                _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
+                bot = new BotGini();
+                bot.SetupGini();
+                _ = BotGini.SendMessage(BotConfig.AmitKumarChatId, "Gini Service is started");
             }
             else
-                bot.SetupGini ();
+                bot.SetupGini();
         }
 
-       
+
 
         public static void Stop()
         {
-            _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is stopping");
-            bot.StopGini ();
+            _ = BotGini.SendMessage(BotConfig.AmitKumarChatId, "Gini Service is stopping");
+            bot.StopGini();
         }
     }
 }

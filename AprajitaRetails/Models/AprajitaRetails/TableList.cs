@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Linq;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
@@ -9,69 +10,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Models
 {
-    public class TelegramAuthUser
+    public class ToDoMessage
     {
-        public int TelegramAuthUserId { get; set; }
-        public long TelegramChatId { get; set; }
-        public string TelegramUserName { get; set; }
-        [Phone]
-        public string MobileNo { get; set; }
-        public string Password { get; set; }
-        public EmpType EmpType { get; set; }
-        public int EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public int ToDoMessageId { get; set; }
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public DateTime OnDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime? OverDate { get; set; }
+        public string Status { get; set; }
+        public bool IsOver { get; set; }
     }
 
-    // Expenses
-    public class CashPayment
-    {
-        public int CashPaymentId { get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Payment Date")]
-        public DateTime PaymentDate { get; set; }
-
-        [Display(Name = "Mode")]
-        public int TranscationModeId { get; set; }
-        public TranscationMode Mode { get; set; }
-
-        [Display(Name = "Paid To"), Required]
-        public string PaidTo { get; set; }
-
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal Amount { get; set; }
-        [Display(Name = "Reciept No")]
-        public string SlipNo { get; set; }
-
-    }
-    public class SalaryPayment
-    {
-        public int SalaryPaymentId { get; set; }
-
-        [Display(Name = "Staff Name")]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
-
-        [Display(Name = "Salary/Year")]
-        public string SalaryMonth { get; set; }
-
-        [Display(Name = "Payment Reason")]
-        public SalaryComponet SalaryComponet { get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Payment Date")]
-        public DateTime PaymentDate { get; set; }
-
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal Amount { get; set; }
-
-        [Display(Name = "Payment Mode")]
-        public PayModes PayMode { get; set; }
-
-        public string Details { get; set; }
-
-
-    }
     public class StaffAdvancePayment
     {
         public int StaffAdvancePaymentId { get; set; }
