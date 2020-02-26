@@ -45,12 +45,15 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                         empData.Add (emp.SalesmanName, amount);
 
                     }
+                    var ta= db.DailySales.Where (c =>  c.SaleDate.Month == DateTime.Today.Month).Sum (c => c.Amount);
+                    empData.Add ("TotalSale", ta);
                 }
                 else
                 {
                     var empName = db.Employees.Find (staff.EmployeeId).StaffName;
                     var amount = db.DailySales.Include (c => c.Salesman).Where (c => c.Salesman.SalesmanName == empName && c.SaleDate.Month == DateTime.Today.Month).Sum (c => c.Amount);
                     empData.Add (empName, amount);
+
                 }
                
             }
@@ -74,6 +77,8 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                         empData.Add (emp.SalesmanName, amount);
 
                     }
+                    var ta = db.DailySales.Where (c => c.SaleDate.Date == DateTime.Today.Date).Sum (c => c.Amount);
+                    empData.Add ("TotalSale", ta);
                 }
                 else
                 {

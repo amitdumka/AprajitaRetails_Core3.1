@@ -8,9 +8,14 @@ using Telegram.Bot.Args;
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
     public sealed class BotConfig
-    {
-        public static readonly string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
-        public static readonly string BotName = "Gini_ARBot";
+    {  
+        
+        //Debug
+        public static readonly string AccessToken = "916559159:AAGqCrNKLZCqmj2EmOpMiwebc87GEsGqCck";
+        public static readonly string BotName = "ARGiniBot";
+        //Relase
+        //public static readonly string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
+        //public static readonly string BotName = "Gini_ARBot";
         public static readonly long AmitKumarChatId = 775142634;
     }
 
@@ -102,7 +107,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 
     }
 
-    public class Gini
+    public  class Gini
     {
         private static BotGini bot;
 
@@ -131,10 +136,9 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 //TODO:
 // Add Passport Suuport.
 //Add File Upload Support
-// Add AI Comand Support LIke my Addtance , total Sale, For Sale Staff,
-// Command For StoreManager Like Attance of Staff, sale, Dues Pendinng Order, Alerts, Etc.
 
 //List of Options to send message Implement which ever is requried
+
 //1 Formated Text
 //Message message = await botClient.SendTextMessageAsync(
 //chatId: e.Message.Chat, // or a chat id: 123456789

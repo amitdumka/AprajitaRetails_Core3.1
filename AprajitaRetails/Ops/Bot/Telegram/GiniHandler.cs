@@ -5,7 +5,7 @@ using Telegram.Bot.Types;
 
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
-    public class GiniHandler
+    public  class GiniHandler
     {
         private const string usage = "Usage:\n" +
                         "/register   - send register\n" +
@@ -17,11 +17,6 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             "/todaysale - Get Current date sale\n" +
             "/myinfo    - get Your Information";
 
-        private static AprajitaRetailsContext db;
-
-        public GiniHandler()
-        {
-        }
 
         public static async void OnMessageWithApi(object sender, MessageEventArgs e)
         {
@@ -44,7 +39,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         {
                             foreach ( var item in data )
                             {
-                                msg += "StaffName: " + item.Key + "\t Amount: " + item.Value + ".\n";
+                                msg += item.Key + "\t Amount: " + item.Value + ".\n";
 
                             }
                         }
@@ -63,7 +58,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         {
                             foreach ( var item in data1 )
                             {
-                                msg1 += "StaffName: " + item.Key + "\t Amount: " + item.Value + ".\n";
+                                msg1 +=item.Key + "\t Amount: " + item.Value + ".\n";
 
                             }
                         }
@@ -102,8 +97,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         break;
                     default:
                         SecondLevelHandlerWithApi (e.Message, e.Message.Text);
-
-                        break;
+                         break;
                 }
             }
         }
