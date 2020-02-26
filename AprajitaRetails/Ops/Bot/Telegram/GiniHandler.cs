@@ -24,7 +24,10 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             if ( e.Message.Text != null )
             {
                 switch ( e.Message.Text )
-                {   
+                {
+                    case "/loc":
+                        await BotGini.AskLocationMessage (e.Message.Chat.Id);
+                        break;
                     case "/request":
                         await BotGini.SendMessage (e.Message.Chat.Id, requestUsage);
                         break;
