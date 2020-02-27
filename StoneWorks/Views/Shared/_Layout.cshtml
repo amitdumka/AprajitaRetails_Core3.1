@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - StoneWorks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no" />
+    <title>@ViewData ["Title"] - StoneWorks</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="bg-info">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-secondary border-bottom box-shadow mb-3">
+            <div class="container">*@
+        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark   bg-warning lighten-6 border-bottom box-shadow mb-1">
+            <div class="container container-sm">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StoneWorks</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,6 +24,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Bolders" asp-action="Index">Bolders</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="ChipSales" asp-action="Index">Sales</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="DailyLabors" asp-action="Index">Labors</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Fuels" asp-action="Index">Fuels</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="HiredTrucks" asp-action="Index">Hired Trucks</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="FuelConsumtions" asp-action="Index">Fuel Use</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Staffs" asp-action="Index">Staff</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="StaffSalaries" asp-action="Index">Salary</a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Trucks" asp-action="Index">Trucks</a></li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -38,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - StoneWorks - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - StoneWorks - PeriPlex Real Estate & Land Developers Pvt. Ltd.  - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

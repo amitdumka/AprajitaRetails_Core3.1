@@ -31,10 +31,10 @@ namespace StoneWorks.Areas.Admin.Ops
             var poweruser = new IdentityUser
             {
                 UserName = "Admin",
-                Email = "Admin@AprajitaRetails.In"
+                Email = "Admin@StoneWorks.In"
             };
             string UserPassword = "Admin@1234";
-            var _user = await UserManager.FindByEmailAsync ("Admin@AprajitaRetails.In");
+            var _user = await UserManager.FindByEmailAsync ("Admin@StoneWorks.In");
             if ( _user == null )
             {
                 var createPowerUser = await UserManager.CreateAsync (poweruser, UserPassword);
