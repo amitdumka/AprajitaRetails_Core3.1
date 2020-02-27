@@ -13,14 +13,11 @@ namespace AprajitaRetails.Ops.Bot
         public string MobileNo { get; set; }
         public long ChatId { get; set; }
         public string StaffName { get; set; }
-        private static BotGini Bot;
- 
         public static BotUser GetEmp(AprajitaRetailsContext db, int empId)
         {
-            if (!BotGini.IsGiniRunning() && Bot == null )
+            if (!BotGini.IsGiniRunning() )
             {
-                Bot = new BotGini ();
-                Bot.SetupGini();
+                Gini.Start ();
             }
 
             BotUser emp = db.TelegramAuthUsers.Where (c => c.EmployeeId == empId).Select (c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId }).FirstOrDefault ();
@@ -28,10 +25,9 @@ namespace AprajitaRetails.Ops.Bot
         }
         public static BotUser GetEmp(AprajitaRetailsContext db, int staffId, bool IsStaffId)
         {
-            if (!BotGini.IsGiniRunning() && Bot == null )
+            if (!BotGini.IsGiniRunning() )
             {
-                Bot = new BotGini ();
-                Bot.SetupGini();
+                Gini.Start ();
             }
             string StaffName = db.Salesmen.Find (staffId).SalesmanName;
             BotUser emp = db.TelegramAuthUsers.Where (c => c.TelegramUserName == StaffName).Select (c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId , StaffName=c.TelegramUserName}).FirstOrDefault ();
@@ -53,13 +49,13 @@ namespace AprajitaRetails.Ops.Bot
             var emp = BotUser.GetEmp (db, staffId, true);
             if ( emp != null )
             {
-                string msg = $"({emp.StaffName}): You have made a Sale of Amount Rs. " + amount + "on date " + DateTime.Now;
+                string msg = $"({emp.StaffName}): You have made a Sale of Amount Rs. " + amount + " on date " + DateTime.Now;
                 await BotGini.SendMessage (emp.ChatId, msg);
                 await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
             }
             else
             {
-                string msg = $"{emp.StaffName} had made a Sale of Amount Rs. " + amount + "on date " + DateTime.Now;
+                string msg = $"{emp.StaffName} had made a Sale of Amount Rs. " + amount + " on date " + DateTime.Now;
                 
                 await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
             }
@@ -75,9 +71,9 @@ namespace AprajitaRetails.Ops.Bot
             
             if ( emp != null )
             {
-                string msg = "StaffName: " + StaffName + "is ";
+                string msg = "StaffName: " + StaffName + " is ";
                 if ( status == AttUnits.Present )
-                    msg += "present and entry time is " + time + ".";
+                    msg += "present and entry time  is " + time + ".";
                 else if ( status == AttUnits.Absent )
                     msg += "absent.";
                 else if ( status == AttUnits.HalfDay )
@@ -90,7 +86,7 @@ namespace AprajitaRetails.Ops.Bot
             }
             else
             {
-                string msg = "StaffName: " + StaffName + "is ";
+                string msg = "StaffName: " + StaffName + " is ";
                 if ( status == AttUnits.Present )
                     msg += "present and entry time is " + time + ".";
                 else if ( status == AttUnits.Absent )

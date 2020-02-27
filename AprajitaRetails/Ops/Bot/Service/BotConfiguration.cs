@@ -1,6 +1,0 @@
-﻿namespace AprajitaRetails.Ops.Service
-{
-    
-}
-
-

@@ -181,7 +181,7 @@ namespace AprajitaRetails.Ops.Triggers
 
             decimal cBal = 0;
 
-            if (cashs != null && cashs.Count() > 0)
+            if (cashs != null && cashs.Any () )
             {
                 cBal = GetClosingBalance(db, cashs.First().CIHDate);
                 if (cBal == 0)
@@ -218,7 +218,7 @@ namespace AprajitaRetails.Ops.Triggers
 
             decimal cBal = 0;
 
-            if (cashs != null && cashs.Count() > 0)
+            if (cashs != null && cashs.Any () )
             {
                 cBal = GetClosingBalance(db, cashs.First().CIBDate);
                 if (cBal == 0)

@@ -7,16 +7,9 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 {
     public  class GiniHandler
     {
-        private const string usage = "Usage:\n" +
-                        "/register   - send register\n" +
-                        "/help - Help Message\n" +
-                        "/request  - request Information";
-        private const string requestUsage = "requests:\n" +
-            "/sale    -Sale Data of Current Month\n" +
-            "/ATT     - Get Current month Attendances\n" +
-            "/todaySale - Get Current date sale\n" +
-            "/myInfo    - get Your Information";
-
+        private const string usage = "Usage:\n /register   - send register\n/help - Help Message\n/request  - request Information";
+        private const string requestUsage = "requests:\n/sale    -Sale Data of Current Month\n/ATT     - Get Current month Attendances\n" +
+            "/todaySale - Get Current date sale\n/myInfo    - get Your Information";
 
         public static async void OnMessageWithApi(object sender, MessageEventArgs e)
         {
@@ -33,10 +26,12 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         break;
 
                     case "/ATT":
+                        var attInfo = TelegramManager.GetAtt (e.Message.Chat.Id);
+                        await BotGini.SendMessage (e.Message.Chat.Id, attInfo);
                         break;
 
                     case "/sale":
-                        var data = ApiHelper.GetSaleData (e.Message.Chat.Id);
+                        var data = TelegramManager.GetSaleData (e.Message.Chat.Id);
                         string msg = "Current MonthSale: \n";
                         if ( data != null )
                         {
@@ -55,7 +50,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         break;
 
                     case "/todaySale":
-                        var data1 = ApiHelper.GetSaleData (e.Message.Chat.Id, true);
+                        var data1 = TelegramManager.GetSaleData (e.Message.Chat.Id, true);
                         string msg1 = "Today Sale: \n";
                         if ( data1 != null )
                         {
@@ -86,7 +81,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                         break;
 
                     case "/myInfo":
-                        var myinfo = ApiHelper.GetMyInfo (e.Message.Chat.Id);                        
+                        var myinfo = TelegramManager.GetMyInfo (e.Message.Chat.Id);                        
                         await BotGini.SendMessage (e.Message.Chat.Id, myinfo);
                         break;
 
@@ -106,8 +101,6 @@ namespace AprajitaRetails.Ops.Bot.Telegram
                 }
             }
         }
-
-
         private static async void SecondLevelHandlerWithApi(Message message, string text)
         {
             if ( text.StartsWith ("/mobile ") )

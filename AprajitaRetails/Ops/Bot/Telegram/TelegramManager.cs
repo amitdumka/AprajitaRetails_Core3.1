@@ -6,12 +6,12 @@ using System.Net.Http;
 using System;
 using System.Collections.Generic;
 using System.Web.Http.ModelBinding;
+using AprajitaRetails.Ops.Bot.Telegram;
 
 namespace AprajitaRetails.Ops.Bot.Manager
 {   //TODO:Create API To Insert and fetch Data 
-    public static class TelegramManager
+    public class TelegramManager
     {
-       
         public static bool AddUserByApi(Message message, string mobileNo, string passwd)
         {
             TelegramAuthUser user = new TelegramAuthUser
@@ -21,24 +21,14 @@ namespace AprajitaRetails.Ops.Bot.Manager
                 Password = passwd,
                 TelegramUserName = "AddInfo"
             };
-
-
-            return ApiHelper.AddTelegramUser(user);
-
+            return AddTelegramUser (user);
         }
-
-
-    }
-    public class ApiHelper
-    {
-       // public const string Url = "https://www.aprajitaretails.in/api/";
-        public const string Url = "https://localhost:44334/api/";
         public static Employee GetEmployee(string mobileNo)
         {
 
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url);
+                client.BaseAddress = new Uri (BotConfig.Url);
                 //HTTP GET
                 var responseTask = client.GetAsync ("Employees/" + mobileNo);
                 responseTask.Wait ();
@@ -57,10 +47,9 @@ namespace AprajitaRetails.Ops.Bot.Manager
         }
         public static Employee GetEmployee(int id)
         {
-
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url);
+                client.BaseAddress = new Uri (BotConfig.Url);
                 //HTTP GET
                 var responseTask = client.GetAsync ("Employees/" + id);
                 responseTask.Wait ();
@@ -77,13 +66,12 @@ namespace AprajitaRetails.Ops.Bot.Manager
                 }
             }
         }
-
         public static bool GetIsUserPresent(string MobileNo)
         {
 
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url);
+                client.BaseAddress = new Uri (BotConfig.Url);
                 //HTTP GET
                 var responseTask = client.GetAsync ("TelegramAuthUsers/" + MobileNo);
                 responseTask.Wait ();
@@ -100,12 +88,11 @@ namespace AprajitaRetails.Ops.Bot.Manager
                 }
             }
         }
-
         public static bool AddTelegramUser(TelegramAuthUser authUser)
         {
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url + "TelegramAuthUsers");
+                client.BaseAddress = new Uri (BotConfig.Url + "TelegramAuthUsers");
                 var postTask = client.PostAsJsonAsync<TelegramAuthUser> ("TelegramAuthUsers", authUser);
                 postTask.Wait ();
                 var result = postTask.Result;
@@ -121,7 +108,7 @@ namespace AprajitaRetails.Ops.Bot.Manager
         {
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url);
+                client.BaseAddress = new Uri (BotConfig.Url);
                 //HTTP GET
                 var responseTask = client.GetAsync ("ARInfo/" + chatid);
                 responseTask.Wait ();
@@ -142,9 +129,9 @@ namespace AprajitaRetails.Ops.Bot.Manager
         {
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url);
+                client.BaseAddress = new Uri (BotConfig.Url);
                 //HTTP GET
-                var responseTask = client.GetAsync ("SaleData/" + chatid   );
+                var responseTask = client.GetAsync ("SaleData/" + chatid);
                 responseTask.Wait ();
                 var result = responseTask.Result;
                 if ( result.IsSuccessStatusCode )
@@ -163,9 +150,9 @@ namespace AprajitaRetails.Ops.Bot.Manager
         {
             using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri (Url);
+                client.BaseAddress = new Uri (BotConfig.Url);
                 //HTTP GET
-                var responseTask = client.GetAsync ("SaleData/" + chatid+"/1");
+                var responseTask = client.GetAsync ("SaleData/" + chatid + "/1");
                 responseTask.Wait ();
                 var result = responseTask.Result;
                 if ( result.IsSuccessStatusCode )
@@ -177,6 +164,27 @@ namespace AprajitaRetails.Ops.Bot.Manager
                 else
                 {
                     return null;
+                }
+            }
+        }
+        public static string GetAtt(long chatId)
+        {
+            using ( var client = new HttpClient () )
+            {
+                client.BaseAddress = new Uri (BotConfig.Url);
+                //HTTP GET
+                var responseTask = client.GetAsync ("AttInfo/" + chatId);
+                responseTask.Wait ();
+                var result = responseTask.Result;
+                if ( result.IsSuccessStatusCode )
+                {
+                    var readTask = result.Content.ReadAsStringAsync ();
+                    readTask.Wait ();
+                    return readTask.Result;
+                }
+                else
+                {
+                    return "Error";
                 }
             }
         }

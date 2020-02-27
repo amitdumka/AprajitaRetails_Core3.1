@@ -32,24 +32,24 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         public string GetAtt(long id)
         {
             var usr = DBHelper.GetChatUser(db, id);
-            if (usr == null) return "You are authorise to use this service!.";
+            if (usr == null) return "You are authorize to use this service!.";
 
             if (usr.EmpType == EmpType.Owner || usr.EmpType == EmpType.StoreManager)
             {
                 var empList = db.Employees.Where(c => c.IsWorking  && c.Category!=EmpType.Owner).Select(c => new { c.EmployeeId, c.IsWorking, c.StaffName }).ToList();
                 if (empList != null)
                 {
-                    string msg = "Att Info:\n";
+                    string msg = "Attendances Info:\n";
                     foreach (var emp in empList)
                     {
                         if (emp != null && emp.IsWorking)
                         {
-                            var present = db.Attendances.Where(c => c.Status == AttUnits.Present || c.Status == AttUnits.Sunday && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
+                            var present = db.Attendances.Where(c => (c.Status == AttUnits.Present || c.Status == AttUnits.Sunday) && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
                             var absent = db.Attendances.Where(c => c.Status == AttUnits.Absent && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
                             var halfDay = db.Attendances.Where(c => c.Status == AttUnits.HalfDay && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
 
                             float tp = present + (halfDay / 2);
-                            msg += $"StaffName: {emp.StaffName} \t  Presnt: {tp}\t Absent: {absent}\n";
+                            msg += $"StaffName: {emp.StaffName} \t  Present: {tp}\t Absent: {absent}\n";
 
                         }
                     }

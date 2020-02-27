@@ -3,18 +3,18 @@ using System.Net;
 
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
-    public static class GiniChannel
+    public class GiniChannel
     {
         static string Channel = "@AprajitaRetails";
         static string PublicChannel = "@TheArvindStoreDumka";
-        static string Token = BotConfig.AccessToken;
+       // static string Token = BotConfig.AccessToken;
 
         public static bool SendToChannel(string message)
         {
             using ( var httpClient = new HttpClient () )
             {
                 var res = httpClient.GetAsync (
-                    $"https://api.telegram.org/bot{Token}/sendMessage?chat_id={Channel}&text={message}"
+                    $"https://api.telegram.org/bot{BotConfig.AccessToken}/sendMessage?chat_id={Channel}&text={message}"
                     ).Result;
                 if ( res.StatusCode == HttpStatusCode.OK )
                 { return true; }
@@ -27,7 +27,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             using ( var httpClient = new HttpClient () )
             {
                 var res = httpClient.GetAsync (
-                    $"https://api.telegram.org/bot{Token}/sendMessage?chat_id={PublicChannel}&text={message}"
+                    $"https://api.telegram.org/bot{BotConfig.AccessToken}/sendMessage?chat_id={PublicChannel}&text={message}"
                     ).Result;
                 if ( res.StatusCode == HttpStatusCode.OK )
                 { return true; }
