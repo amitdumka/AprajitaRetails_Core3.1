@@ -21,6 +21,8 @@ namespace StoneWorks.Data
         public DbSet< HiredTruck> HiredTruck { get; set; }
         public DbSet< Staff> Staff { get; set; }
         public DbSet< StaffSalary> StaffSalary { get; set; }
+        public DbSet<BasicExpense> BasicExpenses { get; set; }
+
 
     }
 }
