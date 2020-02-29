@@ -23,13 +23,14 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [Display(Name = "Ledger Type")]
         public LedgerType LedgerType { get; set; }
 
+
     }
 
     public class Party
     {
         public int PartyId { get; set; }
-
         public string PartyName { get; set; }
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "On Date")]
         public DateTime OpenningDate { get; set; }
@@ -46,7 +47,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public LedgerType LedgerType { get; set; }
        
         public LedgerMaster LedgerMaster { get; set; }
-        //public virtual ICollection<LedgerEntry> Ledgers { get; set; }
+        public virtual ICollection<LedgerEntry> Ledgers { get; set; }
 
     }
 
@@ -55,8 +56,9 @@ namespace AprajitaRetails.Areas.Accounts.Models
     {
         public int LedgerEntryId { get; set; }
 
+        [Display(Name ="Party Name")]
         public int PartyId { get; set; }
-        public virtual Party PartyName { get; set; }
+        public virtual Party Party { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]
@@ -68,7 +70,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal AmountIn { get; set; }
 
-        [ForeignKey("Parties")]
+        [ForeignKey("Parties"), Display(Name ="On Account")]
         public int OwnPartyId { get; set; }
         public virtual Party OnParty { get; set; }
         //TODO: Debit /Credit on Own on Ledger like , Cash, Bank account etc.
