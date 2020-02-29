@@ -4,14 +4,14 @@
     {
 
         //Debug
-        public static readonly string AccessToken = "916559159:AAGqCrNKLZCqmj2EmOpMiwebc87GEsGqCck";
-        public static readonly string BotName = "ARGiniBot";
-        public const string Url = "https://localhost:44334/api/";
+       // public static readonly string AccessToken = "916559159:AAGqCrNKLZCqmj2EmOpMiwebc87GEsGqCck";
+       // public static readonly string BotName = "ARGiniBot";
+       // public const string Url = "https://localhost:44334/api/";
         
         //Relase
-        //public static readonly string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
-        //public static readonly string BotName = "Gini_ARBot";
-        // public const string Url = "https://www.aprajitaretails.in/api/";
+        public static readonly string AccessToken = "1052323717:AAGQ5KLR0akg6LLa0a3XB1b2sfdZ_gdOQ-o";
+        public static readonly string BotName = "Gini_ARBot";
+         public const string Url = "https://www.aprajitaretails.in/api/";
         
         public static readonly long AmitKumarChatId = 775142634;
 

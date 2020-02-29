@@ -46,6 +46,7 @@ namespace AprajitaRetails.Ops.Bot
     {
         public static async void NotifySale(AprajitaRetailsContext db, int staffId, decimal amount)
         {
+            return;
             var emp = BotUser.GetEmp (db, staffId, true);
             if ( emp != null )
             {
@@ -67,6 +68,7 @@ namespace AprajitaRetails.Ops.Bot
     {
         public static async void NotifyStaffAttandance(AprajitaRetailsContext db, string StaffName, int empId, AttUnits status, string time)
         {
+            return;
             var emp = BotUser.GetEmp (db, empId);
             
             if ( emp != null )
@@ -103,6 +105,7 @@ namespace AprajitaRetails.Ops.Bot
 
         public static async void NotifyStaffPayment(AprajitaRetailsContext db, string StaffName, int empId, decimal amount, string remarks , bool IsRec=false)
         {
+            return;
             var emp = BotUser.GetEmp (db, empId);
 
             if ( emp != null )
