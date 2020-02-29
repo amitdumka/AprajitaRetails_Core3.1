@@ -8,40 +8,48 @@ using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accounts.Models
 {
-  
-
     public class LedgerMaster
     {
         public int LedgerMasterId { get; set; }
-        //[ForeignKey("Party")]
+
+        [ForeignKey("Parties")]
         public int PartyId { get; set; }
-        public virtual Party Party { get; set; }
+        public Party Party { get; set; }
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]
         public DateTime CreatingDate { get; set; }
+
         [Display(Name = "Ledger Type")]
         public LedgerType LedgerType { get; set; }
 
-
     }
+
     public class Party
     {
         public int PartyId { get; set; }
+
         public string PartyName { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "On Date")]
         public DateTime OpenningDate { get; set; }
+        
         [Display(Name = "Openning Balance")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal OpenningBalance { get; set; }
+        
         public string Address { get; set; }
         public string PANNo { get; set; }
         public string GSTNo { get; set; }
+
         [Display(Name = "Ledger Type")]
         public LedgerType LedgerType { get; set; }
-        public virtual LedgerEntry Ledger { get; set; }
+       
+        public LedgerMaster LedgerMaster { get; set; }
+        //public virtual ICollection<LedgerEntry> Ledgers { get; set; }
 
     }
+
     //TODO: There will no direct entry for Ledger Entry , just listing  and editing purpose. Editing will be in advance stage, Delete should be there
     public class LedgerEntry
     {
@@ -49,13 +57,13 @@ namespace AprajitaRetails.Areas.Accounts.Models
 
         public int PartyId { get; set; }
         public virtual Party PartyName { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]
         public DateTime EntryDate { get; set; }
-        
+
         public string Particulars { get; set; }
-        
+
         [Display(Name = "Amount In")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal AmountIn { get; set; }
@@ -64,17 +72,17 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public int OwnPartyId { get; set; }
         public virtual Party OnParty { get; set; }
         //TODO: Debit /Credit on Own on Ledger like , Cash, Bank account etc.
-        
+
         [Display(Name = "Amount Out")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal AmountOut { get; set; }
-        
+
         [Display(Name = "Balance")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Balance { get; set; }
     }
 
-    public class DebitNote:BasicNotes
+    public class DebitNote : BasicNotes
     {
         public int DebitNoteId { get; set; }
         //[DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -89,7 +97,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public new decimal Amount { get; set; }
     }
-    public class CreditNote:BasicNotes
+    public class CreditNote : BasicNotes
     {
         public int CreditNoteId { get; set; }
         //[DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -99,7 +107,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         //public Party PartyName { get; set; }
         //public string Particulars { get; set; }
         //[Display(Name = "Credit Amount")]
-        [DataType(DataType.Currency), Column(TypeName = "money") , Display(Name ="Credit Amount")]
+        [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Credit Amount")]
         public new decimal Amount { get; set; }
     }
 
@@ -108,12 +116,12 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]
         public DateTime OnDate { get; set; }
-        
+
         public int PartyId { get; set; }
         public Party PartyName { get; set; }
-        
+
         public string Particulars { get; set; }
-        
+
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
         public string Remarks { get; set; }

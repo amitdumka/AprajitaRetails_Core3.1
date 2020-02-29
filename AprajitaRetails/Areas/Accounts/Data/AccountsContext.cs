@@ -16,6 +16,6 @@ namespace AprajitaRetails.Areas.Accounts.Data
 
         public DbSet<LedgerMaster> Masters { get; set; }
         public DbSet<Party> Parties { get; set; }
-        public DbSet<LedgerEntry> LedgerEntries { get; set; }
+       // public DbSet<LedgerEntry> LedgerEntries { get; set; }
     }
 }
