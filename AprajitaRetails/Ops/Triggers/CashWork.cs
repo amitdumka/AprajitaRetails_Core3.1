@@ -183,7 +183,7 @@ namespace AprajitaRetails.Ops.Triggers
 
             if (cashs != null && cashs.Any () )
             {
-                cBal = GetClosingBalance(db, cashs.First().CIHDate);
+                cBal = GetClosingBalance(db, cashs.First().CIHDate.AddDays(-1));
                 if (cBal == 0)
                     cBal = cashs.First().OpenningBalance;
 

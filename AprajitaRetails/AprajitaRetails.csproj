@@ -53,6 +53,7 @@
   <ItemGroup>
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
+   
     <PackageReference Include="LinqToExcel" Version="1.11.0" />
     <PackageReference Include="MailKit" Version="2.5.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />
@@ -82,18 +83,18 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="MimeKit" Version="2.5.1" />
     <PackageReference Include="OpenTl.ClientApi" Version="0.7.97" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.44" />
+    <!--<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.44" />
-    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="17.4.0.44" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="17.4.0.44" />-->
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="OrchardCore.Localization.Core" Version="1.0.0-beta1-3383" />
-    <PackageReference Include="TDLib" Version="1.6.0" />
+    <!--<PackageReference Include="TDLib" Version="1.6.0" />
     <PackageReference Include="TDLib.Native" Version="1.6.0" />
-    <PackageReference Include="Telegram" Version="1.0.1" />
+    <PackageReference Include="Telegram" Version="1.0.1" />-->
     <PackageReference Include="Telegram.Bot" Version="15.3.0" />
-    <PackageReference Include="TLSharp" Version="0.1.0.470" />
-    <PackageReference Include="TWCore.Bot.Telegram" Version="2.1.181" />
+    <!--<PackageReference Include="TLSharp" Version="0.1.0.470" />
+    <PackageReference Include="TWCore.Bot.Telegram" Version="2.1.181" />-->
   </ItemGroup>
 
 

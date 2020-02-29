@@ -6,6 +6,8 @@ using AprajitaRetails.Data;
 using System;
 using AprajitaRetails.Models.ViewModels;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -13,28 +15,35 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
     [Authorize (Roles = "Admin,PowerUser,StoreManager")]
     public class CashBookController : Controller
     {
+
+        private IHostingEnvironment _hostingEnvironment;
         private readonly AprajitaRetailsContext db;
-        public CashBookController(AprajitaRetailsContext context)
+        public CashBookController(AprajitaRetailsContext context, IHostingEnvironment hostingEnvironment)
         {
             db = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
-       
+
         // GET: CashBook
         public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType)
         {
+            string sWebRootFolder = _hostingEnvironment.WebRootPath;
+            string fileName = Path.Combine (sWebRootFolder, "Export_" + DateTime.Now.ToFileTimeUtc().ToString () + ".xlsx");
+
+            CashBookManagerExporter managerexporter = new CashBookManagerExporter ();
             CashBookManager manager = new CashBookManager ();
             List<CashBook> cashList;
-            if(!String.IsNullOrEmpty(OpsType) )
+            if ( !String.IsNullOrEmpty (OpsType) )
             {
                 if ( OpsType == "Correct" )
                 {
                     //TODO: Implement Correct cash in hand
                     ViewBag.Message = "Cash Book Correction: ";
                     if ( ModeType == "MonthWise" )
-                        manager.CorrectCashInHands (db, EDate.Value.Date, false);
+                        managerexporter.CorrectCashInHands (db, EDate.Value.Date, fileName, false);
                     else
-                        manager.CorrectCashInHands (db, EDate.Value.Date, true);
+                        managerexporter.CorrectCashInHands (db, EDate.Value.Date, fileName, true);
                 }
                 else
                 { ViewBag.Message = ""; }
