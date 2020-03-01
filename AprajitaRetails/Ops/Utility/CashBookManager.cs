@@ -29,7 +29,7 @@ namespace AprajitaRetails.Ops.Utility
             else
             {
                 var bal = db.CashInHands.Where (c => c.CIHDate.Date == forDate.Date).Select (c => new { c.CashIn, c.CashOut, c.OpenningBalance }).FirstOrDefault ();
-               
+
                 if ( bal != null )
                 {
                     return ( bal.OpenningBalance + bal.CashIn - bal.CashOut );
@@ -49,8 +49,8 @@ namespace AprajitaRetails.Ops.Utility
 
             if ( cashs != null && cashs.Any () )
             {
-                cBal = GetClosingBalance (db, cashs.First ().CIHDate.AddDays(-1));
-               
+                cBal = GetClosingBalance (db, cashs.First ().CIHDate.AddDays (-1));
+
                 if ( cBal == 0 )
                     cBal = cashs.First ().OpenningBalance;
 
@@ -88,13 +88,13 @@ namespace AprajitaRetails.Ops.Utility
                 cashBookList = GetMontlyCashBook (db, date);
 
             ExcelExporter.CashBookExporter (fileName, cashBookList, "firstCashBook");
-           
+
             List<CashInHand> InHandList = CreateCashInHands (db, cashBookList);
-            
+
             ExcelExporter.CashInHandExporter (fileName, InHandList, "New CashInhand");
-            
+
             InHandList = CashInHandCorrectionForMonth (db, date);
-            
+
             ExcelExporter.CashInHandExporter (fileName, InHandList, "Updated CashInhand");
             return cashBookList;
         }
@@ -389,6 +389,21 @@ namespace AprajitaRetails.Ops.Utility
             //Remove CashInHand from Database
             DeleteCashInHandForMonth (db, startDate);
 
+            if ( startDate.Date != new DateTime (startDate.Year, startDate.Month, 1) )
+            {
+               CashInHand first = new CashInHand ()
+                {
+                    CIHDate = new DateTime (startDate.Year, startDate.Month, 1),
+                    OpenningBalance = 0,
+                    CashIn = 0,
+                    CashOut = 0,
+                    ClosingBalance = 0
+                };
+                db.CashInHands.Add (first);
+                inHandList.Add (first);
+                db.SaveChanges ();
+            }
+
             foreach ( var item in orderBook )
             {
                 if ( cashInHand == null )
@@ -408,6 +423,25 @@ namespace AprajitaRetails.Ops.Utility
                     db.CashInHands.Add (cashInHand);
                     inHandList.Add (cashInHand);
                     db.SaveChanges ();
+                    var datediff = item.EDate - startDate;
+                    if ( datediff.TotalDays > 1 )
+                    {
+                        for ( int xo = 1 ; xo < datediff.TotalDays ; xo++ )
+                        {
+                            cashInHand = new CashInHand ()
+                            {
+                                CIHDate = startDate.AddDays (xo),
+                                OpenningBalance = 0,
+                                CashIn = 0,
+                                CashOut = 0,
+                                ClosingBalance = 0
+                            };
+                            db.CashInHands.Add (cashInHand);
+                            inHandList.Add (cashInHand);
+                            db.SaveChanges ();
+                        }
+                    }
+                   
                     cashInHand = new CashInHand ()
                     {
                         CIHDate = item.EDate,
@@ -427,6 +461,42 @@ namespace AprajitaRetails.Ops.Utility
             db.CashInHands.Add (cashInHand);
             inHandList.Add (cashInHand);
             db.SaveChanges ();
+            DateTime endDate;
+
+            endDate = new DateTime (startDate.Year, startDate.Month, DateTime.DaysInMonth (startDate.Year, startDate.Month));
+            if ( startDate != endDate )
+            {
+                var datediff = endDate - startDate;
+                if ( datediff.TotalDays > 1 )
+                {
+                    for ( int xo = 1 ; xo < datediff.TotalDays ; xo++ )
+                    {
+                        cashInHand = new CashInHand ()
+                        {
+                            CIHDate = startDate.AddDays (xo),
+                            OpenningBalance = 0,
+                            CashIn = 0,
+                            CashOut = 0,
+                            ClosingBalance = 0
+                        };
+                        db.CashInHands.Add (cashInHand);
+                        inHandList.Add (cashInHand);
+                        db.SaveChanges ();
+                    }
+                }
+
+                cashInHand = new CashInHand ()
+                {
+                    CIHDate = endDate,
+                    OpenningBalance = 0,
+                    CashIn = 0,
+                    CashOut = 0,
+                    ClosingBalance = 0
+                };
+                db.CashInHands.Add (cashInHand);
+                inHandList.Add (cashInHand);
+                db.SaveChanges ();
+            }
             return inHandList;
 
 
@@ -770,6 +840,23 @@ namespace AprajitaRetails.Ops.Utility
                 else if ( startDate != item.EDate && cashInHand != null )
                 {
                     db.CashInHands.Add (cashInHand);
+
+                    var datediff = startDate - item.EDate;
+                    if ( datediff.TotalDays > 1 )
+                    {
+                        for ( int xo = 1 ; xo < datediff.TotalDays ; xo++ )
+                        {
+                            cashInHand = new CashInHand ()
+                            {
+                                CIHDate = startDate.AddDays (xo),
+                                OpenningBalance = 0,
+                                CashIn = 0,
+                                CashOut = 0,
+                                ClosingBalance = 0
+                            };
+                            db.CashInHands.Add (cashInHand);
+                        }
+                    }
                     db.SaveChanges ();
                     cashInHand = new CashInHand ()
                     {
