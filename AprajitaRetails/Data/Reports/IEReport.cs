@@ -1,10 +1,8 @@
 ﻿using AprajitaRetails.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
-using TAS_AprajiataRetails.Models.Helpers;
+using AprajitaRetails.Models.Helpers;
 
 namespace AprajitaRetails.Data.Reports
 {
