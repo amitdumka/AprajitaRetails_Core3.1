@@ -1,6 +1,133 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@*
+<div class="row">
+    <div class="col-md-4">
+        <h2 class="teal-text">Sale Record</h2>
+        <p>
+
+            @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
+            {
+                <table class="table table-striped text-info table-sm">
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.SaleReport.DailySale)</td>
+                        <td>@Html.DisplayFor (model => model.SaleReport.DailySale)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.SaleReport.MonthlySale)</td>
+                        <td>@Html.DisplayFor (model => model.SaleReport.MonthlySale)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.SaleReport.YearlySale)</td>
+                        <td>@Html.DisplayFor (model => model.SaleReport.YearlySale)</td>
+                    </tr>
+                </table>
+            }
+            else
+            {
+                <h5>  Sale Data (Registered Users Only).</h5>
+            }
+
+            <br />
+        </p>
+        <p><a class="btn btn-default" href="Sales/DailySales/Index">Details &raquo;</a></p>
+    </div>
+    <div class="col-md-4 ">
+        <h2 class="dark-green-ic">Tailoring</h2>
+        <p>
+            @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
+            {
+                <table class="table table-striped text-info table-sm">
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.TodaySale)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.TodaySale)</td>
+
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.TodayBooking)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.TodayBooking)</td>
+
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.TodayUnit)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.TodayUnit)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlySale)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.MonthlySale)</td>
+
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlyBooking)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.MonthlyBooking)</td>
+
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlyUnit)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.MonthlyUnit)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlySale)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.YearlySale)</td>
+
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlyBooking)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.YearlyBooking)</td>
+
+                        <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlyUnit)</td>
+                        <td>@Html.DisplayFor (model => model.TailoringReport.YearlyUnit)</td>
+                    </tr>
+                </table>
+            }
+            else
+            {
+                <h5>  Tailoring Data (Registered Users Only).</h5>
+            }
+        </p>
+        <p><a class="btn btn-default" href="Tailoring/TalioringBookings">Booking List &raquo;</a></p>
+    </div>
+    <div class=" col-md-4">
+        <h2 class="amber-text">Accounting</h2>
+        <p>
+            @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
+            {
+                <table class="table  table-sm  table-striped">
+                    <tr>
+                        <td class="text-primary">@Html.DisplayNameFor (model => model.AccountsInfo.OpenningBal)</td>
+                        <td class="text-primary">@Html.DisplayFor (model => model.AccountsInfo.OpenningBal)</td>
+
+                        <td class="text-success">@Html.DisplayNameFor (model => model.AccountsInfo.CashInHand)</td>
+                        <td class="text-success">@Html.DisplayFor (model => model.AccountsInfo.CashInHand)</td>
+                    </tr>
+
+                    <tr>
+                        <td>@Html.DisplayNameFor (model => model.AccountsInfo.CashIn)</td>
+                        <td>@Html.DisplayFor (model => model.AccountsInfo.CashIn)</td>
+
+                        <td class="text-danger">@Html.DisplayNameFor (model => model.AccountsInfo.CashOut)</td>
+                        <td class="text-danger">@Html.DisplayFor (model => model.AccountsInfo.CashOut)</td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>@Html.DisplayNameFor (model => model.AccountsInfo.TotalCashPayments)</td>
+                        <td>@Html.DisplayFor (model => model.AccountsInfo.TotalCashPayments)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-success">@Html.DisplayNameFor (model => model.AccountsInfo.CashInBank)</td>
+                        <td class="text-success">@Html.DisplayFor (model => model.AccountsInfo.CashInBank)</td>
+
+                        <td class="text-primary">@Html.DisplayNameFor (model => model.AccountsInfo.CashToBank)</td>
+                        <td class="text-primary">@Html.DisplayFor (model => model.AccountsInfo.CashToBank)</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class="text-danger">@Html.DisplayNameFor (model => model.AccountsInfo.CashFromBank)</td>
+                        <td class="text-danger">@Html.DisplayFor (model => model.AccountsInfo.CashFromBank)</td>
+                    </tr>
+                </table>
+
+            }
+        </p>
+        <p><a class="btn btn-default" href="">Detail &raquo;</a></p>
+    </div>
+</div>
+ *@
 
 @*<div class="col-md-4">
         <h2>Employee</h2>

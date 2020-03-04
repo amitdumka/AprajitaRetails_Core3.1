@@ -135,9 +135,9 @@ namespace AprajitaRetails.Ops.WidgetModel
                         else info.AbsentDays = 0;
 
                         //var ts = db.DailySales.Include(c=>c.Salesman ).Where (c => c.Salesman.SalesmanName == info.Name && (c.SaleDate).Month == (DateTime.Today).Month).ToList();
-                        if (totalSale != null)
+                        if (totalSale != null &&( item.Employee.Category== EmpType.Salesman || item.Employee.Category == EmpType.StoreManager ) )
                         {
-                            var ts = totalSale.Where(c => c.StaffName == info.Name).ToList();
+                            var ts = totalSale.Where(c => c.StaffName == info.Name ).ToList();
                             info.TotalSale = (decimal?)ts.Sum(c => (decimal?)c.Amount) ?? 0;
                             info.NoOfBills = (int?) ts.Count ?? 0;
                         }
@@ -152,23 +152,6 @@ namespace AprajitaRetails.Ops.WidgetModel
                     {
                         // Log.Error().Message("empresent exception");
                     }
-
-
-                    // var ts = db.DailySales.Where(c => c.Salesman.SalesmanName == info.Name && (c.SaleDate).Month == (DateTime.Today).Month);
-
-                    //if (ts != null )
-                    //{
-                    //    info.TotalSale =(decimal?) ts.Sum(c =>(decimal?) c.Amount)??0;
-                    //    info.NoOfBills =(int?) ts.Count()??0;
-                    //}
-
-                    //if (info.PresentDays > 0 && info.TotalSale > 0)
-                    //{
-                    //    info.Ratio = (double)info.TotalSale / info.PresentDays;
-                    //}
-
-
-
                     infoList.Add(info);
                 }
 
