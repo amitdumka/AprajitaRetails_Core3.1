@@ -309,6 +309,7 @@ namespace AprajitaRetails.Models.ViewModels
 
     public class DetailIEVM
     {
+        public DateTime OnDate { get; set; }
         public IERVM IncomeExpenseRepot { get; set; }
         public ICollection<IncomeExpensesVM> Income { get; set; }  // Details of Current Day/ or week
         public ICollection<IncomeExpensesVM> Expenses { get; set; } //Details of Current Day/ or week

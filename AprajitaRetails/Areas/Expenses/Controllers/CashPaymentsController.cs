@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Areas.Expenses.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {

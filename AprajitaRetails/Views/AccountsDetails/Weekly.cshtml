@@ -1,0 +1,157 @@
+﻿@model AprajitaRetails.Models.ViewModels.IncomeExpensesReport
+
+<div>
+    <h5 class="d-block p-2 bg-success text-white">Weekly</h5>
+    <hr />
+    <table class="table table-bordered table-sm table-responsive table-responsive-sm table-striped border-info rounded mb-2 z-depth-3">
+
+        <tr>
+
+            <td class="text-success font-weight-bold">
+                @Html.DisplayNameFor(model => model.OnDate)
+            </td>
+            <td class="orange-text">
+                @Html.DisplayFor(model => model.OnDate.DayOfWeek)
+            </td>
+        </tr>
+        <tr>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalSale)
+            </td>
+            <td class="text-primary table-info">
+                @Html.DisplayFor(model => model.TotalSale)
+            </td>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalTailoringSale)
+            </td>
+            <td class="text-primary table-info">
+                @Html.DisplayFor(model => model.TotalTailoringSale)
+            </td>
+        </tr>
+        <tr>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalManualSale)
+            </td>
+            <td class="text-primary table-info">
+                @Html.DisplayFor(model => model.TotalManualSale)
+            </td>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalRecipts)
+            </td>
+            <td class="text-primary table-info">
+                @Html.DisplayFor(model => model.TotalRecipts)
+            </td>
+        </tr>
+        <tr>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalCashRecipts)
+            </td>
+            <td class="text-primary table-info">
+                @Html.DisplayFor(model => model.TotalCashRecipts)
+            </td>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalOtherIncome)
+            </td>
+            <td class="text-primary table-info">
+                @Html.DisplayFor(model => model.TotalOtherIncome)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="orange-text font-weight-bold">
+                @Html.DisplayNameFor(model => model.TotalIncome)
+            </td>
+            <td class="text-danger font-weight-bold">
+                @Html.DisplayFor(model => model.TotalIncome)
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalStaffPayments)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalStaffPayments)
+            </td>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalTailoringPayments)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalTailoringPayments)
+            </td>
+        </tr>
+        <tr>
+
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalExpenses)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalExpenses)
+            </td>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalHomeExpenses)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalHomeExpenses)
+            </td>
+        </tr>
+        <tr>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalPayments)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalPayments)
+            </td>
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalCashPayments)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalCashPayments)
+            </td>
+        </tr>
+        <tr>
+
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalOthersExpenses)
+            </td>
+            <td class="text-primary table-danger">
+                @Html.DisplayFor(model => model.TotalOthersExpenses)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="orange-text font-weight-bold">
+                @Html.DisplayNameFor(model => model.TotalAllExpenses)
+            </td>
+            <td class="text-danger font-weight-bold">
+                @Html.DisplayFor(model => model.TotalAllExpenses)
+            </td>
+        </tr>
+        <tr>
+
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalDues)
+            </td>
+            <td class="text-primary table-warning">
+                @Html.DisplayFor(model => model.TotalDues)
+            </td>
+
+            <td class="text-success">
+                @Html.DisplayNameFor(model => model.TotalRecovery)
+            </td>
+            <td class="text-primary table-warning">
+                @Html.DisplayFor(model => model.TotalRecovery)
+            </td>
+        </tr>
+        <tr>
+            <td class="text-info font-weight-bold">
+                @Html.DisplayNameFor(model => model.TotalPendingDues)
+            </td>
+            <td class="purple-text font-weight-bold">
+                @Html.DisplayFor(model => model.TotalPendingDues)
+            </td>
+        </tr>
+    </table>
+</div>
+

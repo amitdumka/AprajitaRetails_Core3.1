@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AprajitaRetails.Models.ViewModels.IncomeExpensesVM>
+<h5 class="d-block p-2 teal text-white z-depth-2">Income</h5>
+
+<table class="table table-bordered table-sm  table-striped border-info rounded mb-2 z-depth-1-half">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Particulars)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                
+                Cash/Bank
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr >
+            <td>
+                @Html.DisplayFor(modelItem => item.OnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Particulars)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @if ( item.IsNonCash )
+                {
+                <b>Card/Bank Transactions</b>
+                }
+                else
+                {
+                      <b>Cash</b>
+                }
+                
+
+        </tr>
+}
+    </tbody>
+</table>

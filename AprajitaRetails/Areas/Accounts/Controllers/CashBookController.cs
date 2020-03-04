@@ -15,7 +15,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
     [Authorize (Roles = "Admin,PowerUser,StoreManager")]
     public class CashBookController : Controller
     {
-
+        [Obsolete]
         private IHostingEnvironment _hostingEnvironment;
         private readonly AprajitaRetailsContext db;
         public CashBookController(AprajitaRetailsContext context, IHostingEnvironment hostingEnvironment)

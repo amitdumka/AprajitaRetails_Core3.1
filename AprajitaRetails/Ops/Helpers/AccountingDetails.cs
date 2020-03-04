@@ -17,7 +17,8 @@ namespace AprajitaRetails.Models.Helpers
         {
             DetailIEVM = new DetailIEVM {
                 Expenses  = CalculateExpenseDetails (db, onDate),
-                Income= CalculateIncomeDetails (db, onDate)
+                Income= CalculateIncomeDetails (db, onDate), OnDate=onDate
+               
 
             };
             DetailIEVM.IncomeExpenseRepot = new IERVM {

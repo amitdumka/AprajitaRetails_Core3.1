@@ -25,18 +25,18 @@ namespace AprajitaRetails.Areas.Admin.Controllers
             UserManager = um;
         }
         // GET: Role
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var roles = roleManager.Roles.ToList ();
             return View (roles);
         }
 
         // GET: Role/Details/5
-        public async Task<ActionResult> DetailsAsync(string id)
+        public IActionResult Details(string id)
         {
-            
-            var roles = roleManager.FindByIdAsync(id).Result;
-            var onRols =   UserManager.GetUsersInRoleAsync (roles.Name).Result;
+
+            var roles = roleManager.FindByIdAsync (id).Result;
+            var onRols = UserManager.GetUsersInRoleAsync (roles.Name).Result;
             ViewBag.RoleName = roles.Name;
 
 

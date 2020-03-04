@@ -1,0 +1,43 @@
+﻿@model AprajitaRetails.Models.ViewModels.DetailIEVM
+
+@{
+    ViewData ["Title"] = "Index";
+}
+
+<h2>Accounts Details</h2>
+<hr/>
+<form asp-action="Index" method="get">
+    <strong>
+        By Date: @Html.EditorFor( model=>model.OnDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString () } })
+        @Html.ValidationMessageFor(model => model.OnDate, "", new { @class = "text-danger" })
+        <input type="submit" value="Get" class=" btn btn-warning " />
+    </strong>
+</form>
+<table class="table   table-bordered border-danger rounded mb-2">
+    <tr>                                    
+        <td><partial name="_Today" model=Model.IncomeExpenseRepot.Today /></td>
+        <td><partial name="Weekly" model=Model.IncomeExpenseRepot.CurrentWeek /></td>
+    </tr>
+    <tr>
+        <td> <partial name="_Month" model=Model.IncomeExpenseRepot.Monthly /></td>
+        <td> <partial name="_Year" model=Model.IncomeExpenseRepot.Yearly /></td>
+    </tr>
+</table>
+ 
+<div>
+
+    <h5 class="text-default">Income/Expense Details</h5>
+    <hr class="hr-dark" />
+</div>  
+<div>
+    <partial name="_IncomeReport" model=Model.Income />
+</div>   
+<div><hr class=" bg-danger" /></div>
+<div> <partial name="_expensesReport" model=Model.Expenses /></div>
+
+
+
+
+    <div>
+        <a class="btn btn-outline-warning btn-sm" asp-action="Index">Back to List</a>
+    </div>
