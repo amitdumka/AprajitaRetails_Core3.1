@@ -28,6 +28,10 @@
 
     <h5 class="text-default">Income/Expense Details</h5>
     <hr class="hr-dark" />
+    <div class="btn-group btn-group-sm">
+        <a class="btn  btn-outline-amber" asp-action="Index" asp-route-Weekly="yes" asp-route-oDate="@ViewBag.OnDate.Date">Weekly</a>
+        <a class="btn  btn-outline-dark-green"asp-action="Index" asp-route-Weekly="no" asp-route-oDate=@ViewBag.OnDate.Date>Daily</a>
+    </div>
 </div>  
 <div>
     <partial name="_IncomeReport" model=Model.Income />

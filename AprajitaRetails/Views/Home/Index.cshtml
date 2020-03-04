@@ -1,19 +1,20 @@
 ﻿@model AprajitaRetails.Models.ViewModels.MasterViewReport
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData ["Title"] = "Home Page";
 }
 <p></p>
 <div class="jumbotron text-right ">
     <h1 class="text-left display-4">The Arvind Store, Dumka</h1>
     <p class="lead text-success">Aprajita Retails Daily Store Management Software.</p>
-    <p><a href="https://www.thearvindstore.com/" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p><a href="https://www.thearvindstore.com/" class="btn btn-outline-dark-green btn-lg">Learn more &raquo;</a></p>
 </div>
+@*  
 <div class="row">
     <div class="col-md-4">
         <h2 class="teal-text">Sale Record</h2>
         <p>
 
-            @if (Model.SaleReport != null && Context.User.Identity.IsAuthenticated)
+            @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
             {
                 <table class="table table-striped text-info table-sm">
                     <tr>
@@ -42,7 +43,7 @@
     <div class="col-md-4 ">
         <h2 class="dark-green-ic">Tailoring</h2>
         <p>
-            @if (Model.TailoringReport != null && Context.User.Identity.IsAuthenticated)
+            @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
             {
                 <table class="table table-striped text-info table-sm">
                     <tr>
@@ -87,14 +88,13 @@
     <div class=" col-md-4">
         <h2 class="amber-text">Accounting</h2>
         <p>
-            @if (Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated)
+            @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
             {
                 <table class="table  table-sm  table-striped">
                     <tr>
                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</td>
                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</td>
-                        @*</tr>
-                            <tr>*@
+                       
                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</td>
                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</td>
                     </tr>
@@ -102,8 +102,7 @@
                     <tr>
                         <td>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</td>
                         <td>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</td>
-                        @*</tr>
-                            <tr>*@
+                        
                         <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</td>
                         <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</td>
                     </tr>
@@ -114,12 +113,11 @@
                         <td>@Html.DisplayNameFor(model => model.AccountsInfo.TotalCashPayments)</td>
                         <td>@Html.DisplayFor(model => model.AccountsInfo.TotalCashPayments)</td>
                     </tr>
-                    @*<hr />*@
+                   
                     <tr>
                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</td>
                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</td>
-                        @*/tr>
-                            <tr>*@
+                       
                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</td>
                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</td>
                     </tr>
@@ -136,76 +134,342 @@
         <p><a class="btn btn-default" href="">Detail &raquo;</a></p>
     </div>
 </div>
-<h2 class="text-success">Employees Info</h2>
-<hr class="text-info" />
-<div class="row">
+ *@
+<section>
 
-    @if (Model.EmpInfoList != null && Model.EmpInfoList.Count > 0 && Context.User.Identity.IsAuthenticated)
-    {
-        foreach (var item in Model.EmpInfoList)
-        {
-            <div class="col-md-4 small">
-                <div class="">
-                    <h4 class="deep-purple-text ">@Html.DisplayFor(model => item.Name)</h4>
-                    <div class="">
-                        <dl class="row ">
-                            @if (item.Present == "Present")
+    <!-- Grid row -->
+    <div class="row mx-1">
+
+        <!-- Grid column -->
+        <div class="col-md-12">
+
+            <!-- Card deck -->
+            <div class="card-deck">
+
+                <!-- Card -->
+
+                <div class="card mb-4">
+
+                    <!--Card image-->
+                    <div class="view overlay">
+                        @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>*@
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body  text-center pb-0 px-0">
+
+                        <!--Title-->
+                        <h4 class="card-title text-default">Sale Record </h4>
+                        <!--Text-->
+                        <p class="card-text">
+                            @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
                             {
-                                <dt class="col-sm-8 text-sm-right text-success">@Html.DisplayNameFor(model => item.Present)</dt>
-                                <dd class="col-sm-4 text-success">@Html.DisplayFor(model => item.Present)</dd>
+                                <table class="table table-striped text-info table-sm">
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.SaleReport.DailySale)</td>
+                                        <td>@Html.DisplayFor(model => model.SaleReport.DailySale)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.SaleReport.MonthlySale)</td>
+                                        <td>@Html.DisplayFor(model => model.SaleReport.MonthlySale)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.SaleReport.YearlySale)</td>
+                                        <td>@Html.DisplayFor(model => model.SaleReport.YearlySale)</td>
+                                    </tr>
+                                </table>
                             }
                             else
                             {
-                                <dt class="col-sm-8 text-sm-right text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
-                                <dd class="col-sm-4 text-danger">@Html.DisplayFor(model => item.Present)</dd>
+                                <h5>  Sale Data (Registered Users Only).</h5>
                             }
-                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.PresentDays)</dt>
-                            <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)</dd>
-                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
-                            <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
-                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
-                            <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
-                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
-                            <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
-                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.TotalSale)</dt>
-                            <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
-                        </dl>
+
+                            <br />
+                        </p>
+                        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                        @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
+                        <a class="btn btn-outline-default btn-mdb" href="Sales/DailySales/Index">Details &raquo;</a>
+
                     </div>
-                    <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
+
                 </div>
+
+                <!-- Card -->
+                <!-- Card -->
+
+                <div class="card  card-cascade wider mb-4">
+
+                    <!--Card image-->
+                    <div class="view overlay">
+                        @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/14.jpg" alt="Card image cap">
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>*@
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body card-body-cascade text-center pb-0 px-0">
+
+                        <!--Title-->
+                        <h4 class="card-title dark-green-ic">Tailoring</h4>
+                        <!--Text-->
+                        <p class="card-text">
+                            @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
+                            {
+                                <table class="table table-striped text-info table-sm">
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.TodaySale)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.TodaySale)</td>
+
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.TodayBooking)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.TodayBooking)</td>
+
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.TodayUnit)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.TodayUnit)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.MonthlySale)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.MonthlySale)</td>
+
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.MonthlyBooking)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.MonthlyBooking)</td>
+
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.MonthlyUnit)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.MonthlyUnit)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.YearlySale)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.YearlySale)</td>
+
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.YearlyBooking)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.YearlyBooking)</td>
+
+                                        <td>@Html.DisplayNameFor(model => model.TailoringReport.YearlyUnit)</td>
+                                        <td>@Html.DisplayFor(model => model.TailoringReport.YearlyUnit)</td>
+                                    </tr>
+                                </table>
+                            }
+                            else
+                            {
+                                <h5>  Tailoring Data (Registered Users Only).</h5>
+                            }
+                        </p>
+                        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                        @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
+                        <a class="btn btn-outline-default btn-md" href="Tailoring/TalioringBookings">Booking List &raquo;</a>
+
+                    </div>
+
+                </div>
+
+                <!-- Card -->
+                <!-- Card -->
+
+                <div class="card  card-cascade wider mb-4">
+
+                    <!--Card image-->
+                    <div class="view overlay">
+                        @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg" alt="Card image cap">
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>*@
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body card-body-cascade text-center pb-0 px-0 ">
+
+                        <!--Title-->
+                        <h4 class="card-title amber-text">Accounting</h4>
+                        <!--Text-->
+                        <p class="card-text">
+                            @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
+                            {
+                                <table class="table  table-sm  table-striped">
+                                    <tr>
+                                        <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</td>
+                                        <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</td>
+                                        @*</tr>
+                                            <tr>*@
+                                        <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</td>
+                                        <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</td>
+                                        <td>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</td>
+                                        @*</tr>
+                                            <tr>*@
+                                        <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</td>
+                                        <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>@Html.DisplayNameFor(model => model.AccountsInfo.TotalCashPayments)</td>
+                                        <td>@Html.DisplayFor(model => model.AccountsInfo.TotalCashPayments)</td>
+                                    </tr>
+                                    @*<hr />*@
+                                    <tr>
+                                        <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</td>
+                                        <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</td>
+                                        @*/tr>
+                                            <tr>*@
+                                        <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</td>
+                                        <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashFromBank)</td>
+                                        <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashFromBank)</td>
+                                    </tr>
+                                </table>
+
+                            }
+                        </p>
+                        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                        @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
+                        <a class="btn btn-outline-default btn-md" href="AccountsDetails/">Detail &raquo;</a>
+
+                    </div>
+
+                </div>
+
+                <!-- Card -->
+
             </div>
-        }
+            <!-- Card deck -->
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+
+
+
+<h2 class="text-success">Employees Info</h2>
+<hr class="text-info" />
+<div class="row mx-1">
+    @if ( Model.EmpInfoList != null && Model.EmpInfoList.Count > 0 && Context.User.Identity.IsAuthenticated )
+    {
+        <section>
+            @*<div class="row mx-1">*@
+            <div class="card-deck">
+
+
+                @foreach ( var item in Model.EmpInfoList )
+                {
+                    <!-- Card -->
+                    <div class="col-md-4 small">
+                        <div class="card mb-4">
+
+                            <!--Card image-->
+                            <div class="view overlay">
+                                @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
+                                    <a href="#!">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>*@
+                            </div>
+
+                            <!--Card content-->
+                            <div class="card-body">
+
+                                <!--Title-->
+                                <h4 class="card-title deep-purple-text">@Html.DisplayFor(model => item.Name)</h4>
+                                <!--Text-->
+                                <p class="card-text">
+                                    <div class="">
+                                        <dl class="row ">
+                                            @if ( item.Present == "Present" )
+                                            {
+                                                <dt class="col-sm-8 text-sm-right text-success">@Html.DisplayNameFor(model => item.Present)</dt>
+                                                <dd class="col-sm-4 text-success">@Html.DisplayFor(model => item.Present)</dd>
+                                            }
+                                            else
+                                            {
+                                                <dt class="col-sm-8 text-sm-right text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
+                                                <dd class="col-sm-4 text-danger">@Html.DisplayFor(model => item.Present)</dd>
+                                            }
+                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.PresentDays)</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)</dd>
+                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
+                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
+                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
+                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.TotalSale)</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
+                                        </dl>
+                                    </div>
+                                </p>
+                                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                                <button type="button" class="btn btn-outline-default btn-sm btn-md ">Details</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Card -->
+
+                }
+            </div>
+            @*</div>*@
+        </section>
     }
     else
     {
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-            <br />
-            <br />
-            <h5>No Employee are Present Today.</h5>
-        </div>
+        <!-- Section: Live preview -->
+        <section>
+
+            <!-- Grid row -->
+            <div class="row mx-1">
+
+                <!-- Grid column -->
+                <div class="col-md-12 mb-4">
+
+                    <!-- Card -->
+                    <div class="card" style="width: 22rem;">
+
+                        <!-- Card image -->
+                        <div class="view overlay">
+                            <img class="card-img-top" src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg" alt="Card image cap">
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                        <!-- Card content -->
+                        <div class="card-body">
+
+                            <!-- Title -->
+                            <h4 class="card-title">No Staff Present</h4>
+                            <!-- Text -->
+                            <p class="card-text">
+                                No Employee is present today, Add attendance.
+                            </p>
+                            <!-- Button -->
+                            <a href="#" class="btn btn-primary">Add Attendance</a>
+
+                        </div>
+
+                    </div>
+                    <!-- Card -->
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </section>
+        <!-- Section: Live preview -->
     }
-
-    @*<div class="col-md-4">
-            <h2>Employee</h2>
-            <p>
-                <h4 class="text-success">Absent Employee</h4>
-                @if (Model.PresentEmp != null && Context.User.Identity.IsAuthenticated)
-                {
-                    foreach (var item in Model.PresentEmp)
-                    {
-                        if (item.isPresent == false)
-                        {
-
-                            @item.StaffName
-                            <br />
-
-                        }
-
-                    }
-                }
-            </p>
-            <p><a class="btn btn-default" href="">Learn more &raquo;</a></p>
-        </div>*@
 </div>

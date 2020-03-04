@@ -16,11 +16,22 @@ namespace AprajitaRetails.Models.Helpers
         public DetailIEVM GetAccountDetails(AprajitaRetailsContext db, DateTime onDate, bool IsWeekly=false)
         {
             DetailIEVM = new DetailIEVM {
-                Expenses  = CalculateExpenseDetails (db, onDate),
-                Income= CalculateIncomeDetails (db, onDate), OnDate=onDate
+               // Expenses  = CalculateExpenseDetails (db, onDate),
+               // Income= CalculateIncomeDetails (db, onDate), 
+                OnDate=onDate
                
 
             };
+            if ( IsWeekly )
+            {
+                DetailIEVM.Expenses = CalculateExpenseDetails (db, onDate,true);
+                DetailIEVM.Income = CalculateIncomeDetails (db, onDate, true);
+            }
+            else
+            {
+                DetailIEVM.Expenses = CalculateExpenseDetails (db, onDate);
+                DetailIEVM.Income = CalculateIncomeDetails (db, onDate);
+            }
             DetailIEVM.IncomeExpenseRepot = new IERVM {
                 Today = CalculateIncomeExpenes (db,onDate,false,false),
                 Monthly = CalculateIncomeExpenes (db, onDate, true, false),
@@ -320,7 +331,7 @@ namespace AprajitaRetails.Models.Helpers
 
             var exp = db.Expenses.Where (c => c.ExpDate.Date == onDate.Date);
             var pettycashexp = db.PettyCashExpenses.Where (c => c.ExpDate.Date == onDate.Date);
-            var cashpay = db.CashPayments.Where (c => c.PaymentDate.Date == onDate.Date);
+            var cashpay = db.CashPayments.Include(c=>c.Mode).Where (c => c.PaymentDate.Date == onDate.Date);
             var tailor = db.TailoringSalaryPayments.Where (c => c.PaymentDate.Date == onDate.Date);
             var staff = db.SalaryPayments.Where (c => c.PaymentDate.Date == onDate.Date);
             var TotalDues = db.DuesLists.Include (c => c.DailySale).Where (c => !c.IsRecovered && c.DailySale.SaleDate.Date == onDate.Date);
