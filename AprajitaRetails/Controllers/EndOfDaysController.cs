@@ -32,7 +32,8 @@ namespace AprajitaRetails.Controllers
 
             ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View (await PaginatedList<EndOfDay>.CreateAsync (_context.EndOfDays.AsNoTracking (), pageNumber ?? 1, pageSize));
+            var endofDay = _context.EndOfDays.OrderByDescending(c => c.EOD_Date);
+            return View (await PaginatedList<EndOfDay>.CreateAsync (endofDay.AsNoTracking (), pageNumber ?? 1, pageSize));
             // return View(await _context.EndOfDays.ToListAsync());
         }
 
