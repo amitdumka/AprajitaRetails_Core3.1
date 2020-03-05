@@ -51,7 +51,8 @@ namespace AprajitaRetails.Areas.Accounts.Models
 
     }
 
-    //TODO: There will no direct entry for Ledger Entry , just listing  and editing purpose. Editing will be in advance stage, Delete should be there
+    //TODO : There will no direct entry for Ledger Entry , just listing  and editing purpose. 
+    //       Editing will be in advance stage, Delete should be there
     public class LedgerEntry
     {
         public int LedgerEntryId { get; set; }
@@ -87,28 +88,14 @@ namespace AprajitaRetails.Areas.Accounts.Models
     public class DebitNote : BasicNotes
     {
         public int DebitNoteId { get; set; }
-        //[DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        //[Display(Name = "Date")]
-        //public DateTime OnDate { get; set; }
-
-        //public int PartyId { get; set; }
-        //public Party PartyName { get; set; }
-        //public string Particulars { get; set; }
-
-        //[Display(Name = "Debit Amount")]
+        
+        [Display(Name = "Debit Amount")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public new decimal Amount { get; set; }
     }
     public class CreditNote : BasicNotes
     {
         public int CreditNoteId { get; set; }
-        //[DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        //[Display(Name = "Date")]
-        //public DateTime EntryDate { get; set; }
-        //public int PartyId { get; set; }
-        //public Party PartyName { get; set; }
-        //public string Particulars { get; set; }
-        //[Display(Name = "Credit Amount")]
         [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Credit Amount")]
         public new decimal Amount { get; set; }
     }
