@@ -1,0 +1,102 @@
+﻿@model AprajitaRetails.Models.CashDetail
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>CashDetail</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.OnDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OnDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C2000)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C2000)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C1000)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C1000)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C500)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C500)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C100)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C100)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C50)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C50)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C20)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C20)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C10)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C10)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.C5)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.C5)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Coin10)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Coin10)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Coin5)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Coin5)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Coin2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Coin2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Coin1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Coin1)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CashDetailId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

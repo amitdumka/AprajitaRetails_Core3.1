@@ -1,0 +1,113 @@
+﻿@model IEnumerable<AprajitaRetails.Models.CashDetail>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C2000)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C1000)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C500)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C100)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C50)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C20)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C10)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.C5)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coin10)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coin5)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coin2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coin1)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C2000)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C1000)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C500)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C100)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C50)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C20)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C10)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.C5)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coin10)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coin5)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coin2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coin1)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CashDetailId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CashDetailId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CashDetailId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

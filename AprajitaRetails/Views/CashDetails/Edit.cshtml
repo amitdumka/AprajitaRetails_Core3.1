@@ -1,0 +1,99 @@
+﻿@model AprajitaRetails.Models.CashDetail
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>CashDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CashDetailId" />
+            <div class="form-group">
+                <label asp-for="OnDate" class="control-label"></label>
+                <input asp-for="OnDate" class="form-control" />
+                <span asp-validation-for="OnDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label"></label>
+                <input asp-for="TotalAmount" class="form-control" />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C2000" class="control-label"></label>
+                <input asp-for="C2000" class="form-control" />
+                <span asp-validation-for="C2000" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C1000" class="control-label"></label>
+                <input asp-for="C1000" class="form-control" />
+                <span asp-validation-for="C1000" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C500" class="control-label"></label>
+                <input asp-for="C500" class="form-control" />
+                <span asp-validation-for="C500" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C100" class="control-label"></label>
+                <input asp-for="C100" class="form-control" />
+                <span asp-validation-for="C100" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C50" class="control-label"></label>
+                <input asp-for="C50" class="form-control" />
+                <span asp-validation-for="C50" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C20" class="control-label"></label>
+                <input asp-for="C20" class="form-control" />
+                <span asp-validation-for="C20" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C10" class="control-label"></label>
+                <input asp-for="C10" class="form-control" />
+                <span asp-validation-for="C10" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="C5" class="control-label"></label>
+                <input asp-for="C5" class="form-control" />
+                <span asp-validation-for="C5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Coin10" class="control-label"></label>
+                <input asp-for="Coin10" class="form-control" />
+                <span asp-validation-for="Coin10" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Coin5" class="control-label"></label>
+                <input asp-for="Coin5" class="form-control" />
+                <span asp-validation-for="Coin5" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Coin2" class="control-label"></label>
+                <input asp-for="Coin2" class="form-control" />
+                <span asp-validation-for="Coin2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Coin1" class="control-label"></label>
+                <input asp-for="Coin1" class="form-control" />
+                <span asp-validation-for="Coin1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
