@@ -1,6 +1,6 @@
 ﻿@model AprajitaRetails.Models.ViewModels.MasterViewReport
 @{
-    ViewData ["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
 }
 <p></p>
 <div class="jumbotron text-right ">
@@ -8,7 +8,7 @@
     <p class="lead text-success">Aprajita Retails Daily Store Management Software.</p>
     <p><a href="https://www.thearvindstore.com/" class="btn btn-outline-dark-green btn-lg">Learn more &raquo;</a></p>
 </div>
-  
+
 
 <section>
 
@@ -66,7 +66,8 @@
                         </p>
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        <a class="btn btn-outline-default btn-md" href="Sales/DailySales/Index">Details &raquo;</a>
+                        @if ( Context.User.Identity.IsAuthenticated )
+                        {<a class="btn btn-outline-default btn-md" href="Sales/DailySales/Index">Details &raquo;</a>}
 
                     </div>
 
@@ -134,7 +135,8 @@
                         </p>
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        <a class="btn btn-outline-default btn-md" href="Tailoring/TalioringBookings">Booking List &raquo;</a>
+                        @if ( Context.User.Identity.IsAuthenticated )
+                        {<a class="btn btn-outline-default btn-md" href="Tailoring/TalioringBookings">Booking List &raquo;</a>}
 
                     </div>
 
@@ -208,7 +210,8 @@
                         </p>
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        <a class="btn btn-outline-default btn-md" href="AccountsDetails/">Detail &raquo;</a>
+                        @if ( Context.User.Identity.IsAuthenticated )
+                        {<a class="btn btn-outline-default btn-md" href="AccountsDetails/">Detail &raquo;</a>}
 
                     </div>
 
@@ -276,7 +279,7 @@
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)</dd>
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
-                                            
+
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>

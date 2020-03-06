@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models.Helpers;
 using AprajitaRetails.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AprajitaRetails.Controllers
 {
+    [Authorize]
     public class AccountsDetailsController : Controller
     {
         private readonly AprajitaRetailsContext db;
