@@ -4,7 +4,7 @@ public static class Constants
     public const string AdministratorRole = "Administrator";
     public const string UserRole = "User";
 
-    public const int MAX_TAGS = 3;
+    public const int MAX_TAGS = 10;   //TODO: increase tag size
 }
 public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, Others }
 

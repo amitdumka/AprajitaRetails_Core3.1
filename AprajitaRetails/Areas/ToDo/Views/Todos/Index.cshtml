@@ -31,7 +31,7 @@
             <tr>
                 <td>
                     <form asp-action="UpdateDone" method="post">
-                        <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
+                        <input type="checkbox" class="done-checkbox" asp-for="@item.Done" name="Click it!"  />Click to Update
                         <input type="hidden" name="id" value="@item.Id" />
                     </form>
                 </td>
@@ -51,14 +51,14 @@
                     {
                         @foreach (var tag in item.Tags)
                         {
-                            <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                            <a asp-action="Index" asp-route-tag="@tag" class="badge badge-default badge-pill">@tag</a>
                         }
                     }
                 </td>
                 <td class="btn-group btn-group-sm">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary rounded-pill">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info rounded-pill">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger rounded-pill">Delete</a>
                 </td>
             </tr>
         }
@@ -66,12 +66,12 @@
 </table>
 
 <p>
-    <a class="btn btn-success" asp-action="Create">Add Todo</a>
+    <a class="btn btn-outline-success btn-sm" asp-action="Create">Add Todo</a>
 </p>
 
 <hr />
 
-<h2 class="text-success">Dones</h2>
+<h2 class="text-success">Over</h2>
 
 <table class="table table-bordered table-sm table-hover table-striped">
     <thead class="table-success">
@@ -105,13 +105,13 @@
                 {
                     @foreach ( var tag in item.Tags )
                     {
-                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                        <a asp-action="Index" asp-route-tag="@tag" class="badge badge-pill badge-info">@tag</a>
                     }
                 }
             </td>
             <td class="btn-group btn-group-sm">
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info rounded-left rounded-pill">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger rounded-right rounded-pill">Delete</a>
             </td>
         </tr>
         }
