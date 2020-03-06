@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<AprajitaRetails.Models.CashDetail>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData ["Title"] = "Cash Details";
 }
 
-<h1>Index</h1>
+<h1>Cash Details</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-sm btn-outline-success" asp-action="Create" id="create" data_modal="">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-bordered table-sm table-hover">
+    <thead class="table-danger">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.OnDate)
@@ -57,57 +57,62 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OnDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C2000)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C1000)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C500)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C100)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C50)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C20)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C10)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.C5)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Coin10)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Coin5)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Coin2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Coin1)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CashDetailId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CashDetailId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CashDetailId">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody class="table-info">
+        @foreach ( var item in Model )
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C2000)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C1000)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C500)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C100)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C50)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C20)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C10)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.C5)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coin10)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coin5)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coin2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Coin1)
+                </td>
+                <td class="btn-group btn-group-sm">
+                    <a id="edit" data_modal="" class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.CashDetailId">Edit</a>
+                    <a  id="detail" data_modal="" class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.CashDetailId">Details</a>
+                    <a  id="delete" data_modal="" class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.CashDetailId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<partial name="_ModalPop" />
+

@@ -27,6 +27,9 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="wwwroot\css\font\Flaticon.svg" />
+    <None Include="wwwroot\css\font\Flaticon.woff2" />
+    <None Include="wwwroot\css\font\_flaticon.scss" />
     <None Include="wwwroot\favicon.ico" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
