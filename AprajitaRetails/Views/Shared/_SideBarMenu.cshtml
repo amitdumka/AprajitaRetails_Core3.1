@@ -104,34 +104,34 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link sidebar-font active " href="#">  <span data-feather="users"></span> Employee</a>
+                <a class="nav-link sidebar-font active " asp-area="Payroll"  asp-controller="Employees"  asp-action="Index" >  <span data-feather="users"></span> Employee</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#"><span data-feather="file"></span>Sale</a>
+                <a class="nav-link sidebar-font"  asp-area="Sales"  asp-controller="DailySales"  asp-action="Index" ><span data-feather="file"></span>Sale</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#"><span data-feather="shopping-cart"></span>Products</a>
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" ><span data-feather="shopping-cart"></span>Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#"><span data-feather="users"></span>Customers</a>
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" ><span data-feather="users"></span>Customers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#"><span data-feather="bar-chart-2"></span>Reports</a>
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" ><span data-feather="bar-chart-2"></span>Reports</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#"><span data-feather="layers"></span> Integrations</a>
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" ><span data-feather="layers"></span> Integrations</a>
             </li>
             <li class="nav-item">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class=" nav-link dropdown-toggle"> <span data-feather="star"></span>Tailoring</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link  sidebar-font"> <span data-feather="book-open"></span>Booking</a>
+                        <a  asp-area="Tailoring"  asp-controller="TalioringBookings"  asp-action="Index"  class="nav-link  sidebar-font"> <span data-feather="book-open"></span>Booking</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link sidebar-font"> <span data-feather="shopping-cart"></span>Delivery</a>
+                        <a  asp-area="Tailoring"  asp-controller="TalioringDeliveries"  asp-action="Index"  class="nav-link sidebar-font"> <span data-feather="shopping-cart"></span>Delivery</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link sidebar-font"> <span data-feather="book"></span>Pending Booking</a>
+                        <a  asp-area="Tailoring"  asp-controller="TalioringBookings"  asp-action="PendingBooking"  class="nav-link sidebar-font"> <span data-feather="book"></span>Pending Booking</a>
                     </li>
                 </ul>
             </li>
@@ -142,10 +142,10 @@
                         <a asp-action="Index" asp-controller="CashDetails" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Cash Details</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
+                        <a  asp-area="Accounts"  asp-controller="Receipts"  asp-action="Index"  class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
+                        <a  asp-area="Accounts"  asp-controller="DuesLists"  asp-action="Index"  class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
                     </li>
                 </ul>
             </li>
@@ -153,31 +153,31 @@
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Saved reports</span>
-            <a class="d-flex align-items-center text-muted" href="#">
+            <a class="d-flex align-items-center text-muted"  asp-area=""  asp-controller=""  asp-action="Index" >
                 <span data-feather="plus-circle"></span>
             </a>
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#">
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
                     <span data-feather="file-text"></span>
                     Current Month
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#">
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
                     <span data-feather="file-text"></span>
                     Last Quarter
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#">
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
                     <span data-feather="file-text"></span>
                     Last Month
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" href="#">
+                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
                     <span data-feather="file-text"></span>
                     Year-end Sale
                 </a>

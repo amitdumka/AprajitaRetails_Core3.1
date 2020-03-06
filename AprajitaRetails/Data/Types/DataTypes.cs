@@ -1,5 +1,11 @@
 ﻿using System.Collections.Generic;
+public static class Constants
+{
+    public const string AdministratorRole = "Administrator";
+    public const string UserRole = "User";
 
+    public const int MAX_TAGS = 3;
+}
 public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, Others }
 
 public enum Genders { Male, Female, TransGender }
