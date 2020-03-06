@@ -189,7 +189,7 @@
 
                             @{
                                 var day = new DateTime(DateTime.Now.Year, DateTime.Now.Month, days).Day;
-                                var todosInDay = Model.MonthlyToTodos.Count(todo => todo.DueTo.ToDateTimeOffset().Day == day);
+                                var todosInDay = Model.MonthlyToTodos.Count(todo => todo.DueTo./*ToDateTimeOffset().*/Day == day);
                                 if (todosInDay > 0)
                                 {
                                     <span style="margin-left: 1em;" class="badge badge-info">@todosInDay</span>

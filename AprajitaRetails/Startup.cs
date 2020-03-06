@@ -15,6 +15,7 @@ using AprajitaRetails.Areas.Voyager.Data;
 using Microsoft.AspNetCore.Http;
 using AprajitaRetails.Ops.Bot.TelgramService;
 using AprajitaRetails.Areas.Accounts.Data;
+using AprajitaRetails.Areas.ToDo.Extensions;
 
 namespace AprajitaRetails
 {
@@ -86,6 +87,11 @@ namespace AprajitaRetails
             
 
             services.AddControllers ().AddNewtonsoftJson ();
+            services.ConfigureLocalization ();
+            services.ConfigureSupportedCultures ();
+            services.ConfigureCookiePolicy ();
+            services.ConfigureServices ();
+            services.ConfigureStorage (Configuration);
 
 
         }

@@ -36,33 +36,43 @@ namespace AprajitaRetails.Areas.ToDo.Models
         public string Content { get; set; }
         public bool Done { get; set; }
 
-        [NotMapped]
-        public Instant Added { get; set; }
-
-        [NotMapped]
-        public Instant DueTo { get; set; }
-
-        public FileInfo File { get; set; }
-
-        [Obsolete ("Property only used for EF-serialization purposes")]
+        
         [DataType (DataType.DateTime)]
         [Column ("Added")]
         [EditorBrowsable (EditorBrowsableState.Never)]
-        public DateTime AddedDateTime
-        {
-            get => Added.ToDateTimeUtc ();
-            set => Added = DateTime.SpecifyKind (value, DateTimeKind.Utc).ToInstant ();
-        }
+        public DateTime Added { get; set; }
+        //[NotMapped]
+        //public Instant Added { get; set; }
 
-        [Obsolete ("Property only used for EF-serialization purposes")]
+        
         [DataType (DataType.DateTime)]
         [Column ("DueTo")]
         [EditorBrowsable (EditorBrowsableState.Never)]
-        public DateTime DuetoDateTime
-        {
-            get => DueTo.ToDateTimeUtc ();
-            set => DueTo = DateTime.SpecifyKind (value, DateTimeKind.Utc).ToInstant ();
-        }
+        public DateTime DueTo { get; set; }
+        // [NotMapped]
+        //public Instant DueTo { get; set; }
+
+        public FileInfo File { get; set; }
+
+        //[Obsolete ("Property only used for EF-serialization purposes")]
+        //[DataType (DataType.DateTime)]
+        //[Column ("Added")]
+        //[EditorBrowsable (EditorBrowsableState.Never)]
+        //public DateTime AddedDateTime
+        //{
+        //    get=>  Added.ToDateTimeUtc ();
+        //    set =>  Added= DateTime.SpecifyKind (value, DateTimeKind.Utc).ToInstant ();
+        //}
+
+        //[Obsolete ("Property only used for EF-serialization purposes")]
+        //[DataType (DataType.DateTime)]
+        //[Column ("DueTo")]
+        //[EditorBrowsable (EditorBrowsableState.Never)]
+        //public DateTime DuetoDateTime
+        //{
+        //    get => DueTo.ToDateTimeUtc ();
+        //    set =>DueTo= DateTime.SpecifyKind (value, DateTimeKind.Utc).ToInstant ();
+        //}
 
         [Column ("Tags")]
         [MaxLength (Constants.MAX_TAGS)]

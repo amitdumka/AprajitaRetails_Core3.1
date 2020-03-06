@@ -6,6 +6,7 @@ using TodoList.Web.Models;
 
 namespace TodoList.Web.Controllers
 {
+    [Area("ToDo")]
     public class HomeController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -22,24 +23,13 @@ namespace TodoList.Web.Controllers
             {
                 return RedirectToAction(nameof(TodosController.Home), "Todos");
             }
-            ViewData["Title"] = "Home";
-            return View();
+            else
+            {
+                return RedirectToAction (nameof (AprajitaRetails.Controllers.HomeController.Index), "Home");
+            }
+           // ViewData["Title"] = "Home";
+           // return View();
         }
-
-        public IActionResult About()
-        {
-            ViewData["Title"] = "About";
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Title"] = "Contact";
-            ViewData["Team"] = "TodoList Team";
-            ViewData["SupportEmail"] = "contact@todolist.com";
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

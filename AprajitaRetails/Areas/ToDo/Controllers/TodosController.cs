@@ -14,6 +14,7 @@ namespace TodoList.Web.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
+    [Area ("ToDo")]
     public class TodosController : Controller
     {
         private readonly ITodoItemService _todoItemService;
@@ -100,7 +101,8 @@ namespace TodoList.Web.Controllers
             {
                 Title = todo.Title,
                 Content = todo.Content,
-                DuetoDateTime = todo.DuetoDateTime,
+                // DuetoDateTime = todo.DuetoDateTime,
+                DueTo = todo.DuetoDateTime,//TODO: instance changes 
                 Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }
             };
             var successful = await _todoItemService

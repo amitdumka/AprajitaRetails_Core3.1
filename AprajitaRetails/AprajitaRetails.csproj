@@ -27,17 +27,14 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
-    <None Include="Areas\ToDo\Views\Home\About.cshtml" />
-    <None Include="Areas\ToDo\Views\Home\Contact.cshtml" />
     <None Include="Areas\ToDo\Views\Home\Index.cshtml" />
-    <None Include="Areas\ToDo\Views\ManageUsers\Index.cshtml" />
     <None Include="Areas\ToDo\Views\Shared\Error.cshtml" />
     <None Include="Areas\ToDo\Views\Shared\_AdminActionsPartial.cshtml" />
     <None Include="Areas\ToDo\Views\Shared\_CookieConsentPartial.cshtml" />
     <None Include="Areas\ToDo\Views\Shared\_EditorScriptsPartial.cshtml" />
     <None Include="Areas\ToDo\Views\Shared\_EditorStylePartial.cshtml" />
-    <None Include="Areas\ToDo\Views\Shared\_Layout.cshtml" />
-    <None Include="Areas\ToDo\Views\Shared\_LoginPartial.cshtml" />
+    <None Include="Areas\ToDo\Views\Shared\_Layout_oold.cshtml" />
+    <None Include="Areas\ToDo\Views\Shared\_LoginPartial_old.cshtml" />
     <None Include="Areas\ToDo\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Areas\ToDo\Views\Todos\Create.cshtml" />
     <None Include="Areas\ToDo\Views\Todos\Delete.cshtml" />

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Todos</h2>
+<h2 class="purple-text">ToDos</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-sm table-hover table-striped" >
+    <thead class="table-danger">
         <tr>
             <th>
                 Update Status
@@ -55,10 +55,10 @@
                         }
                     }
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                <td class="btn-group btn-group-sm">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
                 </td>
             </tr>
         }
@@ -71,10 +71,10 @@
 
 <hr />
 
-<h2>Dones</h2>
+<h2 class="text-success">Dones</h2>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-sm table-hover table-striped">
+    <thead class="table-success">
         <tr>
             <th>
                 Title
@@ -89,7 +89,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Dones)
+        @foreach ( var item in Model.Dones )
         {
         <tr>
             <td>
@@ -101,17 +101,17 @@
                 </span>
             </td>
             <td>
-                @if (item.Tags != null)
+                @if ( item.Tags != null )
                 {
-                    @foreach (var tag in item.Tags)
+                    @foreach ( var tag in item.Tags )
                     {
                         <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
                     }
                 }
             </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            <td class="btn-group btn-group-sm">
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         }
