@@ -272,6 +272,7 @@
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
+    <Folder Include="wwwroot\todolist\" />
   </ItemGroup>
 
 

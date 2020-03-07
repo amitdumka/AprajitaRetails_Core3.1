@@ -1,0 +1,18 @@
+﻿@model TodoList.Web.Models.HomeViewModel
+<h5 class="purple-text">ToDo List</h5>
+
+<h6 class="text-danger">Recent</h6>
+<ol>
+    @foreach ( var item in Model.RecentlyAddedTodos )
+    {
+        <li>@item.Title</li>
+    }
+</ol>
+<h6 class="text-danger">Due on Month</h6>
+<ol>
+    @foreach ( var item in Model.MonthlyToTodos )
+    {
+        <li>@item.Title</li>
+    }
+</ol>
+

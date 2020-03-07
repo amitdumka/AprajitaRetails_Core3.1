@@ -241,7 +241,11 @@
 
             <div class="col-md-1 d-none d-md-block ">
                 @if ( Context.User.Identity.IsAuthenticated )
-                {<br />
+                {  
+                   
+                    
+                    @*<partial   href="TodoHome/TodoList" action="TodoList"/>*@
+                    <br />
                     <div class="bg-light">
                         <div>
                             <h6 class="deep-purple-text">ToDo List</h6>

@@ -24,7 +24,7 @@ namespace AprajitaRetails.Ops.Helpers
     public class TodoManager
     {
         [Authorize]
-        public async Task<HomeViewModel> ListTodoItemAsync(ITodoItemService todoItemService, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IFileStorageService fileStorageService)
+        public async Task<HomeViewModel> ListTodoItemAsync(ITodoItemService todoItemService, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager/*, IFileStorageService fileStorageService*/)
         {
             var currentUser = await userManager.GetUserAsync(signInManager.Context.User);
             if (currentUser == null) return null;
