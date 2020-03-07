@@ -14,7 +14,7 @@ namespace TodoList.Web.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    [Area ("ToDo")]
+    [Area("ToDo")]
     public class TodosController : Controller
     {
         private readonly ITodoItemService _todoItemService;
@@ -34,22 +34,22 @@ namespace TodoList.Web.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
-             var currentDateTime = DateTime.Now;
+            var currentDateTime = DateTime.Now;
             var calendar = new CalendarViewModel(currentDateTime.Month, currentDateTime.Year);
-            
+
             var recentlyAddedTodos = await _todoItemService.GetRecentlyAddedItemsAsync(currentUser);
             var dueTo2daysTodos = await _todoItemService.GetDueTo2DaysItems(currentUser);
             var monthlyItems = await _todoItemService.GetMonthlyItems(currentUser, currentDateTime.Month);
-             var homeViewModel = new HomeViewModel()
+            var homeViewModel = new HomeViewModel()
             {
                 RecentlyAddedTodos = recentlyAddedTodos,
                 CloseDueToTodos = dueTo2daysTodos,
-                MonthlyToTodos= monthlyItems,
+                MonthlyToTodos = monthlyItems,
                 CalendarViewModel = calendar
             };
-             return View(homeViewModel);
+            return View(homeViewModel);
         }
-         // GET: Todos
+        // GET: Todos
         public async Task<IActionResult> Index(string tag = null)
         {
             var currentUser = await _userManager.GetUserAsync(User);
@@ -85,7 +85,7 @@ namespace TodoList.Web.Controllers
             if (!ModelState.IsValid)
             {
                 // return RedirectToAction("Index");
-                return View (todo);
+                return View(todo);
 
             }
 
