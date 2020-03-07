@@ -1,19 +1,13 @@
-﻿
-<style>
+﻿<style>
     .sidebar-font {
         font-size: .875rem;
     }
-
     .feather {
         width: 16px;
         height: 16px;
         vertical-align: text-bottom;
     }
-
-    /*
-        * Sidebar
-        */
-
+    /** Sidebar*/
     .sidebar {
         position: relative;
         top: 0;
@@ -23,7 +17,6 @@
         padding: 0;
         box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     }
-
     .sidebar-sticky {
         position: -webkit-sticky;
         position: sticky;
@@ -33,35 +26,26 @@
         overflow-x: hidden;
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     }
-
     .sidebar .nav-link {
         font-weight: 500;
         color: #333;
     }
-
         .sidebar .nav-link .feather {
             margin-right: 4px;
             color: #999;
         }
-
         .sidebar .nav-link.active {
             color: #007bff;
         }
-
             .sidebar .nav-link:hover .feather,
             .sidebar .nav-link.active .feather {
                 color: inherit;
             }
-
     .sidebar-heading {
         font-size: .75rem;
         text-transform: uppercase;
     }
-
-    /*
-        * Navbar
-        */
-
+    /** Navbar*/
     /*.navbar-brand {
     padding-top: .75rem;
     padding-bottom: .75rem;
@@ -69,32 +53,26 @@
     background-color: rgba(0, 0, 0, .25);
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
         }*/
-
     /*.navbar .form-control {
     padding: .75rem 1rem;
     border-width: 0;
     border-radius: 0;
         }
-
         .form-control-dark {
     color: #fff;
     background-color: rgba(255, 255, 255, .1);
     border-color: rgba(255, 255, 255, .1);
         }
-
     .form-control-dark:focus {
       border-color: transparent;
       box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
     }*/
-
     /*
         * Utilities
         */
-
     .border-top {
         border-top: 1px solid #e5e5e5;
     }
-
     .border-bottom {
         border-bottom: 1px solid #e5e5e5;
     }
@@ -151,6 +129,20 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link sidebar-font active " asp-area="ToDo" asp-controller="Home" asp-action="Index">  <span data-feather="book-open"></span> Todo List</a>
+            </li>
+            <li class="nav-item">
+                <a href="#utilSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="users"></span>Utility</a>
+                <ul class="collapse list-unstyled" id="utilSubmenu">
+                    <li class="nav-item">
+                        <a asp-area="AddressBook" asp-action="Index" asp-controller="Contacts" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Address Book</a>
+                    </li>
+                    @*<li class="nav-item">
+                        <a asp-area="Accounts" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Accounts" asp-controller="DuesLists" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
+                    </li>*@
+                </ul>
             </li>
 
         </ul>

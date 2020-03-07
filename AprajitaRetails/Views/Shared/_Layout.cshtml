@@ -215,15 +215,15 @@
                 <nav class="nav nav-underline">
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                     <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
-                    <a class="nav-link" href="#">Sale</a>
-                    <a class="nav-link" href="#">Purchase</a>
+                    @*<a class="nav-link" href="#">Sale</a>
+                    <a class="nav-link" href="#">Purchase</a>*@
                     <a class="nav-link" href="#">Manual Bill</a>
                     <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendance</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
-                    <a class="nav-link" asp-area="AddressBook" asp-controller="Contacts" asp-action="Index">AddressBook</a>
+                    @*<a class="nav-link" asp-area="AddressBook" asp-controller="Contacts" asp-action="Index">AddressBook</a>*@
                     @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") )
                     {
                         <a class="nav-link" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
