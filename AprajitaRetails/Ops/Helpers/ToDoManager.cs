@@ -7,17 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoList.Web.Models;
-using AprajitaRetails.Areas.ToDo.Interfaces;
-using AprajitaRetails.Areas.ToDo.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using TodoList.Web.Models;
 
 namespace AprajitaRetails.Ops.Helpers
 {
@@ -27,10 +17,10 @@ namespace AprajitaRetails.Ops.Helpers
         public async Task<HomeViewModel> ListTodoItemAsync(ITodoItemService todoItemService, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager/*, IFileStorageService fileStorageService*/)
         {
             var currentUser = await userManager.GetUserAsync(signInManager.Context.User);
-            if (currentUser == null) return null;
+            if (currentUser == null) 
+                return null;
             var currentDateTime = DateTime.Now;
             var calendar = new CalendarViewModel(currentDateTime.Month, currentDateTime.Year);
-
             var recentlyAddedTodos = await todoItemService.GetRecentlyAddedItemsAsync(currentUser);
             var dueTo2daysTodos = await todoItemService.GetDueTo2DaysItems(currentUser);
             var monthlyItems = await todoItemService.GetMonthlyItems(currentUser, currentDateTime.Month);
@@ -45,8 +35,6 @@ namespace AprajitaRetails.Ops.Helpers
 
         }
     }
-
-
     public class ToDoManager
     {
         public void AddToDoList(AprajitaRetailsContext db, string title, string msg, DateTime duedate)
@@ -71,7 +59,6 @@ namespace AprajitaRetails.Ops.Helpers
         {
             db.Update(todo);
             db.SaveChanges();
-
         }
     }
 }
