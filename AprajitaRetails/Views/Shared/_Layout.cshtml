@@ -23,7 +23,6 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
@@ -239,14 +238,14 @@
                 @RenderBody()
             </main>
 
-            <div class="col-md-1 d-none d-md-block ">
+            <div class="col-md-1 d-none d-md-block bg-light border">
                 @if ( Context.User.Identity.IsAuthenticated )
                 {  
                    
                     
-                    @*<partial   href="TodoHome/TodoList" action="TodoList"/>*@
+                    <partial name="TodoList" /> @*href="TodoHome/TodoList" action="TodoList"/>*@
                     <br />
-                    <div class="bg-light">
+                    @*<div class="bg-light">
                         <div>
                             <h6 class="deep-purple-text">ToDo List</h6>
                             <ol class="blue-text sidebar-font">
@@ -259,7 +258,7 @@
 
                             </ol>
                         </div>
-                    </div>
+                    </div>*@
                 }
             </div>
 

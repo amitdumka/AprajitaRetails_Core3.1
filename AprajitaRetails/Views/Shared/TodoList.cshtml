@@ -1,18 +1,25 @@
-﻿@model TodoList.Web.Models.HomeViewModel
-<h5 class="purple-text">ToDo List</h5>
+﻿@using Microsoft.AspNetCore.Identity
+@using AprajitaRetails.Areas.ToDo.Interfaces
+@inject UserManager<IdentityUser> UserManager
+@inject ITodoItemService TodoService
 
-<h6 class="text-danger">Recent</h6>
-<ol>
-    @foreach ( var item in Model.RecentlyAddedTodos )
-    {
-        <li>@item.Title</li>
-    }
-</ol>
-<h6 class="text-danger">Due on Month</h6>
-<ol>
-    @foreach ( var item in Model.MonthlyToTodos )
-    {
-        <li>@item.Title</li>
-    }
-</ol>
+
+    <h6 class="purple-text">Todo's</h6>
+
+    <h6 class="amber-text small">Recent</h6>
+    <ol>
+        @foreach (var item in TodoService.GetRecentlyAddedItemsAsync(UserManager.GetUserAsync(User).Result).Result.ToList())
+
+        {
+            <li class="font-small text-success"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id"> @item.Title</a></li>
+        }
+    </ol>
+    <h6 class="text-danger small">Due</h6>
+    <ol>
+        @foreach (var item in TodoService.GetMonthlyItems(UserManager.GetUserAsync(User).Result, DateTime.Today.Month).Result.ToList())
+
+        {
+            <li class="font-small blue-text"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id">@item.Title</a></li>
+        }
+    </ol>
 
