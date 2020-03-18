@@ -1,0 +1,82 @@
+﻿@model AprajitaRetails.Models.BankAccountSecurityInfo
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>BankAccountSecurityInfo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BankAccountSecurityInfoId" class="control-label"></label>
+                <select asp-for="BankAccountSecurityInfoId" class ="form-control" asp-items="ViewBag.BankAccountSecurityInfoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <input asp-for="CustomerId" class="form-control" />
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxPassword" class="control-label"></label>
+                <input asp-for="TaxPassword" class="form-control" />
+                <span asp-validation-for="TaxPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExtraPassword" class="control-label"></label>
+                <input asp-for="ExtraPassword" class="form-control" />
+                <span asp-validation-for="ExtraPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ATMCardNumber" class="control-label"></label>
+                <input asp-for="ATMCardNumber" class="form-control" />
+                <span asp-validation-for="ATMCardNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiryDate" class="control-label"></label>
+                <input asp-for="ExpiryDate" class="form-control" />
+                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CVVNo" class="control-label"></label>
+                <input asp-for="CVVNo" class="form-control" />
+                <span asp-validation-for="CVVNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ATMPin" class="control-label"></label>
+                <input asp-for="ATMPin" class="form-control" />
+                <span asp-validation-for="ATMPin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TPIN" class="control-label"></label>
+                <input asp-for="TPIN" class="form-control" />
+                <span asp-validation-for="TPIN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

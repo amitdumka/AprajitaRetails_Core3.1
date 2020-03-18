@@ -27,12 +27,6 @@ namespace AprajitaRetails.Models
         public string Details { get; set; }
     }
 
-    //TODO: List
-    //TODO: Dues Recovery options
-    //TODO: Tailoring 
-    //TODO: Sales return policy update and check 
-    //TODO: Purchase of Items/Assets
-    //TODO: Arvind Payments
-    //TODO: Purchase Invoice Entry
+  
 
 }

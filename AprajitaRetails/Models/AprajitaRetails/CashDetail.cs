@@ -13,7 +13,7 @@ namespace AprajitaRetails.Models
         [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OnDate { get; set; }
         [DataType (DataType.Currency), Column (TypeName = "money")]
-        [Display(Name ="Total Amount")]
+        [Display (Name = "Total Amount")]
         public decimal TotalAmount { set; get; }
         [Display (Name = "2000")]
         public int C2000 { set; get; }
@@ -38,15 +38,8 @@ namespace AprajitaRetails.Models
         [Display (Name = "Coin 2")]
         public int Coin2 { set; get; }
         [Display (Name = "Coin 1")]
-        public int Coin1 { set; get; }        
+        public int Coin1 { set; get; }
     }
-
-    //TODO: List
-    //TODO: Dues Recovery options
-    //TODO: Tailoring 
-    //TODO: Sales return policy update and check 
-    //TODO: Purchase of Items/Assets
-    //TODO: Arvind Payments
-    //TODO: Purchase Invoice Entry
-
 }
+
+   

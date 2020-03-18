@@ -14,7 +14,7 @@ namespace AprajitaRetails.Models
         [Display(Name = "Mode")]
         public int TranscationModeId { get; set; }
         //[Index(IsUnique = true)]
-        [Display(Name = "Transcation Mode")]
+        [Display(Name = "Transaction Mode")]
         public string Transcation { get; set; }
 
         public virtual ICollection<CashReceipt> CashReceipts { get; set; }
@@ -23,12 +23,6 @@ namespace AprajitaRetails.Models
         // Amit Kumar , Mukesh, HomeExp, OtherHomeExpenses,CashInOut
     }
 
-    //TODO: List
-    //TODO: Dues Recovery options
-    //TODO: Tailoring 
-    //TODO: Sales return policy update and check 
-    //TODO: Purchase of Items/Assets
-    //TODO: Arvind Payments
-    //TODO: Purchase Invoice Entry
+  
 
 }

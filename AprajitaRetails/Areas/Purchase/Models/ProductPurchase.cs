@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Purchase.Models
 
         public string Remarks { get; set; }
 
-        [Display(Name = "Suppiler")]
+        [Display(Name = "Supplier")]
         public int SupplierID { get; set; }
         public virtual Supplier Supplier { get; set; }
 

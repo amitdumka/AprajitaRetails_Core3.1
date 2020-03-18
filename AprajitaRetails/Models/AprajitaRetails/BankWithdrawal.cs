@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,12 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Models
 {
-    public class BankDeposit
+    public class BankWithdrawal
     {
-        public int BankDepositId { get; set; }
+        public int BankWithdrawalId { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Deposit Date")]
+        [Display(Name = "Withdrawal Date")]
         public DateTime DepoDate { get; set; }
 
         public int AccountNumberId { get; set; }
@@ -22,14 +21,16 @@ namespace AprajitaRetails.Models
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
 
-        [Display(Name = "Payment Mode")]
-        public BankPayModes PayMode { get; set; }
-
-        [Display(Name = "Transaction Details")]
-        public string Details { get; set; }
-        public string Remarks { get; set; }
+        [Display(Name = "Cheques Details")]
+        public string ChequeNo { get; set; }
+        [Display(Name = "Signed By")]
+        public string SignedBy { get; set; }
+        [Display(Name = "Approved By")]
+        public string ApprovedBy { get; set; }
+        [Display(Name = "Self/Named")]
+        public string InNameOf { get; set; }
     }
 
-    
+   
 
 }

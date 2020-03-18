@@ -19,7 +19,7 @@ namespace AprajitaRetails.Areas.Purchase.Models
 
         [Display(Name = "Category")]
         public ProductCategorys Categorys { get; set; }
-        [Display(Name = "Prodcut Type")]
+        [Display(Name = "Product Type")]
         public Category MainCategory { get; set; }
         [Display(Name = "Product Series")]
         public Category ProductCategory { get; set; }

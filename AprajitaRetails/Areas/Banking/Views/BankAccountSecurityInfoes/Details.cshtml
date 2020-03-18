@@ -1,0 +1,84 @@
+﻿@model AprajitaRetails.Models.BankAccountSecurityInfo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BankAccountSecurityInfo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxPassword)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TaxPassword)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ExtraPassword)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ExtraPassword)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ATMCardNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ATMCardNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ExpiryDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CVVNo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CVVNo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ATMPin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ATMPin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TPIN)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TPIN)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BankAccountInfo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BankAccountInfo.BankAccountInfoId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.BankAccountSecurityInfoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AprajitaRetails.Models.BankAccountInfo>
+
+@{
+    ViewData ["Title"] = "Index";
+}
+
+<h2 class="deep-purple-text">Bank Account</h2>
+
+<p>
+    <a class="btn btn-sm btn-outline-success" asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered table-striped table-sm">
+    <thead class="table-info">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountHolder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bank)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BranchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IFSCCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsClientAccount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach( var item in Model )
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountHolder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bank.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BranchName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IFSCCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountType)
+            </td>
+            <td class="text-center">
+                @if ( item.IsClientAccount )
+                {
+                      <span  data-feather="check-circle" class="text-success"></span>
+                }
+                else
+                {
+                    <span data-feather="x-circle" class="text-danger"></span>
+                }
+
+                @*@Html.DisplayFor(modelItem => item.IsClientAccount)*@
+            </td>
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.BankAccountInfoId">Edit</a>
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.BankAccountInfoId">Details</a>
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.BankAccountInfoId">Delete</a>
+            </td>
+            
+        </tr>
+        }
+    </tbody>
+</table>

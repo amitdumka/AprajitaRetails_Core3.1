@@ -1,9 +1,5 @@
 ﻿using AprajitaRetails.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using AprajitaRetails.Models.ViewModels;
-using AprajitaRetails.Areas.AddressBook.Models;
 using AprajitaRetails.Areas.ToDo.Models;
 using System;
 using System.Linq;
@@ -139,6 +135,12 @@ namespace AprajitaRetails.Data
         public DbSet<TelegramAuthUser> TelegramAuthUsers { get; set; }
         public DbSet<ToDoMessage> ToDoMessages { get; set; }
         public DbSet<AprajitaRetails.Models.CashDetail> CashDetail { get; set; }
+
+
+        //BankAccount Info
+
+        public DbSet<BankAccountInfo> BankAccountInfos { get; set; }
+        public DbSet<BankAccountSecurityInfo> AccountSecurityInfos { get; set; }
 
 
         public void ApplyMigrations(AprajitaRetailsContext context)

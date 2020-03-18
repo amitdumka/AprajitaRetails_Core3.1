@@ -35,7 +35,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [Display(Name = "On Date")]
         public DateTime OpenningDate { get; set; }
         
-        [Display(Name = "Openning Balance")]
+        [Display(Name = "Opening Balance")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal OpenningBalance { get; set; }
         

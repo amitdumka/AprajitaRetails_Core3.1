@@ -6,16 +6,19 @@ using System.Collections.Generic;
 
 namespace AprajitaRetails.Models
 {
-
-    //Banking Section
-    public class Bank
+    public class AccountNumber
     {
-        public int BankId { get; set; }
-        [Display(Name = "Bank Name")]
-        public string BankName { get; set; }
+        public int AccountNumberId { get; set; }
 
-        public ICollection<AccountNumber> Accounts { get; set; }
-        public ICollection<BankAccountInfo> BankAccounts { get; set; }
+        [Display(Name = "Bank Name")]
+        public int BankId { get; set; }
+        public Bank Bank { get; set; }
+
+        [Display(Name = "Account Number")]
+        public string Account { get; set; }
+
+        public ICollection<BankDeposit> Deposits { get; set; }
+        public ICollection<BankWithdrawal> Withdrawals { get; set; }
     }
 
 

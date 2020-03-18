@@ -32,10 +32,9 @@
                         @if ( Context.User.Identity.IsAuthenticated )
                         {
                             <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale</a></li>
-                            <!-- Ported Menu-->
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
-
                                 <div class="dropdown-menu " aria-labelledby="dropdown01">
                                     @if ( Context.User.IsInRole ("Admin") )
                                     {
@@ -44,24 +43,21 @@
                                         <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
                                         <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleTaxTypes" asp-action="Index">Output Tax</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
-
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInHands" asp-action="Index">Cash-In-Hands</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInBanks" asp-action="Index">Cash-In-Banks</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="TranscationModes" asp-action="Index">Trans Modes</a>
+                                        <p role="separator" class="dropdown-divider divider-new "></p>
                                     }
                                     @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") )
                                     {
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
                                     }
-
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DuesLists" asp-action="Index">Dues List</a>
                                 </div>
-
                             </li>
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sale/Purchase</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -69,10 +65,8 @@
                                     <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index">Product Items</a>
                                     <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="Stocks" asp-action="Index">Stocks</a>
                                     <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleInvoices" asp-action="Index">Sale Invoices</a>
-
                                 </div>
                             </li>
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tailoring</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -80,16 +74,12 @@
                                     <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
                                     <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
                                     @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
-                                    {
+                                    { <p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
-
-
                                     }
-
-
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -102,9 +92,15 @@
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="ChequesLogs" asp-action="Index">Cheques</a>
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankWithdrawals" asp-action="Index">Bank Withdrawals</a>
                                     }
+                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
+                                    {
+                                        <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankAccountInfoes" asp-action="Index">Bank Accounts</a>
+                                        <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankAccountSecurityInfoes" asp-action="Index">Account Security Info</a>
+
+                                    }
                                 </div>
                             </li>
-                            <!--New To Added-->
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PayRoll</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -215,7 +211,7 @@
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                     <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
                     @*<a class="nav-link" href="#">Sale</a>
-                    <a class="nav-link" href="#">Purchase</a>*@
+                        <a class="nav-link" href="#">Purchase</a>*@
                     <a class="nav-link" href="#">Manual Bill</a>
                     <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendance</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
@@ -240,25 +236,25 @@
 
             <div class="col-md-1 d-none d-md-block bg-light border">
                 @if ( Context.User.Identity.IsAuthenticated )
-                {  
-                   
-                    
+                {
+
+
                     <partial name="TodoList" /> @*href="TodoHome/TodoList" action="TodoList"/>*@
                     <br />
                     @*<div class="bg-light">
-                        <div>
-                            <h6 class="deep-purple-text">ToDo List</h6>
-                            <ol class="blue-text sidebar-font">
-                                <li>Pay Bill</li>
-                                <li>Call Laxman</li>
-                                <li>Call Gopi</li>
-                                <li>Call Mantu</li>
-                                <li>End of Day</li>
-                                <li>Check CashBook Daily</li>
+                            <div>
+                                <h6 class="deep-purple-text">ToDo List</h6>
+                                <ol class="blue-text sidebar-font">
+                                    <li>Pay Bill</li>
+                                    <li>Call Laxman</li>
+                                    <li>Call Gopi</li>
+                                    <li>Call Mantu</li>
+                                    <li>End of Day</li>
+                                    <li>Check CashBook Daily</li>
 
-                            </ol>
-                        </div>
-                    </div>*@
+                                </ol>
+                            </div>
+                        </div>*@
                 }
             </div>
 

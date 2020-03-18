@@ -1,0 +1,103 @@
+﻿@model IEnumerable<AprajitaRetails.Models.BankAccountSecurityInfo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="deep-purple-text">Account Security Info</h2>
+
+<p>
+    <a class="btn btn-sm btn-outline-success" asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered table-striped table-sm">
+    <thead class="table-info">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BankAccountInfo.AccountHolder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BankAccountInfo.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxPassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExtraPassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ATMCardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpiryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CVVNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ATMPin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TPIN)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccountInfo.AccountHolder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccountInfo.AccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxPassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExtraPassword)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ATMCardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpiryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CVVNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ATMPin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TPIN)
+            </td>
+           
+            <td class="btn-group btn-group-sm">
+                <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.BankAccountSecurityInfoId">Edit</a> 
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.BankAccountSecurityInfoId">Details</a> 
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.BankAccountSecurityInfoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
