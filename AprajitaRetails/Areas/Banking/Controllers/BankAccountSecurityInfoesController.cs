@@ -23,10 +23,37 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         }
 
         // GET: Banking/BankAccountSecurityInfoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, string sortOrder, int? pageNumber)
         {
-            var aprajitaRetailsContext = _context.AccountSecurityInfos.Include(b => b.BankAccountInfo);
-            return View(await aprajitaRetailsContext.ToListAsync());
+            ViewData ["NameSortParm"] = String.IsNullOrEmpty (sortOrder) ? "name_desc" : "";
+            ViewData ["BankSortParm"] = sortOrder == "Bank" ? "Bank_desc" : "Bank";
+            
+            if ( searchString != null )
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var aprajitaRetailsContext = _context.AccountSecurityInfos.Include(b => b.BankAccountInfo).ThenInclude(b=>b.Bank).OrderBy(c=>c.BankAccountInfo.AccountHolder);
+            switch ( sortOrder )
+            {
+                case "name_desc":  aprajitaRetailsContext = aprajitaRetailsContext.OrderByDescending (c => c.BankAccountInfo.AccountHolder); break;
+                case "Bank":   aprajitaRetailsContext = aprajitaRetailsContext.OrderBy (c => c.BankAccountInfo.Bank.BankName); break;
+                case "Bank_desc":
+                    aprajitaRetailsContext = aprajitaRetailsContext.OrderByDescending (c => c.BankAccountInfo.Bank.BankName);
+                    break;
+                default:
+                    aprajitaRetailsContext = aprajitaRetailsContext.OrderBy (c => c.BankAccountInfo.AccountHolder);
+                    break;
+
+            }
+           // return View(await aprajitaRetailsContext.ToListAsync());
+           int pageSize = 10;
+            return View (await PaginatedList<BankAccountSecurityInfo>.CreateAsync (aprajitaRetailsContext.AsNoTracking (), pageNumber ?? 1, pageSize));
         }
 
         // GET: Banking/BankAccountSecurityInfoes/Details/5
