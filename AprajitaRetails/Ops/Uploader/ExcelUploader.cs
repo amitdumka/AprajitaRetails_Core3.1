@@ -23,7 +23,7 @@ namespace AprajitaRetails.Ops.Uploader
         {
 
             //UploadType = "InWard";
-            List<string> data = new List<string> ();
+            //List<string> data = new List<string> ();
             if ( FileUpload != null )
             {
                 // tdata.ExecuteCommand("truncate table OtherCompanyAssets");  

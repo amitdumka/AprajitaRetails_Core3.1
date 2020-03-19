@@ -81,7 +81,7 @@ namespace AprajitaRetails.Ops.Utility
         }
         public List<CashBook> CorrectCashInHands(AprajitaRetailsContext db, DateTime date, string fileName, bool IsDay = false)
         {
-            List<CashBook> cashBookList = null;
+            List<CashBook> cashBookList;
             if ( IsDay )
                 cashBookList = GetDailyCashBook (db, date);
             else
@@ -520,7 +520,7 @@ namespace AprajitaRetails.Ops.Utility
     {
         public List<CashBook> CorrectCashInHands(AprajitaRetailsContext db, DateTime date, bool IsDay = false)
         {
-            List<CashBook> cashBookList = null;
+            List<CashBook> cashBookList ;
             if ( IsDay )
                 cashBookList = GetDailyCashBook (db, date);
             else

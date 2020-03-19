@@ -18,11 +18,13 @@ namespace AprajitaRetails.Ops.Utility
                     await userManager.AddToRoleAsync (user, "StoreManager").ConfigureAwait (true);
                 else
                     await userManager.AddToRoleAsync (user, "Salesman").ConfigureAwait (true);
+
                 //TODO: Need to Update Confirmed Email. 
 
-                var userId = await userManager.GetUserIdAsync (user).ConfigureAwait (true);
+                _ = await userManager.GetUserIdAsync (user).ConfigureAwait (true);
                 var code = await userManager.GenerateEmailConfirmationTokenAsync (user).ConfigureAwait (true);
-                var result2 = await userManager.ConfirmEmailAsync (user, code).ConfigureAwait (true);
+
+                _ = await userManager.ConfirmEmailAsync (user, code).ConfigureAwait (true);
                 return true;
             }
 

@@ -132,7 +132,7 @@ namespace AprajitaRetails.Areas.ToDo.Services
             //   .ToArrayAsync ();
 
            
-            return _context.Todos.Where (t => t.UserId == currentUser.Id && !t.Done && DateTime.Compare (DateTime.UtcNow.AddDays (-1), t.Added) <= 0).ToList ();
+            return await _context.Todos.Where (t => t.UserId == currentUser.Id && !t.Done && DateTime.Compare (DateTime.UtcNow.AddDays (-1), t.Added) <= 0).ToListAsync ();
 
         }
 

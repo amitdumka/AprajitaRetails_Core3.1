@@ -19,9 +19,7 @@ namespace AprajitaRetails.Models.Helpers
 
         public void ProcessMonthEnd(DateTime onDate)
         {
-            MonthEnd monthEnd = null;
-
-            monthEnd = CalculateTotalIncome (db, onDate);
+            MonthEnd monthEnd = CalculateTotalIncome (db, onDate);
             monthEnd = CalculateTotalExpenses (db, onDate, monthEnd);
             monthEnd = CalculateSaleData (db, onDate, monthEnd);
             monthEnd = CalculateSaleFinData (db, onDate, monthEnd);
@@ -35,7 +33,7 @@ namespace AprajitaRetails.Models.Helpers
             {
                 TotalSaleIncome = db.DailySales.Where (c => c.SaleDate.Month == ( onDate ).Month).Sum (c => c.Amount),
                 TotalTailoringIncome = db.DailySales.Where (c => c.IsTailoringBill && ( c.SaleDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
-                TotalOtherIncome = 0, //TODO: Ohter Income group will be dealt with proper entry.
+                TotalOtherIncome = 0, //TODO: Other Income group will be dealt with proper entry.
                 TotalRecipts = db.Receipts.Where (c => ( c.RecieptDate ).Month == ( onDate ).Month).Sum (c => c.Amount)
             };
 

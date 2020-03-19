@@ -18,6 +18,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         [Obsolete]
         private IHostingEnvironment _hostingEnvironment;
         private readonly AprajitaRetailsContext db;
+
+        [Obsolete]
         public CashBookController(AprajitaRetailsContext context, IHostingEnvironment hostingEnvironment)
         {
             db = context;

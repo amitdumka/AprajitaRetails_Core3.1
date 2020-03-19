@@ -131,7 +131,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             if ( user.TelegramUserName == "AddInfo" )
             {
                 var ctr = _context.TelegramAuthUsers.Where (c => c.MobileNo == user.MobileNo).Count ();
-                if ( ctr == null || ctr <= 0 )
+                if (  ctr <= 0 )
                 {
                     var emp = _context.Employees.Where (c => c.MobileNo == user.MobileNo).Select (c => new { c.EmployeeId, c.StaffName, c.Category }).FirstOrDefault ();
                     if ( emp != null )

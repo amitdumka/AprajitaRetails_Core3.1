@@ -26,7 +26,7 @@ namespace AprajitaRetails.Controllers
                 onDate = ondate??DateTime.Today;
             }
 
-            IncomeExpensesReport ierData = null;
+            IncomeExpensesReport ierData;
             IEReport dM = new IEReport();
             if (id == 1)
             {

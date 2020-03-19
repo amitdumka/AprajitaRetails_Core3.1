@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -555,16 +556,16 @@ namespace AprajitaRetails.Ops.TAS
             {
                 foreach ( var item in data )
                 {
-                    saleInvoice = CreateSaleInvoice (db,arDB, item, saleInvoice);  //Create SaleInvoice
+                    saleInvoice = CreateSaleInvoice (db, arDB, item, saleInvoice);  //Create SaleInvoice
                     saleInvoice.SaleItems.Add (CreateSaleItem (db, item)); // Create SaleItems
-                    
+
                     ctr++;
                 }
                 if ( saleInvoice != null )
                 {
                     db.SaleInvoices.Add (saleInvoice); // Save Last Sale Invoice
                     db.SaveChanges ();
-                    CreateDailySale (arDB,db, saleInvoice);
+                    CreateDailySale (arDB, db, saleInvoice);
                 }
                 return ctr;
 
@@ -640,7 +641,7 @@ namespace AprajitaRetails.Ops.TAS
         private SalePaymentDetail CreatePaymentDetails(VoyagerContext db, ImportSaleItemWise item)
         {
 
-            if ( item.PaymentType == null || item.PaymentType == "" )
+            if ( string.IsNullOrEmpty (item.PaymentType)  /*== null || item.PaymentType == "" */)
             {
                 return null;
             }
@@ -715,7 +716,7 @@ namespace AprajitaRetails.Ops.TAS
                 {
                     db.SaleInvoices.Add (invoice);
                     db.SaveChanges ();
-                    CreateDailySale (arDB,db, invoice);
+                    CreateDailySale (arDB, db, invoice);
 
                     invoice = new SaleInvoice
                     {
@@ -921,7 +922,7 @@ namespace AprajitaRetails.Ops.TAS
                     IsSaleReturn = false,
                     IsTailoringBill = false
                 };
-                dailySale.SalesmanId = db.Salesmen.Where (c => c.SalesmanName == inv.SaleItems.First ().Salesman.SalesmanName).Select (c => c.SalesmanId).FirstOrDefault () ;
+                dailySale.SalesmanId = db.Salesmen.Where (c => c.SalesmanName == inv.SaleItems.First ().Salesman.SalesmanName).Select (c => c.SalesmanId).FirstOrDefault ();
                 if ( dailySale.SalesmanId <= 0 )
                 {
                     dailySale.SalesmanId = CreateSalesman (db, inv.SaleItems.First ().Salesman.SalesmanName);
@@ -948,12 +949,13 @@ namespace AprajitaRetails.Ops.TAS
                     dailySale.IsSaleReturn = true;
                 }
                 //IsTailoring
-                if ( inv.SaleItems.First ().ProductItem !=null && inv.SaleItems.First ().ProductItem.Categorys == ProductCategorys.Tailoring )
+                if ( inv.SaleItems.First ().ProductItem != null && inv.SaleItems.First ().ProductItem.Categorys == ProductCategorys.Tailoring )
                 {
                     dailySale.IsTailoringBill = true;
-                } else  if( inv.SaleItems.First ().ProductItem == null )
+                }
+                else if ( inv.SaleItems.First ().ProductItem == null )
                 {
-                   if(voyager.ProductItems.Find(  inv.SaleItems.First().ProductItemId).Categorys == ProductCategorys.Tailoring )
+                    if ( voyager.ProductItems.Find (inv.SaleItems.First ().ProductItemId).Categorys == ProductCategorys.Tailoring )
                     {
                         dailySale.IsTailoringBill = true;
                     }
@@ -1067,7 +1069,7 @@ namespace AprajitaRetails.Ops.TAS
         private SalePaymentDetail CreatePaymentDetails(VoyagerContext db, ImportSaleItemWise item)
         {
 
-            if ( item.PaymentType == null || item.PaymentType == "" )
+            if ( string.IsNullOrEmpty (item.PaymentType)/* item.PaymentType == null || item.PaymentType == "" */)
             {
                 return null;
             }

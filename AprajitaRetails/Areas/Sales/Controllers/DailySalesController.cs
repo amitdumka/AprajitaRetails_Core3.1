@@ -107,7 +107,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             }
             catch ( Exception )
             {
-                // Utils.ProcessOpenningClosingBalance(db, DateTime.Today, false, true);
+                // Utility.ProcessOpenningClosingBalance(db, DateTime.Today, false, true);
                 new CashWork ().Process_OpenningBalance (db, DateTime.Today, true);
                 cashinhand = (decimal) 0.00;
                 //Log.Error("Cash In Hand is null");

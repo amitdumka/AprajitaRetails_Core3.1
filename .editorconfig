@@ -53,3 +53,6 @@ dotnet_diagnostic.CA1308.severity = none
 
 # CA1031: Do not catch general exception types
 dotnet_diagnostic.CA1031.severity = none
+
+# CA5359: Do Not Disable Certificate Validation
+dotnet_diagnostic.CA5359.severity = none
