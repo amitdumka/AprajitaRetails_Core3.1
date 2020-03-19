@@ -40,12 +40,14 @@ namespace TodoList.Web.Controllers
             var recentlyAddedTodos = await _todoItemService.GetRecentlyAddedItemsAsync(currentUser);
             var dueTo2daysTodos = await _todoItemService.GetDueTo2DaysItems(currentUser);
             var monthlyItems = await _todoItemService.GetMonthlyItems(currentUser, currentDateTime.Month);
+            var public_todos = await _todoItemService.GetIncompletePublicItemsAsync ();
             var homeViewModel = new HomeViewModel()
             {
                 RecentlyAddedTodos = recentlyAddedTodos,
                 CloseDueToTodos = dueTo2daysTodos,
                 MonthlyToTodos = monthlyItems,
-                CalendarViewModel = calendar
+                CalendarViewModel = calendar  , 
+                PublicTodos=public_todos
             };
             return View(homeViewModel);
         }
@@ -56,17 +58,20 @@ namespace TodoList.Web.Controllers
             if (currentUser == null) return Challenge();
             var todos = await _todoItemService.GetIncompleteItemsAsync(currentUser);
             var dones = await _todoItemService.GetCompleteItemsAsync(currentUser);
+            var public_todos = await _todoItemService.GetIncompletePublicItemsAsync ();
 
             if (!string.IsNullOrEmpty(tag))
             {
                 todos = todos.Where(t => t.Tags.Contains(tag));
                 dones = dones.Where(t => t.Tags.Contains(tag));
+                public_todos= public_todos.Where (t => t.Tags.Contains (tag));
             }
 
             var model = new TodoViewModel()
             {
                 Todos = todos,
-                Dones = dones
+                Dones = dones , 
+                PublicTodos=public_todos
             };
 
             return View(model);
@@ -80,7 +85,7 @@ namespace TodoList.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime,Tags")]TodoItemCreateViewModel todo)
+        public async Task<IActionResult> Create([Bind("Title,Content,DuetoDateTime,Tags,Public")]TodoItemCreateViewModel todo)
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +103,8 @@ namespace TodoList.Web.Controllers
                 Content = todo.Content,
                 // DuetoDateTime = todo.DuetoDateTime,
                 DueTo = todo.DuetoDateTime,//TODO: instance changes 
-                Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }
+                Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }   , 
+                IsPublic=todo.Public
             };
             var successful = await _todoItemService
                 .AddItemAsync(todoItem, currentUser);
@@ -182,7 +188,8 @@ namespace TodoList.Web.Controllers
                 Id = todo.Id,
                 Title = todo.Title,
                 Content = todo.Content,
-                Tags = todo.Tags?.Count() > 0 ? string.Join(',', todo.Tags) : ""
+                Tags = todo.Tags?.Count() > 0 ? string.Join(',', todo.Tags) : ""   , 
+                Public=todo.IsPublic
             };
             return View(editViewModel);
         }
@@ -204,7 +211,8 @@ namespace TodoList.Web.Controllers
                     Id = todo.Id,
                     Title = todo.Title,
                     Content = todo.Content,
-                    Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }
+                    Tags = todo.Tags != null ? todo.Tags.Split(',') : new[] { "" }  , 
+                    IsPublic=todo.Public
                 }, currentUser);
 
             if (!successful)

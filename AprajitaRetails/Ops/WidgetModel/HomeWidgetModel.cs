@@ -110,6 +110,10 @@ namespace AprajitaRetails.Ops.WidgetModel
 
                     try
                     {
+                        if ( item.Employee.Category == EmpType.Salesman )
+                        {
+                            info.IsSalesman = true;
+                        }
 
                         if (empPresent != null)
                         {
@@ -150,7 +154,7 @@ namespace AprajitaRetails.Ops.WidgetModel
                     }
                     catch (Exception)
                     {
-                        // Log.Error().Message("empresent exception");
+                        // Log.Error().Message("emp-present exception");
                     }
                     infoList.Add(info);
                 }

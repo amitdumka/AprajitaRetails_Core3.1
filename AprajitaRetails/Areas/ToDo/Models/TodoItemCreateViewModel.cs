@@ -11,7 +11,7 @@ namespace TodoList.Web.Models
         public string Title { get; set; }
 
         [MaxLength(200)]
-        [MinLength(15)]
+        [MinLength(5)]
         [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
@@ -20,5 +20,6 @@ namespace TodoList.Web.Models
 
         [RegularExpression(@"^(?:[a-zA-Z0-9_\-]*,?){0,3}$", ErrorMessage = "Maximum 3 comma separated tags!")]
         public string Tags { get; set; }
+        public bool Public { get; set; }
     }
 }

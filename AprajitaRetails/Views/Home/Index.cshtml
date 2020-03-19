@@ -280,13 +280,17 @@
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
 
+                                            @if ( item.IsSalesman )
+                                            {
+
+
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.TotalSale)</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
-
+                                            }
                                         </dl>
                                     </div>
                                 </p>

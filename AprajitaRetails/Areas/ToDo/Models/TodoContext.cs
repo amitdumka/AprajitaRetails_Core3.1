@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.IO;
-using NodaTime;
-using NodaTime.Extensions;
 
 namespace AprajitaRetails.Areas.ToDo.Models
 {
@@ -77,6 +68,8 @@ namespace AprajitaRetails.Areas.ToDo.Models
         [Column ("Tags")]
         [MaxLength (Constants.MAX_TAGS)]
         public IEnumerable<string> Tags { get; set; }
+        [Display(Name ="Public")]
+        public bool IsPublic { get; set; }
     }
 
     public class FileInfo

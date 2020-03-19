@@ -95,6 +95,7 @@ namespace AprajitaRetails.Areas.ToDo.Services
             todo.Title = editedTodo.Title;
             todo.Content = editedTodo.Content;
             todo.Tags = editedTodo.Tags;
+            todo.IsPublic = editedTodo.IsPublic;
 
             var saved = await _context.SaveChangesAsync ();
             return saved == 1;
@@ -166,6 +167,11 @@ namespace AprajitaRetails.Areas.ToDo.Services
 
             var changes = await _context.SaveChangesAsync ();
             return changes > 0;
+        }
+
+        public async Task<IEnumerable<TodoItem>> GetIncompletePublicItemsAsync()
+        {
+            return await _context.Todos.Where (t => !t.Done && t.IsPublic).ToArrayAsync ();
         }
     }
 }

@@ -2,132 +2,132 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @*
-<div class="row">
-    <div class="col-md-4">
-        <h2 class="teal-text">Sale Record</h2>
-        <p>
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="teal-text">Sale Record</h2>
+            <p>
 
-            @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
-            {
-                <table class="table table-striped text-info table-sm">
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.SaleReport.DailySale)</td>
-                        <td>@Html.DisplayFor (model => model.SaleReport.DailySale)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.SaleReport.MonthlySale)</td>
-                        <td>@Html.DisplayFor (model => model.SaleReport.MonthlySale)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.SaleReport.YearlySale)</td>
-                        <td>@Html.DisplayFor (model => model.SaleReport.YearlySale)</td>
-                    </tr>
-                </table>
-            }
-            else
-            {
-                <h5>  Sale Data (Registered Users Only).</h5>
-            }
+                @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
+                {
+                    <table class="table table-striped text-info table-sm">
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.SaleReport.DailySale)</td>
+                            <td>@Html.DisplayFor (model => model.SaleReport.DailySale)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.SaleReport.MonthlySale)</td>
+                            <td>@Html.DisplayFor (model => model.SaleReport.MonthlySale)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.SaleReport.YearlySale)</td>
+                            <td>@Html.DisplayFor (model => model.SaleReport.YearlySale)</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <h5>  Sale Data (Registered Users Only).</h5>
+                }
 
-            <br />
-        </p>
-        <p><a class="btn btn-default" href="Sales/DailySales/Index">Details &raquo;</a></p>
+                <br />
+            </p>
+            <p><a class="btn btn-default" href="Sales/DailySales/Index">Details &raquo;</a></p>
+        </div>
+        <div class="col-md-4 ">
+            <h2 class="dark-green-ic">Tailoring</h2>
+            <p>
+                @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
+                {
+                    <table class="table table-striped text-info table-sm">
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.TodaySale)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.TodaySale)</td>
+
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.TodayBooking)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.TodayBooking)</td>
+
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.TodayUnit)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.TodayUnit)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlySale)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.MonthlySale)</td>
+
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlyBooking)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.MonthlyBooking)</td>
+
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlyUnit)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.MonthlyUnit)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlySale)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.YearlySale)</td>
+
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlyBooking)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.YearlyBooking)</td>
+
+                            <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlyUnit)</td>
+                            <td>@Html.DisplayFor (model => model.TailoringReport.YearlyUnit)</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <h5>  Tailoring Data (Registered Users Only).</h5>
+                }
+            </p>
+            <p><a class="btn btn-default" href="Tailoring/TalioringBookings">Booking List &raquo;</a></p>
+        </div>
+        <div class=" col-md-4">
+            <h2 class="amber-text">Accounting</h2>
+            <p>
+                @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
+                {
+                    <table class="table  table-sm  table-striped">
+                        <tr>
+                            <td class="text-primary">@Html.DisplayNameFor (model => model.AccountsInfo.OpenningBal)</td>
+                            <td class="text-primary">@Html.DisplayFor (model => model.AccountsInfo.OpenningBal)</td>
+
+                            <td class="text-success">@Html.DisplayNameFor (model => model.AccountsInfo.CashInHand)</td>
+                            <td class="text-success">@Html.DisplayFor (model => model.AccountsInfo.CashInHand)</td>
+                        </tr>
+
+                        <tr>
+                            <td>@Html.DisplayNameFor (model => model.AccountsInfo.CashIn)</td>
+                            <td>@Html.DisplayFor (model => model.AccountsInfo.CashIn)</td>
+
+                            <td class="text-danger">@Html.DisplayNameFor (model => model.AccountsInfo.CashOut)</td>
+                            <td class="text-danger">@Html.DisplayFor (model => model.AccountsInfo.CashOut)</td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>@Html.DisplayNameFor (model => model.AccountsInfo.TotalCashPayments)</td>
+                            <td>@Html.DisplayFor (model => model.AccountsInfo.TotalCashPayments)</td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-success">@Html.DisplayNameFor (model => model.AccountsInfo.CashInBank)</td>
+                            <td class="text-success">@Html.DisplayFor (model => model.AccountsInfo.CashInBank)</td>
+
+                            <td class="text-primary">@Html.DisplayNameFor (model => model.AccountsInfo.CashToBank)</td>
+                            <td class="text-primary">@Html.DisplayFor (model => model.AccountsInfo.CashToBank)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="text-danger">@Html.DisplayNameFor (model => model.AccountsInfo.CashFromBank)</td>
+                            <td class="text-danger">@Html.DisplayFor (model => model.AccountsInfo.CashFromBank)</td>
+                        </tr>
+                    </table>
+
+                }
+            </p>
+            <p><a class="btn btn-default" href="">Detail &raquo;</a></p>
+        </div>
     </div>
-    <div class="col-md-4 ">
-        <h2 class="dark-green-ic">Tailoring</h2>
-        <p>
-            @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
-            {
-                <table class="table table-striped text-info table-sm">
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.TodaySale)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.TodaySale)</td>
-
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.TodayBooking)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.TodayBooking)</td>
-
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.TodayUnit)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.TodayUnit)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlySale)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.MonthlySale)</td>
-
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlyBooking)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.MonthlyBooking)</td>
-
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.MonthlyUnit)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.MonthlyUnit)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlySale)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.YearlySale)</td>
-
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlyBooking)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.YearlyBooking)</td>
-
-                        <td>@Html.DisplayNameFor (model => model.TailoringReport.YearlyUnit)</td>
-                        <td>@Html.DisplayFor (model => model.TailoringReport.YearlyUnit)</td>
-                    </tr>
-                </table>
-            }
-            else
-            {
-                <h5>  Tailoring Data (Registered Users Only).</h5>
-            }
-        </p>
-        <p><a class="btn btn-default" href="Tailoring/TalioringBookings">Booking List &raquo;</a></p>
-    </div>
-    <div class=" col-md-4">
-        <h2 class="amber-text">Accounting</h2>
-        <p>
-            @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
-            {
-                <table class="table  table-sm  table-striped">
-                    <tr>
-                        <td class="text-primary">@Html.DisplayNameFor (model => model.AccountsInfo.OpenningBal)</td>
-                        <td class="text-primary">@Html.DisplayFor (model => model.AccountsInfo.OpenningBal)</td>
-
-                        <td class="text-success">@Html.DisplayNameFor (model => model.AccountsInfo.CashInHand)</td>
-                        <td class="text-success">@Html.DisplayFor (model => model.AccountsInfo.CashInHand)</td>
-                    </tr>
-
-                    <tr>
-                        <td>@Html.DisplayNameFor (model => model.AccountsInfo.CashIn)</td>
-                        <td>@Html.DisplayFor (model => model.AccountsInfo.CashIn)</td>
-
-                        <td class="text-danger">@Html.DisplayNameFor (model => model.AccountsInfo.CashOut)</td>
-                        <td class="text-danger">@Html.DisplayFor (model => model.AccountsInfo.CashOut)</td>
-                    </tr>
-
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>@Html.DisplayNameFor (model => model.AccountsInfo.TotalCashPayments)</td>
-                        <td>@Html.DisplayFor (model => model.AccountsInfo.TotalCashPayments)</td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-success">@Html.DisplayNameFor (model => model.AccountsInfo.CashInBank)</td>
-                        <td class="text-success">@Html.DisplayFor (model => model.AccountsInfo.CashInBank)</td>
-
-                        <td class="text-primary">@Html.DisplayNameFor (model => model.AccountsInfo.CashToBank)</td>
-                        <td class="text-primary">@Html.DisplayFor (model => model.AccountsInfo.CashToBank)</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="text-danger">@Html.DisplayNameFor (model => model.AccountsInfo.CashFromBank)</td>
-                        <td class="text-danger">@Html.DisplayFor (model => model.AccountsInfo.CashFromBank)</td>
-                    </tr>
-                </table>
-
-            }
-        </p>
-        <p><a class="btn btn-default" href="">Detail &raquo;</a></p>
-    </div>
-</div>
- *@
+*@
 
 @*<div class="col-md-4">
         <h2>Employee</h2>
@@ -761,3 +761,320 @@
 </section>
 <!--Section: Live preview-->
 <!--Section: Code-->
+
+
+
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                            <h3 class="login-heading mb-4">Welcome back!</h3>
+                            <form>
+                                <div class="form-label-group">
+                                    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                    <label for="inputEmail">Email address</label>
+                                </div>
+
+                                <div class="form-label-group">
+                                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                                    <label for="inputPassword">Password</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Remember password</label>
+                                </div>
+                                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+                                <div class="text-center">
+                                    <a class="small" href="#">Forgot password?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*:root {
+      --input-padding-x: 1.5rem;
+      --input-padding-y: 0.75rem;
+    }
+
+    .login,
+    .image {
+      min-height: 100vh;
+    }
+
+    .bg-image {
+      background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .login-heading {
+      font-weight: 300;
+    }
+
+    .btn-login {
+      font-size: 0.9rem;
+      letter-spacing: 0.05rem;
+      padding: 0.75rem 1rem;
+      border-radius: 2rem;
+    }
+
+    .form-label-group {
+      position: relative;
+      margin-bottom: 1rem;
+    }
+
+    .form-label-group>input,
+    .form-label-group>label {
+      padding: var(--input-padding-y) var(--input-padding-x);
+      height: auto;
+      border-radius: 2rem;
+    }
+
+    .form-label-group>label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      margin-bottom: 0;
+      /* Override default `<label>
+        ` margin */
+        line-height: 1.5;
+        color: #495057;
+        cursor: text;
+        /* Match the input under the label */
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        transition: all .1s ease-in-out;
+        }
+
+        .form-label-group input::-webkit-input-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input:-ms-input-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input::-ms-input-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input::-moz-placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input::placeholder {
+        color: transparent;
+        }
+
+        .form-label-group input:not(:placeholder-shown) {
+        padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+        padding-bottom: calc(var(--input-padding-y) / 3);
+        }
+
+        .form-label-group input:not(:placeholder-shown)~label {
+        padding-top: calc(var(--input-padding-y) / 3);
+        padding-bottom: calc(var(--input-padding-y) / 3);
+        font-size: 12px;
+        color: #777;
+        }
+
+        /* Fallback for Edge
+        -------------------------------------------------- */
+
+        @supports (-ms-ime-align: auto) {
+        .form-label-group>label {
+        display: none;
+        }
+        .form-label-group input::-ms-input-placeholder {
+        color: #777;
+        }
+        }
+
+        /* Fallback for IE
+        -------------------------------------------------- */
+
+        @media all and (-ms-high-contrast: none),
+        (-ms-high-contrast: active) {
+        .form-label-group>label {
+        display: none;
+        }
+        .form-label-group input:-ms-input-placeholder {
+        color: #777;
+        }
+        }*@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card card-signin flex-row my-5">
+                <div class="card-img-left d-none d-md-flex">
+                    <!-- Background image for card set in CSS! -->
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Register</h5>
+                    <form class="form-signin">
+                        <div class="form-label-group">
+                            <input type="text" id="inputUserame" class="form-control" placeholder="Username" required autofocus>
+                            <label for="inputUserame">Username</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required>
+                            <label for="inputEmail">Email address</label>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <label for="inputPassword">Password</label>
+                        </div>
+
+                        <div class="form-label-group">
+                            <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                            <label for="inputConfirmPassword">Confirm password</label>
+                        </div>
+
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Register</button>
+                        <a class="d-block text-center mt-2 small" href="#">Sign In</a>
+                        <hr class="my-4">
+                        <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
+                        <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+
+body {
+  background: #007bff;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+}
+
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.card-signin .card-title {
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.card-signin .card-img-left {
+  width: 45%;
+  /* Link to your background image using in the property below! */
+  background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
+  background-size: cover;
+}
+
+.card-signin .card-body {
+  padding: 2rem;
+}
+
+.form-signin {
+  width: 100%;
+}
+
+.form-signin .btn {
+  font-size: 80%;
+  border-radius: 5rem;
+  letter-spacing: .1rem;
+  font-weight: bold;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group input {
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>
+    ` margin */
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: all .1s ease-in-out;
+    }
+
+    .form-label-group input::-webkit-input-placeholder {
+    color: transparent;
+    }
+
+    .form-label-group input:-ms-input-placeholder {
+    color: transparent;
+    }
+
+    .form-label-group input::-ms-input-placeholder {
+    color: transparent;
+    }
+
+    .form-label-group input::-moz-placeholder {
+    color: transparent;
+    }
+
+    .form-label-group input::placeholder {
+    color: transparent;
+    }
+
+    .form-label-group input:not(:placeholder-shown) {
+    padding-top: calc(var(--input-padding-y) + var(--input-padding-y) * (2 / 3));
+    padding-bottom: calc(var(--input-padding-y) / 3);
+    }
+
+    .form-label-group input:not(:placeholder-shown)~label {
+    padding-top: calc(var(--input-padding-y) / 3);
+    padding-bottom: calc(var(--input-padding-y) / 3);
+    font-size: 12px;
+    color: #777;
+    }
+
+    .btn-google {
+    color: white;
+    background-color: #ea4335;
+    }
+
+    .btn-facebook {
+    color: white;
+    background-color: #3b5998;
+    }*@

@@ -96,7 +96,7 @@ namespace AprajitaRetails.Models.ViewModels
         [Display (Name = "No of Days Absent")]
         public double AbsentDays { get; set; }
 
-        [Display (Name = "Ratio Of Attenadance")]
+        [Display (Name = "Ratio Of Attendance")]
         public double Ratio { get; set; }
 
         [Display (Name = "Current Month Sale")]
@@ -105,6 +105,7 @@ namespace AprajitaRetails.Models.ViewModels
 
         [Display (Name = "No Of Bills")]
         public int NoOfBills { get; set; }
+        public bool IsSalesman { get; set; }
 
     }
 
@@ -181,7 +182,7 @@ namespace AprajitaRetails.Models.ViewModels
         [Display (Name = "Cash-In-Hand")]
         [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CashInHand { get; set; }
-        [Display (Name = "Openning Balance")]
+        [Display (Name = "Opening Balance")]
         [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal OpenningBal { get; set; }
         [Display (Name = "Income")]

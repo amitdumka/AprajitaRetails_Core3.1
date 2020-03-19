@@ -18,6 +18,9 @@
     <li class="nav-item">
         <a class="nav-link" id="calendar-tab" data-toggle="tab" href="#calendar" role="tab" aria-controls="calendar" aria-selected="false">Calendar</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" id="publictodo-tab" data-toggle="tab" href="#publictodo" role="tab" aria-controls="publictodo" aria-selected="false">Public Todos</a>
+    </li>
 </ul>
 <a class="btn btn-outline-success btn-sm" asp-action="Create">Add Todo</a>
 <hr/>
@@ -49,40 +52,40 @@
             <tbody>
                 @foreach ( var item in Model.RecentlyAddedTodos )
                 {
-                <tr>
-                    <td>
-                        <form asp-action="UpdateDone" method="post">
-                            <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
-                            <input type="hidden" name="id" value="@item.Id" />
-                        </form>
-                    </td>
-                    <td>
-                        @item.Title
-                    </td>
-                    <td>
-                        @(item.Done ? "Yes" : "No")
-                    </td>
-                    <td>
-                        <span data-value="@item.Added" class="timeStampValueModernized">
-                            @item.Added
-                        </span>
-                    </td>
-                    <td>
-                        @if ( item.Tags != null )
-                        {
-                            @foreach ( var tag in item.Tags )
+                    <tr>
+                        <td>
+                            <form asp-action="UpdateDone" method="post">
+                                <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
+                                <input type="hidden" name="id" value="@item.Id" />
+                            </form>
+                        </td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @(item.Done ? "Yes" : "No")
+                        </td>
+                        <td>
+                            <span data-value="@item.Added" class="timeStampValueModernized">
+                                @item.Added
+                            </span>
+                        </td>
+                        <td>
+                            @if ( item.Tags != null )
                             {
-                                <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                                @foreach ( var tag in item.Tags )
+                                {
+                                    <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                                }
                             }
-                        }
-                    </td>
-                    
-                    <td class="btn-group btn-group-sm">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
-                </tr>
+                        </td>
+
+                        <td class="btn-group btn-group-sm">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -114,40 +117,40 @@
             <tbody>
                 @foreach ( var item in Model.CloseDueToTodos )
                 {
-                <tr>
-                    <td>
-                        <form asp-action="UpdateDone" method="post">
-                            <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
-                            <input type="hidden" name="id" value="@item.Id" />
-                        </form>
-                    </td>
-                    <td>
-                        @item.Title
-                    </td>
-                    <td>
-                        @(item.Done ? "Yes" : "No")
-                    </td>
-                    <td>
-                        <span data-value="@item.DueTo" class="timeStampValueModernized">
-                            @item.DueTo
-                        </span>
-                    </td>
-                    <td>
-                        @if ( item.Tags != null )
-                        {
-                            @foreach ( var tag in item.Tags )
+                    <tr>
+                        <td>
+                            <form asp-action="UpdateDone" method="post">
+                                <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
+                                <input type="hidden" name="id" value="@item.Id" />
+                            </form>
+                        </td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @(item.Done ? "Yes" : "No")
+                        </td>
+                        <td>
+                            <span data-value="@item.DueTo" class="timeStampValueModernized">
+                                @item.DueTo
+                            </span>
+                        </td>
+                        <td>
+                            @if ( item.Tags != null )
                             {
-                                <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                                @foreach ( var tag in item.Tags )
+                                {
+                                    <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                                }
                             }
-                        }
-                    </td>
-                    
-                    <td class="btn-group btn-group-sm">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
-                    </td>
-                </tr>
+                        </td>
+
+                        <td class="btn-group btn-group-sm">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -157,59 +160,124 @@
 
         @{ var days = 0; }
         <table class="table table-bordered">
-            <thead >
-            <tr class="thead-dark">
-                <th colspan="7" class="text-primary">
-                    @DateTime.Now.ToString("MMMM/yyyy")
-                </th>
+            <thead>
+                <tr class="thead-dark">
+                    <th colspan="7" class="text-primary">
+                        @DateTime.Now.ToString("MMMM/yyyy")
+                    </th>
 
-            </tr>
-            <tr class="text-info bg-warning">
-                <th class="text-danger">Sun</th>
-                <th>Mon</th>
-                <th>Tues</th>
-                <th>Wen</th>
-                <th>Thur</th>
-                <th>Fri</th>
-                <th>Sat</th>
-            </tr>
+                </tr>
+                <tr class="text-info bg-warning">
+                    <th class="text-danger">Sun</th>
+                    <th>Mon</th>
+                    <th>Tues</th>
+                    <th>Wen</th>
+                    <th>Thur</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
             </thead>
             <tbody>
 
 
                 <tr>
-                    @for (var i = 0; i < Model.CalendarViewModel.OffsetFromSun; i++)
+                    @for ( var i = 0 ; i < Model.CalendarViewModel.OffsetFromSun ; i++ )
                     {
                         <td>
                         </td>
                     }
-                    @while (days < Model.CalendarViewModel.NumberOfDays)
+                    @while ( days < Model.CalendarViewModel.NumberOfDays )
                     {
                         days = days + 1;
                         <td>
                             @days
 
                             @{
-                                var day = new DateTime(DateTime.Now.Year, DateTime.Now.Month, days).Day;
-                                var todosInDay = Model.MonthlyToTodos.Count(todo => todo.DueTo./*ToDateTimeOffset().*/Day == day);
-                                if (todosInDay > 0)
+                                var day = new DateTime (DateTime.Now.Year, DateTime.Now.Month, days).Day;
+                                var todosInDay = Model.MonthlyToTodos.Count (todo => todo.DueTo./*ToDateTimeOffset().*/Day == day);
+                                if ( todosInDay > 0 )
                                 {
                                     <span style="margin-left: 1em;" class="badge badge-info">@todosInDay</span>
                                 }
                             }
                         </td>
-                        @if ((days + Model.CalendarViewModel.OffsetFromSun) % 7 == 0)
+                        @if ( ( days + Model.CalendarViewModel.OffsetFromSun ) % 7 == 0 )
                         {
-                            WriteLiteral("</tr><tr>");
+                            WriteLiteral ("</tr><tr>");
                         }
                     }
-                    @while (days + Model.CalendarViewModel.OffsetFromSun < 35)
+                    @while ( days + Model.CalendarViewModel.OffsetFromSun < 35 )
                     {
                         days = days + 1;
                         <td>
                         </td>
                     }
                 </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="publictodo" role="tabpanel" aria-labelledby="publictodo-tab">
+        <h2>Public</h2>
+
+        <table class="table table-bordered table-sm table-hover table-striped">
+            <thead class="table-success">
+                <tr>
+                    <th>
+                        Update Status
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Done
+                    </th>
+                    <th>
+                        Added
+                    </th>
+                    <th>
+                        Tags
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ( var item in Model.PublicTodos )
+                {
+                    <tr>
+                        <td>
+                            <form asp-action="UpdateDone" method="post">
+                                <input type="checkbox" class="done-checkbox" asp-for="@item.Done" />
+                                <input type="hidden" name="id" value="@item.Id" />
+                            </form>
+                        </td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @(item.Done ? "Yes" : "No")
+                        </td>
+                        <td>
+                            <span data-value="@item.Added" class="timeStampValueModernized">
+                                @item.Added
+                            </span>
+                        </td>
+                        <td>
+                            @if ( item.Tags != null )
+                            {
+                                @foreach ( var tag in item.Tags )
+                                {
+                                    <a asp-action="Index" asp-route-tag="@tag" class="badge badge-light">@tag</a>
+                                }
+                            }
+                        </td>
+
+                        <td class="btn-group btn-group-sm">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
