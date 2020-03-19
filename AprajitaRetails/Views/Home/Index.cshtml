@@ -275,10 +275,10 @@
                                                 <dt class="col-sm-8 text-sm-right text-danger">@Html.DisplayNameFor(model => item.Present)</dt>
                                                 <dd class="col-sm-4 text-danger">@Html.DisplayFor(model => item.Present)</dd>
                                             }
-                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.PresentDays)</dt>
-                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)</dd>
-                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
-                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>
+                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.PresentDays)/Absent</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)/@Html.DisplayFor(model => item.AbsentDays)</dd>
+                                            @*<dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
+                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>*@
 
                                             @if ( item.IsSalesman )
                                             {
