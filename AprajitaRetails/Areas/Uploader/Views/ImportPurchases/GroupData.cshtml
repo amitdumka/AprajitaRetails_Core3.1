@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData ["Title"] = "GroupData";
+    int ctr = 0;
+}
+<h3>Invoice List</h3>
+
+<table class="table table-sm table-bordered">
+    <thead>
+
+        <tr>
+            <th>#</th>
+            <th>Inv No</th>
+            <th>GRNNo</th>
+            <th>NoOfItem</th>
+            <th>Qty</th>
+            <th>CostValue</th>
+            <th>Tax</th>
+            <th>TotalAmnt</th>
+            @*<th></th>*@
+        </tr>
+
+
+    </thead>
+    <tbody>
+        @foreach ( var item in Model )
+        {
+            IDictionary<String,Object> x = HtmlHelper.AnonymousObjectToHtmlAttributes (item);
+            ctr = ctr + 1;
+            <tr>
+                <td>@ctr</td>
+                 <td>@x["InvoiceNo"]</td>
+                 <td>@x["GRNNo"]</td>
+                 <td>@x["TNo"]</td>
+                 <td>@x["TQTY"]</td>
+                 <td>@x["TCost"]</td>
+                 <td>@x["TTax"]</td>
+                @*@{var c = (decimal)x["TTax"]+(decimal)x["TCost"];}*@
+                 <td>@((decimal)x["TTax"]+(decimal)x["TCost"])</td>
+                @*<td>@x["TBar"]</td>*@
+            </tr>
+        }
+
+    </tbody>
+</table>

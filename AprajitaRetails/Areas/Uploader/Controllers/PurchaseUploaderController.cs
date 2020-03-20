@@ -64,12 +64,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult ListUpload(int? id)
         {
 
-            if (id == 101)
+            if (id == 100)
             {
-                var md1 = db.ImportPurchases.Where(c => c.IsDataConsumed == true).OrderByDescending(c => c.GRNDate);
-                return View(md1);
+                var md2 = db.ImportPurchases.Where(c => c.IsDataConsumed == true).OrderByDescending(c => c.GRNDate);
+                return View(md2);
             }
-            else if (id == 100)
+            else if (id == 101)
             {
                 var md1 = db.ImportPurchases.OrderByDescending(c => c.GRNDate).ThenBy(c => c.IsDataConsumed);
                 return View(md1);

@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
+    //http://abctutorial.com/Post/35/mvc-5-master-details-using-jquery-ajax
+    //http://www.dotnetawesome.com/2016/07/advance-master-details-entry-form-in-mvc.html
     [Area ("Sales")]
     public class ManualInvoiceController : Controller
     {
-        private AprajitaRetailsContext aprajitaContext;
-        private VoyagerContext voyagerContext;
+        private readonly AprajitaRetailsContext aprajitaContext;
+        private readonly VoyagerContext voyagerContext;
 
         public ManualInvoiceController(AprajitaRetailsContext aCtx, VoyagerContext vCtx)
         {
@@ -40,8 +42,10 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 {
                     pItem = new { MRP = (decimal) 0.0, ProductName = "Not Found", TaxRate = (decimal) 0 };
                 }
-                JsonResult result = new JsonResult (pItem);
-                result.Value = pItem;
+                JsonResult result = new JsonResult (pItem)
+                {
+                    Value = pItem
+                };
                 return result;
 
             }
@@ -49,8 +53,10 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             {
 
                 var pItem = new { MRP = (decimal) 0.0, ProductName = "Not Found", TaxRate = (decimal) 0 };
-                JsonResult result = new JsonResult (pItem);
-                result.Value = pItem;
+                JsonResult result = new JsonResult (pItem)
+                {
+                    Value = pItem
+                };
                 return result;
 
             }

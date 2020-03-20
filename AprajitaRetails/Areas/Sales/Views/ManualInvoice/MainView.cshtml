@@ -136,10 +136,7 @@
                     data: { 'barcode': $(element).val() },
                     success: function (data) {
                         console.log(data)
-                        //alert(data.ProductName);
-                       // alert(data.mrp);
-                       // alert(data.taxRate);
-                      //  alert(data.productName);
+                       
                         UpdateProductDetails(element, data);
                     },
                     error: function (error) { console.log(error); alert(error); }
@@ -150,8 +147,8 @@
             if (data != null) {
                 var $pname = $(barcode).parents('.mycontainer').find('#product');
                 var $mrpRate = $(barcode).parents('.mycontainer').find('#mrp');
-                //$pname.append.text(data.productName);
-                //$mrpRate.append.text(data.mrp);
+               // $pname.append.text(data.productName);
+               // $mrpRate.append.text(data.mrp);
                 $pname.val(data.productName);
                 $mrpRate.val(data.mrp);
             } else {

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "ListUpload";
+    var ctr = 0;
 }
     <h2 class="purple-text">Purchase List</h2>
    
@@ -14,7 +15,7 @@
         <hr/>   
 <table class="table table-bordered table-hover table-sm table-striped text-center">
     <thead class="bg-success">
-        <tr>
+        <tr> <th>#</th>
             <th>
                 @Html.DisplayNameFor(model => model.GRNNo)
             </th>
@@ -53,7 +54,8 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            ctr = ctr + 1;
+            <tr> <td>@ctr</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GRNNo)
                 </td>
