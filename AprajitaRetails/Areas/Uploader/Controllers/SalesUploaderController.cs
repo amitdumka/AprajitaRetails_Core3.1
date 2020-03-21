@@ -56,13 +56,13 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
             else
             {
-                ViewBag.MessageHead = "No Sale items added. Some error might has been occured. a=" + a;
+                ViewBag.MessageHead = "No Sale items added. Some error might has been occurred. a=" + a;
                 return View(new SaleInvoice());
             }
 
         }
         [HttpPost]
-        public IActionResult UploadSales(string BillType, string InterState, string UploadType, IFormFile FileUpload)
+        public IActionResult UploadSales(string BillType, string InterState, string UploadType, string StoreCode, IFormFile FileUpload)
         {
            
             ExcelUploaders uploader = new ExcelUploaders();
@@ -85,7 +85,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             {
                 uType = UploadTypes.SaleRegister;
             }
-            UploadReturns response = uploader.UploadExcel(db,uType, FileUpload, IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db,uType, FileUpload, StoreCode, IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)

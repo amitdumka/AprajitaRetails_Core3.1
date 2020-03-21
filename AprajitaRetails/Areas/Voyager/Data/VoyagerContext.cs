@@ -29,39 +29,24 @@ namespace AprajitaRetails.Areas.Voyager.Data
         public DbSet<ImportPurchase> ImportPurchases { get; set; }
         public DbSet<ImportSaleItemWise> ImportSaleItemWises { get; set; }
         public DbSet<ImportSaleRegister> ImportSaleRegisters { get; set; }
-
-
-
         public DbSet<ProductItem> ProductItems { get; set; }
         public DbSet<Brand> Brands { get; set; }
-
-
         public DbSet<Category> Categories { get; set; }
         public DbSet<Stock> Stocks { get; set; }
-
-
         //Purchase Entry System
         public DbSet<ProductPurchase> ProductPurchases { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<PurchaseTaxType> PurchaseTaxTypes { get; set; }
-
-
-        // Sale Entry System
-
         public DbSet<SalesPerson> SalesPerson { get; set; }
         public DbSet<SaleInvoice> SaleInvoices { get; set; }
         public DbSet<SaleItem> SaleItems { get; set; }
         public DbSet<SaleTaxType> SaleTaxTypes { get; set; }
-
-
         public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
         public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
-
         public DbSet<ArvindPayment> ArvindPayments { get; set; }
 
-       // public DbSet<AprajitaRetails.Models.TelegramAuthUser> TelegramAuthUser { get; set; }
-        //StoneWorks
+       
 
     }
 

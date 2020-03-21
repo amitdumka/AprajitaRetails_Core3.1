@@ -1,12 +1,30 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AprajitaRetails.Migrations.Voyager
 {
-    public partial class InitialCreate : Migration
+    public partial class Innit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ArvindPayments",
+                columns: table => new
+                {
+                    ArvindPaymentId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Arvind = table.Column<int>(nullable: false),
+                    OnDate = table.Column<DateTime>(nullable: false),
+                    InvoiceNo = table.Column<string>(nullable: true),
+                    Amount = table.Column<decimal>(type: "money", nullable: false),
+                    BankDetails = table.Column<string>(nullable: true),
+                    Remarks = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArvindPayments", x => x.ArvindPaymentId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Brands",
                 columns: table => new
@@ -40,7 +58,7 @@ namespace AprajitaRetails.Migrations.Voyager
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerID = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
@@ -55,119 +73,7 @@ namespace AprajitaRetails.Migrations.Voyager
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.CustomerID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImportInWards",
-                columns: table => new
-                {
-                    ImportInWardId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InWardNo = table.Column<string>(nullable: true),
-                    InWardDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    InvoiceNo = table.Column<string>(nullable: true),
-                    InvoiceDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
-                    PartyName = table.Column<string>(nullable: true),
-                    TotalQty = table.Column<decimal>(nullable: false),
-                    TotalMRPValue = table.Column<decimal>(nullable: false),
-                    TotalCost = table.Column<decimal>(nullable: false),
-                    ImportDate = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImportInWards", x => x.ImportInWardId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImportPurchases",
-                columns: table => new
-                {
-                    ImportPurchaseId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GRNNo = table.Column<string>(nullable: true),
-                    GRNDate = table.Column<DateTime>(nullable: false),
-                    InvoiceNo = table.Column<string>(nullable: true),
-                    InvoiceDate = table.Column<DateTime>(nullable: false),
-                    SupplierName = table.Column<string>(nullable: true),
-                    Barcode = table.Column<string>(nullable: true),
-                    ProductName = table.Column<string>(nullable: true),
-                    StyleCode = table.Column<string>(nullable: true),
-                    ItemDesc = table.Column<string>(nullable: true),
-                    Quantity = table.Column<double>(nullable: false),
-                    MRP = table.Column<decimal>(type: "money", nullable: false),
-                    MRPValue = table.Column<decimal>(type: "money", nullable: false),
-                    Cost = table.Column<decimal>(type: "money", nullable: false),
-                    CostValue = table.Column<decimal>(type: "money", nullable: false),
-                    TaxAmt = table.Column<decimal>(type: "money", nullable: false),
-                    IsVatBill = table.Column<bool>(nullable: false),
-                    IsLocal = table.Column<bool>(nullable: false),
-                    IsDataConsumed = table.Column<bool>(nullable: false),
-                    ImportTime = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImportPurchases", x => x.ImportPurchaseId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImportSaleItemWises",
-                columns: table => new
-                {
-                    ImportSaleItemWiseId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceDate = table.Column<DateTime>(nullable: false),
-                    InvoiceNo = table.Column<string>(nullable: true),
-                    InvoiceType = table.Column<string>(nullable: true),
-                    BrandName = table.Column<string>(nullable: true),
-                    ProductName = table.Column<string>(nullable: true),
-                    ItemDesc = table.Column<string>(nullable: true),
-                    HSNCode = table.Column<string>(nullable: true),
-                    Barcode = table.Column<string>(nullable: true),
-                    StyleCode = table.Column<string>(nullable: true),
-                    Quantity = table.Column<double>(nullable: false),
-                    MRP = table.Column<decimal>(type: "money", nullable: false),
-                    Discount = table.Column<decimal>(type: "money", nullable: false),
-                    BasicRate = table.Column<decimal>(type: "money", nullable: false),
-                    Tax = table.Column<decimal>(type: "money", nullable: false),
-                    SGST = table.Column<decimal>(type: "money", nullable: false),
-                    CGST = table.Column<decimal>(type: "money", nullable: false),
-                    LineTotal = table.Column<decimal>(type: "money", nullable: false),
-                    RoundOff = table.Column<decimal>(type: "money", nullable: false),
-                    BillAmnt = table.Column<decimal>(type: "money", nullable: false),
-                    PaymentType = table.Column<string>(nullable: true),
-                    Saleman = table.Column<string>(nullable: true),
-                    IsDataConsumed = table.Column<bool>(nullable: false),
-                    ImportTime = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImportSaleItemWises", x => x.ImportSaleItemWiseId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImportSaleRegisters",
-                columns: table => new
-                {
-                    ImportSaleRegisterId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceNo = table.Column<string>(nullable: true),
-                    InvoiceType = table.Column<string>(nullable: true),
-                    InvoiceDate = table.Column<string>(nullable: true),
-                    Quantity = table.Column<double>(nullable: false),
-                    MRP = table.Column<decimal>(nullable: false),
-                    Discount = table.Column<decimal>(nullable: false),
-                    BasicRate = table.Column<decimal>(nullable: false),
-                    Tax = table.Column<decimal>(nullable: false),
-                    RoundOff = table.Column<decimal>(nullable: false),
-                    BillAmnt = table.Column<decimal>(nullable: false),
-                    PaymentType = table.Column<string>(nullable: true),
-                    IsConsumed = table.Column<bool>(nullable: false),
-                    ImportTime = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImportSaleRegisters", x => x.ImportSaleRegisterId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,7 +144,7 @@ namespace AprajitaRetails.Migrations.Voyager
                 name: "Stores",
                 columns: table => new
                 {
-                    StoreID = table.Column<int>(nullable: false)
+                    StoreId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StoreCode = table.Column<string>(nullable: true),
                     StoreName = table.Column<string>(nullable: true),
@@ -257,7 +163,7 @@ namespace AprajitaRetails.Migrations.Voyager
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stores", x => x.StoreID);
+                    table.PrimaryKey("PK_Stores", x => x.StoreId);
                 });
 
             migrationBuilder.CreateTable(
@@ -342,6 +248,145 @@ namespace AprajitaRetails.Migrations.Voyager
                         column: x => x.SalePaymentDetailId,
                         principalTable: "SaleInvoices",
                         principalColumn: "SaleInvoiceId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImportInWards",
+                columns: table => new
+                {
+                    ImportInWardId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InWardNo = table.Column<string>(nullable: true),
+                    InWardDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    InvoiceNo = table.Column<string>(nullable: true),
+                    InvoiceDate = table.Column<DateTime>(type: "DateTime2", nullable: false),
+                    PartyName = table.Column<string>(nullable: true),
+                    TotalQty = table.Column<decimal>(nullable: false),
+                    TotalMRPValue = table.Column<decimal>(nullable: false),
+                    TotalCost = table.Column<decimal>(nullable: false),
+                    IsDataConsumed = table.Column<bool>(nullable: false),
+                    StoreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImportInWards", x => x.ImportInWardId);
+                    table.ForeignKey(
+                        name: "FK_ImportInWards_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
+                        principalColumn: "StoreId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImportPurchases",
+                columns: table => new
+                {
+                    ImportPurchaseId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GRNNo = table.Column<string>(nullable: true),
+                    GRNDate = table.Column<DateTime>(nullable: false),
+                    InvoiceNo = table.Column<string>(nullable: true),
+                    InvoiceDate = table.Column<DateTime>(nullable: false),
+                    SupplierName = table.Column<string>(nullable: true),
+                    Barcode = table.Column<string>(nullable: true),
+                    ProductName = table.Column<string>(nullable: true),
+                    StyleCode = table.Column<string>(nullable: true),
+                    ItemDesc = table.Column<string>(nullable: true),
+                    Quantity = table.Column<double>(nullable: false),
+                    MRP = table.Column<decimal>(type: "money", nullable: false),
+                    MRPValue = table.Column<decimal>(type: "money", nullable: false),
+                    Cost = table.Column<decimal>(type: "money", nullable: false),
+                    CostValue = table.Column<decimal>(type: "money", nullable: false),
+                    TaxAmt = table.Column<decimal>(type: "money", nullable: false),
+                    IsVatBill = table.Column<bool>(nullable: false),
+                    IsLocal = table.Column<bool>(nullable: false),
+                    IsDataConsumed = table.Column<bool>(nullable: false),
+                    StoreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImportPurchases", x => x.ImportPurchaseId);
+                    table.ForeignKey(
+                        name: "FK_ImportPurchases_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
+                        principalColumn: "StoreId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImportSaleItemWises",
+                columns: table => new
+                {
+                    ImportSaleItemWiseId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InvoiceDate = table.Column<DateTime>(nullable: false),
+                    InvoiceNo = table.Column<string>(nullable: true),
+                    InvoiceType = table.Column<string>(nullable: true),
+                    BrandName = table.Column<string>(nullable: true),
+                    ProductName = table.Column<string>(nullable: true),
+                    ItemDesc = table.Column<string>(nullable: true),
+                    HSNCode = table.Column<string>(nullable: true),
+                    Barcode = table.Column<string>(nullable: true),
+                    StyleCode = table.Column<string>(nullable: true),
+                    Quantity = table.Column<double>(nullable: false),
+                    MRP = table.Column<decimal>(type: "money", nullable: false),
+                    Discount = table.Column<decimal>(type: "money", nullable: false),
+                    BasicRate = table.Column<decimal>(type: "money", nullable: false),
+                    Tax = table.Column<decimal>(type: "money", nullable: false),
+                    SGST = table.Column<decimal>(type: "money", nullable: false),
+                    CGST = table.Column<decimal>(type: "money", nullable: false),
+                    LineTotal = table.Column<decimal>(type: "money", nullable: false),
+                    RoundOff = table.Column<decimal>(type: "money", nullable: false),
+                    BillAmnt = table.Column<decimal>(type: "money", nullable: false),
+                    PaymentType = table.Column<string>(nullable: true),
+                    Saleman = table.Column<string>(nullable: true),
+                    IsDataConsumed = table.Column<bool>(nullable: false),
+                    IsVatBill = table.Column<bool>(nullable: false),
+                    IsLocal = table.Column<bool>(nullable: false),
+                    StoreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImportSaleItemWises", x => x.ImportSaleItemWiseId);
+                    table.ForeignKey(
+                        name: "FK_ImportSaleItemWises_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
+                        principalColumn: "StoreId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImportSaleRegisters",
+                columns: table => new
+                {
+                    ImportSaleRegisterId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InvoiceNo = table.Column<string>(nullable: true),
+                    InvoiceType = table.Column<string>(nullable: true),
+                    InvoiceDate = table.Column<string>(nullable: true),
+                    Quantity = table.Column<double>(nullable: false),
+                    MRP = table.Column<decimal>(nullable: false),
+                    Discount = table.Column<decimal>(nullable: false),
+                    BasicRate = table.Column<decimal>(nullable: false),
+                    Tax = table.Column<decimal>(nullable: false),
+                    RoundOff = table.Column<decimal>(nullable: false),
+                    BillAmnt = table.Column<decimal>(nullable: false),
+                    PaymentType = table.Column<string>(nullable: true),
+                    IsConsumed = table.Column<bool>(nullable: false),
+                    StoreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImportSaleRegisters", x => x.ImportSaleRegisterId);
+                    table.ForeignKey(
+                        name: "FK_ImportSaleRegisters_Stores_StoreId",
+                        column: x => x.StoreId,
+                        principalTable: "Stores",
+                        principalColumn: "StoreId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -507,6 +552,41 @@ namespace AprajitaRetails.Migrations.Voyager
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "SalesPerson",
+                columns: new[] { "SalesPersonId", "SalesmanName" },
+                values: new object[] { 1, "Sanjeev Mishra" });
+
+            migrationBuilder.InsertData(
+                table: "SalesPerson",
+                columns: new[] { "SalesPersonId", "SalesmanName" },
+                values: new object[] { 2, "Mukesh Mandal" });
+
+            migrationBuilder.InsertData(
+                table: "SalesPerson",
+                columns: new[] { "SalesPersonId", "SalesmanName" },
+                values: new object[] { 3, "Manager" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportInWards_StoreId",
+                table: "ImportInWards",
+                column: "StoreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportPurchases_StoreId",
+                table: "ImportPurchases",
+                column: "StoreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportSaleItemWises_StoreId",
+                table: "ImportSaleItemWises",
+                column: "StoreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportSaleRegisters_StoreId",
+                table: "ImportSaleRegisters",
+                column: "StoreId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_ProductItems_BrandId",
                 table: "ProductItems",
@@ -576,6 +656,9 @@ namespace AprajitaRetails.Migrations.Voyager
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ArvindPayments");
+
+            migrationBuilder.DropTable(
                 name: "CardPaymentDetails");
 
             migrationBuilder.DropTable(
@@ -603,10 +686,10 @@ namespace AprajitaRetails.Migrations.Voyager
                 name: "Stocks");
 
             migrationBuilder.DropTable(
-                name: "Stores");
+                name: "SalePaymentDetails");
 
             migrationBuilder.DropTable(
-                name: "SalePaymentDetails");
+                name: "Stores");
 
             migrationBuilder.DropTable(
                 name: "ProductPurchases");

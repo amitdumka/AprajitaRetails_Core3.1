@@ -485,10 +485,6 @@ namespace AprajitaRetails.Migrations.Voyager
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("ImportDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("InWardDate")
                         .HasColumnType("DateTime2");
 
@@ -507,6 +503,9 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<string>("PartyName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalCost")
                         .HasColumnType("decimal(18,2)");
 
@@ -517,6 +516,8 @@ namespace AprajitaRetails.Migrations.Voyager
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ImportInWardId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("ImportInWards");
                 });
@@ -542,10 +543,6 @@ namespace AprajitaRetails.Migrations.Voyager
 
                     b.Property<string>("GRNNo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ImportTime")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
@@ -577,6 +574,9 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("StyleCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -587,6 +587,8 @@ namespace AprajitaRetails.Migrations.Voyager
                         .HasColumnType("money");
 
                     b.HasKey("ImportPurchaseId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("ImportPurchases");
                 });
@@ -618,10 +620,6 @@ namespace AprajitaRetails.Migrations.Voyager
 
                     b.Property<string>("HSNCode")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ImportTime")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("datetime2");
@@ -668,6 +666,9 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<string>("Saleman")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("StyleCode")
                         .HasColumnType("nvarchar(max)");
 
@@ -675,6 +676,8 @@ namespace AprajitaRetails.Migrations.Voyager
                         .HasColumnType("money");
 
                     b.HasKey("ImportSaleItemWiseId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("ImportSaleItemWises");
                 });
@@ -694,10 +697,6 @@ namespace AprajitaRetails.Migrations.Voyager
 
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("ImportTime")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("InvoiceDate")
                         .HasColumnType("nvarchar(max)");
@@ -723,10 +722,15 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<decimal>("RoundOff")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Tax")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ImportSaleRegisterId");
+
+                    b.HasIndex("StoreId");
 
                     b.ToTable("ImportSaleRegisters");
                 });
@@ -955,6 +959,42 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.HasOne("AprajitaRetails.Areas.Sales.Models.SaleInvoice", "SaleInvoice")
                         .WithOne("PaymentDetail")
                         .HasForeignKey("AprajitaRetails.Areas.Sales.Models.SalePaymentDetail", "SalePaymentDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AprajitaRetails.Areas.Uploader.Models.ImportInWard", b =>
+                {
+                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
+                        .WithMany("ImportInWards")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AprajitaRetails.Areas.Uploader.Models.ImportPurchase", b =>
+                {
+                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
+                        .WithMany("ImportPurchases")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AprajitaRetails.Areas.Uploader.Models.ImportSaleItemWise", b =>
+                {
+                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
+                        .WithMany("ImportSaleItemWises")
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AprajitaRetails.Areas.Uploader.Models.ImportSaleRegister", b =>
+                {
+                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
+                        .WithMany("ImportSaleRegisters")
+                        .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

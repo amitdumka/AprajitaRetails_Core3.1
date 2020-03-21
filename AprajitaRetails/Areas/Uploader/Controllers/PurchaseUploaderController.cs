@@ -30,7 +30,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadPurchase(string BillType, string InterState , IFormFile FileUpload)
+        public IActionResult UploadPurchase(string BillType, string InterState , string StoreCode, IFormFile FileUpload)
         {
            // IFormFile FileUpload = null ;
             ExcelUploaders uploader = new ExcelUploaders();
@@ -48,7 +48,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 IsLocal = true;
             }
 
-            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload, IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload,StoreCode, IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using LinqToExcel.Attributes;
+using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
@@ -49,8 +50,12 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public string PaymentType { get; set; }
 
         public bool IsConsumed { get; set; } = false;
+        //Store Based Started
+        public int StoreId { get; set; }
+        public virtual Store Store { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
+
+        // [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        // public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
     }
 }

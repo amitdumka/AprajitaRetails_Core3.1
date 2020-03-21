@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using AprajitaRetails.Areas.Uploader.Models;
+using Microsoft.AspNetCore.Authorization;    using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,6 +38,12 @@ namespace AprajitaRetails.Areas.Voyager.Models
         public DateTime? ClosingDate { get; set; }
         [Display(Name = "Operative")]
         public bool Status { get; set; }
+        
+        public virtual ICollection<ImportPurchase> ImportPurchases { get; set; }
+        public virtual ICollection<ImportInWard> ImportInWards { get; set; }
+        public virtual ICollection<ImportSaleItemWise>ImportSaleItemWises { get; set; }
+        public virtual ICollection<ImportSaleRegister>ImportSaleRegisters { get; set; }
+
     }
 
 

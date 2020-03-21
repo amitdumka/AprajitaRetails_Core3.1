@@ -48,9 +48,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.IsConsumed)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ImportTime)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -93,9 +93,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IsConsumed)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ImportTime)
-            </td>
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ImportSaleRegisterId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ImportSaleRegisterId">Details</a> |

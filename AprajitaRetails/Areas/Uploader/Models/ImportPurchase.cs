@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using LinqToExcel.Attributes;
+using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
@@ -69,9 +70,12 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;// is data imported to relevent table
+        //Store Based Started
+        public int StoreId { get; set; }
+        public virtual Store Store { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
+      //  [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
+       // public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
 
 
 

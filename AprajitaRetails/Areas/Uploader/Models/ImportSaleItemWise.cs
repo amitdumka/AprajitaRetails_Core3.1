@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
 using LinqToExcel.Attributes;
+using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
@@ -107,10 +108,14 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public bool IsVatBill { get; set; }
         [DefaultValue(false)]
         public bool IsLocal { get; set; }
+        //Store Based Started
+        public int StoreId { get; set; }
+        public virtual Store Store { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
-                                                                  // is data imported to relevent table
+
+        // [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        //public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
+        // is data imported to relevent table
 
 
     }

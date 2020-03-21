@@ -14,12 +14,13 @@ using Microsoft.AspNetCore.Hosting;
 using OfficeOpenXml;
 using AprajitaRetails.Data;
 using AprajitaRetails.Areas.AddressBook.Models;
+using System.Linq;
 
 namespace AprajitaRetails.Ops.Uploader
 {
     public class ExcelUploaders
     {
-        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload, bool IsVat, bool IsLocal)
+        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload,string StoreCode, bool IsVat, bool IsLocal)
         {
 
             //UploadType = "InWard";
@@ -41,7 +42,7 @@ namespace AprajitaRetails.Ops.Uploader
                     {
                         try
                         {
-                            ImportPurchase (db, pathToExcelFile, IsVat, IsLocal);
+                            ImportPurchase (db, pathToExcelFile, StoreCode,IsVat, IsLocal);
                         }
                         catch ( Exception ex )
                         {
@@ -53,7 +54,7 @@ namespace AprajitaRetails.Ops.Uploader
                     {
                         try
                         {
-                            ImportSaleItemWise (db, pathToExcelFile, IsVat, IsLocal);
+                            ImportSaleItemWise (db, pathToExcelFile,StoreCode, IsVat, IsLocal);
                         }
                         catch ( Exception ex )
                         {
@@ -65,7 +66,7 @@ namespace AprajitaRetails.Ops.Uploader
                     {
                         try
                         {
-                            ImportSaleRegister (db, pathToExcelFile);
+                            ImportSaleRegister (db, StoreCode, pathToExcelFile);
                         }
                         catch ( Exception ex )
                         {
@@ -77,7 +78,7 @@ namespace AprajitaRetails.Ops.Uploader
                     {
                         try
                         {
-                            ImportPurchaseInward (db, pathToExcelFile);
+                            ImportPurchaseInward (db, StoreCode, pathToExcelFile);
                         }
                         catch ( Exception ex )
                         {
@@ -112,7 +113,7 @@ namespace AprajitaRetails.Ops.Uploader
 
         }//end of function
 
-        private int ImportSaleItemWise(VoyagerContext db, string fileName, bool IsVat, bool IsLocal)
+        private int ImportSaleItemWise(VoyagerContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -153,7 +154,7 @@ namespace AprajitaRetails.Ops.Uploader
                         Saleman = ( workSheet.Cells [i, 22].Value ?? string.Empty ).ToString (),
 
                         IsDataConsumed = false,
-                        ImportTime = DateTime.Today,
+                        //ImportTime = DateTime.Today,
                         IsLocal = IsLocal,
                         IsVatBill = IsVat
 
@@ -194,7 +195,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        private int ImportPurchase(VoyagerContext db, string fileName, bool IsVat, bool IsLocal)
+        private int ImportPurchase(VoyagerContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
         {
 
 
@@ -205,7 +206,10 @@ namespace AprajitaRetails.Ops.Uploader
             using ExcelPackage package = new ExcelPackage (file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets ["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
-
+            int StoreID = 1;//Default
+            StoreID = db.Stores.Where (c => c.StoreCode == StoreCode).Select (c => c.StoreId).FirstOrDefault ();
+            if ( StoreID < 1 )
+                StoreID = 1;
             List<ImportPurchase> purchaseList = new List<ImportPurchase> ();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
 
@@ -229,9 +233,10 @@ namespace AprajitaRetails.Ops.Uploader
                     CostValue = (decimal) workSheet.Cells [i, 14].GetValue<decimal> (),
                     TaxAmt = (decimal) workSheet.Cells [i, 15].GetValue<decimal> (),
                     IsDataConsumed = false,
-                    ImportTime = DateTime.Today,
+                   // ImportTime = DateTime.Today,
                     IsLocal = IsLocal,
-                    IsVatBill = IsVat
+                    IsVatBill = IsVat, 
+                    StoreId=StoreID
                 });
 
             }
@@ -242,7 +247,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        private int ImportPurchaseInward(VoyagerContext db, string fileName)
+        private int ImportPurchaseInward(VoyagerContext db, string StoreCode, string fileName)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -269,7 +274,7 @@ namespace AprajitaRetails.Ops.Uploader
                     TotalCost = (decimal) workSheet.Cells [i, 8].GetValue<decimal> (),
 
                     IsDataConsumed = false,
-                    ImportDate = DateTime.Today,
+                   // ImportDate = DateTime.Today,
                 });
 
             }
@@ -280,7 +285,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        private int ImportSaleRegister(VoyagerContext db, string fileName)
+        private int ImportSaleRegister(VoyagerContext db, string StoreCode, string fileName)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -313,7 +318,7 @@ namespace AprajitaRetails.Ops.Uploader
                     RoundOff = (decimal) workSheet.Cells [i, 9].GetValue<decimal> (),
                     BillAmnt = (decimal) workSheet.Cells [i, 10].GetValue<decimal> (),
                     PaymentType = workSheet.Cells [i, 11].Value.ToString (),
-                    ImportTime = DateTime.Today,
+                    //ImportTime = DateTime.Today,
                     IsConsumed = false
                 };
 

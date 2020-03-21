@@ -38,9 +38,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.TotalCost)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.ImportDate)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -72,9 +72,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TotalCost)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.ImportDate)
-            </td>
+            </td>*@
             <td class="btn-group btn-group-sm">
                 <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.ImportInWardId">Edit</a>
                 <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ImportInWardId">Details</a>
