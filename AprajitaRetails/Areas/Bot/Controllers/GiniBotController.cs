@@ -13,7 +13,7 @@ namespace AprajitaRetails.Areas.Bot.Controllers
     public class GiniBotController : Controller
     {
         BotGini bot;
-        static string Msg = "";
+       // static string Msg = "";
         static long LastChatId = BotConfig.AmitKumarChatId;
         private readonly AprajitaRetailsContext _db;
         public GiniBotController(AprajitaRetailsContext db)
@@ -30,7 +30,7 @@ namespace AprajitaRetails.Areas.Bot.Controllers
                 bot.SetupGini ();
                 ViewBag.SendMessage = TXTMessage + ViewBag.SendMessage;
                 await BotGini.SendMessage (LastChatId, TXTMessage);
-                ViewBag.RecMessage = Msg;
+               // ViewBag.RecMessage = Msg;
 
             }
             return View ();
@@ -70,7 +70,7 @@ namespace AprajitaRetails.Areas.Bot.Controllers
                         break;
 
                     case "/register":
-                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobileno, your-password");
+                        await BotGini.SendMessage (e.Message.Chat.Id, "type /mobile space your-mobile-no, your-password");
                         break;
 
                     case "/help":

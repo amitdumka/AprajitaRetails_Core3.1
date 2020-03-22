@@ -10,6 +10,8 @@ using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
+    //TODO: move to accounts sections. 
+
     [Area("Voyager")]
     public class ArvindPaymentsController : Controller
     {

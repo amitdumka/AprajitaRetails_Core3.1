@@ -39,8 +39,8 @@ namespace AprajitaRetails.Ops.Utility
                     return 0;
                 }
             }
-
         }
+
         public List<CashInHand> CashInHandCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate)
         {
             IEnumerable<CashInHand> cashs = db.CashInHands.Where (c => c.CIHDate.Month == forDate.Month).OrderBy (c => c.CIHDate);
@@ -62,23 +62,20 @@ namespace AprajitaRetails.Ops.Utility
                     cBal = cash.ClosingBalance;
 
                     db.Entry (cash).State = EntityState.Modified;
-
                 }
                 try
                 {
-
                     db.SaveChanges ();
-
                 }
                 catch ( Exception )
                 {
                     return cashs.ToList ();
                     // Log.Info("CashInHand Correction failed");
                 }
-
             }
             return cashs.ToList ();
         }
+
         public List<CashBook> CorrectCashInHands(AprajitaRetailsContext db, DateTime date, string fileName, bool IsDay = false)
         {
             List<CashBook> cashBookList;
@@ -366,6 +363,7 @@ namespace AprajitaRetails.Ops.Utility
             }
             return CorrectBalCashBook (book, OpnBal);
         }
+
         private List<CashBook> CorrectBalCashBook(List<CashBook> books, decimal OpnBal)
         {
             IEnumerable<CashBook> orderBook = books.OrderBy (c => c.EDate);
@@ -391,7 +389,7 @@ namespace AprajitaRetails.Ops.Utility
 
             if ( startDate.Date != new DateTime (startDate.Year, startDate.Month, 1) )
             {
-               CashInHand first = new CashInHand ()
+                CashInHand first = new CashInHand ()
                 {
                     CIHDate = new DateTime (startDate.Year, startDate.Month, 1),
                     OpenningBalance = 0,
@@ -441,7 +439,7 @@ namespace AprajitaRetails.Ops.Utility
                             db.SaveChanges ();
                         }
                     }
-                   
+
                     cashInHand = new CashInHand ()
                     {
                         CIHDate = item.EDate,
@@ -498,8 +496,6 @@ namespace AprajitaRetails.Ops.Utility
                 db.SaveChanges ();
             }
             return inHandList;
-
-
         }
 
         // Correct Cash In Hand In Database
@@ -520,7 +516,7 @@ namespace AprajitaRetails.Ops.Utility
     {
         public List<CashBook> CorrectCashInHands(AprajitaRetailsContext db, DateTime date, bool IsDay = false)
         {
-            List<CashBook> cashBookList ;
+            List<CashBook> cashBookList;
             if ( IsDay )
                 cashBookList = GetDailyCashBook (db, date);
             else
@@ -800,6 +796,7 @@ namespace AprajitaRetails.Ops.Utility
             }
             return CorrectBalCashBook (book, OpnBal);
         }
+
         private List<CashBook> CorrectBalCashBook(List<CashBook> books, decimal OpnBal)
         {
             IEnumerable<CashBook> orderBook = books.OrderBy (c => c.EDate);

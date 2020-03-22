@@ -1,22 +1,21 @@
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using AprajitaRetails.Areas.Accounts.Data;
+using AprajitaRetails.Areas.ToDo.Extensions;
+using AprajitaRetails.Areas.Voyager.Data;
 using AprajitaRetails.Data;
+using AprajitaRetails.Ops.Bot.TelgramService;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
-using AprajitaRetails.Areas.Voyager.Data;
-//using AprajitaRetails.Areas.Chat.Models.Hubs;
-using Microsoft.AspNetCore.Http;
-using AprajitaRetails.Ops.Bot.TelgramService;
-using AprajitaRetails.Areas.Accounts.Data;
-using AprajitaRetails.Areas.ToDo.Extensions;
-using System;
 
 namespace AprajitaRetails
 {
@@ -58,8 +57,9 @@ namespace AprajitaRetails
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
 
-            services.AddSession (options => {
-                options.IdleTimeout = TimeSpan.FromHours (4);//You can set Time   
+            services.AddSession (options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours (4);//You can set Time
             });
             // services.AddSignalR ();
 
@@ -85,10 +85,7 @@ namespace AprajitaRetails
              });
             services.AddApplicationInsightsTelemetry ();
 
-            
             services.AddSingleton<IGiniService, GiniService> ();
-           
-            
 
             services.AddControllers ().AddNewtonsoftJson ();
             services.ConfigureLocalization ();
@@ -96,8 +93,6 @@ namespace AprajitaRetails
             services.ConfigureCookiePolicy ();
             services.ConfigureServices ();
             services.ConfigureStorage (Configuration);
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -133,8 +128,6 @@ namespace AprajitaRetails
                      pattern: "{controller=Home}/{action=Index}/{id?}");
                  endpoints.MapRazorPages ();
              });
-
-
         }
     }
 }

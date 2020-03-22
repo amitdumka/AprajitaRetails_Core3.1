@@ -1,64 +1,54 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using System;
 using System.ComponentModel;
-//using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-//using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 
 namespace AprajitaRetails.Models
 {
-    //Income 
+    //Income
     public class DailySale
     {
         public int DailySaleId { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Sale Date")]
+        [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display (Name = "Sale Date")]
         public DateTime SaleDate { get; set; }
 
-        [Display(Name = "Invoice No")]
+        [Display (Name = "Invoice No")]
         public string InvNo { get; set; }
 
-        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal Amount { get; set; }
 
-        [Display(Name = "Payment Mode")]
+        [Display (Name = "Payment Mode")]
         public PayModes PayMode { get; set; }
 
-        [Display(Name = "Cash Amount")]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [Display (Name = "Cash Amount")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CashAmount { get; set; }
 
-        [ForeignKey("Salesman")]
+        [ForeignKey ("Salesman")]
         public int SalesmanId { get; set; }
+
         public virtual Salesman Salesman { get; set; }
 
-        [Display(Name = "Due")]
+        [Display (Name = "Due")]
         public bool IsDue { get; set; }
 
-        [Display(Name = "Manual Bill")]
+        [Display (Name = "Manual Bill")]
         public bool IsManualBill { get; set; }
 
-        [Display(Name = "Tailoring Bill")]
+        [Display (Name = "Tailoring Bill")]
         public bool IsTailoringBill { get; set; }
 
-        [Display(Name = "Sale Return")]
+        [Display (Name = "Sale Return")]
         public bool IsSaleReturn { get; set; }
+
         public string Remarks { get; set; }
-        
-        [DefaultValue(false)]
-           public bool IsMatchedWithVOy { get; set; }
+
+        [DefaultValue (false)]
+        public bool IsMatchedWithVOy { get; set; }
+
         //public virtual DuesList DuesList { get; set; }
-
     }
-
-    //TODO: List
-    //TODO: Dues Recovery options
-    //TODO: Tailoring 
-    //TODO: Sales return policy update and check 
-    //TODO: Purchase of Items/Assets
-    //TODO: Arvind Payments
-    //TODO: Purchase Invoice Entry
-
 }

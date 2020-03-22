@@ -22,8 +22,7 @@ namespace AprajitaRetails.Ops.TAS
     public class InventoryManger
     {
         private readonly int StoreID = 1;
-
-        public InventoryManger(int storeid) { StoreID = storeid; }
+         public InventoryManger(int storeid) { StoreID = storeid; }
 
         #region HelperFunctions
         public void UpdateHSNCode(VoyagerContext db, string HSNCode, int itemCode) { }
@@ -307,7 +306,6 @@ namespace AprajitaRetails.Ops.TAS
             return ctr;
         }
 
-
         public int CreateProductItem(VoyagerContext db, ImportPurchase purchase)
         {
             int barc = db.ProductItems.Where (c => c.Barcode == purchase.Barcode).Count ();
@@ -327,7 +325,7 @@ namespace AprajitaRetails.Ops.TAS
 
                 };
 
-                //spliting ProductName
+                //splinting ProductName
                 string [] PN = purchase.ProductName.Split ('/');
 
                 // Apparel / Work / Blazers
@@ -346,6 +344,7 @@ namespace AprajitaRetails.Ops.TAS
                     item.Units = Units.Nos;
                     item.Categorys = ProductCategorys.Tailoring;
                 }
+                //TODO: include promo items and suit cover
                 else
                 {
                     item.Units = Units.Nos;
@@ -383,7 +382,7 @@ namespace AprajitaRetails.Ops.TAS
             Stock stcks = db.Stocks.Where (c => c.ProductItemId == pItemId).FirstOrDefault ();
             if ( stcks != null )
             {
-                
+
                 stcks.PurchaseQty += purchase.Quantity;
                 stcks.Quantity += purchase.Quantity;
                 db.Entry (stcks).State = EntityState.Modified;
@@ -416,14 +415,11 @@ namespace AprajitaRetails.Ops.TAS
                     product.TotalBasicAmount += purchase.CostValue;
                     product.TotalTax += purchase.TaxAmt;
                     product.TotalQty += purchase.Quantity;
-
-
                 }
                 else
                 {
                     db.ProductPurchases.Add (product);
                     db.SaveChanges ();
-
                     product = new ProductPurchase
                     {
                         InvoiceNo = purchase.InvoiceNo,
@@ -438,16 +434,10 @@ namespace AprajitaRetails.Ops.TAS
                         TotalAmount = purchase.CostValue + purchase.TaxAmt,// TODO: Check for actual DATA. 
                         Remarks = "",
                         SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName),
-                        StoreId=StoreID
-
-
+                        StoreId = StoreID
                     };
                     product.PurchaseItems = new List<PurchaseItem> ();
-
-
-
                 }
-
             }
             else
             {
@@ -466,10 +456,8 @@ namespace AprajitaRetails.Ops.TAS
                     Remarks = "",
                     SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName),
                     StoreId = StoreID
-
                 };
                 product.PurchaseItems = new List<PurchaseItem> ();
-
             }
             return product;
         }
@@ -494,13 +482,22 @@ namespace AprajitaRetails.Ops.TAS
         {
             //Calculate tax rate
             int taxRate = 0;
-            taxRate = (int) ( ( purchase.TaxAmt * 100 ) / purchase.CostValue );
+            try
+            {
+                taxRate = (int) ( ( purchase.TaxAmt * 100 ) / purchase.CostValue );
+            }
+            catch ( Exception )
+            {
 
+                taxRate = 0;
+            }
+
+            //TODO:BUG:  error can come if tax amount is zero. 
             if ( IsLocal )
             {
                 try
                 {
-                    int id = db.PurchaseTaxTypes.Where (c => c.CompositeRate == taxRate).Select (c => c.PurchaseTaxTypeId).FirstOrDefault ();
+                    int id = db.PurchaseTaxTypes.Where (c => c.CompositeRate == taxRate && c.TaxType == TaxType.GST).Select (c => c.PurchaseTaxTypeId).FirstOrDefault ();
                     if ( id == 0 )
                     {
                         PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax GST(SGST+CGST) @" + taxRate };
@@ -519,28 +516,32 @@ namespace AprajitaRetails.Ops.TAS
                     return taxType.PurchaseTaxTypeId;
                 }
             }
-
-
-            try
+            else
             {
-                int id = db.PurchaseTaxTypes.Where (c => c.CompositeRate == taxRate).Select (c => c.PurchaseTaxTypeId).FirstOrDefault ();
-                if ( id == 0 )
+                try
                 {
+                    int id = db.PurchaseTaxTypes.Where (c => c.CompositeRate == taxRate && c.TaxType == TaxType.IGST).Select (c => c.PurchaseTaxTypeId).FirstOrDefault ();
+                    if ( id == 0 )
+                    {
+                        PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
+                        db.PurchaseTaxTypes.Add (taxType);
+                        db.SaveChanges ();
+                        return taxType.PurchaseTaxTypeId;
+                    }
+                    return id;
+                }
+                catch ( Exception )
+                {
+
                     PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
                     db.PurchaseTaxTypes.Add (taxType);
                     db.SaveChanges ();
                     return taxType.PurchaseTaxTypeId;
                 }
-                return id;
             }
-            catch ( Exception )
-            {
 
-                PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
-                db.PurchaseTaxTypes.Add (taxType);
-                db.SaveChanges ();
-                return taxType.PurchaseTaxTypeId;
-            }
+
+
 
         }
         #endregion
@@ -808,7 +809,7 @@ namespace AprajitaRetails.Ops.TAS
         }
 
         /// <summary>
-        /// For Creating Stock list for Sale . which can be later ajusted
+        /// For Creating Stock list for Sale . which can be later adjusted
         /// </summary>
         /// <param name="db">Database Context</param>
         /// <param name="qty"> Sale Qty</param>
@@ -998,9 +999,7 @@ namespace AprajitaRetails.Ops.TAS
         public bool IsPurchaseEntry { get; set; }
         public bool IsAccoutingEntry { get; set; }
     }
-
-
-    public static class SalePurchaseManager
+        public static class SalePurchaseManager
     {
         /// <summary>
         /// UpDate Stock when Sale or Purchase Happen
@@ -1012,7 +1011,7 @@ namespace AprajitaRetails.Ops.TAS
         /// <returns></returns>
         public static bool UpDateStock(VoyagerContext db, int ItemCode, double Qty, bool IsPurchased, int StoreId)
         {
-            var stock = db.Stocks.Where (c => c.ProductItemId == ItemCode && c.StoreId==StoreId).FirstOrDefault ();
+            var stock = db.Stocks.Where (c => c.ProductItemId == ItemCode && c.StoreId == StoreId).FirstOrDefault ();
 
             if ( stock != null )
             {
@@ -1209,7 +1208,7 @@ namespace AprajitaRetails.Ops.TAS
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
                 SalesPersonId = GetSalesPersonId (db, item.Saleman),
-                SaleTaxTypeId = CreateSaleTax (db, item) 
+                SaleTaxTypeId = CreateSaleTax (db, item)
 
             };
             SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, StoreId);// TODO: Check for this working

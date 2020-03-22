@@ -1,33 +1,26 @@
-﻿using AprajitaRetails.Areas.Uploader.Models;
-using LinqToExcel;
-using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
-using System.Data.OleDb;
-using System.Web;
-using Microsoft.AspNetCore.Http;
 using System.IO;
-using AprajitaRetails.Areas.Voyager.Data;
-using Microsoft.AspNetCore.Hosting;
-using OfficeOpenXml;
-using AprajitaRetails.Data;
-using AprajitaRetails.Areas.AddressBook.Models;
 using System.Linq;
+using AprajitaRetails.Areas.AddressBook.Models;
+using AprajitaRetails.Areas.Uploader.Models;
+using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Http;
+using OfficeOpenXml;
 
 namespace AprajitaRetails.Ops.Uploader
 {
     public class ExcelUploaders
     {
-        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload,string StoreCode, bool IsVat, bool IsLocal)
+        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
         {
-
             //UploadType = "InWard";
             //List<string> data = new List<string> ();
             if ( FileUpload != null )
             {
-                // tdata.ExecuteCommand("truncate table OtherCompanyAssets");  
+                // tdata.ExecuteCommand("truncate table OtherCompanyAssets");
                 if ( FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" )
                 {
                     string filename = FileUpload.FileName;
@@ -42,7 +35,7 @@ namespace AprajitaRetails.Ops.Uploader
                     {
                         try
                         {
-                            ImportPurchase (db, pathToExcelFile, StoreCode,IsVat, IsLocal);
+                            ImportPurchase (db, pathToExcelFile, StoreCode, IsVat, IsLocal);
                         }
                         catch ( Exception ex )
                         {
@@ -54,7 +47,7 @@ namespace AprajitaRetails.Ops.Uploader
                     {
                         try
                         {
-                            ImportSaleItemWise (db, pathToExcelFile,StoreCode, IsVat, IsLocal);
+                            ImportSaleItemWise (db, pathToExcelFile, StoreCode, IsVat, IsLocal);
                         }
                         catch ( Exception ex )
                         {
@@ -96,21 +89,16 @@ namespace AprajitaRetails.Ops.Uploader
                         System.IO.File.Delete (pathToExcelFile);
                     }
                     return UploadReturns.Success;
-
-
-
-                }//end of if contexttype
+                }//end of if context type
                 else
                 {
                     return UploadReturns.NotExcelType;
                 }
-
-            }//end of if fileupload
+            }//end of if file upload
             else
             {
                 return UploadReturns.FileNotFound;
             }
-
         }//end of function
 
         private int ImportSaleItemWise(VoyagerContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
@@ -128,15 +116,14 @@ namespace AprajitaRetails.Ops.Uploader
             int xo = 0;
             for ( int i = 2 ; i <= totalRows ; i++ )
             {
-                //Invoice No 1	Invoice Date 2	Invoice Type 3	
+                //Invoice No 1	Invoice Date 2	Invoice Type 3
                 //Brand Name 4	Product Name 5 Item Desc 6	HSN Code 7	BAR CODE 8	//
-                //Style Code 9	Quantity 10	MRP	11 Discount Amt 12	Basic Amt 13	Tax Amt 14	SGST Amt 15	
+                //Style Code 9	Quantity 10	MRP	11 Discount Amt 12	Basic Amt 13	Tax Amt 14	SGST Amt 15
                 //CGST Amt 16	CESS Amt 17	Line Total 18	Round Off 19	Bill Amt 20	Payment Mode 21	SalesMan Name 22	//
                 //Coupon %	Coupon Amt	SUB TYPE	Bill Discount	LP Flag	Inst Order CD	TAILORING FLAG
 
                 try
                 {
-
                     ImportSaleItemWise p = new ImportSaleItemWise
                     {
                         InvoiceNo = ( workSheet.Cells [i, 1].Value ?? string.Empty ).ToString (),
@@ -157,7 +144,6 @@ namespace AprajitaRetails.Ops.Uploader
                         //ImportTime = DateTime.Today,
                         IsLocal = IsLocal,
                         IsVatBill = IsVat
-
                     };
 
                     p.HSNCode = ( workSheet.Cells [i, 7].Value ?? string.Empty ).ToString ();
@@ -174,9 +160,7 @@ namespace AprajitaRetails.Ops.Uploader
                     p.RoundOff = (decimal) workSheet.Cells [i, 19].GetValue<decimal> ();
                     p.BillAmnt = (decimal) workSheet.Cells [i, 20].GetValue<decimal> ();
 
-
                     saleList.Add (p);
-
 
                     xo++;
                 }
@@ -186,7 +170,6 @@ namespace AprajitaRetails.Ops.Uploader
                     // return UploadReturns.Error;
                     throw;
                 }
-
             }
 
             db.ImportSaleItemWises.AddRange (saleList);
@@ -197,8 +180,6 @@ namespace AprajitaRetails.Ops.Uploader
 
         private int ImportPurchase(VoyagerContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
         {
-
-
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
             FileInfo file = new FileInfo (fileName);
@@ -233,12 +214,11 @@ namespace AprajitaRetails.Ops.Uploader
                     CostValue = (decimal) workSheet.Cells [i, 14].GetValue<decimal> (),
                     TaxAmt = (decimal) workSheet.Cells [i, 15].GetValue<decimal> (),
                     IsDataConsumed = false,
-                   // ImportTime = DateTime.Today,
+                    // ImportTime = DateTime.Today,
                     IsLocal = IsLocal,
-                    IsVatBill = IsVat, 
-                    StoreId=StoreID
+                    IsVatBill = IsVat,
+                    StoreId = StoreID
                 });
-
             }
 
             db.ImportPurchases.AddRange (purchaseList);
@@ -274,9 +254,8 @@ namespace AprajitaRetails.Ops.Uploader
                     TotalCost = (decimal) workSheet.Cells [i, 8].GetValue<decimal> (),
 
                     IsDataConsumed = false,
-                   // ImportDate = DateTime.Today,
+                    // ImportDate = DateTime.Today,
                 });
-
             }
 
             db.ImportInWards.AddRange (purchaseList);
@@ -300,9 +279,9 @@ namespace AprajitaRetails.Ops.Uploader
             int xo = 0;
             for ( int i = 2 ; i <= totalRows ; i++ )
             {
-                //Invoice No 1	Invoice Date 2	Invoice Type 3	
+                //Invoice No 1	Invoice Date 2	Invoice Type 3
                 //Brand Name 4	Product Name 5 Item Desc 6	HSN Code 7	BAR CODE 8	//
-                //Style Code 9	Quantity 10	MRP	11 Discount Amt 12	Basic Amt 13	Tax Amt 14	SGST Amt 15	
+                //Style Code 9	Quantity 10	MRP	11 Discount Amt 12	Basic Amt 13	Tax Amt 14	SGST Amt 15
                 //CGST Amt 16	CESS Amt 17	Line Total 18	Round Off 19	Bill Amt 20	Payment Mode 21	SalesMan Name 22	//
                 //Coupon %	Coupon Amt	SUB TYPE	Bill Discount	LP Flag	Inst Order CD	TAILORING FLAG
                 ImportSaleRegister p = new ImportSaleRegister
@@ -323,7 +302,6 @@ namespace AprajitaRetails.Ops.Uploader
                 };
 
                 saleList.Add (p);
-
 
                 xo++;
             }
@@ -348,7 +326,6 @@ namespace AprajitaRetails.Ops.Uploader
                         FileUpload.CopyTo (stream);
                     }
 
-
                     try
                     {
                         FileInfo file = new FileInfo (pathToExcelFile);
@@ -363,14 +340,12 @@ namespace AprajitaRetails.Ops.Uploader
                         {
                             Contact c = new Contact
                             {
-
-                                FirstName = (workSheet.Cells [i, 1].Value ?? string.Empty ).ToString (),
-                                LastName = (workSheet.Cells [i, 2].Value ?? string.Empty ).ToString (),
+                                FirstName = ( workSheet.Cells [i, 1].Value ?? string.Empty ).ToString (),
+                                LastName = ( workSheet.Cells [i, 2].Value ?? string.Empty ).ToString (),
                                 Remarks = ( workSheet.Cells [i, 3].Value ?? string.Empty ).ToString (),
                                 EMailAddress = ( workSheet.Cells [i, 4].Value ?? string.Empty ).ToString (),
                                 MobileNo = ( workSheet.Cells [i, 6].Value ?? string.Empty ).ToString (),
                                 PhoneNo = ( workSheet.Cells [i, 5].Value ?? string.Empty ).ToString ()
-
                             };
                             addList.Add (c);
                             xo++;
@@ -389,8 +364,6 @@ namespace AprajitaRetails.Ops.Uploader
                         System.IO.File.Delete (pathToExcelFile);
                     }
                     return UploadReturns.Success;
-
-
                 }
                 else
                 {

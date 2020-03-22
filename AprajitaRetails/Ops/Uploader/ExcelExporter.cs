@@ -1,27 +1,21 @@
-﻿using AprajitaRetails.Areas.Uploader.Models;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Data;
-using OfficeOpenXml;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models.ViewModels;
 using AprajitaRetails.Models;
+using AprajitaRetails.Models.ViewModels;
+using OfficeOpenXml;
 
 namespace AprajitaRetails.Ops.Exporter
 {
-
-
     public static class ExcelExporter
     {
-
         public static void CashInHandExporter(string fileName, List<CashInHand> inHandList, string name)
         {
             FileInfo file = new FileInfo (fileName);
             using ( ExcelPackage package = new ExcelPackage (file) )
             {
-
-
                 ExcelWorksheet worksheet2 = package.Workbook.Worksheets.Add (name);
                 worksheet2.Cells [1, 1].Value = "Date";
                 worksheet2.Cells [1, 2].Value = "Opening Cash";
@@ -42,15 +36,10 @@ namespace AprajitaRetails.Ops.Exporter
                 }
 
                 package.Save ();
-
-
-
             }
-
-
         }
 
-        public static void CashBookExporter( string fileName, List<CashBook> cashBooks, string name)
+        public static void CashBookExporter(string fileName, List<CashBook> cashBooks, string name)
         {
             FileInfo file = new FileInfo (fileName);
             using ( ExcelPackage package = new ExcelPackage (file) )
@@ -76,20 +65,17 @@ namespace AprajitaRetails.Ops.Exporter
                 }
                 package.Save ();
             }
-
-
         }
 
         public static string ExportPurchase(VoyagerContext db, string fileName)
         {
-           // string rootFolder = _hostingEnvironment.WebRootPath;
+            // string rootFolder = _hostingEnvironment.WebRootPath;
             //string fileName = @"ExportCustomers.xlsx";
 
             FileInfo file = new FileInfo (fileName);
 
             using ( ExcelPackage package = new ExcelPackage (file) )
             {
-
                 IList<ImportPurchase> purchaseList = db.ImportPurchases.ToList ();
 
                 ExcelWorksheet worksheet = package.Workbook.Worksheets.Add ("Purchase");
@@ -112,11 +98,9 @@ namespace AprajitaRetails.Ops.Exporter
                 }
 
                 package.Save ();
-
             }
 
             return " Purchase list has been exported successfully";
         }
-
     }
 }
