@@ -10,6 +10,7 @@ using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -45,8 +46,8 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult ProcessSale(string dDate)
         {
             DateTime ddDate = DateTime.Parse (dDate).Date;
-
-            InventoryManger iManage = new InventoryManger();
+            int StoreId = HelperUtil.GetStoreID (HttpContext);
+            InventoryManger iManage = new InventoryManger(StoreId);
             int a = iManage.CreateSaleEntry(db,ddDate, aprajitaContext);
             if (a > 0)
             {

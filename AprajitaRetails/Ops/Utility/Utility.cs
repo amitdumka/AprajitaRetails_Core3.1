@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -36,6 +38,47 @@ namespace AprajitaRetails.Ops.Utility
             throw new InvalidOperationException("Member expression expected.");
         }
     }
+
+
+    public class HelperUtil
+    {
+        public static int GetStoreID(HttpContext context)
+        {
+            // ViewBag.Name = HttpContext.Session.GetString (SessionName);
+           // int? id = context.Session.GetInt32 (Constants.STOREID);
+           // return id?? 0;
+            return context.Session.GetInt32 (Constants.STOREID)??1  ;
+        }
+
+        public static string GetStoreCode(HttpContext context)
+        {
+            return context.Session.GetString (Constants.STORECODE);
+        }
+
+        public static void SetStoreId(HttpContext context, int storeid)
+        {
+           
+            context.Session.SetInt32 (Constants.STOREID, storeid);
+        }
+        public static void SetStoreCode(HttpContext context, string storecode)
+        {
+            context.Session.SetString (Constants.STORECODE , storecode);
+            
+        }
+
+        public static bool IsSessionSet(HttpContext context)
+        {
+            if ( !context.Session.IsAvailable|| context.Session.Keys.Count() < 2 )
+            {
+                HelperUtil.SetStoreCode (context, "JH0006");
+                HelperUtil.SetStoreId (context, 1);
+                
+            }
+            return true;
+        }
+
+    }
+
 
 
     //Then use it like so:

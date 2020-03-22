@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -35,8 +36,13 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
 
 
             ViewData["CurrentFilter"] = searchString;
+            
+            HelperUtil.IsSessionSet (HttpContext);
+            int storeid = HelperUtil.GetStoreID (HttpContext);
+
+            ViewData ["StoreID"] = storeid;
             int pageSize = 10;
-            var voyagerContext = _context.Stocks.Include(s => s.ProductItem);
+            var voyagerContext = _context.Stocks.Include(s => s.ProductItem).Where(c=>c.StoreId==storeid);
 
             return View(await PaginatedList<Stock>.CreateAsync(voyagerContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             
@@ -78,6 +84,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         {
             if (ModelState.IsValid)
             {
+                HelperUtil.IsSessionSet (HttpContext);
+                int storeid = HelperUtil.GetStoreID (HttpContext);
+                stock.StoreId = storeid;
                 _context.Add(stock);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

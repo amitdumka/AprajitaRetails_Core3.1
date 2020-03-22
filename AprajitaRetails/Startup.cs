@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Http;
 using AprajitaRetails.Ops.Bot.TelgramService;
 using AprajitaRetails.Areas.Accounts.Data;
 using AprajitaRetails.Areas.ToDo.Extensions;
+using System;
 
 namespace AprajitaRetails
 {
@@ -57,6 +58,9 @@ namespace AprajitaRetails
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
 
+            services.AddSession (options => {
+                options.IdleTimeout = TimeSpan.FromHours (4);//You can set Time   
+            });
             // services.AddSignalR ();
 
             services.AddControllersWithViews ();
@@ -116,6 +120,7 @@ namespace AprajitaRetails
             app.UseAuthentication ();
             app.UseAuthorization ();
             app.UseRequestLocalization ();
+            app.UseSession ();
 
             app.UseEndpoints (endpoints =>
              {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,14 +11,15 @@ using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
-    [Area("Uploader")]
+    [Area ("Uploader")]
     [Authorize]
     public class PurchaseUploaderController : Controller
     {
-       VoyagerContext db;
+        VoyagerContext db;
 
         public PurchaseUploaderController(VoyagerContext context)
         {
@@ -26,56 +28,56 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // GET: PurchaseUploader
         public IActionResult Index()
         {
-            return View();
+            return View ();
         }
 
         [HttpPost]
-        public IActionResult UploadPurchase(string BillType, string InterState , string StoreCode, IFormFile FileUpload)
+        public IActionResult UploadPurchase(string BillType, string InterState, string StoreCode, IFormFile FileUpload)
         {
-           // IFormFile FileUpload = null ;
-            ExcelUploaders uploader = new ExcelUploaders();
+            // IFormFile FileUpload = null ;
+            ExcelUploaders uploader = new ExcelUploaders ();
             bool IsVat = false;
             bool IsLocal = false;
 
-            if (BillType == "VAT")
+            if ( BillType == "VAT" )
             {
                 IsVat = true;
             }
 
 
-            if (InterState == "WithInState")
+            if ( InterState == "WithInState" )
             {
                 IsLocal = true;
             }
 
-            UploadReturns response = uploader.UploadExcel(db,UploadTypes.Purchase, FileUpload,StoreCode, IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel (db, UploadTypes.Purchase, FileUpload, StoreCode, IsVat, IsLocal);
 
-            ViewBag.Status = response.ToString();
-            if (response == UploadReturns.Success)
+            ViewBag.Status = response.ToString ();
+            if ( response == UploadReturns.Success )
             {
-                return RedirectToAction("ListUpload");
+                return RedirectToAction ("ListUpload");
             }
 
-            return View();
+            return View ();
 
         }
-        
-       
+
+
         public IActionResult ListUpload(int? id)
         {
 
-            if (id == 100)
+            if ( id == 100 )
             {
-                var md2 = db.ImportPurchases.Where(c => c.IsDataConsumed == true).OrderByDescending(c => c.GRNDate);
-                return View(md2);
+                var md2 = db.ImportPurchases.Where (c => c.IsDataConsumed == true).OrderByDescending (c => c.GRNDate);
+                return View (md2);
             }
-            else if (id == 101)
+            else if ( id == 101 )
             {
-                var md1 = db.ImportPurchases.OrderByDescending(c => c.GRNDate).ThenBy(c => c.IsDataConsumed);
-                return View(md1);
+                var md1 = db.ImportPurchases.OrderByDescending (c => c.GRNDate).ThenBy (c => c.IsDataConsumed);
+                return View (md1);
             }
-            var md = db.ImportPurchases.Where(c => c.IsDataConsumed == false).OrderByDescending(c => c.GRNDate);
-            return View(md);
+            var md = db.ImportPurchases.Where (c => c.IsDataConsumed == false).OrderByDescending (c => c.GRNDate);
+            return View (md);
 
 
         }
@@ -84,36 +86,36 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ProcessPurchase(string dDate)
         {
-            DateTime ddDate = DateTime.Parse(dDate).Date;
 
-            InventoryManger iManage = new InventoryManger();
-            int a = iManage.ProcessPurchaseInward(db,ddDate, false);
-            //TODO: instead of product item . it should list purchase invoice with item
+            HelperUtil.IsSessionSet (HttpContext);
 
-            //TODO: Instead of displaying here. move to other page so back forward can be possible
+            DateTime ddDate = DateTime.Parse (dDate).Date;
 
-            if (a > 0)
+            int StoreId = HelperUtil.GetStoreID (HttpContext);
+            InventoryManger iManage = new InventoryManger (StoreId);
+
+            int a = iManage.ProcessPurchaseInward (db, ddDate, false);
+
+            if ( a > 0 )
             {
 
-                return RedirectToAction ("ProcessedPurchase", new {id=a,onDate=ddDate });
+                return RedirectToAction ("ProcessedPurchase", new { id = a, onDate = ddDate });
 
-                //var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (ddDate.Date));
-                //ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + a;
-                //return View(dm.ToList());
+
             }
             else
             {
                 //TODO: In view Check for Model is null or not
-                ViewBag.MessageHead = "No Product items added. Some error might has been occured. a=" + a;
-                return View(new List<ProductPurchase>());
+                ViewBag.MessageHead = "No Product items added. Some error might has been occurred. a=" + a;
+                return View (new List<ProductPurchase> ());
             }
         }
-        
-        public IActionResult ProcessedPurchase(int id,DateTime onDate)
+
+        public IActionResult ProcessedPurchase(int id, DateTime onDate)
         {
             var dm = db.ProductPurchases.Include (c => c.PurchaseItems).Where (c => c.InWardDate.Date == ( onDate.Date ));
             ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
-            return View (dm.ToList ());            
+            return View (dm.ToList ());
         }
         // GET: PurchaseUploader/Details/5
         public IActionResult Details(int? id)

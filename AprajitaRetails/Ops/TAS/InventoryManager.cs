@@ -11,6 +11,8 @@ using AprajitaRetails.Areas.Voyager.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.EntityFrameworkCore;
+using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace AprajitaRetails.Ops.TAS
 {
@@ -19,6 +21,9 @@ namespace AprajitaRetails.Ops.TAS
     /// </summary>
     public class InventoryManger
     {
+        private readonly int StoreID = 1;
+
+        public InventoryManger(int storeid) { StoreID = storeid; }
 
         #region HelperFunctions
         public void UpdateHSNCode(VoyagerContext db, string HSNCode, int itemCode) { }
@@ -378,6 +383,7 @@ namespace AprajitaRetails.Ops.TAS
             Stock stcks = db.Stocks.Where (c => c.ProductItemId == pItemId).FirstOrDefault ();
             if ( stcks != null )
             {
+                
                 stcks.PurchaseQty += purchase.Quantity;
                 stcks.Quantity += purchase.Quantity;
                 db.Entry (stcks).State = EntityState.Modified;
@@ -390,7 +396,9 @@ namespace AprajitaRetails.Ops.TAS
                     Quantity = purchase.Quantity,
                     ProductItemId = pItemId,
                     SaleQty = 0,
-                    Units = db.ProductItems.Find (pItemId).Units
+                    Units = db.ProductItems.Find (pItemId).Units,
+                    StoreId = StoreID
+
                 };
                 db.Stocks.Add (stock);
             }
@@ -430,6 +438,7 @@ namespace AprajitaRetails.Ops.TAS
                         TotalAmount = purchase.CostValue + purchase.TaxAmt,// TODO: Check for actual DATA. 
                         Remarks = "",
                         SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName),
+                        StoreId=StoreID
 
 
                     };
@@ -455,7 +464,8 @@ namespace AprajitaRetails.Ops.TAS
                     TotalQty = purchase.Quantity,
                     TotalAmount = purchase.CostValue + purchase.TaxAmt,// TODO: Check for actual DATA. 
                     Remarks = "",
-                    SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName)
+                    SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName),
+                    StoreId = StoreID
 
                 };
                 product.PurchaseItems = new List<PurchaseItem> ();
@@ -545,7 +555,7 @@ namespace AprajitaRetails.Ops.TAS
             if ( onDate < new DateTime (2017, 7, 1) )
             {
                 //  isVat = true;
-                return -1;// TODO: Temp implemenent for vat system
+                return -1;// TODO: Temp implement for vat system
             }
 
             SaleInvoice saleInvoice = null;
@@ -766,7 +776,7 @@ namespace AprajitaRetails.Ops.TAS
             var pi = db.ProductItems.Where (c => c.Barcode == item.Barcode).Select (c => new { c.ProductItemId, c.Units }).FirstOrDefault ();
             if ( pi == null )
             {
-                //TODO: Handle for ProductItem Doesnt Exsist. 
+                //TODO: Handle for ProductItem Doesn't Exists. 
                 //create item and stock
                 int id = StockItem (db, item, out Units UNTS);
                 pi = new { ProductItemId = id, Units = UNTS };
@@ -787,7 +797,7 @@ namespace AprajitaRetails.Ops.TAS
                 SaleTaxTypeId = CreateSaleTax (db, item)
 
             };
-            if ( !SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false) )
+            if ( !SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, StoreID) )
             {
                 //TODO: Create Stock and update
                 CreateStockItem (db, saleItem.Qty, saleItem.ProductItemId, saleItem.Units);
@@ -824,7 +834,7 @@ namespace AprajitaRetails.Ops.TAS
         {
             // Always GST and with Local Sale
 
-            //Calulate Rate
+            //Calculate Rate
             decimal rate = 0;
             try
             {
@@ -1000,9 +1010,9 @@ namespace AprajitaRetails.Ops.TAS
         /// <param name="Qty"></param>
         /// <param name="IsPurchased"></param>
         /// <returns></returns>
-        public static bool UpDateStock(VoyagerContext db, int ItemCode, double Qty, bool IsPurchased)
+        public static bool UpDateStock(VoyagerContext db, int ItemCode, double Qty, bool IsPurchased, int StoreId)
         {
-            var stock = db.Stocks.Where (c => c.ProductItemId == ItemCode).FirstOrDefault ();
+            var stock = db.Stocks.Where (c => c.ProductItemId == ItemCode && c.StoreId==StoreId).FirstOrDefault ();
 
             if ( stock != null )
             {
@@ -1027,9 +1037,6 @@ namespace AprajitaRetails.Ops.TAS
                 return false;
 
         }
-
-
-
 
     }
 
@@ -1186,7 +1193,7 @@ namespace AprajitaRetails.Ops.TAS
 
         }
 
-        private SaleItem CreateSaleItem(VoyagerContext db, ImportSaleItemWise item)
+        private SaleItem CreateSaleItem(VoyagerContext db, ImportSaleItemWise item, int StoreId)
         {
             var pi = db.ProductItems.Where (c => c.Barcode == item.Barcode).Select (c => new { c.ProductItemId, c.Units }).FirstOrDefault ();
 
@@ -1202,10 +1209,10 @@ namespace AprajitaRetails.Ops.TAS
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
                 SalesPersonId = GetSalesPersonId (db, item.Saleman),
-                SaleTaxTypeId = CreateSaleTax (db, item)
+                SaleTaxTypeId = CreateSaleTax (db, item) 
 
             };
-            SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false);// TODO: Check for this working
+            SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, StoreId);// TODO: Check for this working
             return saleItem;
         }
 

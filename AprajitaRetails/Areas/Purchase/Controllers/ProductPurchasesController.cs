@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -37,7 +38,10 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var voyagerContext = _context.ProductPurchases.Include(p => p.Supplier);
+            HelperUtil.IsSessionSet (HttpContext);
+            int storeid = HelperUtil.GetStoreID (HttpContext);
+
+            var voyagerContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c=>c.StoreId==storeid);
            return View(await PaginatedList<ProductPurchase>.CreateAsync(voyagerContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             
             
@@ -78,6 +82,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         {
             if (ModelState.IsValid)
             {
+                HelperUtil.IsSessionSet (HttpContext);
+                int storeid = HelperUtil.GetStoreID (HttpContext);
+                productPurchase.StoreId = storeid;
                 _context.Add(productPurchase);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -104,7 +111,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // POST: Purchase/ProductPurchases/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from over-posting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
