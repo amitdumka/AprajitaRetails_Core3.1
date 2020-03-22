@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AprajitaRetails.Areas.Purchase.Models
 {
+    //Global Class
     public class Supplier
     {
         public int SupplierID { get; set; }

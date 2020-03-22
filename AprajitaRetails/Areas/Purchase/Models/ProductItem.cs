@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AprajitaRetails.Areas.Purchase.Models
 {
+    //Global Class
+
     public class ProductItem
     {
         public int ProductItemId { set; get; }
@@ -13,8 +15,11 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public int BrandId { get; set; }
         public virtual Brand BrandName { get; set; }
 
+        [Display(Name ="Style Code")]
         public string StyleCode { get; set; }
+        [Display(Name ="Product Name")]
         public string ProductName { get; set; }
+        [Display(Name = "Item Desc")]
         public string ItemDesc { get; set; }
 
         [Display(Name = "Category")]

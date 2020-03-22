@@ -1,4 +1,5 @@
 ﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Voyager.Models;
 using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,9 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Areas.Purchase.Models
 {
+    //Store Based Class
+
     public class ProductPurchase
     {
         public int ProductPurchaseId { get; set; }
+        [Display(Name = "Store")]
+        public int StoreId { get; set; }
+        public virtual Store Store { get; set; }
 
         public string InWardNo { get; set; }
 

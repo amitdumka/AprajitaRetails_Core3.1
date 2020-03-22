@@ -1,4 +1,5 @@
-﻿using AprajitaRetails.Areas.Uploader.Models;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Uploader.Models;
 using Microsoft.AspNetCore.Authorization;    using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -43,6 +44,10 @@ namespace AprajitaRetails.Areas.Voyager.Models
         public virtual ICollection<ImportInWard> ImportInWards { get; set; }
         public virtual ICollection<ImportSaleItemWise>ImportSaleItemWises { get; set; }
         public virtual ICollection<ImportSaleRegister>ImportSaleRegisters { get; set; }
+
+        //Purchase
+        public virtual ICollection<ProductPurchase> ProductPurchases { get; set; }
+        public virtual ICollection<Stock> Stocks { get; set; }
 
     }
 

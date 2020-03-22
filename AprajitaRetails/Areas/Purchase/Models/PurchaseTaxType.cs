@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Areas.Purchase.Models
 {
+    //Global Class
     public class PurchaseTaxType
     {
         public int PurchaseTaxTypeId { get; set; }

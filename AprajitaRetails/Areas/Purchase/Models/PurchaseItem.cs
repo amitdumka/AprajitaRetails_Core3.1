@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Areas.Purchase.Models
 {
+    // This is Store Based but still StoreID linking is not done. will check for it in final realase
     public class PurchaseItem
     {
         public int PurchaseItemId { get; set; }//Pk
