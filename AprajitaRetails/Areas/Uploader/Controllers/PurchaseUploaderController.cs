@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Voyager.Data;
-using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS;
 using AprajitaRetails.Ops.Uploader;
+using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -19,12 +17,13 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     [Authorize]
     public class PurchaseUploaderController : Controller
     {
-        VoyagerContext db;
+        private VoyagerContext db;
 
         public PurchaseUploaderController(VoyagerContext context)
         {
             db = context;
         }
+
         // GET: PurchaseUploader
         public IActionResult Index()
         {
@@ -44,7 +43,6 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 IsVat = true;
             }
 
-
             if ( InterState == "WithInState" )
             {
                 IsLocal = true;
@@ -59,13 +57,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
 
             return View ();
-
         }
-
 
         public IActionResult ListUpload(int? id)
         {
-
             if ( id == 100 )
             {
                 var md2 = db.ImportPurchases.Where (c => c.IsDataConsumed == true).OrderByDescending (c => c.GRNDate);
@@ -78,15 +73,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
             var md = db.ImportPurchases.Where (c => c.IsDataConsumed == false).OrderByDescending (c => c.GRNDate);
             return View (md);
-
-
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ProcessPurchase(string dDate)
         {
-
             HelperUtil.IsSessionSet (HttpContext);
 
             DateTime ddDate = DateTime.Parse (dDate).Date;
@@ -98,10 +90,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
             if ( a > 0 )
             {
-
                 return RedirectToAction ("ProcessedPurchase", new { id = a, onDate = ddDate });
-
-
             }
             else
             {
@@ -117,6 +106,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
             return View (dm.ToList ());
         }
+
         // GET: PurchaseUploader/Details/5
         public IActionResult Details(int? id)
         {

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
 namespace AprajitaRetails.Ops.Uploader
-{
+{  //Store Based Changes is made in this class , All function support Store
     public class ExcelUploaders
     {
         public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
@@ -110,7 +110,10 @@ namespace AprajitaRetails.Ops.Uploader
             using ExcelPackage package = new ExcelPackage (file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets ["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
-
+            int StoreID = 1;//Default
+            StoreID = db.Stores.Where (c => c.StoreCode == StoreCode).Select (c => c.StoreId).FirstOrDefault ();
+            if ( StoreID < 1 )
+                StoreID = 1;
             List<ImportSaleItemWise> saleList = new List<ImportSaleItemWise> ();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
             int xo = 0;
@@ -143,7 +146,8 @@ namespace AprajitaRetails.Ops.Uploader
                         IsDataConsumed = false,
                         //ImportTime = DateTime.Today,
                         IsLocal = IsLocal,
-                        IsVatBill = IsVat
+                        IsVatBill = IsVat,
+                        StoreId = StoreID
                     };
 
                     p.HSNCode = ( workSheet.Cells [i, 7].Value ?? string.Empty ).ToString ();
@@ -236,7 +240,10 @@ namespace AprajitaRetails.Ops.Uploader
             using ExcelPackage package = new ExcelPackage (file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets ["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
-
+            int StoreID = 1;//Default
+            StoreID = db.Stores.Where (c => c.StoreCode == StoreCode).Select (c => c.StoreId).FirstOrDefault ();
+            if ( StoreID < 1 )
+                StoreID = 1;
             List<ImportInWard> purchaseList = new List<ImportInWard> ();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
 
@@ -252,7 +259,7 @@ namespace AprajitaRetails.Ops.Uploader
                     TotalQty = (decimal) workSheet.Cells [i, 6].Value,
                     TotalMRPValue = (decimal) workSheet.Cells [i, 7].GetValue<decimal> (),
                     TotalCost = (decimal) workSheet.Cells [i, 8].GetValue<decimal> (),
-
+                    StoreId = StoreID,
                     IsDataConsumed = false,
                     // ImportDate = DateTime.Today,
                 });
@@ -273,7 +280,10 @@ namespace AprajitaRetails.Ops.Uploader
             using ExcelPackage package = new ExcelPackage (file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets ["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
-
+            int StoreID = 1;//Default
+            StoreID = db.Stores.Where (c => c.StoreCode == StoreCode).Select (c => c.StoreId).FirstOrDefault ();
+            if ( StoreID < 1 )
+                StoreID = 1;
             List<ImportSaleRegister> saleList = new List<ImportSaleRegister> ();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
             int xo = 0;
@@ -297,7 +307,7 @@ namespace AprajitaRetails.Ops.Uploader
                     RoundOff = (decimal) workSheet.Cells [i, 9].GetValue<decimal> (),
                     BillAmnt = (decimal) workSheet.Cells [i, 10].GetValue<decimal> (),
                     PaymentType = workSheet.Cells [i, 11].Value.ToString (),
-                    //ImportTime = DateTime.Today,
+                    StoreId = StoreID,
                     IsConsumed = false
                 };
 
