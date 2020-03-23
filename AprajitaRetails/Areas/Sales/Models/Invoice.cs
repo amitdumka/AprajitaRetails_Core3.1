@@ -175,23 +175,23 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     public class ManualSaleItem : SaleItem
     {
         public int ManualSaleItemId { get; set; }
-        public int ManualInoviceId { get; set; }
-        public virtual ICollection<ManualInvoice> ManualInvoices { get; set; }
+        public int ManualInvoiceId { get; set; }
+        public virtual ManualInvoice ManualInvoice { get; set; }
     }
 
     public class ManualPaymentDetail : PaymentDetail
     {
-        [ForeignKey("ManualInvoices")]
+      //  [ForeignKey("ManualInvoices")]
         public int ManualPaymentDetailId { get; set; }
-
+        public int ManualInvoiceId { get; set; }
         public virtual ManualInvoice ManualInvoice { get; set; }
     }
 
     public class ManualCardDetail : CardDetail
     {
-        [ForeignKey("ManualInvoices")]
+        //[ForeignKey("ManualInvoices")]
         public int ManualCardDetailId { get; set; }
-
+        public int ManualInvoiceId { get; set; }
         public virtual ManualInvoice ManualInvoice { get; set; }
     }
 

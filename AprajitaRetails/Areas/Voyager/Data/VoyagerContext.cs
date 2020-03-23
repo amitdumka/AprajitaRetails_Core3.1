@@ -6,6 +6,7 @@ using AprajitaRetails.Areas.Voyager.Models;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Models;
 using AprajitaRetails.Areas.Sales.Models.Views;
+using System;
 
 namespace AprajitaRetails.Areas.Voyager.Data
 {
@@ -20,6 +21,35 @@ namespace AprajitaRetails.Areas.Voyager.Data
             modelBuilder.Entity<SalesPerson> ().HasData (new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
             modelBuilder.Entity<SalesPerson> ().HasData (new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
             modelBuilder.Entity<SalesPerson> ().HasData (new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
+
+            modelBuilder.Entity<Customer> ().HasData (new Customer
+            {
+                CustomerId = 1,
+                FirstName = "Cash",
+                LastName = "Sale",
+                Age = 0,
+                City = "Dumka",
+                CreatedDate = DateTime.Now.Date,
+                Gender = Genders.Male,
+                NoOfBills = 0,
+                TotalAmount = 0,
+                MobileNo = "1234567890",
+                DateOfBirth = DateTime.Now.Date
+            });
+            modelBuilder.Entity<Customer> ().HasData (new Customer
+            {
+                CustomerId = 2,
+                FirstName = "Card",
+                LastName = "Sale",
+                Age = 0,
+                City = "Dumka",
+                CreatedDate = DateTime.Now.Date,
+                Gender = Genders.Male,
+                NoOfBills = 0,
+                TotalAmount = 0,
+                MobileNo = "1234567890",
+                DateOfBirth = DateTime.Now.Date
+            });
         }
         public DbSet<Store> Stores { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -49,11 +79,18 @@ namespace AprajitaRetails.Areas.Voyager.Data
         // New Invoice System
         public DbSet<RegularInvoice> RegularInvoices { get; set; }
         public DbSet<RegularSaleItem> RegularSaleItems { get; set; }
-        public DbSet<RegularPaymentDetail>RegularPaymentDetails { get; set; }
-        public DbSet<RegularCardDetail>RegularCardDetails { get; set; }
+        public DbSet<RegularPaymentDetail> RegularPaymentDetails { get; set; }
+        public DbSet<RegularCardDetail> RegularCardDetails { get; set; }
 
 
-       
+
+        // New Invoice System  Manual
+        public DbSet<Sales.Models.Views.ManualInvoice> ManualInvoices { get; set; }
+        public DbSet<Sales.Models.Views.ManualSaleItem> ManualSaleItems { get; set; }
+        public DbSet<ManualPaymentDetail> ManualPaymentDetails { get; set; }
+        public DbSet<ManualCardDetail> ManualCardDetails { get; set; }
+
+
 
     }
 

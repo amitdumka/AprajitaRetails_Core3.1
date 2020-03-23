@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Areas.Purchase.Models
 {
@@ -31,10 +32,12 @@ namespace AprajitaRetails.Areas.Purchase.Models
         [Display(Name = "Sub Category")]
         public Category ProductType { get; set; }
 
-
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal MRP { get; set; }
         [Display(Name = "Tax Rate")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal TaxRate { get; set; }    // TODO:Need to Review in final Edition
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal Cost { get; set; }
 
         public Sizes Size { get; set; }

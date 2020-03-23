@@ -24,6 +24,7 @@ namespace AprajitaRetails.Areas.Voyager.Models
         [Display(Name = "Bill Count")]
         public int NoOfBills { set; get; }
         [Display(Name = "Purchase Amount")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal TotalAmount { set; get; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

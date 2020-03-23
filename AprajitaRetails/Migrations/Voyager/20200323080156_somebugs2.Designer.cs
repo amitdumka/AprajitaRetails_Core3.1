@@ -4,14 +4,16 @@ using AprajitaRetails.Areas.Voyager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations.Voyager
 {
     [DbContext(typeof(VoyagerContext))]
-    partial class VoyagerContextModelSnapshot : ModelSnapshot
+    [Migration("20200323080156_somebugs2")]
+    partial class somebugs2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -486,166 +488,6 @@ namespace AprajitaRetails.Migrations.Voyager
                             SalesPersonId = 3,
                             SalesmanName = "Manager"
                         });
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualCardDetail", b =>
-                {
-                    b.Property<int>("ManualCardDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("AuthCode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CardType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LastDigit")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ManualInvoiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ManualCardDetailId");
-
-                    b.HasIndex("ManualInvoiceId")
-                        .IsUnique();
-
-                    b.ToTable("ManualCardDetails");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualInvoice", b =>
-                {
-                    b.Property<int>("ManualInvoiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InvoiceNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OnDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("RoundOffAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalBillAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("TotalDiscountAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("TotalItems")
-                        .HasColumnType("int");
-
-                    b.Property<double>("TotalQty")
-                        .HasColumnType("float");
-
-                    b.Property<decimal>("TotalTaxAmount")
-                        .HasColumnType("money");
-
-                    b.HasKey("ManualInvoiceId");
-
-                    b.HasIndex("StoreId");
-
-                    b.ToTable("ManualInvoices");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualPaymentDetail", b =>
-                {
-                    b.Property<int>("ManualPaymentDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("CardAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("CashAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("ManualInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("MixAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("PayMode")
-                        .HasColumnType("int");
-
-                    b.HasKey("ManualPaymentDetailId");
-
-                    b.HasIndex("ManualInvoiceId")
-                        .IsUnique();
-
-                    b.ToTable("ManualPaymentDetails");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualSaleItem", b =>
-                {
-                    b.Property<int>("ManualSaleItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BarCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("BasicAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("BillAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("MRP")
-                        .HasColumnType("money");
-
-                    b.Property<int>("ManualInvoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductItemId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Qty")
-                        .HasColumnType("float");
-
-                    b.Property<int?>("SaleTaxTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SalesPersonId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TaxAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("Units")
-                        .HasColumnType("int");
-
-                    b.HasKey("ManualSaleItemId");
-
-                    b.HasIndex("ManualInvoiceId");
-
-                    b.HasIndex("ProductItemId");
-
-                    b.HasIndex("SaleTaxTypeId");
-
-                    b.HasIndex("SalesPersonId");
-
-                    b.ToTable("ManualSaleItems");
                 });
 
             modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.RegularCardDetail", b =>
@@ -1136,36 +978,6 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            CustomerId = 1,
-                            Age = 0,
-                            City = "Dumka",
-                            CreatedDate = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateOfBirth = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            FirstName = "Cash",
-                            Gender = 0,
-                            LastName = "Sale",
-                            MobileNo = "1234567890",
-                            NoOfBills = 0,
-                            TotalAmount = 0m
-                        },
-                        new
-                        {
-                            CustomerId = 2,
-                            Age = 0,
-                            City = "Dumka",
-                            CreatedDate = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateOfBirth = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            FirstName = "Card",
-                            Gender = 0,
-                            LastName = "Sale",
-                            MobileNo = "1234567890",
-                            NoOfBills = 0,
-                            TotalAmount = 0m
-                        });
                 });
 
             modelBuilder.Entity("AprajitaRetails.Areas.Voyager.Models.Store", b =>
@@ -1331,58 +1143,6 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.HasOne("AprajitaRetails.Areas.Sales.Models.SaleInvoice", "SaleInvoice")
                         .WithOne("PaymentDetail")
                         .HasForeignKey("AprajitaRetails.Areas.Sales.Models.SalePaymentDetail", "SalePaymentDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualCardDetail", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.Views.ManualInvoice", "ManualInvoice")
-                        .WithOne("CardDetail")
-                        .HasForeignKey("AprajitaRetails.Areas.Sales.Models.Views.ManualCardDetail", "ManualInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualInvoice", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualPaymentDetail", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.Views.ManualInvoice", "ManualInvoice")
-                        .WithOne("PaymentDetail")
-                        .HasForeignKey("AprajitaRetails.Areas.Sales.Models.Views.ManualPaymentDetail", "ManualInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.ManualSaleItem", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.Views.ManualInvoice", "ManualInvoice")
-                        .WithMany("SaleItems")
-                        .HasForeignKey("ManualInvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AprajitaRetails.Areas.Purchase.Models.ProductItem", "ProductItem")
-                        .WithMany()
-                        .HasForeignKey("ProductItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.SaleTaxType", "SaleTaxType")
-                        .WithMany()
-                        .HasForeignKey("SaleTaxTypeId");
-
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.SalesPerson", "Salesman")
-                        .WithMany()
-                        .HasForeignKey("SalesPersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

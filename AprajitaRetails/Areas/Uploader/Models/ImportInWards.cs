@@ -36,12 +36,15 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public string PartyName { get; set; }
 
         [ExcelColumn("Total Qty")]
+        [DataType (DataType.Currency), Column (TypeName = "decimal(18,2)")]
         public decimal TotalQty { get; set; }
 
         [ExcelColumn("Total MRP Value")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal TotalMRPValue { get; set; }
 
         [ExcelColumn("Total Cost")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal TotalCost { get; set; }
         
         [DefaultValue(false)]

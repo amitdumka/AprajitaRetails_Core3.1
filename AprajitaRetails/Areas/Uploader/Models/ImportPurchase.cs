@@ -30,7 +30,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         [ExcelColumn("Supplier Name")]
         public string SupplierName { get; set; }
 
-        [ExcelColumn("Barcode")]
+        [ExcelColumn("Bar code")]
         public string Barcode { get; set; }
 
         [ExcelColumn("Product Name")]
@@ -73,11 +73,5 @@ namespace AprajitaRetails.Areas.Uploader.Models
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
-
-      //  [DatabaseGenerated (DatabaseGeneratedOption.Computed)]
-       // public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
-
-
-
     }
 }

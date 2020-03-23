@@ -4,14 +4,16 @@ using AprajitaRetails.Areas.Voyager.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations.Voyager
 {
     [DbContext(typeof(VoyagerContext))]
-    partial class VoyagerContextModelSnapshot : ModelSnapshot
+    [Migration("20200323080626_ManualInvoice")]
+    partial class ManualInvoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1136,36 +1138,6 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            CustomerId = 1,
-                            Age = 0,
-                            City = "Dumka",
-                            CreatedDate = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateOfBirth = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            FirstName = "Cash",
-                            Gender = 0,
-                            LastName = "Sale",
-                            MobileNo = "1234567890",
-                            NoOfBills = 0,
-                            TotalAmount = 0m
-                        },
-                        new
-                        {
-                            CustomerId = 2,
-                            Age = 0,
-                            City = "Dumka",
-                            CreatedDate = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            DateOfBirth = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            FirstName = "Card",
-                            Gender = 0,
-                            LastName = "Sale",
-                            MobileNo = "1234567890",
-                            NoOfBills = 0,
-                            TotalAmount = 0m
-                        });
                 });
 
             modelBuilder.Entity("AprajitaRetails.Areas.Voyager.Models.Store", b =>

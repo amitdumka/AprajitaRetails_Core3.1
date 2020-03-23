@@ -71,8 +71,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public decimal Tax { get; set; } // Can be use for IGST
 
         [ExcelColumn("SGST Amt")]
-
-        [DataType(DataType.Currency), Column(TypeName = "money")]
+         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal SGST { get; set; }
 
         [ExcelColumn("CGST Amt")]
@@ -94,8 +93,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public decimal BillAmnt { get; set; }
 
         [ExcelColumn("Payment Mode")]
-
-        [Display(Name = "Payment Type")]
+         [Display(Name = "Payment Type")]
         public string PaymentType { get; set; }
 
         [ExcelColumn("SalesMan Name")]
@@ -111,12 +109,6 @@ namespace AprajitaRetails.Areas.Uploader.Models
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
-
-
-        // [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import
-        // is data imported to relevent table
-
-
+   
     }
 }

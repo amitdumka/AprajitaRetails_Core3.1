@@ -228,7 +228,9 @@ namespace AprajitaRetails.Areas.Sales.Models
         public int PaymentDetailsID { get; set; }
         public string InvoiceNo { get; set; }
         public SalePayMode PayMode { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CashAmount { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CardAmount { get; set; }
         public int CardDetailsID { get; set; }
     }
@@ -241,9 +243,12 @@ namespace AprajitaRetails.Areas.Sales.Models
         public string ReturnInvoiceNo { get; set; }
         public double TotalQty { get; set; }
         public int TotalReturnItem { get; set; }
-        public double Amount { get; set; }
-        public double TaxAmount { get; set; }
-        public double DiscountAmount { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
+        public decimal Amount { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
+        public decimal TaxAmount { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
+        public decimal DiscountAmount { get; set; }
         public DateTime OnDate { get; set; }
         public string NewSaleInvoiceNo { get; set; }
         public string Debit_CreditNotesNo { get; set; }

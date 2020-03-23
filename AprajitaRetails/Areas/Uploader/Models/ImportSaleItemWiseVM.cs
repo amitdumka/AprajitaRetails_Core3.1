@@ -134,10 +134,5 @@ namespace AprajitaRetails.Areas.Uploader.Models
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
-
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //public DateTime? ImportTime { get; set; } = DateTime.Now; // Date of Import is data imported to relevent table
-
-
     }
 }
