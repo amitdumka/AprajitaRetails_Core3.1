@@ -10,38 +10,39 @@ using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Sales.Models.Views
 {
+    #region BaseInvoice
     public class Invoice
     {
         //Store Info
-        [Display (Name = "Store")]
+        [Display(Name = "Store")]
         public int StoreId { get; set; }
 
         public Store Store { get; set; }
 
-        [Display (Name = "Customer Name")]
+        [Display(Name = "Customer Name")]
         public int CustomerId { get; set; }
 
-        [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display (Name = "Sale Date")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
         public DateTime OnDate { get; set; }
 
         public string InvoiceNo { get; set; }
 
-        [Display (Name = "Total Items")]
+        [Display(Name = "Total Items")]
         public int TotalItems { get; set; }
 
-        [Display (Name = "Qty")]
+        [Display(Name = "Qty")]
         public double TotalQty { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money"), Display (Name = "Bill Amt")]
+        [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Bill Amt")]
         public decimal TotalBillAmount { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money"), Display (Name = "Discount")]
+        [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Discount")]
         public decimal TotalDiscountAmount { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money"), Display (Name = "Round off")]
+        [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Round off")]
         public decimal RoundOffAmount { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money"), Display (Name = "Taxes")]
+        [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Taxes")]
         public decimal TotalTaxAmount { get; set; }
     }
 
@@ -49,36 +50,36 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public int ProductItemId { get; set; }
 
-        [Display (Name = "Product")]
+        [Display(Name = "Product")]
         public virtual ProductItem ProductItem { get; set; }
 
         public string BarCode { get; set; }
 
-        [Display (Name = "Quantity")]
+        [Display(Name = "Quantity")]
         public double Qty { get; set; }
 
-        [Display (Name = "Unit")]
+        [Display(Name = "Unit")]
         public Units Units { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
-        [Display (Name = "Basic Amount")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [Display(Name = "Basic Amount")]
         public decimal BasicAmount { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Discount { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
-        [Display (Name = "Tax Amount")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [Display(Name = "Tax Amount")]
         public decimal TaxAmount { get; set; }
 
         public int? SaleTaxTypeId { get; set; }
         public virtual SaleTaxType SaleTaxType { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
-        [Display (Name = "Bill Amount")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [Display(Name = "Bill Amount")]
         public decimal BillAmount { get; set; }
 
         // SaleTax options and it will Done
@@ -93,37 +94,44 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public SalePayMode PayMode { get; set; }
 
-        [DefaultValue (0)]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DefaultValue(0)]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CashAmount { get; set; }
 
-        [DefaultValue (0)]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DefaultValue(0)]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CardAmount { get; set; }
 
-        [DefaultValue (0)]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DefaultValue(0)]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MixAmount { get; set; }
     }
 
     public class CardDetail
     {
-        [Display (Name = "Card Type")]
+        [Display(Name = "Card Type")]
         public int CardType { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
 
         public int AuthCode { get; set; }
         public int LastDigit { get; set; }
     }
 
+    #endregion
+
+
     //Tables
+
+    #region RegularInvoiec
     //Sale Invoice Regular
     public class RegularInvoice : Invoice
     {
         public int RegularInvoiceId { get; set; }
+
         public virtual ICollection<RegularSaleItem> SaleItems { get; set; }
+        
         public virtual RegularPaymentDetail PaymentDetail { get; set; }
         public virtual RegularCardDetail CardDetail { get; set; }
     }
@@ -131,28 +139,31 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     public class RegularSaleItem : SaleItem
     {
         public int RegularSaleItemId { get; set; }
-        public int RegularInoviceId { get; set; }
-        public virtual ICollection<RegularInvoice> RegularInvoices { get; set; }
+     
+        public int RegularInvoiceId { get; set; }
+        public virtual RegularInvoice RegularInvoice { get; set; }
     }
 
     public class RegularPaymentDetail : PaymentDetail
     {
-        [ForeignKey ("RegularInvoices")]
+       // [ForeignKey("RegularInvoices")]
         public int RegularPaymentDetailId { get; set; }
-
+        
+        public int RegularInvoiceId { get; set; }
         public virtual RegularInvoice RegularInvoice { get; set; }
     }
 
     public class RegularCardDetail : CardDetail
     {
-        [ForeignKey ("RegularInvoices")]
+       // [ForeignKey("RegularInvoices")]
         public int RegularCardDetailId { get; set; }
 
+        public int RegularInvoiceId { get; set; }
         public virtual RegularInvoice RegularInvoice { get; set; }
     }
+    #endregion
 
-    //Manual Sale Invoice
-
+    #region ManualInvoice
     public class ManualInvoice : Invoice
     {
         public int ManualInvoiceId { get; set; }
@@ -170,7 +181,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
     public class ManualPaymentDetail : PaymentDetail
     {
-        [ForeignKey ("ManualInvoices")]
+        [ForeignKey("ManualInvoices")]
         public int ManualPaymentDetailId { get; set; }
 
         public virtual ManualInvoice ManualInvoice { get; set; }
@@ -178,14 +189,15 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
     public class ManualCardDetail : CardDetail
     {
-        [ForeignKey ("ManualInvoices")]
+        [ForeignKey("ManualInvoices")]
         public int ManualCardDetailId { get; set; }
 
         public virtual ManualInvoice ManualInvoice { get; set; }
     }
 
-    //Sale Return
+    #endregion
 
+    #region SalesReturn
     public class SaleReturn : Invoice
     {
         public int SaleReturnId { get; set; }
@@ -199,6 +211,13 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public int SaleItemReturnId { get; set; }
     }
+
+    #endregion
+    //Manual Sale Invoice
+
+
+    //Sale Return
+
 
     //ViewModel for Invoice
 

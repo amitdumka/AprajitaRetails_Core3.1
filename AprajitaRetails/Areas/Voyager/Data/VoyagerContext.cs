@@ -5,7 +5,7 @@ using AprajitaRetails.Areas.Voyager.Models;
 
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Models;
-
+using AprajitaRetails.Areas.Sales.Models.Views;
 
 namespace AprajitaRetails.Areas.Voyager.Data
 {
@@ -39,12 +39,19 @@ namespace AprajitaRetails.Areas.Voyager.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<PurchaseTaxType> PurchaseTaxTypes { get; set; }
         public DbSet<SalesPerson> SalesPerson { get; set; }
-        public DbSet<SaleInvoice> SaleInvoices { get; set; }
-        public DbSet<SaleItem> SaleItems { get; set; }
+        public DbSet<Sales.Models.SaleInvoice> SaleInvoices { get; set; }
+        public DbSet<Sales.Models.SaleItem> SaleItems { get; set; }
         public DbSet<SaleTaxType> SaleTaxTypes { get; set; }
         public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
         public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
         public DbSet<ArvindPayment> ArvindPayments { get; set; }
+
+        // New Invoice System
+        public DbSet<RegularInvoice> RegularInvoices { get; set; }
+        public DbSet<RegularSaleItem> RegularSaleItems { get; set; }
+        public DbSet<RegularPaymentDetail>RegularPaymentDetails { get; set; }
+        public DbSet<RegularCardDetail>RegularCardDetails { get; set; }
+
 
        
 
