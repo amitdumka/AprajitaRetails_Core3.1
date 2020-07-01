@@ -28,6 +28,9 @@ namespace AprajitaRetails.Models
         [Display (Name ="Job Category")]
         [DefaultValue(0)]
         public EmpType Category { get; set; }
+        [DefaultValue(false)]
+        [Display(Name ="Tailoring Divisoin")]
+        public bool? IsTailors { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
         public ICollection<SalaryPayment> SalaryPayments { get; set; }
         public ICollection<StaffAdvancePayment> AdvancePayments { get; set; }

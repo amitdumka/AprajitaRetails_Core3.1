@@ -13,11 +13,7 @@ namespace AprajitaRetails.Models
     //Account Holder Account No 
     //CUSTOMER ID USERID  Password Tax Password Extra Password ATM CARD ATM PIN Exp Date CCV TIP ACCOUNT TYPE Account Balance Date    IFSCE Code
 
-    public enum AccountType
-    {
-        Saving, Current, CashCredit, OverDraft, Others
-
-    }
+   
 
     public class BankAccountInfo
     {

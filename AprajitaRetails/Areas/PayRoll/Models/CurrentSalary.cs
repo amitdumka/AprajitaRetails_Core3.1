@@ -8,6 +8,7 @@ namespace AprajitaRetails.Models
     public class CurrentSalary
     {
         //TODO: Think some thing others also 
+        //TODO: Implement tailiroing division on this model
         public int CurrentSalaryId { get; set; }
 
         public int EmployeeId { get; set; }
@@ -38,6 +39,7 @@ namespace AprajitaRetails.Models
         public DateTime? CloseDate { get; set; }
 
         public bool IsEffective { get; set; }
+        public bool? IsTailoring { get; set; }
 
         public virtual ICollection<PaySlip> PaySlips { get; set; }
         

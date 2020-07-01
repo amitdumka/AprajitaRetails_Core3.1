@@ -35,8 +35,12 @@ namespace AprajitaRetails.Models
 
         public string Remarks { get; set; }
 
+        [Display(Name = "Party")]
+        public int? PartyId { get; set; }
+
+
     }
 
-  
+
 
 }

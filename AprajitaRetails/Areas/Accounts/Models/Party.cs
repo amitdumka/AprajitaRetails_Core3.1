@@ -34,21 +34,21 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "On Date")]
         public DateTime OpenningDate { get; set; }
-        
+
         [Display(Name = "Opening Balance")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal OpenningBalance { get; set; }
-        
+
         public string Address { get; set; }
         public string PANNo { get; set; }
         public string GSTNo { get; set; }
 
         [Display(Name = "Ledger Type")]
         public LedgerType LedgerType { get; set; }
-       
+
         public LedgerMaster LedgerMaster { get; set; }
         public virtual ICollection<LedgerEntry> Ledgers { get; set; }
-
+        public virtual ICollection<BasicLedgerEntry> BasicLedgers { get; set; }
     }
 
     //TODO : There will no direct entry for Ledger Entry , just listing  and editing purpose. 
@@ -57,7 +57,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
     {
         public int LedgerEntryId { get; set; }
 
-        [Display(Name ="Party Name")]
+        [Display(Name = "Party Name")]
         public int PartyId { get; set; }
         public virtual Party Party { get; set; }
 
@@ -71,7 +71,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal AmountIn { get; set; }
 
-        [ForeignKey("Parties"), Display(Name ="On Account")]
+        [ForeignKey("Parties"), Display(Name = "On Account")]
         public int OwnPartyId { get; set; }
         public virtual Party OnParty { get; set; }
         //TODO: Debit /Credit on Own on Ledger like , Cash, Bank account etc.
@@ -88,7 +88,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
     public class DebitNote : BasicNotes
     {
         public int DebitNoteId { get; set; }
-        
+
         [Display(Name = "Debit Amount")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public new decimal Amount { get; set; }
@@ -158,4 +158,33 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public int DefectiveGoodsReturnId { get; set; }
 
     }
+
+
+
+    public class BasicLedgerEntry
+    {
+        public int BasicLedgerEntryId { get; set; }
+
+        [Display(Name = "Party Name")]
+        public int PartyId { get; set; }
+        public virtual Party Party { get; set; }
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date")]
+        public DateTime EntryDate { get; set; }
+        [Display(Name ="On Account Off")]
+        public LedgerEntryType EntryType { get; set; }
+        public int ReferanceId { get; set; }
+        public string Particulars { get; set; }
+        [Display(Name = "Amount In")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
+        public decimal AmountIn { get; set; }
+        [Display(Name = "Amount Out")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
+        public decimal AmountOut { get; set; }
+    }
+
+
+   
+
 }

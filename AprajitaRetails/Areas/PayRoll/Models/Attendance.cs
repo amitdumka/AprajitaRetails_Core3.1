@@ -20,7 +20,7 @@ namespace AprajitaRetails.Models
 
         public AttUnits Status { get; set; }
         public string Remarks { get; set; }
-
+        public bool? IsTailoring { get; set; }
     }
 
 }

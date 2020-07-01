@@ -25,8 +25,12 @@ namespace AprajitaRetails.Models
         [Display(Name = "Payment Mode")]
         public PayModes PayMode { get; set; }
         public string Details { get; set; }
+
+        [Display(Name = "Party")]
+        public int? PartyId { get; set; }
+
     }
 
-  
+
 
 }

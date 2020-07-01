@@ -29,9 +29,12 @@ namespace AprajitaRetails.Models
         [Display(Name = "Receipt Slip No ")]
         public string RecieptSlipNo { get; set; }
         public string Remarks { get; set; }
+        [Display(Name = "Party")]
+        public int? PartyId { get; set; }
+
 
     }
 
-    
+
 
 }

@@ -20,23 +20,5 @@ namespace AprajitaRetails.Models
         public ICollection<BankDeposit> Deposits { get; set; }
         public ICollection<BankWithdrawal> Withdrawals { get; set; }
     }
-
-
-    //public enum Modes { ON, OFF, Play, Pause, Stop, Upload, Delete}
-
-    //public class PlaySongs
-    //{
-    //    public int PlaySongsId { get; set; }
-    //    public string SongName { get; set; }
-    //    public Modes PlayModes { get; set; }
-    //}
-
-    //TODO: List
-    //TODO: Dues Recovery options
-    //TODO: Tailoring 
-    //TODO: Sales return policy update and check 
-    //TODO: Purchase of Items/Assets
-    //TODO: Arvind Payments
-    //TODO: Purchase Invoice Entry
-
+    
 }

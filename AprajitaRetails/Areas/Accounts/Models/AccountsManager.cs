@@ -2,22 +2,83 @@
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;    using System;
+using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+//using AspNetCore;
+using AprajitaRetails.Areas.Accounts.Data;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using Castle.DynamicProxy.Generators;
 
 namespace AprajitaRetails.Areas.Accounts.Models
 {
+    public class LedgerManager
+    {
+        public int CreateParty(AccountsContext db, string PartyName, LedgerType ledgerType)
+        {
+            Party newParty = new Party
+            {
+                Address = "",
+                GSTNo = "",
+                OpenningBalance = 0,
+                OpenningDate = DateTime.Today,
+                PANNo = "",
+                PartyName = PartyName,
+                LedgerType = ledgerType,
+                LedgerMaster = new LedgerMaster { CreatingDate = DateTime.Today, LedgerType = ledgerType }
+            };
+            db.Parties.Add(newParty);
+            return db.SaveChanges();
+            
+        }
+        public void UpdateParty() { }
+        public void DeleteParty() { }
+
+        public int OnInsert(AccountsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refId, string Ref)
+        {
+            BasicLedgerEntry entry = new BasicLedgerEntry
+            {
+                EntryDate = date,
+                EntryType = entryType,
+                Particulars = Ref,
+                Party = party,
+                PartyId = party.PartyId,
+                AmountOut = 0,
+                AmountIn = 0,
+                ReferanceId = refId
+            };
+            if (amount > 0) entry.AmountIn = amount; else entry.AmountOut = Math.Abs(amount);
+
+            db.BasicLedgerEntries.Add(entry);
+            return db.SaveChanges();
+
+        }
+        public void OnUpdate(AccountsContext db, DateTime date, Party party, decimal amount, decimal updateAmount, LedgerEntryType entryType, int refid, string Ref) { }
+        public int OnDelete(AccountsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refid)
+        {
+
+            BasicLedgerEntry entry = db.BasicLedgerEntries.Where(c => c.ReferanceId == refid && c.PartyId == party.PartyId && c.EntryType == entryType).FirstOrDefault();
+            db.Remove(entryType);
+            return db.SaveChanges();
+        }
+    }
+
+
+
     public class AccountsManager
     {
-        public void OnInsert(AprajitaRetailsContext db, CashReceipt reciepts) {
+        public void OnInsert(AprajitaRetailsContext db, CashReceipt reciepts)
+        {
             CashTrigger.UpdateCashInHand(db, reciepts.InwardDate, reciepts.Amount);
         }
-        public void OnDelete(AprajitaRetailsContext db, CashReceipt reciepts) {
-            CashTrigger.UpdateCashInHand(db, reciepts.InwardDate, 0-reciepts.Amount);
+        public void OnDelete(AprajitaRetailsContext db, CashReceipt reciepts)
+        {
+            CashTrigger.UpdateCashInHand(db, reciepts.InwardDate, 0 - reciepts.Amount);
         }
-        public void OnUpdate(AprajitaRetailsContext db, CashReceipt reciepts) {
+        public void OnUpdate(AprajitaRetailsContext db, CashReceipt reciepts)
+        {
             var oldPay = db.CashReceipts.Where(c => c.CashReceiptId == reciepts.CashReceiptId).Select(d => new { d.Amount, d.InwardDate }).FirstOrDefault();
 
             if (oldPay != null)

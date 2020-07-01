@@ -8,7 +8,7 @@ public static class Constants
     public const string STOREID = "_StoreId";
     public const string STORECODE = "StoreCode"; 
 }
-public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, Others }
+public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, TailorMaster, Tailors, TailoringAssistance, Others }
 
 public enum Genders { Male, Female, TransGender }
 public enum Units { Meters, Nos, Pcs, Packets }
@@ -49,6 +49,13 @@ public static class UploadType
 public enum UploadReturns { Success, Error, FileNotFound, NotExcelType, ImportNotSupported }
 public  enum LoginRole { Admin, StoreManager, Salesman, Accountant, RemoteAccountant, Member, PowerUser };
 
+
+public enum LedgerEntryType { Expenses, Payment, Reciept, Salary, AdvacePayment, AdvaceReciept, ArvindLimited, Others }
+public enum AccountType
+{
+    Saving, Current, CashCredit, OverDraft, Others
+
+}
 
 //public enum Genders { Male, Female, TransGender }
 //public enum Units { Nos, Meters, PCs, Packets }

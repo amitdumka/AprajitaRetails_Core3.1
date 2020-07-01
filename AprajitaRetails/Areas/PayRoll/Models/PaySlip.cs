@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Models
 {
+    //TODO: convert to implement tailioring division also
     public class PaySlip
     {
         public int PaySlipId { get; set; }
@@ -53,7 +54,9 @@ namespace AprajitaRetails.Models
 
         public string Remarks { get; set; }
 
-        
+        public bool? IsTailoring { get; set; }
+
+
 
 
     }
