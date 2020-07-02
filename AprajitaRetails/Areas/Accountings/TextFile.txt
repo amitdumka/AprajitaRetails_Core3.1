@@ -1,0 +1,8 @@
+﻿Payment
+Reciept
+Expenses
+Salary
+SalaryAdavce
+ManualInvoice
+Cash-CashOnly differance. Version 4
+
