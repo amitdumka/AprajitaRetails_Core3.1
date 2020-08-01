@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 //using System.Data.Entity;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -57,6 +58,10 @@ namespace AprajitaRetails.Models
         public decimal TotalPayments { get; set; }//done
         public decimal TotalRecipts { get; set; }//done
 
+        //Version 3.0
+        [DefaultValue(1)]
+        public int? StoreLocationId { get; set; }
+        public virtual StoreLocation Store { get; set; }
     }
 
   

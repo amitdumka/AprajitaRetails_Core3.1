@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Ops.Utility;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -15,9 +16,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
     [Authorize]
     public class ProductPurchasesController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public ProductPurchasesController(VoyagerContext context)
+        public ProductPurchasesController(AprajitaRetailsContext context)
         {
             _context = context;
         }
@@ -41,8 +42,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             HelperUtil.IsSessionSet (HttpContext);
             int storeid = HelperUtil.GetStoreID (HttpContext);
 
-            var voyagerContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c=>c.StoreId==storeid);
-           return View(await PaginatedList<ProductPurchase>.CreateAsync(voyagerContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c=>c.StoreId==storeid);
+           return View(await PaginatedList<ProductPurchase>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             
             
         }

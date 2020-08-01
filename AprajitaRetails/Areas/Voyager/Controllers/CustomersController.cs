@@ -3,8 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
@@ -12,9 +13,9 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
     [Authorize]
     public class CustomersController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public CustomersController(VoyagerContext context)
+        public CustomersController(AprajitaRetailsContext context)
         {
             _context = context;
         }

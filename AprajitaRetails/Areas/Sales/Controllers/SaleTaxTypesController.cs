@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;    
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Sales.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
@@ -14,9 +16,9 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     [Authorize]
     public class SaleTaxTypesController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public SaleTaxTypesController(VoyagerContext context)
+        public SaleTaxTypesController(AprajitaRetailsContext context)
         {
             _context = context;
         }

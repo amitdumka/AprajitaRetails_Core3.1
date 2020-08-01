@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Authorization;
@@ -17,11 +17,11 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     public class ImportAttendanceController : Controller
     {
         private readonly AprajitaRetailsContext db;
-        private readonly VoyagerContext voyDb;
-        public ImportAttendanceController(AprajitaRetailsContext con, Voyager.Data.VoyagerContext vdb)
+       // private readonly AprajitaRetailsContext voyDb;
+        public ImportAttendanceController(AprajitaRetailsContext con)
         {
             db = con;
-            voyDb = vdb;
+            
         }
         public IActionResult Index()
         {
@@ -31,7 +31,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult UploadData(string StoreCode, IFormFile FileUpload)
         {
             ExcelUploaders uploader = new ExcelUploaders();
-            UploadReturns response = uploader.UploadAttendance(db, voyDb, StoreCode, FileUpload);
+            UploadReturns response = uploader.UploadAttendance(db, StoreCode, FileUpload);
 
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)

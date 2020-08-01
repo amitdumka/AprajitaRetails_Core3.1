@@ -1,12 +1,8 @@
-﻿using AprajitaRetails.Areas.Accounts.Data;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using Remotion.Data.Linq.Clauses.ResultOperators;
+﻿using AprajitaRetails.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 /// <summary>
 /// Version 3.0
@@ -131,7 +127,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
         public int PartyId { get; set; }
         public int LedgerId { get; set; }
         public int LedgerEnrtryId { get; set; }
-        public DateTime dateTime { get; set; }
+        public DateTime DateTime { get; set; }
         public string Narations { get; set; }
     }
 
@@ -446,7 +442,7 @@ namespace AprajitaRetails.Areas.Accountings.Operations
 {
     public class TranscationOperation
     {
-        public void OnInsert(AccountsContext db, PayModes modes)
+        public void OnInsert(AprajitaRetailsContext db, PayModes modes)
         {
 
             if (modes == PayModes.Cash) { }
@@ -460,7 +456,7 @@ namespace AprajitaRetails.Areas.Accountings.Operations
                 else { }
             }
         }
-        public void OnUpdate(AccountsContext db, PayModes modes)
+        public void OnUpdate(AprajitaRetailsContext db, PayModes modes)
         {
             if (modes == PayModes.Cash) { }
             else
@@ -473,7 +469,7 @@ namespace AprajitaRetails.Areas.Accountings.Operations
                 else { }
             }
         }
-        public void OnDelete(AccountsContext db, PayModes modes)
+        public void OnDelete(AprajitaRetailsContext db, PayModes modes)
         {
             if (modes == PayModes.Cash) { }
             else
@@ -486,11 +482,11 @@ namespace AprajitaRetails.Areas.Accountings.Operations
                 else { }
             }
         }
-        public void CashOperations(AccountsContext db)
+        public void CashOperations(AprajitaRetailsContext db)
         {
 
         }
-        public void NonCashOperatins(AccountsContext db)
+        public void NonCashOperatins(AprajitaRetailsContext db)
         {
 
         }

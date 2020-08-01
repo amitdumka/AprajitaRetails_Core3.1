@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using AprajitaRetails.Areas.AddressBook.Models;
 using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +15,7 @@ namespace AprajitaRetails.Ops.Uploader
 {  //Store Based Changes is made in this class , All function support Store
     public class ExcelUploaders
     {
-        public UploadReturns UploadExcel(VoyagerContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
+        public UploadReturns UploadExcel(AprajitaRetailsContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
         {
             //UploadType = "InWard";
             //List<string> data = new List<string> ();
@@ -114,7 +114,7 @@ namespace AprajitaRetails.Ops.Uploader
             }
         }//end of function
 
-        private int ImportSaleItemWise(VoyagerContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
+        private int ImportSaleItemWise(AprajitaRetailsContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -195,7 +195,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        private int ImportPurchase(VoyagerContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
+        private int ImportPurchase(AprajitaRetailsContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -244,7 +244,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        private int ImportPurchaseInward(VoyagerContext db, string StoreCode, string fileName)
+        private int ImportPurchaseInward(AprajitaRetailsContext db, string StoreCode, string fileName)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -284,7 +284,7 @@ namespace AprajitaRetails.Ops.Uploader
             //return purchaseList;
         }
 
-        private int ImportSaleRegister(VoyagerContext db, string StoreCode, string fileName)
+        private int ImportSaleRegister(AprajitaRetailsContext db, string StoreCode, string fileName)
         {
             //string rootFolder = IHostingEnvironment.WebRootPath;
             //string fileName = @"ImportCustomers.xlsx";
@@ -399,7 +399,7 @@ namespace AprajitaRetails.Ops.Uploader
             }
         }
 
-        public UploadReturns UploadAttendance(AprajitaRetailsContext db, VoyagerContext voydb, string StoreCode, IFormFile FileUpload)
+        public UploadReturns UploadAttendance(AprajitaRetailsContext db, string StoreCode, IFormFile FileUpload)
         {
 
             if (FileUpload != null)
@@ -424,7 +424,7 @@ namespace AprajitaRetails.Ops.Uploader
                         List<AttendanceVM> addList = new List<AttendanceVM>();
 
                         int StoreID = 1;//Default
-                        StoreID = voydb.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
+                        StoreID = db.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
                         if (StoreID < 1)
                             StoreID = 1;
 

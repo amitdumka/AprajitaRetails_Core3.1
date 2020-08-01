@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +14,12 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     public class ManualInvoiceController : Controller
     {
         private readonly AprajitaRetailsContext aprajitaContext;
-        private readonly VoyagerContext voyagerContext;
+       // private readonly aprajitaContext aprajitaContext;
 
-        public ManualInvoiceController(AprajitaRetailsContext aCtx, VoyagerContext vCtx)
+        public ManualInvoiceController(AprajitaRetailsContext aCtx)
         {
             aprajitaContext = aCtx;
-            voyagerContext = vCtx;
+            //aprajitaContext = vCtx;
         }
         public IActionResult Index()
         {
@@ -36,7 +36,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         {
             try
             {
-                var pItem = voyagerContext.ProductItems.Where (c => c.Barcode == barcode).Select (c => new { c.MRP, c.ProductName, c.TaxRate }).FirstOrDefault ();
+                var pItem = aprajitaContext.ProductItems.Where (c => c.Barcode == barcode).Select (c => new { c.MRP, c.ProductName, c.TaxRate }).FirstOrDefault ();
 
                 if ( pItem == null )
                 {

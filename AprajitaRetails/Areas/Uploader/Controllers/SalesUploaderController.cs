@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using AprajitaRetails.Areas.Sales.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS;
 using AprajitaRetails.Ops.Uploader;
@@ -17,10 +17,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     [Authorize]
     public class SalesUploaderController : Controller
     {
-        private readonly VoyagerContext db;
+        private readonly AprajitaRetailsContext db;
         private readonly AprajitaRetailsContext aprajitaContext;
 
-        public SalesUploaderController(VoyagerContext context, AprajitaRetailsContext arContext)
+        public SalesUploaderController(AprajitaRetailsContext context, AprajitaRetailsContext arContext)
         {
             db = context;
             aprajitaContext = arContext;

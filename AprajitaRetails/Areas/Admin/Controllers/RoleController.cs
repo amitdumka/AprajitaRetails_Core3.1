@@ -17,8 +17,8 @@ namespace AprajitaRetails.Areas.Admin.Controllers
     [Authorize(Roles="Admin,PowerUser")]
     public class RoleController : Controller
     {
-        RoleManager<IdentityRole> roleManager;
-        UserManager<IdentityUser> UserManager;
+        readonly RoleManager<IdentityRole> roleManager;
+        readonly UserManager<IdentityUser> UserManager;
         public RoleController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> um)
         {
             this.roleManager = roleManager;

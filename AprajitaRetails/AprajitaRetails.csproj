@@ -261,6 +261,7 @@
     <Folder Include="Areas\Accountings\Controllers\" />
     <Folder Include="Areas\Accountings\Data\" />
     <Folder Include="Areas\Accountings\Views\" />
+    <Folder Include="Areas\Accounts\Data\" />
     <Folder Include="Areas\AddressBook\Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Banking\Data\" />
@@ -274,6 +275,7 @@
     <Folder Include="Areas\Sales\Data\" />
     <Folder Include="Areas\ToDo\Data\" />
     <Folder Include="Areas\Uploader\Data\" />
+    <Folder Include="Areas\Voyager\Data\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
     <Folder Include="wwwroot\todolist\" />

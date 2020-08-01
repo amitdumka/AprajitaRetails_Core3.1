@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS;
 using AprajitaRetails.Ops.Uploader;
 using AprajitaRetails.Ops.Utility;
@@ -17,9 +17,9 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     [Authorize]
     public class PurchaseUploaderController : Controller
     {
-        private VoyagerContext db;
+        private readonly AprajitaRetailsContext db;
 
-        public PurchaseUploaderController(VoyagerContext context)
+        public PurchaseUploaderController(AprajitaRetailsContext context)
         {
             db = context;
         }

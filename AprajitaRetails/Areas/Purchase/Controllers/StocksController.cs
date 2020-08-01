@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Ops.Utility;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -15,9 +16,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
     [Authorize]
     public class StocksController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public StocksController(VoyagerContext context)
+        public StocksController(AprajitaRetailsContext context)
         {
             _context = context;
         }
@@ -42,9 +43,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
 
             ViewData ["StoreID"] = storeid;
             int pageSize = 10;
-            var voyagerContext = _context.Stocks.Include(s => s.ProductItem).Where(c=>c.StoreId==storeid);
+            var AprajitaRetailsContext = _context.Stocks.Include(s => s.ProductItem).Where(c=>c.StoreId==storeid);
 
-            return View(await PaginatedList<Stock>.CreateAsync(voyagerContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Stock>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             
             
         }

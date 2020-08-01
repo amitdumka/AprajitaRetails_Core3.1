@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -14,9 +14,9 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     [Authorize]
     public class ImportInWardsController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public ImportInWardsController(VoyagerContext context)
+        public ImportInWardsController(AprajitaRetailsContext context)
         {
             _context = context;
         }

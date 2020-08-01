@@ -3,6 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.ToDo.Models;
 using System;
 using System.Linq;
+using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Sales.Models;
+using AprajitaRetails.Areas.Sales.Models.Views;
+using AprajitaRetails.Areas.Uploader.Models;
+using ManualSaleItem = AprajitaRetails.Areas.Sales.Models.ManualSaleItem;
+using ManualInvoice = AprajitaRetails.Areas.Sales.Models.ManualInvoice;
+using SaleItem = AprajitaRetails.Areas.Sales.Models.SaleItem;
+using SaleInvoice = AprajitaRetails.Areas.Sales.Models.SaleInvoice;
+using AprajitaRetails.Areas.Accounts.Models;
 //using AprajitaRetails.Areas.Chat.Models;
 
 namespace AprajitaRetails.Data
@@ -40,9 +50,11 @@ namespace AprajitaRetails.Data
               .HasIndex (b => b.Transcation)
               .IsUnique ();
 
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra" });
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal" });
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 3, SalesmanName = "Manager" });
+            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreLocationId=1 });
+            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreLocationId = 1 });
+            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreLocationId = 1 });
+            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 3, SalesmanName = "Bikash Kumar Sah", StoreLocationId = 1 });
+
 
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 1, BankName = "SBI" });
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 2, BankName = "ICICI" });
@@ -51,6 +63,7 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 5, BankName = "BOB" });
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 6, BankName = "Axis" });
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 7, BankName = "HDFC" });
+            
 
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 1, Transcation = "Home Expenses" });
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 2, Transcation = "Other Home Expenses" });
@@ -60,15 +73,47 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 6, Transcation = "CashIn" });
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 7, Transcation = "CashOut" });
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 8, Transcation = "Regular" });
+            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
+            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
+            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
+
+            modelBuilder.Entity<Customer>().HasData(new Customer
+            {
+                CustomerId = 1,
+                FirstName = "Cash",
+                LastName = "Sale",
+                Age = 0,
+                City = "Dumka",
+                CreatedDate = DateTime.Now.Date,
+                Gender = Genders.Male,
+                NoOfBills = 0,
+                TotalAmount = 0,
+                MobileNo = "1234567890",
+                DateOfBirth = DateTime.Now.Date
+            });
+            modelBuilder.Entity<Customer>().HasData(new Customer
+            {
+                CustomerId = 2,
+                FirstName = "Card",
+                LastName = "Sale",
+                Age = 0,
+                City = "Dumka",
+                CreatedDate = DateTime.Now.Date,
+                Gender = Genders.Male,
+                NoOfBills = 0,
+                TotalAmount = 0,
+                MobileNo = "1234567890",
+                DateOfBirth = DateTime.Now.Date
+            });
 
 
         }
         ////Version 2
-        public DbSet<DailySale> DailySales { get; set; }
-        public DbSet<CashInHand> CashInHands { get; set; }
-        public DbSet<CashInBank> CashInBanks { get; set; }
-        public DbSet<Salesman> Salesmen { get; set; }
-        public DbSet<DuesList> DuesLists { get; set; }
+        public DbSet<DailySale> DailySales { get; set; }   //Version 3.0
+        public DbSet<CashInHand> CashInHands { get; set; } //Version 3.0
+        public DbSet<CashInBank> CashInBanks { get; set; } //Version 3.0
+        public DbSet<Salesman> Salesmen { get; set; }      //Version 3.0
+        public DbSet<DuesList> DuesLists { get; set; }     //Version 3.0
 
         public DbSet<TranscationMode> TranscationModes { get; set; }
         public DbSet<CashPayment> CashPayments { get; set; }
@@ -155,6 +200,56 @@ namespace AprajitaRetails.Data
         public DbSet<AprajitaRetails.Models.OnlineSale> OnlineSale { get; set; }
         public DbSet<AprajitaRetails.Models.OnlineVendor> OnlineVendor { get; set; }
         public DbSet<AttendanceVM> AttendancesImport { get; set; }
+        public DbSet<StoreLocation> Locations { get; set; }
+
+
+        // Unifiing of Database . 
+
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<ProductItem> ProductItems { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
+        //Purchase Entry System
+        public DbSet<ProductPurchase> ProductPurchases { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<PurchaseItem> PurchaseItems { get; set; }
+        public DbSet<PurchaseTaxType> PurchaseTaxTypes { get; set; }
+        public DbSet<SalesPerson> SalesPerson { get; set; }
+        public DbSet<SaleInvoice> SaleInvoices { get; set; }
+        public DbSet<SaleItem> SaleItems { get; set; }
+        public DbSet<SaleTaxType> SaleTaxTypes { get; set; }
+        public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
+        public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
+        public DbSet<ArvindPayment> ArvindPayments { get; set; }
+
+        // New Invoice System
+        public DbSet<RegularInvoice> RegularInvoices { get; set; }
+        public DbSet<RegularSaleItem> RegularSaleItems { get; set; }
+        public DbSet<RegularPaymentDetail> RegularPaymentDetails { get; set; }
+        public DbSet<RegularCardDetail> RegularCardDetails { get; set; }
+
+
+
+        // New Invoice System  Manual
+        public DbSet<ManualInvoice> ManualInvoices { get; set; }
+        public DbSet<ManualSaleItem> ManualSaleItems { get; set; }
+        public DbSet<ManualPaymentDetail> ManualPaymentDetails { get; set; }
+        public DbSet<ManualCardDetail> ManualCardDetails { get; set; }
+
+        //Import Table
+        public DbSet<ImportInWard> ImportInWards { get; set; }
+        public DbSet<ImportPurchase> ImportPurchases { get; set; }
+        public DbSet<ImportSaleItemWise> ImportSaleItemWises { get; set; }
+        public DbSet<ImportSaleRegister> ImportSaleRegisters { get; set; }
+
+
+        //Accounts
+        public DbSet<LedgerMaster> Masters { get; set; }
+        public DbSet<Party> Parties { get; set; }
+        public DbSet<LedgerEntry> LedgerEntries { get; set; }
+        public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
 
     }
 

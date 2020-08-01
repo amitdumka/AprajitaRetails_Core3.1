@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -12,9 +12,9 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     [Authorize]
     public class ImportSaleItemWisesController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public ImportSaleItemWisesController(VoyagerContext context)
+        public ImportSaleItemWisesController(AprajitaRetailsContext context)
         {
             _context = context;
         }

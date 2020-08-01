@@ -5,7 +5,7 @@ using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.EntityFrameworkCore;
@@ -26,11 +26,11 @@ namespace AprajitaRetails.Ops.TAS
 
         #region HelperFunctions
 
-        public void UpdateHSNCode(VoyagerContext db, string HSNCode, int itemCode)
+        public void UpdateHSNCode(AprajitaRetailsContext db, string HSNCode, int itemCode)
         {
         }
 
-        public int GetSalesPersonId(VoyagerContext db, string salesman)
+        public int GetSalesPersonId(AprajitaRetailsContext db, string salesman)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        public int GetCustomerId(VoyagerContext db, ImportSaleItemWise item)
+        public int GetCustomerId(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
             if ( item.PaymentType == "CAS" ) //TODO: Check For Actual Data.
                 return 1;
@@ -65,7 +65,7 @@ namespace AprajitaRetails.Ops.TAS
             //return 1;
         }
 
-        private List<Category> GetCategory(VoyagerContext db, string pCat, string sCat, string tCat)
+        private List<Category> GetCategory(AprajitaRetailsContext db, string pCat, string sCat, string tCat)
         {
             List<Category> CatIdList = new List<Category> ();
 
@@ -119,7 +119,7 @@ namespace AprajitaRetails.Ops.TAS
             return CatIdList;
         }
 
-        private List<int> GetCategoryId(VoyagerContext db, string pCat, string sCat, string tCat)
+        private List<int> GetCategoryId(AprajitaRetailsContext db, string pCat, string sCat, string tCat)
         {
             List<int> CatIdList = new List<int> ();
             int id = (int?) db.Categories.Where (c => c.CategoryName == pCat && c.IsPrimaryCategory).FirstOrDefault ().CategoryId ?? -1;
@@ -173,7 +173,7 @@ namespace AprajitaRetails.Ops.TAS
             return CatIdList;
         }
 
-        private int GetBrandID(VoyagerContext db, string code)
+        private int GetBrandID(AprajitaRetailsContext db, string code)
         {
             //TODO: Null Object is found
             //TODO: create if not exsits
@@ -195,7 +195,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        private int GetBrand(VoyagerContext db, string StyleCode)
+        private int GetBrand(AprajitaRetailsContext db, string StyleCode)
         {
             if ( StyleCode.StartsWith ("U") )
             {
@@ -224,7 +224,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        private int GetSupplierIdOrAdd(VoyagerContext db, string sup)
+        private int GetSupplierIdOrAdd(AprajitaRetailsContext db, string sup)
         {
             try
             {
@@ -264,7 +264,7 @@ namespace AprajitaRetails.Ops.TAS
 
         // Converting purchase items to stock
 
-        public int ProcessPurchaseInward(VoyagerContext db, DateTime inDate, bool IsLocal)
+        public int ProcessPurchaseInward(AprajitaRetailsContext db, DateTime inDate, bool IsLocal)
         {
             int ctr = 0;
             var data = db.ImportPurchases.Where (c => c.IsDataConsumed == false && ( c.GRNDate.Date ) == ( inDate.Date )).OrderBy (c => c.InvoiceNo).ToList ();
@@ -291,7 +291,7 @@ namespace AprajitaRetails.Ops.TAS
             return ctr;
         }
 
-        public int CreateProductItem(VoyagerContext db, ImportPurchase purchase)
+        public int CreateProductItem(AprajitaRetailsContext db, ImportPurchase purchase)
         {
             int barc = db.ProductItems.Where (c => c.Barcode == purchase.Barcode).Count ();
 
@@ -358,7 +358,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        public void CreateStockItem(VoyagerContext db, ImportPurchase purchase, int pItemId)
+        public void CreateStockItem(AprajitaRetailsContext db, ImportPurchase purchase, int pItemId)
         {
             Stock stcks = db.Stocks.Where (c => c.ProductItemId == pItemId).FirstOrDefault ();
             if ( stcks != null )
@@ -383,7 +383,7 @@ namespace AprajitaRetails.Ops.TAS
             db.SaveChanges ();
         }
 
-        public ProductPurchase CreatePurchaseInWard(VoyagerContext db, ImportPurchase purchase, ProductPurchase product)
+        public ProductPurchase CreatePurchaseInWard(AprajitaRetailsContext db, ImportPurchase purchase, ProductPurchase product)
         {
             if ( product != null )
             {
@@ -441,7 +441,7 @@ namespace AprajitaRetails.Ops.TAS
             return product;
         }
 
-        public PurchaseItem CreatePurchaseItem(VoyagerContext db, ImportPurchase purchase, int productId, bool IsLocal = false)
+        public PurchaseItem CreatePurchaseItem(AprajitaRetailsContext db, ImportPurchase purchase, int productId, bool IsLocal = false)
         {
             PurchaseItem item = new PurchaseItem
             {
@@ -457,7 +457,7 @@ namespace AprajitaRetails.Ops.TAS
             return item;
         }
 
-        public int CreatePurchaseTaxType(VoyagerContext db, ImportPurchase purchase, bool IsLocal = false)
+        public int CreatePurchaseTaxType(AprajitaRetailsContext db, ImportPurchase purchase, bool IsLocal = false)
         {
             //Calculate tax rate
             int taxRate = 0;
@@ -521,7 +521,7 @@ namespace AprajitaRetails.Ops.TAS
 
         #region Sale
 
-        public int CreateSaleEntry(VoyagerContext db, DateTime onDate, AprajitaRetailsContext arDB)
+        public int CreateSaleEntry(AprajitaRetailsContext db, DateTime onDate, AprajitaRetailsContext arDB)
         {
             int ctr = 0;
             bool isVat = false;
@@ -559,7 +559,7 @@ namespace AprajitaRetails.Ops.TAS
         //HSN Code	BAR CODE	Style Code	Quantity
         //MRP	Discount Amt	Basic Amt	Tax Amt	SGST Amt	CGST Amt	Line Total	Round Off
         //Bill Amt	Payment Mode	SalesMan Name
-        private int StockItem(VoyagerContext db, ImportSaleItemWise item, out Units unit)
+        private int StockItem(AprajitaRetailsContext db, ImportSaleItemWise item, out Units unit)
         {
             ProductItem pItem = new ProductItem
             {
@@ -610,7 +610,7 @@ namespace AprajitaRetails.Ops.TAS
             return pItem.ProductItemId;
         }
 
-        private RegularPaymentDetail CreatePaymentDetails(VoyagerContext db, ImportSaleItemWise item)
+        private RegularPaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
             RegularPaymentDetail payment = null;
            
@@ -662,7 +662,7 @@ namespace AprajitaRetails.Ops.TAS
                 return payment;
         }
 
-        private RegularInvoice CreateSaleInvoice(VoyagerContext db, AprajitaRetailsContext arDB, ImportSaleItemWise item, RegularInvoice invoice)
+        private RegularInvoice CreateSaleInvoice(AprajitaRetailsContext db, AprajitaRetailsContext arDB, ImportSaleItemWise item, RegularInvoice invoice)
         {
             if ( invoice != null )
             {
@@ -726,7 +726,7 @@ namespace AprajitaRetails.Ops.TAS
             return invoice;
         }
 
-        private RegularSaleItem CreateSaleItem(VoyagerContext db, ImportSaleItemWise item)
+        private RegularSaleItem CreateSaleItem(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
             var pi = db.ProductItems.Where (c => c.Barcode == item.Barcode).Select (c => new { c.ProductItemId, c.Units }).FirstOrDefault ();
             if ( pi == null )
@@ -768,7 +768,7 @@ namespace AprajitaRetails.Ops.TAS
         /// <param name="qty"> Sale Qty</param>
         /// <param name="pItemId">Item Code</param>
         /// <param name="unts">Units</param>
-        private void CreateStockItem(VoyagerContext db, double qty, int pItemId, Units unts)
+        private void CreateStockItem(AprajitaRetailsContext db, double qty, int pItemId, Units unts)
         {
             Stock stock = new Stock
             {
@@ -783,7 +783,7 @@ namespace AprajitaRetails.Ops.TAS
             db.SaveChanges ();
         }
 
-        private int CreateSaleTax(VoyagerContext db, ImportSaleItemWise item)
+        private int CreateSaleTax(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
             // Always GST and with Local Sale
 
@@ -818,7 +818,7 @@ namespace AprajitaRetails.Ops.TAS
 
         #region DailySale
 
-        private void CreateDailySale(AprajitaRetailsContext db, VoyagerContext voyager, RegularInvoice inv)
+        private void CreateDailySale(AprajitaRetailsContext db, AprajitaRetailsContext voyager, RegularInvoice inv)
         {
             var dSale = db.DailySales.Where (c => c.InvNo == inv.InvoiceNo).FirstOrDefault ();
             if ( dSale != null )
@@ -954,7 +954,7 @@ namespace AprajitaRetails.Ops.TAS
         /// <param name="Qty"></param>
         /// <param name="IsPurchased"></param>
         /// <returns></returns>
-        public static bool UpDateStock(VoyagerContext db, int ItemCode, double Qty, bool IsPurchased, int StoreId)
+        public static bool UpDateStock(AprajitaRetailsContext db, int ItemCode, double Qty, bool IsPurchased, int StoreId)
         {
             var stock = db.Stocks.Where (c => c.ProductItemId == ItemCode && c.StoreId == StoreId).FirstOrDefault ();
 
@@ -985,7 +985,7 @@ namespace AprajitaRetails.Ops.TAS
 
     public class VatSalePurchase
     {
-        public int GetSalesPersonId(VoyagerContext db, string salesman)
+        public int GetSalesPersonId(AprajitaRetailsContext db, string salesman)
         {
             try
             {
@@ -1011,12 +1011,12 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        public int GetCustomerId(VoyagerContext db, ImportSaleItemWise item)
+        public int GetCustomerId(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
             return 1;
         }
 
-        private RegularPaymentDetail CreatePaymentDetails(VoyagerContext db, ImportSaleItemWise item)
+        private RegularPaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
             RegularPaymentDetail payment = null;
             if ( string.IsNullOrEmpty (item.PaymentType)/* item.PaymentType == null || item.PaymentType == "" */)
@@ -1067,7 +1067,7 @@ namespace AprajitaRetails.Ops.TAS
                 return payment;
         }
 
-        private RegularInvoice CreateSaleInvoice(VoyagerContext db, ImportSaleItemWise item, RegularInvoice invoice)
+        private RegularInvoice CreateSaleInvoice(AprajitaRetailsContext db, ImportSaleItemWise item, RegularInvoice invoice)
         {
             if ( invoice != null )
             {
@@ -1129,7 +1129,7 @@ namespace AprajitaRetails.Ops.TAS
             return invoice;
         }
 
-        private RegularSaleItem CreateSaleItem(VoyagerContext db, ImportSaleItemWise item, int StoreId)
+        private RegularSaleItem CreateSaleItem(AprajitaRetailsContext db, ImportSaleItemWise item, int StoreId)
         {
             var pi = db.ProductItems.Where (c => c.Barcode == item.Barcode).Select (c => new { c.ProductItemId, c.Units }).FirstOrDefault ();
 
@@ -1151,7 +1151,7 @@ namespace AprajitaRetails.Ops.TAS
             return saleItem;
         }
 
-        private int CreateSaleTax(VoyagerContext db, ImportSaleItemWise item, bool isIGST = false)
+        private int CreateSaleTax(AprajitaRetailsContext db, ImportSaleItemWise item, bool isIGST = false)
         {
             if ( item.Tax != 0 && item.SGST != 0 )
             {

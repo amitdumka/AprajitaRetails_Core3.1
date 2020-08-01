@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using AprajitaRetails.Areas.Accounts.Data;
 using AprajitaRetails.Areas.ToDo.Extensions;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.TelgramService;
 using Microsoft.AspNetCore.Builder;
@@ -46,12 +45,12 @@ namespace AprajitaRetails
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("AprajitaRetailsConnection")));
 
-            services.AddDbContext<VoyagerContext> (options =>
-                options.UseSqlServer (
-                    Configuration.GetConnectionString ("VoyagerConnection")));
-            services.AddDbContext<AccountsContext> (options =>
-               options.UseSqlServer (
-                   Configuration.GetConnectionString ("AccountsConnection")));
+            //services.AddDbContext<AprajitaRetailsContext> (options =>
+            //    options.UseSqlServer (
+            //        Configuration.GetConnectionString ("VoyagerConnection")));
+            //services.AddDbContext<AprajitaRetailsContext> (options =>
+            //   options.UseSqlServer (
+            //       Configuration.GetConnectionString ("AccountsConnection")));
 
             services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole> ()

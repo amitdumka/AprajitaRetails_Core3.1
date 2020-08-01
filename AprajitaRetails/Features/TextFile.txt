@@ -1,0 +1,14 @@
+﻿Version 3.0
+
+1) Store Based Data
+2) Party Option for Payment, Expenses, Receipt
+3) Tailoring and Normal Stuff Combilned in one
+
+
+
+
+
+
+
+Table migrated
+

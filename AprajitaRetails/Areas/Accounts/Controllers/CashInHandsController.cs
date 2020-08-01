@@ -13,6 +13,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
     public class CashInHandsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreCode = 1;
 
         public CashInHandsController(AprajitaRetailsContext context)
         {
@@ -33,7 +34,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
             ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.CashInHands.OrderByDescending (c => c.CIHDate).OrderByDescending (c => c.CIHDate);
+            var aprajitaRetailsContext = _context.CashInHands.Where(c=>c.StoreLocationId==StoreCode).OrderByDescending (c => c.CIHDate).OrderByDescending (c => c.CIHDate);
             return View (await PaginatedList<CashInHand>.CreateAsync (aprajitaRetailsContext.AsNoTracking (), pageNumber ?? 1, pageSize));
             //return View(await _context.CashInHands.ToListAsync());
         }
@@ -71,6 +72,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         {
             if ( ModelState.IsValid )
             {
+                cashInHand.StoreLocationId = StoreCode;
                 _context.Add (cashInHand);
                 await _context.SaveChangesAsync ();
                 return RedirectToAction (nameof (Index));

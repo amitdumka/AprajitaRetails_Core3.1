@@ -75,5 +75,10 @@ namespace AprajitaRetails.Models
         public bool IsDelivered { get; set; }
 
         public virtual ICollection<TalioringDelivery> Deliveries { get; set; }
+
+        //Version 3.0
+        [DefaultValue(1)]
+        public int? StoreLocationId { get; set; }
+        public virtual StoreLocation Store { get; set; }
     }
 }

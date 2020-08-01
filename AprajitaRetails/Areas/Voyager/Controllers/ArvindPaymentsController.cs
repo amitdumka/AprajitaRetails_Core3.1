@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Voyager.Data;
+
 using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
@@ -15,9 +16,9 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
     [Area("Voyager")]
     public class ArvindPaymentsController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public ArvindPaymentsController(VoyagerContext context)
+        public ArvindPaymentsController(AprajitaRetailsContext context)
         {
             _context = context;
         }

@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -14,9 +13,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
     [Authorize]
     public class ProductItemsController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public ProductItemsController(VoyagerContext context)
+        public ProductItemsController(AprajitaRetailsContext context)
         {
             _context = context;
         }
@@ -36,10 +35,10 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var voyagerContext = _context.ProductItems.Include(p => p.BrandName);
-            return View(await PaginatedList<ProductItem>.CreateAsync(voyagerContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var AprajitaRetailsContext = _context.ProductItems.Include(p => p.BrandName);
+            return View(await PaginatedList<ProductItem>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
            
-            //return PartialView(await voyagerContext.ToListAsync());
+            //return PartialView(await AprajitaRetailsContext.ToListAsync());
         }
 
         // GET: Purchase/ProductItems/Details/5

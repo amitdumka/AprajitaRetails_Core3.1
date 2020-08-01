@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -14,9 +15,9 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
     [Authorize]
     public class PurchaseTaxTypesController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public PurchaseTaxTypesController(VoyagerContext context)
+        public PurchaseTaxTypesController(AprajitaRetailsContext context)
         {
             _context = context;
         }

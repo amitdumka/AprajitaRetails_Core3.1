@@ -85,7 +85,7 @@ namespace AprajitaRetails.Ops.WidgetModel
                 .Where(c => c.Status == AttUnits.Absent && (c.AttDate).Month == (DateTime.Today).Month)
                  .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
-            var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => (c.SaleDate).Month == (DateTime.Today).Month).Select(a => new { StaffName = a.Salesman.SalesmanName, Amount = a.Amount }).ToList();
+            var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => (c.SaleDate).Month == (DateTime.Today).Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
 
             List<EmployeeInfo> infoList = new List<EmployeeInfo>();
 

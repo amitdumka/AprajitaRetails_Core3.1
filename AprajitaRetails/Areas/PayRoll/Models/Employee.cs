@@ -39,6 +39,10 @@ namespace AprajitaRetails.Models
         public ICollection<Expense> Expenses { get; set; }
 
         public virtual ICollection<CurrentSalary> CurrentSalaries { get; set; }
+        //Version 3.0
+        [DefaultValue(1)]
+        public int? StoreLocationId { get; set; }
+        public virtual StoreLocation Store { get; set; }
 
     }
 

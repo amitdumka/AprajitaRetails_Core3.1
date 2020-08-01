@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Sales.Models;
-using AprajitaRetails.Areas.Voyager.Data;
+
+using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
@@ -15,9 +16,9 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     [Authorize]
     public class SaleInvoicesController : Controller
     {
-        private readonly VoyagerContext _context;
+        private readonly AprajitaRetailsContext _context;
 
-        public SaleInvoicesController(VoyagerContext context)
+        public SaleInvoicesController(AprajitaRetailsContext context)
         {
             _context = context;
         }

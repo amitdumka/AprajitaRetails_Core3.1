@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,6 +40,11 @@ namespace AprajitaRetails.Models
         public int Coin2 { set; get; }
         [Display (Name = "Coin 1")]
         public int Coin1 { set; get; }
+
+        //Version 3.0
+        [DefaultValue(1)]
+        public int? StoreLocationId { get; set; }
+        public virtual StoreLocation Store { get; set; }
     }
 }
 

@@ -2,21 +2,15 @@
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 //using AspNetCore;
-using AprajitaRetails.Areas.Accounts.Data;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using Castle.DynamicProxy.Generators;
 
 namespace AprajitaRetails.Areas.Accounts.Models
 {
     public class LedgerManager
     {
-        public int CreateParty(AccountsContext db, string PartyName, LedgerType ledgerType)
+        public int CreateParty(AprajitaRetailsContext db, string PartyName, LedgerType ledgerType)
         {
             Party newParty = new Party
             {
@@ -36,7 +30,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public void UpdateParty() { }
         public void DeleteParty() { }
 
-        public int OnInsert(AccountsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refId, string Ref)
+        public int OnInsert(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refId, string Ref)
         {
             BasicLedgerEntry entry = new BasicLedgerEntry
             {
@@ -55,8 +49,8 @@ namespace AprajitaRetails.Areas.Accounts.Models
             return db.SaveChanges();
 
         }
-        public void OnUpdate(AccountsContext db, DateTime date, Party party, decimal amount, decimal updateAmount, LedgerEntryType entryType, int refid, string Ref) { }
-        public int OnDelete(AccountsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refid)
+        public void OnUpdate(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, decimal updateAmount, LedgerEntryType entryType, int refid, string Ref) { }
+        public int OnDelete(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refid)
         {
 
             BasicLedgerEntry entry = db.BasicLedgerEntries.Where(c => c.ReferanceId == refid && c.PartyId == party.PartyId && c.EntryType == entryType).FirstOrDefault();
