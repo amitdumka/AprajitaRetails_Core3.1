@@ -51,4 +51,8 @@ namespace AprajitaRetails.Models
 
         //public virtual DuesList DuesList { get; set; }
     }
+
+
+
+
 }

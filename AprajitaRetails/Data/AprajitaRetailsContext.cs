@@ -151,6 +151,12 @@ namespace AprajitaRetails.Data
             }
         }
 
+
+        public DbSet<AprajitaRetails.Models.OnlineSale> OnlineSale { get; set; }
+
+
+        public DbSet<AprajitaRetails.Models.OnlineVendor> OnlineVendor { get; set; }
+
     }
 
 }
