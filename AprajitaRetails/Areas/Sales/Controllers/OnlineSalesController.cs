@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
     [Area("Sales")]
+    [Authorize]
     public class OnlineSalesController : Controller
     {
         private readonly AprajitaRetailsContext _context;

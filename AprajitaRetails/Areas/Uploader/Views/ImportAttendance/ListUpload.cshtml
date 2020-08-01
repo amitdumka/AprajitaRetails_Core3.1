@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AprajitaRetails.Models.AttendanceVM>
+
+@{
+    ViewData["Title"] = "ListUpload";
+}
+
+<h1>ListUpload</h1>
+
+<table class="table table-bordered table-hover table-sm table-striped text-center">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsTailoring)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDataConsumed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AttDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntryTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsTailoring)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoreCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDataConsumed)
+                </td>
+                <td>
+                <td class="btn-group btn-group-sm">
+                    <a class="btn btn-sm btn-outline-amber" asp-area="AddressBook" asp-controller="Contacts" asp-action="Edit" asp-route-id="@item.AttendanceVMId">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-area="AddressBook" asp-controller="Contacts" asp-action="Delete" asp-route-id="@item.AttendanceVMId">Delete</a>
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
