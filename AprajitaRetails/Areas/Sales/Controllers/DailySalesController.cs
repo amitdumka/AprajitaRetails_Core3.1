@@ -19,7 +19,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
     public class DailySalesController : Controller
     {
         //Version 3.0 
-        private readonly int StoreCodeId = 1;
+        private readonly int StoreCodeId = 1;   //Default Value. For Now.
 
         private readonly AprajitaRetailsContext db;
        // private readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
@@ -51,15 +51,15 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
 
             //For Current Day
-            var dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate == DateTime.Today && c.StoreLocationId==this.StoreCodeId);
+            var dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate == DateTime.Today && c.StoreId==this.StoreCodeId);
 
             if ( id != null && id == 101 )
             {
-                dailySales = db.DailySales.Include (d => d.Salesman).Where(c=>  c.StoreLocationId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
+                dailySales = db.DailySales.Include (d => d.Salesman).Where(c=>  c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
             }
             else if ( id != null && id == 102 )
             {
-                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate.Month == DateTime.Today.Month && c.StoreLocationId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
+                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate.Month == DateTime.Today.Month && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
 
             }
             else
@@ -69,7 +69,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
             if ( !String.IsNullOrEmpty (searchString) )
             {
-                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.InvNo == searchString && c.StoreLocationId == this.StoreCodeId);
+                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.InvNo == searchString && c.StoreId == this.StoreCodeId);
                 //return View(await dls.ToListAsync());
 
             }
@@ -79,11 +79,11 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
                 if ( SaleDate != null )
                 {
-                    dailySales = db.DailySales.Include (d => d.Salesman).Where (c =>  c.SaleDate  ==  SaleDate && c.StoreLocationId == this.StoreCodeId).OrderByDescending (c => c.DailySaleId);
+                    dailySales = db.DailySales.Include (d => d.Salesman).Where (c =>  c.SaleDate  ==  SaleDate && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.DailySaleId);
                 }
                 else
                 {
-                    dailySales = db.DailySales.Include (d => d.Salesman).Where (c => ( c.SaleDate.Month ) == ( DateTime.Today.Month) && c.StoreLocationId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
+                    dailySales = db.DailySales.Include (d => d.Salesman).Where (c => ( c.SaleDate.Month ) == ( DateTime.Today.Month) && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
                 }
 
                 if ( !String.IsNullOrEmpty (salesmanId) )
@@ -99,14 +99,14 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
             #region FixedUI 
             //Fixed Query
-            var totalSale = db.DailySales.Where (c => c.IsManualBill == false && c.SaleDate.Date == DateTime.Today.Date && c.StoreLocationId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
-            var totalManualSale = db.DailySales.Where (c => c.IsManualBill == true && c.SaleDate.Date == DateTime.Today.Date && c.StoreLocationId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
-            var totalMonthlySale = db.DailySales.Where (c => c.SaleDate.Month == DateTime.Today.Month && c.StoreLocationId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
-            var duesamt = db.DuesLists.Where (c => c.IsRecovered == false && c.StoreLocationId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
+            var totalSale = db.DailySales.Where (c => c.IsManualBill == false && c.SaleDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
+            var totalManualSale = db.DailySales.Where (c => c.IsManualBill == true && c.SaleDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
+            var totalMonthlySale = db.DailySales.Where (c => c.SaleDate.Month == DateTime.Today.Month && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
+            var duesamt = db.DuesLists.Where (c => c.IsRecovered == false && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
             var cashinhand = (decimal) 0.00;
             try
             {
-                cashinhand = db.CashInHands.Where (c => c.CIHDate == DateTime.Today && c.StoreLocationId == this.StoreCodeId).FirstOrDefault ().InHand;
+                cashinhand = db.CashInHands.Where (c => c.CIHDate == DateTime.Today && c.StoreId == this.StoreCodeId).FirstOrDefault ().InHand;
             }
             catch ( Exception )
             {
@@ -222,7 +222,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             if ( ModelState.IsValid )
             {
                 //version 3.0  StoreCode
-                dailySale.StoreLocationId = this.StoreCodeId;
+                dailySale.StoreId = this.StoreCodeId;
 
                 db.Add (dailySale);
                 new SalesManager ().OnInsert (db, dailySale);
@@ -269,7 +269,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 try
                 {
-                    dailySale.StoreLocationId = this.StoreCodeId;
+                    dailySale.StoreId = this.StoreCodeId;
                     db.Update (dailySale);
                     await db.SaveChangesAsync ();
                 }

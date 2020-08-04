@@ -2,6 +2,7 @@
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using AprajitaRetails.Areas.Voyager.Models;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
@@ -31,8 +32,8 @@ namespace AprajitaRetails.Models
         }
         //Version 3.0
         [DefaultValue(1)]
-        public int? StoreLocationId { get; set; }
-        public virtual StoreLocation Store { get; set; }
+        public int? StoreId { get; set; }
+        public virtual Store Store { get; set; }
     }
 
 

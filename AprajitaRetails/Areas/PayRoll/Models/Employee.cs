@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Models
 {
@@ -29,7 +30,7 @@ namespace AprajitaRetails.Models
         [DefaultValue(0)]
         public EmpType Category { get; set; }
         [DefaultValue(false)]
-        [Display(Name ="Tailoring Divisoin")]
+        [Display(Name ="Tailoring Division")]
         public bool? IsTailors { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
         public ICollection<SalaryPayment> SalaryPayments { get; set; }
@@ -41,8 +42,8 @@ namespace AprajitaRetails.Models
         public virtual ICollection<CurrentSalary> CurrentSalaries { get; set; }
         //Version 3.0
         [DefaultValue(1)]
-        public int? StoreLocationId { get; set; }
-        public virtual StoreLocation Store { get; set; }
+        public int? StoreId { get; set; }
+        public virtual Store Store { get; set; }
 
     }
 

@@ -50,10 +50,10 @@ namespace AprajitaRetails.Data
               .HasIndex (b => b.Transcation)
               .IsUnique ();
 
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreLocationId=1 });
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreLocationId = 1 });
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreLocationId = 1 });
-            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 3, SalesmanName = "Bikash Kumar Sah", StoreLocationId = 1 });
+            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreId=1 });
+            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreId = 1 });
+            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreId = 1 });
+            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 3, SalesmanName = "Bikash Kumar Sah", StoreId = 1 });
 
 
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 1, BankName = "SBI" });
@@ -205,7 +205,10 @@ namespace AprajitaRetails.Data
 
         // Unifiing of Database . 
 
-        public DbSet<Store> Stores { get; set; }
+        public DbSet<Store> Stores { get; set; } // Adding to relevent classes
+
+
+
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ProductItem> ProductItems { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -248,8 +251,8 @@ namespace AprajitaRetails.Data
         //Accounts
         public DbSet<LedgerMaster> Masters { get; set; }
         public DbSet<Party> Parties { get; set; }
-        public DbSet<LedgerEntry> LedgerEntries { get; set; }
-        public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
+       // public DbSet<LedgerEntry> LedgerEntries { get; set; }
+       public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
 
     }
 

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
+using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Models
 {
@@ -33,8 +33,8 @@ namespace AprajitaRetails.Models
         public int? PartyId { get; set; }
         //Version 3.0
         [DefaultValue(1)]
-        public int? StoreLocationId { get; set; }
-        public virtual StoreLocation Store { get; set; }
+        public int? StoreId { get; set; }
+        public virtual Store Store { get; set; }
 
     }
 

@@ -39,7 +39,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale).Where(c=>c.StoreLocationId==StoreCode)
+            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale).Where(c=>c.StoreId==StoreCode)
                 .OrderByDescending (c => c.PaidDate);
            return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return PartialView(await aprajitaRetailsContext.ToListAsync());
@@ -83,7 +83,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         {
             if (ModelState.IsValid)
             {
-                dueRecoverd.StoreLocationId = StoreCode;
+                dueRecoverd.StoreId = StoreCode;
                 _context.Add(dueRecoverd);
                 new AccountsManager().OnInsert(_context, dueRecoverd);
                 await _context.SaveChangesAsync();

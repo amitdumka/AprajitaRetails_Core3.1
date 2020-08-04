@@ -37,7 +37,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.DuesLists.Include(d => d.DailySale).Where(c=>c.StoreLocationId==StoreCode);
+            var aprajitaRetailsContext = _context.DuesLists.Include(d => d.DailySale).Where(c=>c.StoreId==StoreCode);
             return View(await PaginatedList<DuesList>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
            // return View(await aprajitaRetailsContext.ToListAsync());
         }
@@ -77,7 +77,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         {
             if (ModelState.IsValid)
             {
-                duesList.StoreLocationId = StoreCode;
+                duesList.StoreId = StoreCode;
                 _context.Add(duesList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

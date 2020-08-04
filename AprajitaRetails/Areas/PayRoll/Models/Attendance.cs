@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -25,8 +26,8 @@ namespace AprajitaRetails.Models
         public bool? IsTailoring { get; set; }
         //Version 3.0
         [DefaultValue(1)]
-        public int? StoreLocationId { get; set; }
-        public virtual StoreLocation Store { get; set; }
+        public int? StoreId { get; set; }
+        public virtual Store Store { get; set; }
     }
 
 

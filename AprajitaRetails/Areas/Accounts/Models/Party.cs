@@ -47,7 +47,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public LedgerType LedgerType { get; set; }
 
         public LedgerMaster LedgerMaster { get; set; }
-        public virtual ICollection<LedgerEntry> Ledgers { get; set; }
+      //  public virtual ICollection<LedgerEntry> Ledgers { get; set; }
         public virtual ICollection<BasicLedgerEntry> BasicLedgers { get; set; }
     }
 
