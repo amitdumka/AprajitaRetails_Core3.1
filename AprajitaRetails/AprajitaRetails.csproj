@@ -30,9 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Areas\Sales\Controllers\ManualInvoiceController.cs" />
-    <Compile Remove="Areas\Sales\Controllers\SaleInvoicesController.cs" />
-    <Compile Remove="Areas\Sales\Controllers\SaleTaxTypesController.cs" />
     <Compile Remove="Migrations\AccountsContextModelSnapshot.cs" />
   </ItemGroup>
 
