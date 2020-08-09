@@ -63,12 +63,14 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 return View (new SaleInvoice ());
             }
         }
+      
         public IActionResult ProcessedSale(int id, DateTime onDate)
         {
             var dm = db.SaleInvoices.Include (c => c.PaymentDetail).Where (c => c.OnDate == onDate.Date);
             ViewBag.MessageHead = "No. Of Sale Invoice Created  and item processed are " + id;
             return View (dm.ToList ());
         }
+        
         [HttpPost]
         public IActionResult UploadSales(string BillType, string InterState, string UploadType, string StoreCode, IFormFile FileUpload)
         {

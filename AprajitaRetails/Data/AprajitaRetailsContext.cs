@@ -8,10 +8,10 @@ using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Areas.Uploader.Models;
-using ManualSaleItem = AprajitaRetails.Areas.Sales.Models.ManualSaleItem;
-using ManualInvoice = AprajitaRetails.Areas.Sales.Models.ManualInvoice;
-using SaleItem = AprajitaRetails.Areas.Sales.Models.SaleItem;
-using SaleInvoice = AprajitaRetails.Areas.Sales.Models.SaleInvoice;
+//using ManualSaleItem = AprajitaRetails.Areas.Sales.Models.ManualSaleItem;
+//using ManualInvoice = AprajitaRetails.Areas.Sales.Models.ManualInvoice;
+//using SaleItem = AprajitaRetails.Areas.Sales.Models.SaleItem;
+//using SaleInvoice = AprajitaRetails.Areas.Sales.Models.SaleInvoice;
 using AprajitaRetails.Areas.Accounts.Models;
 //using AprajitaRetails.Areas.Chat.Models;
 
@@ -53,7 +53,7 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreId=1 });
             modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreId = 1 });
             modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreId = 1 });
-            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 3, SalesmanName = "Bikash Kumar Sah", StoreId = 1 });
+            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 4, SalesmanName = "Bikash Kumar Sah", StoreId = 1 });
 
 
             modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 1, BankName = "SBI" });
@@ -73,9 +73,11 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 6, Transcation = "CashIn" });
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 7, Transcation = "CashOut" });
             modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 8, Transcation = "Regular" });
+
             modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
             modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
             modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
+            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 4, SalesmanName = "Bikash Kumar Sah" });
 
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
@@ -200,15 +202,12 @@ namespace AprajitaRetails.Data
         public DbSet<AprajitaRetails.Models.OnlineSale> OnlineSale { get; set; }
         public DbSet<AprajitaRetails.Models.OnlineVendor> OnlineVendor { get; set; }
         public DbSet<AttendanceVM> AttendancesImport { get; set; }
-        public DbSet<StoreLocation> Locations { get; set; }
+        
 
 
         // Unifiing of Database . 
 
         public DbSet<Store> Stores { get; set; } // Adding to relevent classes
-
-
-
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ProductItem> ProductItems { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -220,11 +219,13 @@ namespace AprajitaRetails.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<PurchaseTaxType> PurchaseTaxTypes { get; set; }
         public DbSet<SalesPerson> SalesPerson { get; set; }
-        public DbSet<SaleInvoice> SaleInvoices { get; set; }
-        public DbSet<SaleItem> SaleItems { get; set; }
+       
+         public DbSet<Areas.Sales.Models.SaleInvoice> SaleInvoices { get; set; }
+        public DbSet<Areas.Sales.Models.SaleItem> SaleItems { get; set; }
+        
         public DbSet<SaleTaxType> SaleTaxTypes { get; set; }
-        public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
-        public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
+       // public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
+       // public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
         public DbSet<ArvindPayment> ArvindPayments { get; set; }
 
         // New Invoice System
@@ -236,10 +237,10 @@ namespace AprajitaRetails.Data
 
 
         // New Invoice System  Manual
-        public DbSet<ManualInvoice> ManualInvoices { get; set; }
-        public DbSet<ManualSaleItem> ManualSaleItems { get; set; }
-        public DbSet<ManualPaymentDetail> ManualPaymentDetails { get; set; }
-        public DbSet<ManualCardDetail> ManualCardDetails { get; set; }
+        //public DbSet<ManualInvoice> ManualInvoices { get; set; }
+        //public DbSet<ManualSaleItem> ManualSaleItems { get; set; }
+        //public DbSet<ManualPaymentDetail> ManualPaymentDetails { get; set; }
+        //public DbSet<ManualCardDetail> ManualCardDetails { get; set; }
 
         //Import Table
         public DbSet<ImportInWard> ImportInWards { get; set; }

@@ -220,6 +220,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
 
     //ViewModel for Invoice
+    //TODO: Need to generalized
 
     public class SaleInvoice
     {
