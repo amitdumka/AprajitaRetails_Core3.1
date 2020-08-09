@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AprajitaRetails.Models.Attendance>
+
+@{
+    ViewData["Title"] = "ListUploadEmpWise";
+}
+
+<h1>ListUploadEmpWise</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AttDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsTailoring)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Store)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsTailoring)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Store.StoreCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AttendanceId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AttendanceId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AttendanceId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

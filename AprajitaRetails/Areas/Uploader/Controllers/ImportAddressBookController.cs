@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Uploader;
@@ -28,6 +29,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         {
             ExcelUploaders uploader = new ExcelUploaders ();
             UploadReturns response = uploader.UploadAddressBook (db,  FileUpload);
+
             ViewBag.Status = response.ToString ();
             if ( response == UploadReturns.Success )
             {
@@ -41,6 +43,18 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         {
 
             return View (db.Contact.ToList());
+        }
+
+
+        public IActionResult UploadEmpAttendance()
+        {
+            return View();
+        }
+
+        public IActionResult UploadDataForEmp(IFormFile FileUpload, string empCode)
+        {
+            return View();// Add Actual 
+
         }
     }
 

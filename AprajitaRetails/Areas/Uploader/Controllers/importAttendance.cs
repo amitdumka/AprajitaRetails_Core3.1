@@ -47,5 +47,32 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
             return View(db.AttendancesImport.ToList());
         }
+        public IActionResult ListUploadEmpWise()
+        {
+            // Try to get for emp id based. 
+            return View(db.Attendances.ToList());
+        }
+        public IActionResult UploadEmpAttendance()
+        {
+            return View();
+        }
+
+        public IActionResult UploadDataForEmp(IFormFile FileUpload, string empCode)
+        {
+            ExcelUploaders uploader = new ExcelUploaders();
+            int empid = -1; 
+            // TODO Do process EmpCode to empid
+
+            UploadReturns response = uploader.UploadAttendanceForEmp(db,FileUpload, empid);
+
+            ViewBag.Status = response.ToString();
+            if (response == UploadReturns.Success)
+            {
+                return RedirectToAction("ListUpload");
+            }
+
+            return View();
+
+        }
     }
 }
