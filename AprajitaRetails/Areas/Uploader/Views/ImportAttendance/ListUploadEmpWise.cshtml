@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<AprajitaRetails.Models.Attendance>
 
 @{
-    ViewData["Title"] = "ListUploadEmpWise";
+    ViewData["Title"] = "List Upload EmpWise";
 }
 
-<h1>ListUploadEmpWise</h1>
+<h1 class="text-danger">Uploaded List (Employee)</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+<table class="table table-sm  table-hover table-striped table-bordered text-center">
+    <thead class="bg-success">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Employee)
@@ -23,24 +20,19 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Remarks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsTailoring)
-            </th>
+            </th>                     
             <th>
                 @Html.DisplayNameFor(model => model.Store)
             </th>
-            <th>Action</th>
+            @*<th>Action</th>*@
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <tbody class="bg-white">
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+                @Html.DisplayFor(modelItem => item.Employee.StaffName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AttDate)
@@ -51,21 +43,25 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remarks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsTailoring)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Store.StoreCode)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AttendanceId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AttendanceId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AttendanceId">Delete</a>
-            </td>
+            @*<td class="btn-group btn-group-sm">
+            @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser")  )
+            {
+                <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
+            }
+
+            <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
+            @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser")  )
+            {
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
+            }
+
+            <a class="btn btn-outline-default" asp-action="EmpDetails" asp-route-id="@item.AttendanceId" id="detail" data_modal="">List</a>
+        </td>*@
         </tr>
-}
+        }
     </tbody>
 </table>

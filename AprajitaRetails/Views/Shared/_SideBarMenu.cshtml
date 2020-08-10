@@ -137,11 +137,48 @@
                         <a asp-area="AddressBook" asp-action="Index" asp-controller="Contacts" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Address Book</a>
                     </li>
                     @*<li class="nav-item">
-                        <a asp-area="Accounts" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
+                    <a asp-area="Accounts" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-area="Accounts" asp-controller="DuesLists" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
+                </li>*@
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="#importSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="users"></span>Imports</a>
+                <ul class="collapse list-unstyled" id="importSubmenu">
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="ImportAddressBook" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Address Book</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="Accounts" asp-controller="DuesLists" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
-                    </li>*@
+                        <a asp-area="Uploader" asp-controller="ImportAttendance" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Attendance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Sales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Purchase</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="ImportInWards" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>ImportInWards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="ImportPurchases" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>ImportPurchases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="ImportSaleItemWises" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>ImportSaleItemWises</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="ImportSaleRegisters" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>ImportSaleRegisters</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="SalesUploader" asp-action="SaleList" class="nav-link sidebar-font"> <span data-feather="trello"></span>Sale List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="ListUpLoad" class="nav-link sidebar-font"> <span data-feather="trello"></span>Purchase List</a>
+                    </li>
                 </ul>
             </li>
 

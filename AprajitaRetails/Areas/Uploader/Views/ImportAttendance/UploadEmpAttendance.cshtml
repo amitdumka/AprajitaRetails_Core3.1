@@ -1,7 +1,46 @@
-﻿
+﻿@model AprajitaRetails.Models.Employee
 @{
     ViewData["Title"] = "UploadEmpAttendance";
+    
 }
 
 <h1>UploadEmpAttendance</h1>
+<div class="">
+    <h3 class="text-warning">Upload Attendance(Excel)</h3>
+    <hr />
+    @using (Html.BeginForm("UploadDataForEmp", "ImportAttendance", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    {
+        <div class="form form-check">
+            <div class="form form-check">
+                <div class="form-group form-row ">
+
+                    <div class="form-group">
+                        <label class="control-label">Staff Name</label>
+                        <select asp-for="EmployeeId" id="EmpCode" class="form-control" asp-items="ViewBag.EmployeeId"></select>
+                        @*@Html.DropDownList("EmpCode", Html.GetEnumSelectList<>(), "Select Upload Type", new { @class = "form-control" })*@
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-row ">
+
+                <div class="control-label col-md-2 text-primary">Excel File:</div>
+                <div class="col-md-10 ">
+                    <input type="file" id="FileUpload" name="FileUpload" class="btn-warning text-info form-control-sm" />
+                </div>
+            </div>
+
+            <div class="form-group form-row">
+
+                <div class="col-md-offset-10">
+                    <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary form-control-sm" @*onclick="onSubmit()"*@ />
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>@ViewBag.Status</div>
+
 

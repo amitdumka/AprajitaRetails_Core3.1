@@ -48,6 +48,10 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).Where (c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
                 //return View(await aprajitaRetailsContext_all.ToListAsync());
             }
+            else  if (id == 102)
+            {
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month-1).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+            }
 
             //return View(await aprajitaRetailsContext.ToListAsync());
 

@@ -496,28 +496,43 @@ namespace AprajitaRetails.Ops.Uploader
                         int totalRows = workSheet.Dimension.Rows;
                         List<Attendance> addList = new List<Attendance>();
 
-                        //int StoreID = 1;//Default
+                        int StoreID = 1;//Default
                         //StoreID = voydb.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
                         //if (StoreID < 1)
                         //    StoreID = 1;
 
 
                         int xo = 0;
+                        decimal att = -1;
                         for (int i = 2; i <= totalRows; i++)
                         {
-                            Attendance c = new Attendance
+                            att = (decimal)workSheet.Cells[i, 4].GetValue<decimal>();
+                            if (att > -1)
                             {
-                                EmployeeId = EmpId,
-                                AttDate = (DateTime)workSheet.Cells[i, 2].GetValue<DateTime>(),
-                                EntryTime = (workSheet.Cells[i, 3].Value ?? string.Empty).ToString(),
-                                Status = AttUnits.Absent,
-                                Remarks = (workSheet.Cells[i, 5].Value ?? string.Empty).ToString(),
-                                IsTailoring = (bool)workSheet.Cells[i, 6].GetValue<bool>(),
-                                //StoreCode = StoreID,
-                                //IsDataConsumed = false,
-                            };
-                            addList.Add(c);
-                            xo++;
+                                Attendance c = new Attendance
+                                {
+                                    EmployeeId = EmpId,
+                                    AttDate = (DateTime)workSheet.Cells[i, 2].GetValue<DateTime>(),
+                                    EntryTime = (workSheet.Cells[i, 3].Value ?? string.Empty).ToString(),
+                                    Status = AttUnits.Absent,
+                                    Remarks = (workSheet.Cells[i, 5].Value ?? string.Empty).ToString(),
+                                    IsTailoring = (bool)workSheet.Cells[i, 6].GetValue<bool>(),
+                                    StoreId = StoreID,
+                                    //IsDataConsumed = false,
+                                };
+
+                                switch (att)
+                                {
+                                    case 0: c.Status = AttUnits.Absent; break;
+                                    case 1: c.Status = AttUnits.Present; break;
+                                    case 0.5M: c.Status = AttUnits.HalfDay; break; //Halfday;
+                                    case 3: c.Status = AttUnits.Holiday; break; // holiday
+                                    case 4: c.Status = AttUnits.StoreClosed; break; //closed
+                                }
+                                addList.Add(c);
+                                xo++;
+                            }
+                            
                         }
                         db.Attendances.AddRange(addList);
                         db.SaveChanges();

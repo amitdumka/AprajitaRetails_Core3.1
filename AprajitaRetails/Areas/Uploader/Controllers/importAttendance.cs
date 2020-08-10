@@ -8,6 +8,8 @@ using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -25,6 +27,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["EmployeeId"] = new SelectList(db.Employees, "EmployeeId", "StaffName");
             return View();
         }
 
@@ -32,47 +35,43 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         {
             ExcelUploaders uploader = new ExcelUploaders();
             UploadReturns response = uploader.UploadAttendance(db, StoreCode, FileUpload);
-
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)
             {
                 return RedirectToAction("ListUpload");
             }
-
             return View();
         }
 
         public IActionResult ListUpload()
         {
-
             return View(db.AttendancesImport.ToList());
         }
-        public IActionResult ListUploadEmpWise()
-        {
-            // Try to get for emp id based. 
-            return View(db.Attendances.ToList());
-        }
+
         public IActionResult UploadEmpAttendance()
         {
+            ViewData["EmployeeId"] = new SelectList(db.Employees, "EmployeeId", "StaffName");
+
             return View();
         }
 
-        public IActionResult UploadDataForEmp(IFormFile FileUpload, string empCode)
+        public IActionResult UploadDataForEmp(IFormFile FileUpload, int EmployeeId)
         {
             ExcelUploaders uploader = new ExcelUploaders();
-            int empid = -1; 
-            // TODO Do process EmpCode to empid
-
-            UploadReturns response = uploader.UploadAttendanceForEmp(db,FileUpload, empid);
-
+                     
+            UploadReturns response = uploader.UploadAttendanceForEmp(db,FileUpload, EmployeeId);
             ViewBag.Status = response.ToString();
             if (response == UploadReturns.Success)
             {
-                return RedirectToAction("ListUpload");
+                return RedirectToAction("ListUploadEmpWise", new { empId = EmployeeId } );
             }
-
             return View();
-
         }
+        public IActionResult ListUploadEmpWise(int empId)
+        {
+            // Try to get for emp id based. 
+            return View(db.Attendances.Include(a=>a.Employee).Include(a=>a.Store).Where(c=>c.EmployeeId==empId).ToList());
+        }
+
     }
 }
