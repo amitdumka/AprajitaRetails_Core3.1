@@ -604,7 +604,7 @@ namespace AprajitaRetails.Ops.Uploader
                             tempstr = (workSheet.Cells[i, 2].Value ?? string.Empty).ToString();
                             switch (tempstr)
                             {
-                               
+
 
                                 case "Cash": c.LedgerBy = LedgerBy.Cash; break;
                                 case "EDCHDFC": c.LedgerBy = LedgerBy.EDCHDFC; break;
@@ -693,5 +693,557 @@ namespace AprajitaRetails.Ops.Uploader
                 return UploadReturns.FileNotFound;
             }
         }
+    }
+
+
+    public class PostUpload
+    {
+        public void ProcessBookEntry(AprajitaRetailsContext db, VoucherType voucherType, int StoreId)
+        {
+            switch (voucherType)
+            {
+                case VoucherType.Payment:
+                    ProcessPaymentVoucher(db, StoreId);
+                    break;
+                case VoucherType.Reciept:
+                    ProcessRecieptVoucher(db, StoreId);
+                    break;
+                case VoucherType.Contra:
+                    ProcessContraVoucher(db, StoreId);
+                    break;
+                case VoucherType.DebitNote:
+                    break;
+                case VoucherType.CreditNote:
+                    break;
+                case VoucherType.JV:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ProcessPaymentVoucher(AprajitaRetailsContext db, int StoreId)
+        {
+            var dataList = db.ImportBookEntries.Where(c => !c.IsConsumed && c.VoucherType == VoucherType.Payment);
+        }
+        private void ProcessRecieptVoucher(AprajitaRetailsContext db, int StoreId)
+        {
+            var dataList = db.ImportBookEntries.Where(c => !c.IsConsumed && c.VoucherType == VoucherType.Reciept);
+            foreach (var item in dataList)
+            {
+                if (item.LedgerTo == LedgerTo.Cash)
+                {
+                    switch (item.LedgerBy)
+                    {
+                        case LedgerBy.EXPUNDEF:
+                            PettyCashExpense cashExpense = new PettyCashExpense
+                            {
+                                Amount = item.Amount,
+                                ExpDate = item.OnDate,
+                                EmployeeId = 1//Alok Emp Id,
+                                ,
+                                Particulars = item.Naration,
+                                Remarks = "AutoUpload",
+                                PaidTo = item.Naration,
+                                StoreId = StoreId
+
+                            };
+                            item.IsConsumed = true;
+                            db.ImportBookEntries.Update(item);
+                            db.PettyCashExpenses.Add(cashExpense);
+
+                            break;
+                        case LedgerBy.Suspense:
+
+                            if (item.Naration.Contains("AMIT JEE"))
+                            {
+                                CashPayment cash = new CashPayment
+                                {
+                                    Amount = item.Amount,
+                                    StoreId = StoreId,
+                                    PaymentDate = item.OnDate,
+                                    PaidTo = item.Naration,
+                                    SlipNo = "AutoUpload",
+                                    TranscationModeId = 1
+                                };
+                                item.IsConsumed = true;
+                                db.CashPayments.Add(cash);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("RAJ MISTRY"))
+                            {
+                                CashPayment cash = new CashPayment
+                                {
+                                    Amount = item.Amount,
+                                    StoreId = StoreId,
+                                    PaymentDate = item.OnDate,
+                                    PaidTo = item.Naration,
+                                    SlipNo = "AutoUpload",
+                                    TranscationModeId = 2
+                                };
+                                item.IsConsumed = true;
+                                db.CashPayments.Add(cash);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("BHUTU"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "BHUTU MISTRY",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            //WORKSHOP
+                            else if (item.Naration.Contains("WORKSHOP"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "WORKSHOP RENT",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            //
+                            else if (item.Naration.Contains("ADVERTISMENT RM: MIKEING"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "ADVERTISMENT RM: MIKEING",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+
+                            else if (item.Naration.Contains("BIKASH PATWARI"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "BIKASH PATWARI",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("SALARY"))
+                            {
+                                SalaryPayment salary2 = new SalaryPayment
+                                {
+                                    EmployeeId = 0,
+                                    Amount = item.Amount,
+                                    PaymentDate = item.OnDate,
+                                    PayMode = PayModes.Cash,
+                                    SalaryComponet = SalaryComponet.Others,
+                                    StoreId = StoreId,
+                                    Details = "AutoUpload #" + item.Naration,
+                                    SalaryMonth = item.OnDate.Year.ToString()
+                                };
+
+                                if (item.Naration.Contains("ALOK")) salary2.EmployeeId = 1;
+                                else if (item.Naration.Contains("SANJEEV")) salary2.EmployeeId = 2;
+                                else if (item.Naration.Contains("RAMREKH")) salary2.EmployeeId = 10;
+                                else if (item.Naration.Contains("MUKESH")) salary2.EmployeeId = 3;
+                                else if (item.Naration.Contains("SOURAV")) salary2.EmployeeId = 6;
+                                else if (item.Naration.Contains("SANTOSH")) salary2.EmployeeId = 8;
+                                else if (item.Naration.Contains("ANIL")) salary2.EmployeeId = 11;
+                                else salary2.EmployeeId = 4;
+
+
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.SalaryPayments.Add(salary2);
+                            }
+                            else if (item.Naration.Contains("RAMREKH"))
+                            {
+                                if (item.Naration.Contains("RAMREKH RM: SALARY"))
+                                {
+                                    SalaryPayment salary1 = new SalaryPayment
+                                    {
+                                        EmployeeId = 10,//TODO: For ramrek
+                                        Amount = item.Amount,
+                                        PaymentDate = item.OnDate,
+                                        PayMode = PayModes.Cash,
+                                        SalaryComponet = SalaryComponet.Others,
+                                        StoreId = StoreId,
+                                        Details = "AutoUpload #" + item.Naration,
+                                        SalaryMonth = item.OnDate.Year.ToString()
+                                    };
+                                    item.IsConsumed = true;
+                                    db.ImportBookEntries.Update(item);
+                                    db.SalaryPayments.Add(salary1);
+                                }
+                                else
+                                {
+                                    PettyCashExpense cashExpense1 = new PettyCashExpense
+                                    {
+                                        Amount = item.Amount,
+                                        ExpDate = item.OnDate,
+                                        EmployeeId = 1//Alok Emp Id,
+                               ,
+                                        Particulars = item.Naration,
+                                        Remarks = "AutoUpload",
+                                        PaidTo = item.Naration,
+                                        StoreId = StoreId
+
+                                    };
+                                    item.IsConsumed = true;
+                                    db.ImportBookEntries.Update(item);
+                                    db.PettyCashExpenses.Add(cashExpense1);
+                                }
+
+                            }
+                            else if (item.Naration.Contains("ANUBHA"))
+                            {
+                                CashPayment cash3 = new CashPayment
+                                {
+                                    Amount = item.Amount,
+                                    StoreId = StoreId,
+                                    PaymentDate = item.OnDate,
+                                    PaidTo = item.Naration,
+                                    SlipNo = "AutoUpload",
+                                    TranscationModeId = 2
+                                };
+                                item.IsConsumed = true;
+                                db.CashPayments.Add(cash3);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            // 
+                            else if (item.Naration.Contains("PETROL") || item.Naration.Contains("VERNA") || item.Naration.Contains("NEWSPAPER") || item.Naration.Contains("NET") || item.Naration.Contains("TILES MISTRY"))
+                            {
+                                PettyCashExpense cashExpense2 = new PettyCashExpense
+                                {
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1//Alok Emp Id,
+                               ,
+                                    Particulars = item.Naration,
+                                    Remarks = "AutoUpload",
+                                    PaidTo = item.Naration,
+                                    StoreId = StoreId
+
+                                };
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.PettyCashExpenses.Add(cashExpense2);
+                            }
+
+                            else if (item.Naration.StartsWith("MUKESH(STAFF)"))
+                            {
+                                SalaryPayment salary1 = new SalaryPayment
+                                {
+                                    EmployeeId = 3,//TODO: For Mukesh
+                                    Amount = item.Amount,
+                                    PaymentDate = item.OnDate,
+                                    PayMode = PayModes.Cash,
+                                    SalaryComponet = SalaryComponet.Others,
+                                    StoreId = StoreId,
+                                    Details = "AutoUpload #" + item.Naration,
+                                    SalaryMonth = item.OnDate.Year.ToString()
+                                };
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.SalaryPayments.Add(salary1);
+                            }
+                            else if (item.Naration.StartsWith("ALOK RM"))
+                            {
+                                SalaryPayment salary1 = new SalaryPayment
+                                {
+                                    EmployeeId = 1,//TODO: For Mukesh
+                                    Amount = item.Amount,
+                                    PaymentDate = item.OnDate,
+                                    PayMode = PayModes.Cash,
+                                    SalaryComponet = SalaryComponet.Others,
+                                    StoreId = StoreId,
+                                    Details = "AutoUpload #" + item.Naration,
+                                    SalaryMonth = item.OnDate.Year.ToString()
+                                };
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.SalaryPayments.Add(salary1);
+                            }
+                            else if (item.Naration.StartsWith("SANJEEV(STAFF)"))
+                            {
+                                SalaryPayment salary1 = new SalaryPayment
+                                {
+                                    EmployeeId = 2,//TODO: For Sanjeev
+                                    Amount = item.Amount,
+                                    PaymentDate = item.OnDate,
+                                    PayMode = PayModes.Cash,
+                                    SalaryComponet = SalaryComponet.Others,
+                                    StoreId = StoreId,
+                                    Details = "AutoUpload #" + item.Naration,
+                                    SalaryMonth = item.OnDate.Year.ToString()
+                                };
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.SalaryPayments.Add(salary1);
+                            }
+                            else if (item.Naration.StartsWith("SOURAV(STAFF)"))
+                            {
+                                SalaryPayment salary1 = new SalaryPayment
+                                {
+                                    EmployeeId = 6,//TODO: For SOURAV(STAFF)
+                                    Amount = item.Amount,
+                                    PaymentDate = item.OnDate,
+                                    PayMode = PayModes.Cash,
+                                    SalaryComponet = SalaryComponet.Others,
+                                    StoreId = StoreId,
+                                    Details = "AutoUpload #" + item.Naration,
+                                    SalaryMonth = item.OnDate.Year.ToString()
+                                };
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.SalaryPayments.Add(salary1);
+                            }
+                            //
+                            else if (item.Naration.Contains("MUKESH(HOME)"))
+                            {
+                                CashPayment cash = new CashPayment
+                                {
+                                    Amount = item.Amount,
+                                    StoreId = StoreId,
+                                    PaymentDate = item.OnDate,
+                                    PaidTo = item.Naration,
+                                    SlipNo = "AutoUpload",
+                                    TranscationModeId = 1
+                                };
+                                item.IsConsumed = true;
+                                db.CashPayments.Add(cash);
+                                db.ImportBookEntries.Update(item);
+                            }
+
+                            else if (item.Naration.Contains("TV INSTALMENT RM"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "TV INSTALMENT RM:Mukesh",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("GOPI"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "GOPI",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("ELECTRIC BILL"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "ELECTRIC BILL",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("FLOWER"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "FLOWER",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("JAFAR MASTER"))
+                            {
+                                SalaryPayment salarys = new SalaryPayment
+                                {
+                                    EmployeeId = 0,//TODO: For Zafar
+                                    Amount = item.Amount,
+                                    PaymentDate = item.OnDate,
+                                    PayMode = PayModes.Cash,
+                                    SalaryComponet = SalaryComponet.Others,
+                                    StoreId = StoreId,
+                                    Details = "AutoUpload #" + item.Naration,
+                                    SalaryMonth = item.OnDate.Year.ToString()
+                                };
+                                item.IsConsumed = true;
+                                db.ImportBookEntries.Update(item);
+                                db.SalaryPayments.Add(salarys);
+                            }
+                            else if (item.Naration.Contains("JAFAR RM"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "Zafar",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+
+                            break;
+                        case LedgerBy.Zafar:
+                            SalaryPayment salary = new SalaryPayment
+                            {
+                                EmployeeId = 0,//TODO: For Zafar
+                                Amount = item.Amount,
+                                PaymentDate = item.OnDate,
+                                PayMode = PayModes.Cash,
+                                SalaryComponet = SalaryComponet.Others,
+                                StoreId = StoreId,
+                                Details = "AutoUpload #" + item.Naration,
+                                SalaryMonth = item.OnDate.Year.ToString()
+                            };
+                            item.IsConsumed = true;
+                            db.ImportBookEntries.Update(item);
+                            db.SalaryPayments.Add(salary);
+
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+            }
+        }
+
+        private int ProcessContraVoucher(AprajitaRetailsContext db, int StoreId)
+        {
+            var dataList = db.ImportBookEntries.Where(c => !c.IsConsumed && c.VoucherType == VoucherType.Contra);
+            foreach (var item in dataList)
+            {
+                if (item.LedgerTo == LedgerTo.Cash)
+                {
+                    if (item.Naration.Contains("Bank Deposit "))
+                    {
+                        BankDeposit deposit = new BankDeposit
+                        {
+                            Amount = item.Amount,
+                            Details = item.Naration,
+                            DepoDate = item.OnDate,
+                            PayMode = BankPayModes.Cash,
+                            StoreId = StoreId,
+                            Remarks = "AutoAdded"
+                        };
+                        switch (item.LedgerBy)
+                        {
+                            case LedgerBy.AmitKumar:
+                                deposit.AccountNumberId = 12;
+                                deposit.Remarks = deposit.Remarks + " #LedBy: Amit Kumar";
+                                break;
+                            case LedgerBy.BandhanCA:
+                                deposit.AccountNumberId = 3;
+                                break;
+
+                            case LedgerBy.HDFCCA:
+                                deposit.AccountNumberId = 11;
+                                break;
+                            case LedgerBy.ICICIBankCA:
+                                deposit.AccountNumberId = 6;
+                                break;
+                            case LedgerBy.IDBICA:
+                                deposit.AccountNumberId = 10;
+                                break;
+                            case LedgerBy.Others:
+                                deposit.AccountNumberId = 12;
+                                deposit.Remarks = deposit.Remarks + " #LedBy: Others";
+                                break;
+                            case LedgerBy.SBICC:
+                                deposit.AccountNumberId = 1;
+                                break;
+                            case LedgerBy.Suspense:
+                                deposit.AccountNumberId = 12;
+                                deposit.Remarks = deposit.Remarks + " #LedBy: Suspense";
+                                break;
+
+                            default:
+                                break;
+                        }
+                        item.IsConsumed = true;
+                        db.BankDeposits.Add(deposit);
+                        db.ImportBookEntries.Update(item);
+                    }
+
+
+                }
+
+            }
+            return db.SaveChanges();
+        }
+
     }
 }
