@@ -248,6 +248,8 @@ namespace AprajitaRetails.Data
         public DbSet<ImportSaleItemWise> ImportSaleItemWises { get; set; }
         public DbSet<ImportSaleRegister> ImportSaleRegisters { get; set; }
 
+        public DbSet<BookEntry> ImportBookEntries { get; set; }
+
 
         //Accounts
         public DbSet<LedgerMaster> Masters { get; set; }

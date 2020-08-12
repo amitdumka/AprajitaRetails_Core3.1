@@ -4,14 +4,16 @@ using AprajitaRetails.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations
 {
     [DbContext(typeof(AprajitaRetailsContext))]
-    partial class AprajitaRetailsContextModelSnapshot : ModelSnapshot
+    [Migration("20200812080710_BookEntry")]
+    partial class BookEntry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -865,7 +867,7 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OnDate")
-                        .HasColumnType("DateTime2");
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("VoucherType")
                         .HasColumnType("int");

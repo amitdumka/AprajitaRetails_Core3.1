@@ -57,6 +57,14 @@ public enum AccountType
 
 }
 
+
+public enum VoucherType { Payment, Reciept, Contra, DebitNote, CreditNote, JV }
+public enum LedgerTo { CashSales, POSSale, Cash, TailorBook, Suspense }
+public enum Head { Sale, HDFCCA, TailorBook, BikashPatwari, Sanjeev, Zafar, Suspense, IDBICA, ICICIBankCA, BandhanCA, SBIOD, SBICC, AmitKumar, Others }
+public enum LedgerBy { AmitKumar, Cash, BandhanCA, BHARATQR, EDCBandhan, EDCEASYTAP, EDCHDFC, EDCICICI, EDCSBI, EXPUNDEF, HDFCCA, ICICIBankCA, IDBICA, Others, SBICC, Suspense, Zafar }
+
+
+
 //public enum Genders { Male, Female, TransGender }
 //public enum Units { Nos, Meters, PCs, Packets }
 //public enum TaxType { GST, SGST, CGST, IGST, VAT }

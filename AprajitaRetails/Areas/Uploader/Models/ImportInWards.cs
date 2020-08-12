@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,26 +37,26 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public string PartyName { get; set; }
 
         [ExcelColumn("Total Qty")]
-        [DataType (DataType.Currency), Column (TypeName = "decimal(18,2)")]
+        [DataType(DataType.Currency), Column(TypeName = "decimal(18,2)")]
         public decimal TotalQty { get; set; }
 
         [ExcelColumn("Total MRP Value")]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TotalMRPValue { get; set; }
 
         [ExcelColumn("Total Cost")]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TotalCost { get; set; }
-        
+
         [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;// is data imported to relevent table
-        
+
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
 
         //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-       // public DateTime? ImportDate { get; set; } = DateTime.Now;
+        // public DateTime? ImportDate { get; set; } = DateTime.Now;
 
 
     }

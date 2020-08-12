@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -472,7 +473,7 @@ namespace AprajitaRetails.Ops.Uploader
             }
         }
 
-        public UploadReturns UploadAttendanceForEmp(AprajitaRetailsContext db, IFormFile FileUpload,int EmpId)
+        public UploadReturns UploadAttendanceForEmp(AprajitaRetailsContext db, IFormFile FileUpload, int EmpId)
         {
 
             if (FileUpload != null)
@@ -532,9 +533,142 @@ namespace AprajitaRetails.Ops.Uploader
                                 addList.Add(c);
                                 xo++;
                             }
-                            
+
                         }
                         db.Attendances.AddRange(addList);
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        return UploadReturns.Error;
+                    }
+
+                    if ((System.IO.File.Exists(pathToExcelFile)))
+                    {
+                        System.IO.File.Delete(pathToExcelFile);
+                    }
+                    return UploadReturns.Success;
+                }
+                else
+                {
+                    return UploadReturns.NotExcelType;
+                }
+            }
+            else
+            {
+                return UploadReturns.FileNotFound;
+            }
+        }
+
+
+        public UploadReturns UploadBookEntry(AprajitaRetailsContext db, IFormFile FileUpload)
+        {
+            if (FileUpload != null)
+            {
+                if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                {
+                    string filename = FileUpload.FileName;
+
+                    string pathToExcelFile = Path.GetTempPath() + filename;
+                    using (var stream = new FileStream(pathToExcelFile, FileMode.Create))
+                    {
+                        FileUpload.CopyTo(stream);
+                    }
+
+                    try
+                    {
+                        FileInfo file = new FileInfo(pathToExcelFile);
+
+                        using ExcelPackage package = new ExcelPackage(file);
+                        ExcelWorksheet workSheet = package.Workbook.Worksheets["Sheet1"];
+                        int totalRows = workSheet.Dimension.Rows;
+                        List<BookEntry> addList = new List<BookEntry>();
+
+                        int xo = 0;
+                        string tempstr = "";
+                        for (int i = 2; i <= totalRows; i++)
+                        {
+                            BookEntry c = new BookEntry
+                            {
+                                IsConsumed = false,
+                                OnDate = (DateTime)workSheet.Cells[i, 1].GetValue<DateTime>(),
+                                Amount = (decimal)workSheet.Cells[i, 4].GetValue<decimal>(),
+                                Naration = (workSheet.Cells[i, 6].Value ?? string.Empty).ToString(),
+                                LedgerBy = LedgerBy.Suspense,
+                                LedgerTo = LedgerTo.Suspense,
+                                VoucherType = VoucherType.JV
+
+                            };
+                            c.Naration = c.Naration + "   #OrgDate: " + (workSheet.Cells[i, 7].Value ?? string.Empty).ToString();
+                            tempstr = (workSheet.Cells[i, 2].Value ?? string.Empty).ToString();
+                            switch (tempstr)
+                            {
+                               
+
+                                case "Cash": c.LedgerBy = LedgerBy.Cash; break;
+                                case "EDCHDFC": c.LedgerBy = LedgerBy.EDCHDFC; break;
+                                case "EXP UNDEF": c.LedgerBy = LedgerBy.EXPUNDEF; break;
+                                case "EDCICICI": c.LedgerBy = LedgerBy.EDCICICI; break;
+                                case "Suspense": c.LedgerBy = LedgerBy.Suspense; break;
+                                case "Zafar": c.LedgerBy = LedgerBy.Zafar; break;
+                                case "HDFC CA": c.LedgerBy = LedgerBy.HDFCCA; break;
+                                case "ICICI Bank CA": c.LedgerBy = LedgerBy.ICICIBankCA; break;
+                                case "Others": c.LedgerBy = LedgerBy.Others; break;
+                                case "Amit Kumar": c.LedgerBy = LedgerBy.AmitKumar; break;
+                                case "Bandhan CA": c.LedgerBy = LedgerBy.BandhanCA; break;
+
+
+                                case "BHARAT QR": c.LedgerBy = LedgerBy.BHARATQR; break;
+                                case "EDCBandhan": c.LedgerBy = LedgerBy.EDCBandhan; break;
+                                case "EDCEASYTAP": c.LedgerBy = LedgerBy.EDCEASYTAP; break;
+
+                                case "EDCSBI": c.LedgerBy = LedgerBy.EDCSBI; break;
+                                case "SBI CC": c.LedgerBy = LedgerBy.SBICC; break;
+                                case "IDBI CA": c.LedgerBy = LedgerBy.IDBICA; break;
+
+
+                                default:
+                                    c.LedgerBy = LedgerBy.Others;
+                                    c.Naration = c.Naration + " #By: " + tempstr; break;
+
+                            }
+
+                            tempstr = (workSheet.Cells[i, 3].Value ?? string.Empty).ToString();
+                            switch (tempstr)
+                            { // CashSales, POSSale, Cash, TailorBook, Suspense
+                                case "Cash": c.LedgerTo = LedgerTo.Cash; break;
+                                case "POSSale": c.LedgerTo = LedgerTo.POSSale; break;
+                                case "CashSales": c.LedgerTo = LedgerTo.CashSales; break;
+                                case "Suspense": c.LedgerTo = LedgerTo.Suspense; break;
+                                case "TailorBook": c.LedgerTo = LedgerTo.TailorBook; break;
+                                default:
+                                    c.LedgerTo = LedgerTo.Suspense;
+                                    c.Naration = c.Naration + " #To: " + tempstr;
+                                    break;
+
+                            }
+                            tempstr = (workSheet.Cells[i, 5].Value ?? string.Empty).ToString();
+                            switch (tempstr)
+                            {
+                                case "Payment": c.VoucherType = VoucherType.Payment; break;
+                                case "Receipt": c.VoucherType = VoucherType.Reciept; break;
+                                case "Contra": c.VoucherType = VoucherType.Contra; break;
+
+                                case "Debit Note": c.VoucherType = VoucherType.DebitNote; break;
+                                case "Credit Note": c.VoucherType = VoucherType.CreditNote; break;
+                                case "JV": c.VoucherType = VoucherType.JV; break;
+                                default:
+                                    c.VoucherType = VoucherType.JV;
+                                    c.Naration = c.Naration + " #VCType: " + tempstr;
+                                    break;
+                            }
+
+
+                            addList.Add(c);
+                            xo++;
+                        }
+                        db.ImportBookEntries.AddRange(addList);
                         db.SaveChanges();
                     }
                     catch (Exception ex)

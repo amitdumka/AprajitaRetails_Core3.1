@@ -1,0 +1,69 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.Uploader.Models.BookEntry>
+
+@{
+    ViewData["Title"] = "Book Entry";
+}
+
+<h1>Book Entry</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LedgerBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LedgerTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoucherType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Naration)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.IsConsumed)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LedgerBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LedgerTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoucherType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naration)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.IsConsumed)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BookEntryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BookEntryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BookEntryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

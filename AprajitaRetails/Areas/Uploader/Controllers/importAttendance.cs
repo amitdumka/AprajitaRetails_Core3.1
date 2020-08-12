@@ -19,7 +19,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     public class ImportAttendanceController : Controller
     {
         private readonly AprajitaRetailsContext db;
-       // private readonly AprajitaRetailsContext voyDb;
+      
         public ImportAttendanceController(AprajitaRetailsContext con)
         {
             db = con;
