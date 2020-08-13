@@ -725,6 +725,11 @@ namespace AprajitaRetails.Ops.Uploader
         private void ProcessPaymentVoucher(AprajitaRetailsContext db, int StoreId)
         {
             var dataList = db.ImportBookEntries.Where(c => !c.IsConsumed && c.VoucherType == VoucherType.Payment);
+
+
+
+
+
         }
         private void ProcessRecieptVoucher(AprajitaRetailsContext db, int StoreId)
         {
@@ -754,7 +759,6 @@ namespace AprajitaRetails.Ops.Uploader
 
                             break;
                         case LedgerBy.Suspense:
-
                             if (item.Naration.Contains("AMIT JEE"))
                             {
                                 CashPayment cash = new CashPayment
@@ -803,7 +807,6 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.Expenses.Add(expense);
                                 db.ImportBookEntries.Update(item);
                             }
-                            //WORKSHOP
                             else if (item.Naration.Contains("WORKSHOP"))
                             {
                                 Expense expense = new Expense
@@ -822,7 +825,6 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.Expenses.Add(expense);
                                 db.ImportBookEntries.Update(item);
                             }
-                            //
                             else if (item.Naration.Contains("ADVERTISMENT RM: MIKEING"))
                             {
                                 Expense expense = new Expense
@@ -841,7 +843,24 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.Expenses.Add(expense);
                                 db.ImportBookEntries.Update(item);
                             }
-
+                            else if (item.Naration.Contains("ADVERTISMENT"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "ADVERTISMENT",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
                             else if (item.Naration.Contains("BIKASH PATWARI"))
                             {
                                 Expense expense = new Expense
@@ -942,15 +961,14 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.CashPayments.Add(cash3);
                                 db.ImportBookEntries.Update(item);
                             }
-                            // 
-                            else if (item.Naration.Contains("PETROL") || item.Naration.Contains("VERNA") || item.Naration.Contains("NEWSPAPER") || item.Naration.Contains("NET") || item.Naration.Contains("TILES MISTRY"))
+                            else if (item.Naration.Contains("PETROL") ||  item.Naration.Contains("PettyCash RM:") || item.Naration.Contains("VERNA") || item.Naration.Contains("NEWSPAPER") || item.Naration.Contains("NET") || item.Naration.Contains("TILES MISTRY"))
                             {
                                 PettyCashExpense cashExpense2 = new PettyCashExpense
                                 {
                                     Amount = item.Amount,
                                     ExpDate = item.OnDate,
-                                    EmployeeId = 1//Alok Emp Id,
-                               ,
+                                    EmployeeId = 1,//ALOK EMP ID
+                               
                                     Particulars = item.Naration,
                                     Remarks = "AutoUpload",
                                     PaidTo = item.Naration,
@@ -961,7 +979,6 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.ImportBookEntries.Update(item);
                                 db.PettyCashExpenses.Add(cashExpense2);
                             }
-
                             else if (item.Naration.StartsWith("MUKESH(STAFF)"))
                             {
                                 SalaryPayment salary1 = new SalaryPayment
@@ -979,7 +996,7 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.ImportBookEntries.Update(item);
                                 db.SalaryPayments.Add(salary1);
                             }
-                            else if (item.Naration.StartsWith("ALOK RM"))
+                            else if (item.Naration.StartsWith("ALOK(Staff)"))
                             {
                                 SalaryPayment salary1 = new SalaryPayment
                                 {
@@ -1030,7 +1047,6 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.ImportBookEntries.Update(item);
                                 db.SalaryPayments.Add(salary1);
                             }
-                            //
                             else if (item.Naration.Contains("MUKESH(HOME)"))
                             {
                                 CashPayment cash = new CashPayment
@@ -1046,7 +1062,6 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.CashPayments.Add(cash);
                                 db.ImportBookEntries.Update(item);
                             }
-
                             else if (item.Naration.Contains("TV INSTALMENT RM"))
                             {
                                 Expense expense = new Expense
@@ -1092,6 +1107,42 @@ namespace AprajitaRetails.Ops.Uploader
                                     ExpDate = item.OnDate,
                                     EmployeeId = 1,
                                     PaidTo = "ELECTRIC BILL",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("TELEPHONE"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "TELEPHONE BILL",
+                                    Particulars = item.Naration,
+                                    PaymentDetails = "Cash",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUpload"
+                                };
+                                item.IsConsumed = true;
+                                db.Expenses.Add(expense);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            else if (item.Naration.Contains("Expenses RM:"))
+                            {
+                                Expense expense = new Expense
+                                {
+                                    StoreId = StoreId,
+                                    Amount = item.Amount,
+                                    ExpDate = item.OnDate,
+                                    EmployeeId = 1,
+                                    PaidTo = "UpdatePartyName",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
                                     PayMode = PaymentModes.Cash,
@@ -1154,7 +1205,18 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.Expenses.Add(expense);
                                 db.ImportBookEntries.Update(item);
                             }
-
+                            else if(item.Naration.Contains("BULLET SHOWROOM RM:"))
+                            {
+                                Payment pay = new Payment {
+                                    Amount=item.Amount, PayDate=item.OnDate, PaymentDetails=item.Naration, 
+                                    PaymentPartry="BULLET SHOWROOM Dumka", PaymentSlipNo="AUTOUPLOAD", 
+                                    PayMode=PaymentModes.Cash, Remarks="AutoUPLOAD", StoreId=StoreId
+                                };
+                                item.IsConsumed = true;
+                                db.Payments.Add(pay);
+                                db.ImportBookEntries.Update(item);
+                            }
+                            
                             break;
                         case LedgerBy.Zafar:
                             SalaryPayment salary = new SalaryPayment
@@ -1180,7 +1242,6 @@ namespace AprajitaRetails.Ops.Uploader
 
             }
         }
-
         private int ProcessContraVoucher(AprajitaRetailsContext db, int StoreId)
         {
             var dataList = db.ImportBookEntries.Where(c => !c.IsConsumed && c.VoucherType == VoucherType.Contra);
@@ -1245,5 +1306,18 @@ namespace AprajitaRetails.Ops.Uploader
             return db.SaveChanges();
         }
 
+
+        private void ProcessEDCReciept(AprajitaRetailsContext db, int StoreId) { }
+        private void ProcessSuspensesReciept(AprajitaRetailsContext db, int StoreId) { }
+
     }
 }
+
+
+/*
+ ADVERTISMENT RM:
+
+ 
+ 
+ 
+ */
