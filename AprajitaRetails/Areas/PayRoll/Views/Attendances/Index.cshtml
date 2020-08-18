@@ -12,14 +12,38 @@
     <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
     <a class="btn btn-brown btn-sm" asp-action="Index" asp-route-id="102">Last Month</a>
     <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
+</p>
+
+<div class="btn-group btn-group-sm">
+    @foreach (var item in ViewBag.YearList)
+    {
+
+        <a class="btn btn-outline-dark-green" asp-action="Index" asp-route-id=@item>@item</a>
+
+    }
+</div>
+@if (ViewBag.YearName != null)
+{
     <div class="btn-group btn-group-sm">
-        @foreach (var item in ViewBag.YearList)
+        @*<select name="MonthName" id="mnt" asp-items="@new SelectList(ViewBag.MonthList,12)" class="select-dropdown" >
+            </select>*@
+        @foreach (var item in ViewBag.MonthList)
         {
-            <a class="btn btn-blue-grey" asp-action="Index" asp-route-id=@item>@item</a>
+            if (item == "")
+            {
+                <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">All</a>
+            }
+            else
+            {
+                <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">@item</a>}
         }
     </div>
 
-</p>
+
+}
+
+
+
 <table class="table table-sm  table-hover table-striped table-bordered text-center">
     <thead class="bg-success">
         <tr>
@@ -61,18 +85,18 @@
                     @Html.DisplayFor(modelItem => item.Remarks)
                 </td>
                 <td class="btn-group btn-group-sm">
-                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser")  )
+                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
                     {
                         <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
                     }
 
                     <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
-                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser")  )
+                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
                     {
                         <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
                     }
 
-                    <a class="btn btn-outline-default" asp-action="EmpDetails"  asp-route-id="@item.AttendanceId" asp-route-ondate="@item.AttDate.Date.ToString("dd-MM-yyyy")" id="detail" data_modal="">List</a>
+                    <a class="btn btn-outline-default" asp-action="EmpDetails" asp-route-id="@item.AttendanceId" asp-route-ondate="@item.AttDate.Date.ToString("dd-MM-yyyy")" id="detail" data_modal="">List</a>
                 </td>
             </tr>
         }
