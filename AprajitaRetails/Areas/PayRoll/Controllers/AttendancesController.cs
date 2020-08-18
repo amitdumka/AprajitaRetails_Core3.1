@@ -9,6 +9,9 @@ using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using AprajitaRetails.Models.Helpers;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using Castle.Core.Internal;
+using System.Runtime.Serialization;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -25,7 +28,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
         // GET: Attendances
         public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, int? pageNumber)
-        {
+        {// TODO: implement StoreID on this
             if ( searchString != null )
             {
                 pageNumber = 1;
@@ -38,6 +41,10 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             ViewData ["CurrentFilter"] = searchString;
             var aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).Where (c => c.AttDate == DateTime.Today);
 
+            var YearList = _context.Attendances.GroupBy(c=>c.AttDate.Year).Select(c => c.Key).ToList();
+            YearList.Sort();
+            ViewBag.YearList = YearList;
+            
             if ( id == 101 )
             {
                 aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
@@ -45,12 +52,23 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             else if ( id == 100 )
             {
-                aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).Where (c => c.AttDate.Month == DateTime.Today.Month).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include (a => a.Employee).Where (c => c.AttDate.Month == DateTime.Today.Month && c.AttDate.Year == DateTime.Today.Year).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
                 //return View(await aprajitaRetailsContext_all.ToListAsync());
             }
             else  if (id == 102)
             {
-                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month-1).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month- 1 && c.AttDate.Year == DateTime.Today.Year).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+            }else
+            {
+                if (id!=null && YearList.Contains((int)id))
+                {
+                    aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Year == id).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                }
+                else
+                {
+
+                }
+
             }
 
             //return View(await aprajitaRetailsContext.ToListAsync());
@@ -60,19 +78,33 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
 
-        public async Task<IActionResult> EmpDetails(int? id)
+        public async Task<IActionResult> EmpDetails(int? id, string? ondate)
         {
             if ( id == null )
             {
                 return NotFound ();
             }
-            //Attendance attendance = db.Attendances.Include (c => c.Employee).Where (c => c.AttendanceId == id).FirstOrDefault ();
-
+            //ToString("dd-MM-yyyy")
             var empid = _context.Attendances.Find (id).EmployeeId;
+
+            DateTime ValidDate = DateTime.Today;
+            //if (onDate != null) ValidDate = (DateTime)onDate;
+            if (!ondate.IsNullOrEmpty()) {
+
+
+               if (!DateTime.TryParse(ondate,  out ValidDate))
+                {
+                    ValidDate = DateTime.Today;
+                }
+            }
+            
+
             var attList = _context.Attendances.Include (c => c.Employee)
-                .Where (c => c.EmployeeId == empid && c.AttDate.Month == DateTime.Today.Month)
+                .Where (c => c.EmployeeId == empid && c.AttDate.Month == ValidDate.Month && c.AttDate.Year == ValidDate.Year)
                 .OrderBy (c => c.AttDate);
 
+            
+            
             var p = attList.Where (c => c.Status == AttUnits.Present).Count ();
             var a = attList.Where (c => c.Status == AttUnits.Absent).Count ();
             int noofdays = DateTime.DaysInMonth (DateTime.Today.Year, DateTime.Today.Month);
