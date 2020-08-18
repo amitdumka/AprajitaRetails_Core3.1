@@ -636,7 +636,7 @@ namespace AprajitaRetails.Ops.Uploader
 
                             tempstr = (workSheet.Cells[i, 3].Value ?? string.Empty).ToString();
                             switch (tempstr)
-                            { // CashSales, POSSale, Cash, TailorBook, Suspense
+                            { 
                                 case "Cash": c.LedgerTo = LedgerTo.Cash; break;
                                 case "POSSale": c.LedgerTo = LedgerTo.POSSale; break;
                                 case "CashSales": c.LedgerTo = LedgerTo.CashSales; break;
