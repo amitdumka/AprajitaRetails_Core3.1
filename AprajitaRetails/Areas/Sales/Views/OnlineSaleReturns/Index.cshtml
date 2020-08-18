@@ -41,10 +41,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RecivedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vendor)
-            </th>
+            </th>           
             <th></th>
         </tr>
     </thead>
@@ -52,7 +49,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OnlineSale.OnlineSaleId)
+                @Html.DisplayFor(modelItem => item.OnlineSale.InvNo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ReturnDate)
@@ -81,9 +78,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RecivedDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vendor.OnlineVendorId)
-            </td>
+          
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OnlineSaleReturnId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.OnlineSaleReturnId">Details</a> |

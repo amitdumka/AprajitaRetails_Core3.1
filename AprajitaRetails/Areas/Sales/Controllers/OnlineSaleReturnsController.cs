@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // GET: Sales/OnlineSaleReturns
         public async Task<IActionResult> Index()
         {
-            var aprajitaRetailsContext = _context.OnlineSaleReturns.Include(o => o.OnlineSale).Include(o => o.Vendor);
+            var aprajitaRetailsContext = _context.OnlineSaleReturns.Include(o => o.OnlineSale);
             return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -37,7 +37,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             var onlineSaleReturn = await _context.OnlineSaleReturns
                 .Include(o => o.OnlineSale)
-                .Include(o => o.Vendor)
+               
                 .FirstOrDefaultAsync(m => m.OnlineSaleReturnId == id);
             if (onlineSaleReturn == null)
             {
@@ -50,8 +50,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // GET: Sales/OnlineSaleReturns/Create
         public IActionResult Create()
         {
-            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "OnlineSaleId");
-            ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId");
+            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo");
+           // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId");
             return View();
         }
 
@@ -60,7 +60,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OnlineSaleReturnId,OnlineSaleId,ReturnDate,InvNo,Amount,VoyagerInvoiceNo,VoygerDate,VoyagerAmount,Remarks,IsRecived,RecivedDate,OnlineVendorId")] OnlineSaleReturn onlineSaleReturn)
+        public async Task<IActionResult> Create([Bind("OnlineSaleReturnId,OnlineSaleId,ReturnDate,InvNo,Amount,VoyagerInvoiceNo,VoygerDate,VoyagerAmount,Remarks,IsRecived,RecivedDate")] OnlineSaleReturn onlineSaleReturn)
         {
             if (ModelState.IsValid)
             {
@@ -68,8 +68,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "OnlineSaleId", onlineSaleReturn.OnlineSaleId);
-            ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
+            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo", onlineSaleReturn.OnlineSaleId);
+           // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
             return View(onlineSaleReturn);
         }
 
@@ -86,8 +86,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             {
                 return NotFound();
             }
-            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "OnlineSaleId", onlineSaleReturn.OnlineSaleId);
-            ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
+            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo", onlineSaleReturn.OnlineSaleId);
+           // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
             return View(onlineSaleReturn);
         }
 
@@ -96,7 +96,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OnlineSaleReturnId,OnlineSaleId,ReturnDate,InvNo,Amount,VoyagerInvoiceNo,VoygerDate,VoyagerAmount,Remarks,IsRecived,RecivedDate,OnlineVendorId")] OnlineSaleReturn onlineSaleReturn)
+        public async Task<IActionResult> Edit(int id, [Bind("OnlineSaleReturnId,OnlineSaleId,ReturnDate,InvNo,Amount,VoyagerInvoiceNo,VoygerDate,VoyagerAmount,Remarks,IsRecived,RecivedDate")] OnlineSaleReturn onlineSaleReturn)
         {
             if (id != onlineSaleReturn.OnlineSaleReturnId)
             {
@@ -123,8 +123,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "OnlineSaleId", onlineSaleReturn.OnlineSaleId);
-            ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
+            ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo", onlineSaleReturn.OnlineSaleId);
+          //  ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
             return View(onlineSaleReturn);
         }
 
@@ -138,7 +138,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             var onlineSaleReturn = await _context.OnlineSaleReturns
                 .Include(o => o.OnlineSale)
-                .Include(o => o.Vendor)
+                
                 .FirstOrDefaultAsync(m => m.OnlineSaleReturnId == id);
             if (onlineSaleReturn == null)
             {

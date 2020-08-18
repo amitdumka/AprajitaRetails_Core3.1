@@ -78,9 +78,9 @@ namespace AprajitaRetails.Models
         [Display(Name = "Recived Date")]
         public DateTime? RecivedDate { get; set; }
 
-        [ForeignKey("OnlineVendor")]
-        public int OnlineVendorId { get; set; }
-        public virtual OnlineVendor Vendor { get; set; }
+        //[ForeignKey("OnlineVendor")]
+        //public int OnlineVendorId { get; set; }
+        //public virtual OnlineVendor Vendor { get; set; }
 
     }
 
