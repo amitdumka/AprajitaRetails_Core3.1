@@ -1,0 +1,95 @@
+﻿@model IEnumerable<AprajitaRetails.Models.OnlineSaleReturn>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OnlineSale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoyagerInvoiceNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoygerDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoyagerAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRecived)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecivedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OnlineSale.OnlineSaleId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoyagerInvoiceNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoygerDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoyagerAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRecived)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecivedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor.OnlineVendorId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OnlineSaleReturnId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OnlineSaleReturnId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OnlineSaleReturnId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
