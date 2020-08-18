@@ -19,7 +19,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
     public class DailySalesController : Controller
     {
         //Version 3.0 
-        private readonly int StoreCodeId = 1;   //Default Value. For Now.
+        private readonly int StoreCodeId = 1;   //TODO:Default Value. For Now.
 
         private readonly AprajitaRetailsContext db;
        // private readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
@@ -55,11 +55,19 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
             if ( id != null && id == 101 )
             {
+                //All
                 dailySales = db.DailySales.Include (d => d.Salesman).Where(c=>  c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
             }
             else if ( id != null && id == 102 )
             {
-                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate.Month == DateTime.Today.Month && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
+                //Current Month
+                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate.Month == DateTime.Today.Month && c.SaleDate.Year == DateTime.Today.Year && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
+
+            }
+            else if (id != null && id == 103)
+            {
+                //Last Month
+                dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate.Month == DateTime.Today.Month-1 && c.SaleDate.Year == DateTime.Today.Year && c.StoreId == this.StoreCodeId).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
 
             }
             else
@@ -83,7 +91,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 }
                 else
                 {
-                    dailySales = db.DailySales.Include (d => d.Salesman).Where (c => ( c.SaleDate.Month ) == ( DateTime.Today.Month) && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
+                    dailySales = db.DailySales.Include (d => d.Salesman).Where (c =>  c.SaleDate.Month  ==  DateTime.Today.Month && c.SaleDate.Year == DateTime.Today.Year && c.StoreId == this.StoreCodeId).OrderByDescending (c => c.SaleDate).ThenByDescending (c => c.DailySaleId);
                 }
 
                 if ( !String.IsNullOrEmpty (salesmanId) )
