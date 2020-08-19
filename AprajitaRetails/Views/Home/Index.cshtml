@@ -10,6 +10,9 @@
 </div>
 
 
+
+
+
 <section>
 
     <!-- Grid row -->
@@ -22,15 +25,79 @@
             <div class="card-deck">
 
                 <!-- Card -->
+                @if(Model.BookingOverDues!=null && Model.BookingOverDues.Count > 0)
+                {
 
                 <div class="card mb-4">
 
                     <!--Card image-->
                     <div class="view overlay">
                         @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
-                            <a href="#!">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>*@
+                <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                </a>*@
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body  text-center pb-0 px-0">
+
+                        <!--Title-->
+                        <h4 class="card-title text-warning">Warning Board </h4>
+                        <!--Text-->
+                        <p class="card-text">
+                            @if (Model.BookingOverDues != null && Context.User.Identity.IsAuthenticated)
+                            {
+                            <table class="table table-striped text-info table-sm">
+                                @{
+                                    var ctr = 0;
+                                }
+                                @foreach (var item in Model.BookingOverDues )
+                                {
+                                    ctr++; 
+                                    <tr>
+                                        @*<td>@Html.DisplayNameFor(model => item.CustomerName)</td>
+                                        <td>@Html.DisplayFor(model => item.CustomerName)</td>*@
+                                    
+                                        <td>@Html.DisplayNameFor(model => item.SlipNo)</td>
+                                        <td>@Html.DisplayFor(model => item.SlipNo)</td>
+                                    @*</tr>
+                                    <tr>*@
+                                        <td>@Html.DisplayNameFor(model => item.NoDays)</td>
+                                        <td>@Html.DisplayFor(model => item.NoDays)</td>
+                                    </tr>
+                                    @*<tr>
+                                        <td>@Html.DisplayNameFor(model => item.DelveryDate)</td>
+                                        <td>@Html.DisplayFor(model => item.DelveryDate)</td>
+                                    </tr>*@
+                                    if (ctr > 3) break;
+                                }
+
+                            </table>
+                            }
+                            else
+                            {
+                                <h5>  Sale Data (Registered Users Only).</h5>
+                            }
+
+                            <br />
+                        </p>
+                        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                        @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {<a class="btn btn-outline-default btn-md" href="Reports/BookingOverDue/Index">Details &raquo;</a>}
+
+                    </div>
+
+                </div>
+                }
+                <div class="card mb-4">
+
+                    <!--Card image-->
+                    <div class="view overlay">
+                        @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
+                <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                </a>*@
                     </div>
 
                     <!--Card content-->
@@ -40,7 +107,7 @@
                         <h4 class="card-title text-default">Sale Record </h4>
                         <!--Text-->
                         <p class="card-text">
-                            @if ( Model.SaleReport != null && Context.User.Identity.IsAuthenticated )
+                            @if (Model.SaleReport != null && Context.User.Identity.IsAuthenticated)
                             {
                                 <table class="table table-striped text-info table-sm">
                                     <tr>
@@ -66,7 +133,7 @@
                         </p>
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        @if ( Context.User.Identity.IsAuthenticated )
+                        @if (Context.User.Identity.IsAuthenticated)
                         {<a class="btn btn-outline-default btn-md" href="Sales/DailySales/Index">Details &raquo;</a>}
 
                     </div>
@@ -81,9 +148,9 @@
                     <!--Card image-->
                     <div class="view overlay">
                         @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/14.jpg" alt="Card image cap">
-                            <a href="#!">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>*@
+                <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                </a>*@
                     </div>
 
                     <!--Card content-->
@@ -93,7 +160,7 @@
                         <h4 class="card-title dark-green-ic">Tailoring</h4>
                         <!--Text-->
                         <p class="card-text">
-                            @if ( Model.TailoringReport != null && Context.User.Identity.IsAuthenticated )
+                            @if (Model.TailoringReport != null && Context.User.Identity.IsAuthenticated)
                             {
                                 <table class="table table-striped text-info table-sm">
                                     <tr>
@@ -135,7 +202,7 @@
                         </p>
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        @if ( Context.User.Identity.IsAuthenticated )
+                        @if (Context.User.Identity.IsAuthenticated)
                         {<a class="btn btn-outline-default btn-md" href="Tailoring/TalioringBookings">Booking List &raquo;</a>}
 
                     </div>
@@ -150,9 +217,9 @@
                     <!--Card image-->
                     <div class="view overlay">
                         @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg" alt="Card image cap">
-                            <a href="#!">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>*@
+                <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                </a>*@
                     </div>
 
                     <!--Card content-->
@@ -162,14 +229,14 @@
                         <h4 class="card-title amber-text">Accounting</h4>
                         <!--Text-->
                         <p class="card-text">
-                            @if ( Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated )
+                            @if (Model.AccountsInfo != null && Context.User.Identity.IsAuthenticated)
                             {
                                 <table class="table  table-sm  table-striped">
                                     <tr>
                                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</td>
                                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</td>
                                         @*</tr>
-                                            <tr>*@
+                                <tr>*@
                                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</td>
                                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</td>
                                     </tr>
@@ -178,7 +245,7 @@
                                         <td>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</td>
                                         <td>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</td>
                                         @*</tr>
-                                            <tr>*@
+                                <tr>*@
                                         <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</td>
                                         <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</td>
                                     </tr>
@@ -194,7 +261,7 @@
                                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</td>
                                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</td>
                                         @*/tr>
-                                            <tr>*@
+                                <tr>*@
                                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</td>
                                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</td>
                                     </tr>
@@ -210,7 +277,7 @@
                         </p>
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        @if ( Context.User.Identity.IsAuthenticated )
+                        @if (Context.User.Identity.IsAuthenticated)
                         {<a class="btn btn-outline-default btn-md" href="AccountsDetails/">Detail &raquo;</a>}
 
                     </div>
@@ -235,14 +302,14 @@
 <h2 class="text-success">Employees Info</h2>
 <hr class="text-info" />
 <div class="row mx-1">
-    @if ( Model.EmpInfoList != null && Model.EmpInfoList.Count > 0 && Context.User.Identity.IsAuthenticated )
+    @if (Model.EmpInfoList != null && Model.EmpInfoList.Count > 0 && Context.User.Identity.IsAuthenticated)
     {
         <section>
             @*<div class="row mx-1">*@
             <div class="card-deck">
 
 
-                @foreach ( var item in Model.EmpInfoList )
+                @foreach (var item in Model.EmpInfoList)
                 {
                     <!-- Card -->
                     <div class="col-md-4 small">
@@ -265,7 +332,7 @@
                                 <p class="card-text">
                                     <div class="">
                                         <dl class="row ">
-                                            @if( item.Present == "Present" )
+                                            @if (item.Present == "Present")
                                             {
                                                 <dt class="col-sm-8 text-sm-right text-success">@Html.DisplayNameFor(model => item.Present)</dt>
                                                 <dd class="col-sm-4 text-success">@Html.DisplayFor(model => item.Present)</dd>
@@ -278,18 +345,18 @@
                                             <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.PresentDays)/Absent</dt>
                                             <dd class="col-sm-4">@Html.DisplayFor(model => item.PresentDays)/@Html.DisplayFor(model => item.AbsentDays)</dd>
                                             @*<dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.AbsentDays)</dt>
-                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>*@
+                                                <dd class="col-sm-4">@Html.DisplayFor(model => item.AbsentDays)</dd>*@
 
-                                            @if ( item.IsSalesman )
+                                            @if (item.IsSalesman)
                                             {
 
 
-                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
-                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
-                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
-                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
-                                            <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.TotalSale)</dt>
-                                            <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
+                                                <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.Ratio)</dt>
+                                                <dd class="col-sm-4">@Html.DisplayFor(model => item.Ratio)</dd>
+                                                <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.NoOfBills)</dt>
+                                                <dd class="col-sm-4">@Html.DisplayFor(model => item.NoOfBills)</dd>
+                                                <dt class="col-sm-8 text-sm-right">@Html.DisplayNameFor(model => item.TotalSale)</dt>
+                                                <dd class="col-sm-4">@Html.DisplayFor(model => item.TotalSale)</dd>
                                             }
                                         </dl>
                                     </div>
@@ -357,3 +424,31 @@
         <!-- Section: Live preview -->
     }
 </div>
+@*<button type="button" data-toggle="modal" data-target="#myModal2">PopUp!</button>*@
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Warning: Tailoring Over Due</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Tailoring Over Due Warning</h5>
+                <p>This <a href="#" role="button" class="btn btn-secondary popover-test" title="Popover title" data-content="Popover body content is set in this attribute.">button</a> triggers a popover on click.</p>
+                <hr>
+                <h5>Tooltips in a modal</h5>
+                <p><a href="#" class="tooltip-test" title="Tooltip">This link</a> and <a href="#" class="tooltip-test" title="Tooltip">that link</a> have tooltips on hover.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -97,4 +97,18 @@ namespace AprajitaRetails.Areas.Reports.Models
 
     }
 
+
+    public class BookingOverDue
+    {
+        public int BookingId { get; set; }
+        public string CustomerName { get; set; }
+        public string SlipNo { get; set; }
+        public DateTime BookingDate { get; set; }
+        public DateTime DelveryDate { get; set; }
+        public int Quantity { get; set; }
+        public int NoDays { get; set; }
+
+    }
+
+
 }

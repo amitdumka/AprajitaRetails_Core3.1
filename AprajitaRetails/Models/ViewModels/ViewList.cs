@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Reports.Models;
 
 namespace AprajitaRetails.Models.ViewModels
 {
@@ -26,6 +27,7 @@ namespace AprajitaRetails.Models.ViewModels
         // public ManaulSaleReport ManaulSale { get; set; }
         //public List<EmpStatus> PresentEmp { get; set; }
         public AccountsInfo AccountsInfo { get; set; }
+        public  List<BookingOverDue>? BookingOverDues { get; set; }
 
     }
 

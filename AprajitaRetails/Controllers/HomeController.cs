@@ -10,6 +10,7 @@ using AprajitaRetails.Models.ViewModels;
 using AprajitaRetails.Ops.WidgetModel;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.TelgramService;
+using AprajitaRetails.Areas.Reports.Ops;
 
 namespace AprajitaRetails.Controllers
 {
@@ -34,12 +35,9 @@ namespace AprajitaRetails.Controllers
                 SaleReport = SaleWidgetModel.GetSaleRecord (_context),
                 TailoringReport = HomeWidgetModel.GetTailoringReport (_context),
                 EmpInfoList = HomeWidgetModel.GetEmpInfo (_context),
-                AccountsInfo = HomeWidgetModel.GetAccoutingRecord (_context)
+                AccountsInfo = HomeWidgetModel.GetAccoutingRecord (_context), 
+                BookingOverDues= ReportOps.GetTailoringBookingOverDue(_context)
             };
-
-
-            ViewBag.SaleData =(int) reportView.SaleReport.DailySale;
-            
             return View (reportView);
             
         }

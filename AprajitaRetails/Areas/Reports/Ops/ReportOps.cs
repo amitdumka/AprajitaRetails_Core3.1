@@ -3,6 +3,7 @@ using AprajitaRetails.Areas.Sales.Controllers;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Models.Helpers;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using OpenTl.Schema.Channels;
 using System;
 using System.Collections.Generic;
@@ -141,6 +142,27 @@ namespace AprajitaRetails.Areas.Reports.Ops
         }
 
 
+        public static List<BookingOverDue> GetTailoringBookingOverDue(AprajitaRetailsContext db)
+        {
+            DateTime date = DateTime.Today.AddDays(-11);
+            var list = db.TalioringBookings.Where(c =>!c.IsDelivered && c.DeliveryDate<date ).ToList();
+
+            List<BookingOverDue> DueList = new List<BookingOverDue>();
+            foreach (var item in list)
+            {
+                BookingOverDue overDue = new BookingOverDue
+                { BookingDate=item.BookingDate, BookingId=item.TalioringBookingId, DelveryDate=item.DeliveryDate, 
+                   Quantity=item.TotalQty, SlipNo= item.BookingSlipNo,
+                   CustomerName= item.CustName, 
+                   NoDays=(DateTime.Today.Date- item.DeliveryDate.Date).Days
+                };
+                DueList.Add(overDue);
+            }
+
+            //DueList.Sort();
+            return DueList;
+
+        }
 
     }
 }
