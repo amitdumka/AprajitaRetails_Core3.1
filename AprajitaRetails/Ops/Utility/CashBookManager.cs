@@ -746,58 +746,60 @@ namespace AprajitaRetails.Ops.Utility
            
             foreach (var item in eTalStPay)
             {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+                
+                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars ="TSAP_ID:# "+item.TailoringStaffAdvancePaymentId+" SN: "+item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
 
             foreach (var item in eTalSal)
             {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = "TSP_ID:# " + item.TailoringSalaryPaymentId + " SN: " + item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
 
             foreach (var item in eexp)
             {
-                CashBook b = new CashBook() { EDate = item.ExpDate, CashIn = 0, Particulars = item.Particulars, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.ExpDate, CashIn = 0, Particulars ="Exp_ID# "+item.ExpenseId+" Particulars: "+ item.Particulars, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
             foreach (var item in eDepo)
             {
-                CashBook b = new CashBook() { EDate = item.DepoDate, CashIn = 0, Particulars = "Bank Depo=> " + item.Account.Account, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.DepoDate, CashIn = 0, Particulars = "Bank Depo# "+item.BankDepositId+" Acc: " + item.Account.Account, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
             foreach (var item in eCashEx)
             {
-                CashBook b = new CashBook() { EDate = item.ExpDate, CashIn = 0, Particulars = item.Particulars, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.ExpDate, CashIn = 0, Particulars = "PCE_ID:# " + item.PettyCashExpenseId+" Particulars: "+ item.Particulars, CashOut = item.Amount, CashBalance = 0 };
+
                 book.Add(b);
             }
             foreach (var item in eDue)
             {
-                CashBook b = new CashBook() { EDate = item.DailySale.SaleDate, CashIn = 0, Particulars = "Dues=>" + item.DailySale.InvNo, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.DailySale.SaleDate, CashIn = 0, Particulars = "Dues# "+item.DuesListId+" InvNo: "  + item.DailySale.InvNo, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
 
             foreach (var item in eCPay)
             {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.PaidTo, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars ="CP_ID:# "+item.CashPaymentId+" PaidTo: "+ item.PaidTo, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
 
             foreach (var item in ePay)
             {
-                CashBook b = new CashBook() { EDate = item.PayDate, CashIn = 0, Particulars = item.PaymentPartry, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.PayDate, CashIn = 0, Particulars ="PMT_ID:# "+item.PaymentId+" P_Party: " + item.PaymentPartry, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
 
             foreach (var item in eStPay)
             {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = "SAP_ID:# " + item.StaffAdvancePaymentId + " SN: " + item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
 
             foreach (var item in eSal)
             {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars ="Sal_ID:# "+item.SalaryPaymentId+" SN: "+ item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
                 book.Add(b);
             }
             return CorrectBalCashBook(book, OpnBal);

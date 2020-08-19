@@ -265,7 +265,7 @@
                                 <p class="card-text">
                                     <div class="">
                                         <dl class="row ">
-                                            @if ( item.Present == "Present" )
+                                            @if( item.Present == "Present" )
                                             {
                                                 <dt class="col-sm-8 text-sm-right text-success">@Html.DisplayNameFor(model => item.Present)</dt>
                                                 <dd class="col-sm-4 text-success">@Html.DisplayFor(model => item.Present)</dd>
@@ -295,7 +295,7 @@
                                     </div>
                                 </p>
                                 <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                                <button type="button" class="btn btn-outline-default btn-sm btn-md ">Details</button>
+                                <a asp-route-id="@item.EmpId" asp-area="Reports" asp-action="AttdDetails" asp-controller="EmpAttReportController" class="btn btn-outline-default btn-sm btn-md ">Details</a>
 
                             </div>
 

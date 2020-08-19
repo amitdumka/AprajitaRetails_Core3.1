@@ -1,0 +1,149 @@
+﻿@model AprajitaRetails.Areas.Reports.Models.EmpFinReport
+
+@{
+    ViewData["Title"] = "FinDetails";
+}
+
+<h1>FinDetails</h1>
+<div>
+<form asp-action="FinDetails" method="get">
+    <strong>
+        Start Date: @Html.EditorFor(model => model.JoinningDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString() } })
+        @Html.ValidationMessageFor(model => model.JoinningDate, "", new { @class = "text-danger" })
+    </strong>
+    <strong>
+        End Date: @Html.EditorFor(model => model.LeavingDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString() } })
+        @Html.ValidationMessageFor(model => model.LeavingDate, "", new { @class = "text-danger" })
+    </strong>
+    <input type="hidden"  id="id" name="id" value="@Model.EmployeeId" />
+    <input type="submit" value="Get Data" class=" btn btn-warning " />
+</form>
+</div>
+<div>
+    <h4>EmpFinReport</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Employee.EmployeeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JoinningDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JoinningDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LeavingDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LeavingDate)
+        </dd>
+
+        @if (Model.Type == EmpType.Salesman)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalSale)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalSale)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.NoOfBill)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.NoOfBill)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.AverageSale)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.AverageSale)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalLastPcIncentive)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalLastPcIncentive)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalWowBillIncentive)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalWowBillIncentive)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalSaleIncentive)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalSaleIncentive)
+            </dd>
+
+
+        }
+        else if (Model.Type == EmpType.StoreManager)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalSale)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalSale)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.NoOfBill)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.NoOfBill)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TotalSaleIncentive)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TotalSaleIncentive)
+            </dd>
+
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalSalaryPaid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalSalaryPaid)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalSalaryAdvancePaid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalSalaryAdvancePaid)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalAdvancePaidOff)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalAdvancePaidOff)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalBalance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalBalance)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.EmpFinReportId">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>

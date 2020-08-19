@@ -1,0 +1,103 @@
+﻿@model AprajitaRetails.Areas.Reports.Models.EmpAttReport
+
+@{
+    ViewData["Title"] = "AttdDetails";
+}
+
+<h1>AttdDetails</h1>
+<div>
+    <form asp-action="AttdDetails" method="get">
+        <strong>
+            Start Date: @Html.EditorFor(model => model.JoinningDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString() } })
+            @Html.ValidationMessageFor(model => model.JoinningDate, "", new { @class = "text-danger" })
+        </strong>
+        <strong>
+            End Date: @Html.EditorFor(model => model.LeavingDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString() } })
+            @Html.ValidationMessageFor(model => model.LeavingDate, "", new { @class = "text-danger" })
+        </strong>
+        <input type="hidden" id="id" name="id" value="@Model.EmployeeId" />
+        <input type="submit" value="Get Data" class=" btn btn-warning " />
+    </form>
+</div>
+<div>
+    <h4>EmpAttReport</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Employee.EmployeeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JoinningDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JoinningDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LeavingDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LeavingDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsWorking)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsWorking)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalDaysPresent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalDaysPresent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalDaysAbsent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalDaysAbsent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalDaysHalfDay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalDaysHalfDay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalSundayPresent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalSundayPresent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalFinalPresent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalFinalPresent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NoOfWorkingDays)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NoOfWorkingDays)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.EmpAttReportId">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>

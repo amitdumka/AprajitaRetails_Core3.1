@@ -1,0 +1,84 @@
+﻿@model PaginatedList<AprajitaRetails.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h1 class="text-dark">Employees</h1>
+
+<p>
+    <a class="btn btn-outline-brown btn-sm" id="create" data_modal="" asp-action="Create">Create New</a>
+</p>
+<table class="table  table-bordered table-striped table-sm table-hover w-auto ">
+    <thead class="bg-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().StaffName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().JoiningDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LeavingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsWorking)
+            </th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Category)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="table-danger">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JoiningDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeavingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsWorking)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td class="btn-group ">
+                    <a class="btn btn-outline-secondary btn-sm" asp-action="AttdDetails" asp-route-id="@item.EmployeeId">Attendance</a>
+                    <a class="btn btn-outline-deep-orange btn-sm" asp-action="FinDetails" asp-route-id="@item.EmployeeId">Salary</a>
+                    @*<a class="btn btn-outline-danger btn-sm" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!-- modal placeholder-->
+<div id='myModal' class='modal fade in' tabindex="-1" role="dialog" area-labledby="myModalLable" area-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-notify " role="document" id="modalHead">
+        <div class="modal-content card">
+            <div class="modal-header card-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id='myModalContent' class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_ModalPop" />

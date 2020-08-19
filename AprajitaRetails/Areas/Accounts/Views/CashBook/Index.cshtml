@@ -68,41 +68,66 @@
             @foreach ( var item in Model )
             {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Particulars)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CashIn)
-                </td>
-                @if ( item.CashOut > 0 )
+                @if (item.CashOut > 0)
                 {
+                    <td class="text-danger">
+                        @Html.DisplayFor(modelItem => item.EDate)
+                    </td>
+                    <td class="text-danger">
+                        @Html.DisplayFor(modelItem => item.Particulars)
+                    </td>
+                    <td class="text-danger">
+                        @Html.DisplayFor(modelItem => item.CashIn)
+                    </td>
                     <td class="text-danger">
                         @Html.DisplayFor(modelItem => item.CashOut)
                     </td>
+
+                    @if (item.CashBalance < 0)
+                    {
+                        <td class="text-danger">
+                            @Html.DisplayFor(modelItem => item.CashBalance)
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="text-success">
+                            @Html.DisplayFor(modelItem => item.CashBalance)
+                        </td>
+                    }
+
                 }
                 else
                 {
                     <td>
+                        @Html.DisplayFor(modelItem => item.EDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Particulars)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CashIn)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.CashOut)
                     </td>
+
+                    @if (item.CashBalance < 0)
+                    {
+                        <td class="text-danger">
+                            @Html.DisplayFor(modelItem => item.CashBalance)
+                        </td>
+
+                    }
+                    else
+                    {
+                        <td class="text-success">
+                            @Html.DisplayFor(modelItem => item.CashBalance)
+                        </td>
+                    }
                 }
 
-                @if ( item.CashBalance < 0 )
-                {
-                    <td class="text-danger">
-                        @Html.DisplayFor(modelItem => item.CashBalance)
-                    </td>
-
-                }
-                else
-                {
-                    <td class="text-success">
-                        @Html.DisplayFor(modelItem => item.CashBalance)
-                    </td>
-                }
 
             </tr>
             }

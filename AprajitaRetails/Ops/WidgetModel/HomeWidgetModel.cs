@@ -75,17 +75,17 @@ namespace AprajitaRetails.Ops.WidgetModel
         {
                        
             var emps = db.Attendances.Include(c => c.Employee).
-                Where(c => (c.AttDate) == (DateTime.Today)).OrderByDescending(c => c.Employee.StaffName);
+                Where(c => c.AttDate == DateTime.Today).OrderByDescending(c => c.Employee.StaffName);
 
             var empPresent = db.Attendances.Include(c => c.Employee)
-                .Where(c => c.Status == AttUnits.Present && (c.AttDate).Month == (DateTime.Today).Month)
+                .Where(c => c.Status == AttUnits.Present &&  c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month)
                 .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
             var empAbsent = db.Attendances.Include(c => c.Employee)
-                .Where(c => c.Status == AttUnits.Absent && (c.AttDate).Month == (DateTime.Today).Month)
+                .Where(c => c.Status == AttUnits.Absent && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month)
                  .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
-            var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => (c.SaleDate).Month == (DateTime.Today).Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
+            var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
 
             List<EmployeeInfo> infoList = new List<EmployeeInfo>();
 
@@ -95,7 +95,7 @@ namespace AprajitaRetails.Ops.WidgetModel
                 {
                     EmployeeInfo info = new EmployeeInfo()
                     {
-                        Name = item.Employee.StaffName,
+                        Name = item.Employee.StaffName,EmpId=item.Employee.EmployeeId,
                         AbsentDays = 0,
                         NoOfBills = 0,
                         Present = "",

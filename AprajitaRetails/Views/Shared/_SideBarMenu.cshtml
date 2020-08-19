@@ -93,9 +93,22 @@
             <li class="nav-item">
                 <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index"><span data-feather="users"></span>Customers</a>
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index"><span data-feather="bar-chart-2"></span>Reports</a>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class=" nav-link dropdown-toggle"> <span data-feather="star"></span>Reports</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li class="nav-item">
+                        <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="Index" class="nav-link  sidebar-font"> <span data-feather="book-open"></span>Employee</a>
+                    </li>
+                    @*<li class="nav-item">
+                        <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="shopping-cart"></span>Delivery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="PendingBooking" class="nav-link sidebar-font"> <span data-feather="book"></span>Pending Booking</a>
+                    </li>*@
+                </ul>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index"><span data-feather="layers"></span> Integrations</a>
             </li>

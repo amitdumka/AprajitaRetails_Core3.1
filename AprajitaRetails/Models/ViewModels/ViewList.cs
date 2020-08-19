@@ -84,6 +84,8 @@ namespace AprajitaRetails.Models.ViewModels
 
     public class EmployeeInfo
     {
+        [Display(Name = "Emp ID")]
+        public int EmpId { get; set; }
         [Display (Name = "Staff Name")]
         public string Name { get; set; }
 
