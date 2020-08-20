@@ -47,15 +47,15 @@ namespace AprajitaRetails.Models.ViewModels
 
         [Display (Name = "Booking")]
         public decimal TodayBooking { get; set; }
-        [Display (Name = "Items")]
+        [Display (Name = "Item")]
         public decimal TodayUnit { get; set; }
         [Display (Name = "Booking")]
         public decimal MonthlyBooking { get; set; }
-        [Display (Name = "Items")]
+        [Display (Name = "Item")]
         public decimal MonthlyUnit { get; set; }
         [Display (Name = "Booking")]
         public decimal YearlyBooking { get; set; }
-        [Display (Name = "Itemst")]
+        [Display (Name = "Item")]
         public decimal YearlyUnit { get; set; }
     }
 

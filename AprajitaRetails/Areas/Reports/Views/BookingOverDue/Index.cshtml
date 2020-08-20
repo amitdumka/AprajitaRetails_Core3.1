@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<AprajitaRetails.Areas.Reports.Models.BookingOverDue>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Booking Over Due List";
 }
 
-<h1>Booking Over Due List</h1>
-
-<table class="table">
-    <thead>
+<h2 class="text-danger">Booking Over Due List</h2>
+<div>
+    <h4 class="text-info"> Booking Details</h4>
+</div>
+<table class="table table-sm table-bordered table-hover table-striped">
+    <thead class="bg-success">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.BookingId)
@@ -30,39 +32,40 @@
             <th>
                 @Html.DisplayNameFor(model => model.NoDays)
             </th>
-            @*<th></th>*@
+            <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustomerName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SlipNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DelveryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoDays)
-            </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>*@
-        </tr>
-}
+    <tbody class="bg-white">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SlipNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DelveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NoDays)
+                </td>
+                <td class="btn-group btn-sm">
+                    <a class="btn  btn-outline-amber btn-sm" asp-action="Edit" id="edit" data_modal="" asp-controller="TalioringBookings" asp-area="Tailoring" asp-route-id="@item.BookingId">Edit</a>
+                    <a class="btn  btn-outline-info btn-sm" asp-action="Details" id="details" data_modal="" asp-controller="TalioringBookings" asp-area="Tailoring" asp-route-id="@item.BookingId">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<partial name="_OnlyModalPopUp" />

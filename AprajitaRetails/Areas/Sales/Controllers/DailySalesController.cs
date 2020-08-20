@@ -99,17 +99,18 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                     dailySales = dailySales.Where (c => c.Salesman.SalesmanName == salesmanId);
                 }
 
-                //return View(DailySales);
+               
 
             }
 
             // For All Invoice
-
+            //TODO: Make a Static class and function to fetch details
             #region FixedUI 
             //Fixed Query
             var totalSale = db.DailySales.Where (c => c.IsManualBill == false && c.SaleDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
             var totalManualSale = db.DailySales.Where (c => c.IsManualBill == true && c.SaleDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
-            var totalMonthlySale = db.DailySales.Where (c => c.SaleDate.Month == DateTime.Today.Month && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
+            var totalMonthlySale = db.DailySales.Where (c => c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
+            var totalLastMonthlySale = db.DailySales.Where(c => c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month-1 && c.StoreId == this.StoreCodeId).Sum(c => (decimal?)c.Amount) ?? 0;
             var duesamt = db.DuesLists.Where (c => c.IsRecovered == false && c.StoreId == this.StoreCodeId).Sum (c => (decimal?) c.Amount) ?? 0;
             var cashinhand = (decimal) 0.00;
             try
@@ -129,6 +130,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             ViewBag.MonthlySale = totalMonthlySale;
             ViewBag.DuesAmount = duesamt;
             ViewBag.CashInHand = cashinhand;
+            ViewBag.LastMonthSale = totalLastMonthlySale;
 
             #endregion
 

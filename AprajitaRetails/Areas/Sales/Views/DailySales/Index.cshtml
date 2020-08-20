@@ -20,30 +20,30 @@
             <tr class="text-danger">
                 <th>Total Dues</th>
                 <th>Cash-In-Hands</th>
-                <th></th>
+                <th class="text-primary">Last Month Sale</th>
             </tr>
             <tr class="text-center ">
 
                 <td class="text-success"> <b>@string.Format("{0:C}", ViewBag.DuesAmount) </b></td>
                 <td class="text-success"> <b>@string.Format("{0:C}", ViewBag.CashInHand)</b></td>
-                <td class="text-success"></td>
+                <td class="text-success"><b>@string.Format("{0:C}", ViewBag.LastMonthSale)</b></td>
             </tr>
 
             <tr class="text-danger form-actions no-color">
 
-                <td class=""><strong> Salesman: @Html.DropDownList("salesmanId", "All")</strong></td>
+                <td class=""><strong> Salesman : @Html.DropDownList("salesmanId", "All")</strong></td>
                 <td>
                     <strong>
-                        By Date: @Html.EditorFor(model => model.FirstOrDefault ().SaleDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString () } })
+                        By Date : @Html.EditorFor(model => model.FirstOrDefault ().SaleDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString () } })
                         @Html.ValidationMessageFor(model => model.FirstOrDefault ().SaleDate, "", new { @class = "text-danger" })
                     </strong>
                 </td>
                 <td>
                     <strong>
                         Or
-                        <span class="glyphicon glyphicon-search"> </span>  By InvoiceNo: @*@Html.TextBox("SearchString")*@
+                        <span class="glyphicon glyphicon-search"> </span>  By InvoiceNo :  @*@Html.TextBox("SearchString")*@
                         <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
-                        <input type="submit" value="Filter" class=" btn btn-warning " />
+                        <input type="submit" value="Filter" class=" btn btn-outline-warning btn-sm " />
                     </strong>
                 </td>
 

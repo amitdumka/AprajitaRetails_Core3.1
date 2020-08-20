@@ -86,7 +86,11 @@ namespace AprajitaRetails.Areas.Reports.Models
     public class EmpReport
     {
         public int EmpReportId { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
         public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
@@ -100,12 +104,20 @@ namespace AprajitaRetails.Areas.Reports.Models
 
     public class BookingOverDue
     {
+        [Display(Name = "Booking ID")]
         public int BookingId { get; set; }
+        [Display(Name = "Customer Name")]
         public string CustomerName { get; set; }
+        [Display(Name = "Slip No")]
         public string SlipNo { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Booking Date")]
         public DateTime BookingDate { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Delivery Date")]
         public DateTime DelveryDate { get; set; }
         public int Quantity { get; set; }
+        [Display(Name = "Due Days")]
         public int NoDays { get; set; }
 
     }
