@@ -1,7 +1,8 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Newtonsoft.Json;
-using Microsoft.AspNetCore.Authorization;    using System;
+using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,57 +19,47 @@ namespace AprajitaRetails.Ops.Helpers
         {
             var p1 = db.Employees;
             string json = JsonConvert.SerializeObject(p1);
-
-            
-            
-           
-
-            using ( MemoryStream stream = new MemoryStream () )
+            using (MemoryStream stream = new MemoryStream())
             {
-                var serializer = new XmlSerializer (typeof (List<EndOfDay>));
+                var serializer = new XmlSerializer(typeof(List<EndOfDay>));
                 var p = db.EndOfDays.ToList();
-                serializer.Serialize (stream, p);
-
-                stream.Seek (0, SeekOrigin.Begin);
-                using ( StreamReader reader = new StreamReader (stream) )
+                serializer.Serialize(stream, p);
+                stream.Seek(0, SeekOrigin.Begin);
+                using (StreamReader reader = new StreamReader(stream))
                 {
-                    string xml = reader.ReadToEnd ();
-
-                    json+="\nXML Party Down\n"+ xml;
+                    string xml = reader.ReadToEnd();
+                    json += "\nXML Party Down\n" + xml;
                 }
-                  
             }
             return json;
         }
-    
-    
+
+
         public static void ToXML()
         {
-
-            using MemoryStream stream = new MemoryStream ();
+            using MemoryStream stream = new MemoryStream();
             // Create an XML document. Write our specific values into the document.
-            XmlTextWriter xmlWriter = new XmlTextWriter (stream, System.Text.Encoding.ASCII);
+            XmlTextWriter xmlWriter = new XmlTextWriter(stream, System.Text.Encoding.ASCII);
             // Write the XML document header.
-            xmlWriter.WriteStartDocument ();
+            xmlWriter.WriteStartDocument();
             // Write our first XML header.
-            xmlWriter.WriteStartElement ("AprajitaRetails");
+            xmlWriter.WriteStartElement("AprajitaRetails");
             // Write an element representing a single web application object.
-            xmlWriter.WriteStartElement ("AprajitaRetailsContext");
+            xmlWriter.WriteStartElement("AprajitaRetailsContext");
             // Write child element data for our web application object.
-            xmlWriter.WriteElementString ("Date", DateTime.Now.ToString ());
-            xmlWriter.WriteElementString ("DataBaseName", "AprajitaRetails");
-            xmlWriter.WriteElementString ("ApplicationName", "AprajitaRetails");
+            xmlWriter.WriteElementString("Date", DateTime.Now.ToString());
+            xmlWriter.WriteElementString("DataBaseName", "AprajitaRetails");
+            xmlWriter.WriteElementString("ApplicationName", "AprajitaRetails");
             // End the element WebApplication
-            xmlWriter.WriteEndElement ();
+            xmlWriter.WriteEndElement();
             // End the document WebApplications
-            xmlWriter.WriteEndElement ();
+            xmlWriter.WriteEndElement();
             // Finilize the XML document by writing any required closing tag.
-            xmlWriter.WriteEndDocument ();
-
+            xmlWriter.WriteEndDocument();
             // To be safe, flush the document to the memory stream.
-            xmlWriter.Flush ();
+            xmlWriter.Flush();
             // Convert the memory stream to an array of bytes.
-            byte [] byteArray = stream.ToArray ();
+            byte[] byteArray = stream.ToArray();
 
             // Send the XML file to the web browser for download.
             //Response.Clear();
@@ -76,9 +67,8 @@ namespace AprajitaRetails.Ops.Helpers
             //Response.AppendHeader("Content-Length", byteArray.Length.ToString());
             //Response.ContentType = "application/octet-stream";
             //Response.BinaryWrite(byteArray);
-
-            xmlWriter.Close ();
+            xmlWriter.Close();
         }
-    
+
     }
 }
