@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ENVELOPE>
+  <HEADER>
+    <TALLYREQUEST>Import Data</TALLYREQUEST>
+  </HEADER>
+  <BODY>
+    <IMPORTDATA>
+      <REQUESTDESC>
+        <REPORTNAME>All Masters</REPORTNAME>
+      </REQUESTDESC>
+      <REQUESTDATA>
+        <TALLYMESSAGE xmlns:UDF="TallyUDF">
+
+          <!— TO DO: Specify the company Name as it appears in Tally -->
+          <COMPANY NAME="DEMO" ACTION="Alter">
+            <!—  enable Maintain Multiple Godown -->
+            <ISMULTIGODOWNON>Yes</ISMULTIGODOWNON>
+            <!—  enable Use Debit/Credit Notes -->
+            <ISDCNOTEON>Yes</ISDCNOTEON>
+            <!—  enable Use Invoice mode for Credit Notes -->
+            <DNOTEASINVOICE>Yes</DNOTEASINVOICE>
+            <!—  enable Use Invoice mode for Debit notes -->
+            <CNOTEASINVOICE>Yes</CNOTEASINVOICE>
+            <!—  enable Use 0 valued entries in vouchers -->
+            <USEZEROENTRIES>Yes</USEZEROENTRIES>
+
+          </COMPANY>
+        </TALLYMESSAGE>
+      </REQUESTDATA>
+    </IMPORTDATA>
+  </BODY>
+</ENVELOPE>
