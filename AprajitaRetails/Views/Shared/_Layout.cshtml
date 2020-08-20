@@ -86,9 +86,10 @@
                                     <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Bookings</a>
                                     <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
                                     <p role="separator" class="dropdown-divider"></p>
-                                    <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
-                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+
+                                    @if (Context.User.IsInRole("Admin"))
                                     {
+                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
                                         <p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
