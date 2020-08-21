@@ -173,5 +173,10 @@ namespace AprajitaRetails.Areas.ToDo.Services
         {
             return await _context.Todos.Where (t => !t.Done && t.IsPublic).ToArrayAsync ();
         }
+        //TODO: Need to implement this function
+        public Task<IEnumerable<TodoItem>> GetIncompletePrivateItemsAsync(IdentityUser currentUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace AprajitaRetails.Areas.ToDo.Interfaces
     public interface ITodoItemService
     {
         Task<IEnumerable<TodoItem>> GetIncompletePublicItemsAsync();
+        Task<IEnumerable<TodoItem>> GetIncompletePrivateItemsAsync(IdentityUser currentUser);//TODO: assigned todo
+
         Task<IEnumerable<TodoItem>> GetIncompleteItemsAsync(IdentityUser currentUser);
         Task<IEnumerable<TodoItem>> GetCompleteItemsAsync(IdentityUser currentUser);
         Task<IEnumerable<TodoItem>> GetItemsByTagAsync(IdentityUser currentUser, string tag);

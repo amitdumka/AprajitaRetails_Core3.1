@@ -70,6 +70,13 @@ namespace AprajitaRetails.Areas.ToDo.Models
         public IEnumerable<string> Tags { get; set; }
         [Display(Name ="Public")]
         public bool IsPublic { get; set; }
+       
+        //TODO: to make TODO list for particular user.
+        //[Required]
+        //[MaxLength(450)]
+        //public string AssignedUserId { get; set; }
+        //[Display(Name = "Private")]
+        //public bool IsPrivate { get; set; }
     }
 
     public class FileInfo
