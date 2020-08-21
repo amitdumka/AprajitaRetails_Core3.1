@@ -77,8 +77,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 
                 _context.Add(payment);
-                await _context.SaveChangesAsync();
                 new ExpenseManager().OnInsert(_context, payment);
+                await _context.SaveChangesAsync();            
                 return RedirectToAction(nameof(Index));
             }
             return PartialView(payment);

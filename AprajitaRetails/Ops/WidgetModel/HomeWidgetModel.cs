@@ -37,7 +37,6 @@ namespace AprajitaRetails.Ops.WidgetModel
 
         public static AccountsInfo GetAccoutingRecord(AprajitaRetailsContext db)
         {
-
             
             AccountsInfo info = new AccountsInfo();
             CashInHand cih = db.CashInHands.Where(c => (c.CIHDate) == (DateTime.Today)).FirstOrDefault();
@@ -58,6 +57,7 @@ namespace AprajitaRetails.Ops.WidgetModel
 
             var CashExp = db.PettyCashExpenses.Where(c => (c.ExpDate) == (DateTime.Today));
             var CashPay = db.CashPayments.Where(c => (c.PaymentDate) == (DateTime.Today));
+
 
             if (CashExp != null)
             {

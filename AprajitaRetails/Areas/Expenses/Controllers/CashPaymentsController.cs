@@ -114,8 +114,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(cashPayment);
-                await _context.SaveChangesAsync();
                 new ExpenseManager().OnInsert(_context, cashPayment);
+                await _context.SaveChangesAsync();              
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation", cashPayment.TranscationModeId);

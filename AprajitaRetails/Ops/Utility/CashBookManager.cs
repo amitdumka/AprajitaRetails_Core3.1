@@ -681,7 +681,7 @@ namespace AprajitaRetails.Ops.Utility
             try
             {
                 ColBal = worker.GetClosingBalance(db, oDate.AddDays(-1));
-                OpnBal = (decimal?)db.CashInHands.Where(c => (c.CIHDate) == (oDate)).FirstOrDefault().OpenningBalance ?? 0;
+                OpnBal = (decimal?)(db.CashInHands.Where(c => (c.CIHDate) == oDate).Select(c=>c.OpenningBalance).FirstOrDefault()) ?? 0;
                 if (OpnBal != ColBal)
                     OpnBal = ColBal;
             }

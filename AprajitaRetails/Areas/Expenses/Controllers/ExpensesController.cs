@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.Expenses.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
@@ -78,6 +79,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(expense);
+                new ExpenseManager().OnInsert(_context, expense);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -118,6 +120,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    new ExpenseManager().OnUpdate(_context, expense);
                     _context.Update(expense);
                     await _context.SaveChangesAsync();
                 }
@@ -164,6 +167,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             var expense = await _context.Expenses.FindAsync(id);
             _context.Expenses.Remove(expense);
+            new ExpenseManager().OnDelete(_context, expense);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
