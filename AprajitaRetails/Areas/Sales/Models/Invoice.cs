@@ -83,28 +83,29 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public decimal BillAmount { get; set; }
 
         // SaleTax options and it will Done
-        public int SalesPersonId { get; set; }
-
-        public virtual SalesPerson Salesman { get; set; }
-
-        //public virtual ManualInvoice SaleInvoice { get; set; }
+        public int SalesPersonId { get; set; }  // TODO: Switch to salesman
+        public virtual SalesPerson Salesman { get; set; }       // TODO: Switch to salesman
     }
 
     public class PaymentDetail
     {
+        int PaymentDetailId { get; set; }
         public SalePayMode PayMode { get; set; }
 
-        [DefaultValue(0)]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [DefaultValue (0)]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CashAmount { get; set; }
 
-        [DefaultValue(0)]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [DefaultValue (0)]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CardAmount { get; set; }
 
-        [DefaultValue(0)]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
+        [DefaultValue (0)]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal MixAmount { get; set; }
+        public int? CardDetailId { get; set; }
+        public virtual CardDetail CardDetail {get;set;}
+
     }
 
     public class CardDetail
@@ -117,6 +118,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         public int AuthCode { get; set; }
         public int LastDigit { get; set; }
+        public virtual PaymentDetail    PaymentDetail { get; set; }
     }
 
     #endregion

@@ -18,6 +18,7 @@ namespace AprajitaRetails.Areas.Identity.Pages.Account
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            
         }
 
         [TempData]

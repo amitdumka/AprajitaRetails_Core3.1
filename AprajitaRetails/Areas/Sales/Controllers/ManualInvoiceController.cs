@@ -14,15 +14,14 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     public class ManualInvoiceController : Controller
     {
         private readonly AprajitaRetailsContext aprajitaContext;
-       // private readonly aprajitaContext aprajitaContext;
 
         public ManualInvoiceController(AprajitaRetailsContext aCtx)
         {
             aprajitaContext = aCtx;
-            //aprajitaContext = vCtx;
         }
         public IActionResult Index()
         {
+           
 
             return View ();
         }
@@ -37,7 +36,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             try
             {
                 var pItem = aprajitaContext.ProductItems.Where (c => c.Barcode == barcode).Select (c => new { c.MRP, c.ProductName, c.TaxRate }).FirstOrDefault ();
-
                 if ( pItem == null )
                 {
                     pItem = new { MRP = (decimal) 0.0, ProductName = "Not Found", TaxRate = (decimal) 0 };
@@ -51,18 +49,13 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             }
             catch ( Exception )
             {
-
                 var pItem = new { MRP = (decimal) 0.0, ProductName = "Not Found", TaxRate = (decimal) 0 };
                 JsonResult result = new JsonResult (pItem)
                 {
                     Value = pItem
                 };
                 return result;
-
             }
-
-
-
             //Json { Data=pItem, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
