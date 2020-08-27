@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AprajitaRetails.Data;
-using AprajitaRetails.Data.Reports;
+
 using AprajitaRetails.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using AprajitaRetails.Areas.Reports.Ops;
 
 namespace AprajitaRetails.Controllers
 {

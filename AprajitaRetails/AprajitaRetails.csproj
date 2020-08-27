@@ -289,6 +289,7 @@
     <Folder Include="Areas\ToDo\Data\" />
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Areas\Voyager\Data\" />
+    <Folder Include="Data\Reports\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
     <Folder Include="wwwroot\todolist\" />

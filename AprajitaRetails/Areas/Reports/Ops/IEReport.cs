@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using AprajitaRetails.Models.Helpers;
+using AprajitaRetails.Data;
 
-namespace AprajitaRetails.Data.Reports
+namespace AprajitaRetails.Areas.Reports.Ops
 {
     public class IEReport
     {
