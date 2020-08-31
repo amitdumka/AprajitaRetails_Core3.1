@@ -1,69 +1,115 @@
-﻿@model IEnumerable<AprajitaRetails.Areas.Uploader.Models.BookEntry>
+﻿@model PaginatedList<AprajitaRetails.Areas.Uploader.Models.BookEntry>
 
 @{
     ViewData["Title"] = "Book Entry";
+    var ctr = 0;
 }
 
-<h1>Book Entry</h1>
+<h2 class="text-danger">Book Entry</h2>
+<div class="btn-group btn-group-sm">
+    <a class="btn btn-outline-primary" asp-action="ListUpLoad" asp-route-id="101">All</a>
+    <a class="btn btn-outline-secondary" asp-action="ListUpLoad" asp-route-id="100">Processed</a>
+    <a class="btn btn-outline-warning" asp-action="ListUpLoad" asp-route-id="">Pending</a>
 
+</div>
+<hr />
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-hover table-sm table-striped text-center">
+    <thead class="bg-success">
         <tr>
+            <th>#</th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.FirstOrDefault().OnDate) </a></th>
             <th>
-                @Html.DisplayNameFor(model => model.OnDate)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LedgerBy)
             </th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["LedgerToParm"]">@Html.DisplayNameFor(model => model.FirstOrDefault().LedgerTo) </a></th>           
             <th>
-                @Html.DisplayNameFor(model => model.LedgerBy)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
+            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["VoucherTypeParm"]">@Html.DisplayNameFor(model => model.FirstOrDefault().VoucherType)</a></th>
             <th>
-                @Html.DisplayNameFor(model => model.LedgerTo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VoucherType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Naration)
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Naration)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.IsConsumed)
-            </th>*@
+            @Html.DisplayNameFor(model => model.FirstOrDefault().IsConsumed)
+        </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OnDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LedgerBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LedgerTo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VoucherType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Naration)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IsConsumed)
-            </td>*@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BookEntryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BookEntryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookEntryId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            ctr = ctr + 1;
+            @if (item.IsConsumed)
+            {
+                <tr class="text-danger">
+                    <td>@ctr</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LedgerBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LedgerTo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VoucherType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naration)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.IsConsumed)
+                    </td>*@
+                    <td class="btn-group btn-group-sm">
+                        <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.BookEntryId">Edit</a>
+                        <a class="btn btn-warning btn-sm" asp-action="Details" asp-route-id="@item.BookEntryId">Details</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.BookEntryId">Delete</a>
+                    </td>
+                </tr>
+
+
+
+            }
+            else
+            {
+                <tr>
+                    <td>@ctr</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OnDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LedgerBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LedgerTo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VoucherType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naration)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.IsConsumed)
+                    </td>*@
+                    <td class="btn-group btn-group-sm">
+                        <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@item.BookEntryId">Edit</a>
+                        <a class="btn btn-warning btn-sm" asp-action="Details" asp-route-id="@item.BookEntryId">Details</a>
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.BookEntryId">Delete</a>
+                    </td>
+                </tr>
+
+
+            }
+        }
     </tbody>
 </table>
+<partial name="_ModalPop" />

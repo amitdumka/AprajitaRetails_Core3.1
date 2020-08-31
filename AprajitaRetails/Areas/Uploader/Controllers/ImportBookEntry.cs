@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Authorization;
@@ -43,10 +43,57 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View();
         }
 
-        public IActionResult ListUpload()
+        public async Task<IActionResult> ListUpload(int? id, string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            ViewData["VoucherTypeParm"] = String.IsNullOrEmpty(sortOrder) ? "vouc_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["LedgerToParm"] = sortOrder == "LedgerTo" ? "LedgerToDesc" : "LedgerTo";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
-            return View(db.ImportBookEntries.Where(c=>c.IsConsumed==false).ToList());
+
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 20;
+            bool isConsumed = false;
+            if (id == 100) isConsumed = true;
+            var vModel = db.ImportBookEntries.Where(c => c.IsConsumed == isConsumed);
+            if (id == 101) vModel = db.ImportBookEntries;
+
+            switch (sortOrder)
+            {
+                case "Date":
+                    vModel = vModel.OrderBy(c => c.OnDate);
+                    break;
+                case "date_desc":
+                    vModel = vModel.OrderByDescending(c => c.OnDate);
+                    break;
+                case "LedgerTo":
+                    vModel = vModel.OrderBy(c => c.LedgerTo);
+                    break;
+
+                case "LedgerToDesc":
+                    vModel = vModel.OrderByDescending(c => c.LedgerTo);
+                    break;
+                case "vouc_desc":
+                    vModel = vModel.OrderByDescending(c => c.VoucherType);
+                    break;
+                default:
+                    vModel = vModel.OrderBy(c => c.VoucherType);
+                    break;
+
+            }
+
+
+            return View(await PaginatedList<BookEntry>.CreateAsync(vModel.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+            // return View(db.ImportBookEntries.Where(c=>c.IsConsumed==false).ToList());
         }
     }
 }
