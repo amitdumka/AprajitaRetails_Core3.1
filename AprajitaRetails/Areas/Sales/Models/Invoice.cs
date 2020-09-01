@@ -89,7 +89,10 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
     public class PaymentDetail
     {
-        int PaymentDetailId { get; set; }
+        public int PaymentDetailId { get; set; }
+
+        public string InvoiceNo { get; set; }
+
         public SalePayMode PayMode { get; set; }
 
         [DefaultValue (0)]
@@ -106,10 +109,18 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public int? CardDetailId { get; set; }
         public virtual CardDetail CardDetail {get;set;}
 
+        [DefaultValue(false)]
+        public bool IsManualBill { get; set; }
+        [Display(Name = "Store")]
+        public int StoreId { get; set; }
+
+        public virtual Store Store { get; set; }
+
     }
 
     public class CardDetail
     {
+        public int CardDetailId { get; set; }
         [Display(Name = "Card Type")]
         public int CardType { get; set; }
 
@@ -118,7 +129,14 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         public int AuthCode { get; set; }
         public int LastDigit { get; set; }
-        public virtual PaymentDetail    PaymentDetail { get; set; }
+        
+        //TODO: Check is required. 
+        [Display(Name = "Store")]
+        public int StoreId { get; set; }
+        public virtual Store Store { get; set; }
+
+        public int PaymentDetailId { get; set; }
+        public virtual PaymentDetail PaymentDetail { get; set; }
     }
 
     #endregion
@@ -134,8 +152,8 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         public virtual ICollection<RegularSaleItem> SaleItems { get; set; }
         
-        public virtual RegularPaymentDetail PaymentDetail { get; set; }
-        public virtual RegularCardDetail CardDetail { get; set; }
+        public virtual PaymentDetail PaymentDetail { get; set; }
+        //public virtual RegularCardDetail CardDetail { get; set; }
     }
 
     public class RegularSaleItem : SaleItem
@@ -146,23 +164,23 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public virtual RegularInvoice RegularInvoice { get; set; }
     }
 
-    public class RegularPaymentDetail : PaymentDetail
-    {
-       // [ForeignKey("RegularInvoices")]
-        public int RegularPaymentDetailId { get; set; }
+    //public class RegularPaymentDetail : PaymentDetail
+    //{
+    //   // [ForeignKey("RegularInvoices")]
+    //    public int RegularPaymentDetailId { get; set; }
         
-        public int RegularInvoiceId { get; set; }
-        public virtual RegularInvoice RegularInvoice { get; set; }
-    }
+    //    public int RegularInvoiceId { get; set; }
+    //    public virtual RegularInvoice RegularInvoice { get; set; }
+    //}
 
-    public class RegularCardDetail : CardDetail
-    {
-       // [ForeignKey("RegularInvoices")]
-        public int RegularCardDetailId { get; set; }
+    //public class RegularCardDetail : CardDetail
+    //{
+    //   // [ForeignKey("RegularInvoices")]
+    //    public int RegularCardDetailId { get; set; }
 
-        public int RegularInvoiceId { get; set; }
-        public virtual RegularInvoice RegularInvoice { get; set; }
-    }
+    //    public int RegularInvoiceId { get; set; }
+    //    public virtual RegularInvoice RegularInvoice { get; set; }
+    //}
     #endregion
 
     #region ManualInvoice

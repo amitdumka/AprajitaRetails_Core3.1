@@ -542,7 +542,7 @@ namespace AprajitaRetails.Ops.TAS
                 }
                 if ( saleInvoice != null )
                 {
-                    db.RegularInvoices.Add (saleInvoice); // Save Last Sale Invoice
+                   //TODO: db.RegularInvoices.Add (saleInvoice); // Save Last Sale Invoice
                     db.SaveChanges ();
                     CreateDailySale (arDB, db, saleInvoice); // Create DailySale Entry
                 }
@@ -610,9 +610,9 @@ namespace AprajitaRetails.Ops.TAS
             return pItem.ProductItemId;
         }
 
-        private RegularPaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
+        private /*RegularPaymentDetail*/ PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
-            RegularPaymentDetail payment = null;
+            PaymentDetail payment = null;
            
             if ( string.IsNullOrEmpty (item.PaymentType)  /*== null || item.PaymentType == "" */)
             {
@@ -621,7 +621,7 @@ namespace AprajitaRetails.Ops.TAS
             else if ( item.PaymentType == "CAS" )
             {
                 //cash Payment
-                 payment = new RegularPaymentDetail
+                 payment = new PaymentDetail
                  {
                     CashAmount = item.BillAmnt,
                     PayMode = SalePayMode.Cash
@@ -631,7 +631,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else if ( item.PaymentType == "CRD" )
             {
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     CardAmount = item.BillAmnt,
                     PayMode = SalePayMode.Card
@@ -641,7 +641,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else if ( item.PaymentType == "MIX" )
             {
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     MixAmount = item.BillAmnt,
                     PayMode = SalePayMode.Mix
@@ -651,7 +651,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else if ( item.PaymentType == "SR" )
             {
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
                     PayMode = SalePayMode.SR
@@ -683,7 +683,7 @@ namespace AprajitaRetails.Ops.TAS
                 }
                 else
                 {
-                    db.RegularInvoices.Add (invoice);
+                    //TODO: db.RegularInvoices.Add (invoice);
                     db.SaveChanges ();
                     CreateDailySale (arDB, db, invoice);
 
@@ -1016,9 +1016,9 @@ namespace AprajitaRetails.Ops.TAS
             return 1;
         }
 
-        private RegularPaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
+        private /*RegularPaymentDetail*/PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
-            RegularPaymentDetail payment = null;
+            PaymentDetail payment = null;
             if ( string.IsNullOrEmpty (item.PaymentType)/* item.PaymentType == null || item.PaymentType == "" */)
             {
                 return null;
@@ -1026,7 +1026,7 @@ namespace AprajitaRetails.Ops.TAS
             else if ( item.PaymentType == "CAS" )
             {
                 //cash Payment
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
                     PayMode = SalePayMode.Cash
@@ -1036,7 +1036,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else if ( item.PaymentType == "CRD" )
             {
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     CardAmount = item.BillAmnt,
                     PayMode = SalePayMode.Card
@@ -1046,7 +1046,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else if ( item.PaymentType == "MIX" )
             {
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     MixAmount = item.BillAmnt,
                     PayMode = SalePayMode.Mix
@@ -1056,7 +1056,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else if ( item.PaymentType == "SR" )
             {
-                payment = new RegularPaymentDetail
+                payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
                     PayMode = SalePayMode.SR
@@ -1087,7 +1087,7 @@ namespace AprajitaRetails.Ops.TAS
                 }
                 else
                 {
-                    db.RegularInvoices.Add (invoice);
+                    //TODO:  db.RegularInvoices.Add (invoice);
                     db.SaveChanges ();
 
                     invoice = new RegularInvoice
