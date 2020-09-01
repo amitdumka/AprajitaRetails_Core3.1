@@ -231,11 +231,13 @@ namespace AprajitaRetails.Data
         public DbSet<ArvindPayment> ArvindPayments { get; set; }
 
         // New Invoice System
-      //  public DbSet<RegularInvoice> RegularInvoices { get; set; }
+        //  public DbSet<RegularInvoice> RegularInvoices { get; set; }
         //public DbSet<RegularSaleItem> RegularSaleItems { get; set; }
         //public DbSet<RegularPaymentDetail> RegularPaymentDetails { get; set; }
         //public DbSet<RegularCardDetail> RegularCardDetails { get; set; }
 
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<CardDetail> CardDetails { get; set; }
 
 
         // New Invoice System  Manual

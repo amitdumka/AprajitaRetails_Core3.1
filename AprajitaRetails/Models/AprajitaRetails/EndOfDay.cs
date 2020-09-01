@@ -2,6 +2,7 @@
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AprajitaRetails.Areas.Voyager.Models;
 
@@ -29,6 +30,7 @@ namespace AprajitaRetails.Models
         [Display(Name = "Accessories")]
         public int Access { get; set; }
         [Display(Name = "Cash at Store")]
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal CashInHand { get; set; }
         //Version 3.0
         [DefaultValue(1)]

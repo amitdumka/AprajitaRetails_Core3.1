@@ -4,14 +4,16 @@ using AprajitaRetails.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations
 {
     [DbContext(typeof(AprajitaRetailsContext))]
-    partial class AprajitaRetailsContextModelSnapshot : ModelSnapshot
+    [Migration("20200901101525_bugfxed")]
+    partial class bugfxed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1753,7 +1755,7 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("IncentiveRate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("IncentiveTarget")
                         .HasColumnType("money");
@@ -1768,13 +1770,13 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("LPRate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("SundaySalary")
                         .HasColumnType("money");
 
                     b.Property<decimal>("WOWBillRate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("WOWBillTarget")
                         .HasColumnType("money");
@@ -1961,7 +1963,7 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("CashInHand")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("EOD_Date")
                         .HasColumnType("datetime2");

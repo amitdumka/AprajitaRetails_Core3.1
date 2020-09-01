@@ -4,14 +4,16 @@ using AprajitaRetails.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations
 {
     [DbContext(typeof(AprajitaRetailsContext))]
-    partial class AprajitaRetailsContextModelSnapshot : ModelSnapshot
+    [Migration("20200901100424_PaymentDetailsAdd")]
+    partial class PaymentDetailsAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -750,7 +752,7 @@ namespace AprajitaRetails.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsConsumed")
                         .HasColumnType("bit");
@@ -1556,16 +1558,16 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("CashIn")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("CashOut")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("ClosingBalance")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("OpenningBalance")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("StoreId")
                         .HasColumnType("int");
@@ -1591,16 +1593,16 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("CashIn")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("CashOut")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("ClosingBalance")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("OpenningBalance")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("StoreId")
                         .HasColumnType("int");
@@ -1753,7 +1755,7 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("IncentiveRate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("IncentiveTarget")
                         .HasColumnType("money");
@@ -1768,13 +1770,13 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("LPRate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("SundaySalary")
                         .HasColumnType("money");
 
                     b.Property<decimal>("WOWBillRate")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("WOWBillTarget")
                         .HasColumnType("money");
@@ -1886,7 +1888,7 @@ namespace AprajitaRetails.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("DailySaleId")
                         .HasColumnType("int");
@@ -1961,7 +1963,7 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("CashInHand")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("EOD_Date")
                         .HasColumnType("datetime2");
@@ -2060,88 +2062,88 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("float");
 
                     b.Property<decimal>("TotalAmountAccess")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalAmountFabric")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalAmountOthers")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalAmountRMZ")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("TotalBill")
                         .HasColumnType("float");
 
                     b.Property<decimal>("TotalCashExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalDues")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalDuesOfMonth")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalDuesRecovered")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("TotalFabric")
                         .HasColumnType("float");
 
                     b.Property<decimal>("TotalHomeExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalInward")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalInwardByAmitKumar")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalInwardOthers")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalOnBookExpenes")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalOtherExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalOtherHomeExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalOtherIncome")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("TotalOthers")
                         .HasColumnType("float");
 
                     b.Property<decimal>("TotalPayments")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("TotalRMZ")
                         .HasColumnType("float");
 
                     b.Property<decimal>("TotalRecipts")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalSalary")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalSaleIncome")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalTailoringExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalTailoringIncome")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TotalTrimsAndOtherExpenses")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
@@ -2663,7 +2665,7 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("OutAmount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ReferanceDetails")
                         .HasColumnType("nvarchar(max)");

@@ -17,6 +17,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public LedgerBy LedgerBy { get; set; }
         [Display(Name = "Ledger To")]
         public LedgerTo LedgerTo { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal Amount { get; set; }
         [Display(Name = "Voucher Type")]
         public VoucherType VoucherType { get; set; }

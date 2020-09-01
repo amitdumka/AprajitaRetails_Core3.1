@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AprajitaRetails.Areas.Voyager.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Models
 {
     public class DuesList
     {
         public int DuesListId { get; set; }
+        [DataType (DataType.Currency), Column (TypeName = "money")]
+
         public decimal Amount { get; set; }
 
         [Display(Name = "Is Paid")]
