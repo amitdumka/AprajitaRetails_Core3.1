@@ -158,6 +158,16 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string InvoiceNo { get; set; }
         public virtual RegularInvoice Invoice { get; set; }
     }
+
+
+    public class SaleItemList
+    {
+        public string BarCode { get; set; }
+        public string ProductName { get; set; }
+        public double Quantity { get; set; }
+        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
+    }
     #endregion
 
     #region ManualInvoice

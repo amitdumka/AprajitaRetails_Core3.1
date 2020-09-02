@@ -235,7 +235,7 @@
                     <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
                     @*<a class="nav-link" href="#">Sale</a>
                         <a class="nav-link" href="#">Purchase</a>*@
-                    <a class="nav-link" href="#">Manual Bill</a>
+                    <a class="nav-link" asp-area="Sales" asp-controller="ManualInvoice" asp-action="Index">Manual Bill</a>
                     <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendance</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="CashPayments" asp-action="Index">Cash Payments</a>
