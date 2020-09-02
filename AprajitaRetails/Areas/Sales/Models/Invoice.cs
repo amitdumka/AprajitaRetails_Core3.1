@@ -86,7 +86,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public decimal BillAmount { get; set; }
 
         public int SalesmanId { get; set; }
-        public virtual Salesman Saleman { get; set; }
+        public virtual Salesman Salesman { get; set; }
 
         //Navigation for Invoice
         public string InvoiceNo { get; set; }

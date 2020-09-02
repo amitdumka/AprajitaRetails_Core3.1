@@ -748,7 +748,7 @@ namespace AprajitaRetails.Ops.TAS
                 BillAmount = item.LineTotal,
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
-                SalesPersonId = GetSalesPersonId (db, item.Saleman),
+                SalesmanId = GetSalesPersonId (db, item.Saleman),
                 SaleTaxTypeId = CreateSaleTax (db, item)
             };
             if ( !SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, item.StoreId) )
@@ -1144,7 +1144,7 @@ namespace AprajitaRetails.Ops.TAS
                 BillAmount = item.LineTotal,
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
-                SalesPersonId = GetSalesPersonId (db, item.Saleman),
+                SalesmanId = GetSalesPersonId (db, item.Saleman),
                 SaleTaxTypeId = CreateSaleTax (db, item)
             };
             SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, StoreId);// TODO: Check for this working
