@@ -87,10 +87,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         public int SalesmanId { get; set; }
         public virtual Salesman Salesman { get; set; }
-
-        //Navigation for Invoice
-        public string InvoiceNo { get; set; }
-        public virtual Invoice Invoice { get; set; }
+     
 
     }
 
@@ -156,6 +153,9 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     public class RegularSaleItem : SaleItem
     {
         public int RegularSaleItemId { get; set; }
+        //Navigation for Invoice
+        public string InvoiceNo { get; set; }
+        public virtual RegularInvoice Invoice { get; set; }
     }
     #endregion
 
