@@ -34,31 +34,31 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                var id = db.SalesPerson.Where (c => c.SalesmanName == salesman).FirstOrDefault ().SalesPersonId;
-                if ( id > 0 )
+                var id = db.SalesPerson.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesPersonId;
+                if (id > 0)
                 {
                     return id;
                 }
                 else
                 {
                     SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                    db.SalesPerson.Add (sm);
-                    db.SaveChanges ();
+                    db.SalesPerson.Add(sm);
+                    db.SaveChanges();
                     return sm.SalesPersonId;
                 }
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                db.SalesPerson.Add (sm);
-                db.SaveChanges ();
+                db.SalesPerson.Add(sm);
+                db.SaveChanges();
                 return sm.SalesPersonId;
             }
         }
 
         public int GetCustomerId(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
-            if ( item.PaymentType == "CAS" ) //TODO: Check For Actual Data.
+            if (item.PaymentType == "CAS") //TODO: Check For Actual Data.
                 return 1;
             else
                 return 2;
@@ -67,51 +67,51 @@ namespace AprajitaRetails.Ops.TAS
 
         private List<Category> GetCategory(AprajitaRetailsContext db, string pCat, string sCat, string tCat)
         {
-            List<Category> CatIdList = new List<Category> ();
+            List<Category> CatIdList = new List<Category>();
 
-            Category Cid = db.Categories.Where (c => c.CategoryName == pCat && c.IsPrimaryCategory).FirstOrDefault ();
+            Category Cid = db.Categories.Where(c => c.CategoryName == pCat && c.IsPrimaryCategory).FirstOrDefault();
 
-            if ( Cid == null )
+            if (Cid == null)
             {
                 Category cat1 = new Category { CategoryName = pCat, IsPrimaryCategory = true };
-                db.Categories.Add (cat1);
-                db.SaveChanges ();
-                CatIdList.Add (cat1);
+                db.Categories.Add(cat1);
+                db.SaveChanges();
+                CatIdList.Add(cat1);
             }
-            else if ( Cid != null )
+            else if (Cid != null)
             {
-                CatIdList.Add (Cid);
+                CatIdList.Add(Cid);
             }
             else
             { }
 
             //id = 0;
-            Category Cid2 = db.Categories.Where (c => c.CategoryName == sCat && c.IsSecondaryCategory).FirstOrDefault ();
-            if ( Cid2 == null )
+            Category Cid2 = db.Categories.Where(c => c.CategoryName == sCat && c.IsSecondaryCategory).FirstOrDefault();
+            if (Cid2 == null)
             {
                 Category cat2 = new Category { CategoryName = sCat, IsSecondaryCategory = true };
-                db.Categories.Add (cat2);
-                db.SaveChanges ();
-                CatIdList.Add (cat2);
+                db.Categories.Add(cat2);
+                db.SaveChanges();
+                CatIdList.Add(cat2);
             }
-            else if ( Cid2 != null )
+            else if (Cid2 != null)
             {
-                CatIdList.Add (Cid2);
+                CatIdList.Add(Cid2);
             }
             else
             { }
 
-            Category Cid3 = db.Categories.Where (c => c.CategoryName == tCat && !c.IsPrimaryCategory && !c.IsSecondaryCategory).FirstOrDefault ();
-            if ( Cid3 == null )
+            Category Cid3 = db.Categories.Where(c => c.CategoryName == tCat && !c.IsPrimaryCategory && !c.IsSecondaryCategory).FirstOrDefault();
+            if (Cid3 == null)
             {
                 Category cat3 = new Category { CategoryName = tCat };
-                db.Categories.Add (cat3);
-                db.SaveChanges ();
-                CatIdList.Add (cat3);
+                db.Categories.Add(cat3);
+                db.SaveChanges();
+                CatIdList.Add(cat3);
             }
-            else if ( Cid3 != null )
+            else if (Cid3 != null)
             {
-                CatIdList.Add (Cid3);
+                CatIdList.Add(Cid3);
             }
             else
             { }
@@ -121,50 +121,50 @@ namespace AprajitaRetails.Ops.TAS
 
         private List<int> GetCategoryId(AprajitaRetailsContext db, string pCat, string sCat, string tCat)
         {
-            List<int> CatIdList = new List<int> ();
-            int id = (int?) db.Categories.Where (c => c.CategoryName == pCat && c.IsPrimaryCategory).FirstOrDefault ().CategoryId ?? -1;
-            if ( id == -1 )
+            List<int> CatIdList = new List<int>();
+            int id = (int?)db.Categories.Where(c => c.CategoryName == pCat && c.IsPrimaryCategory).FirstOrDefault().CategoryId ?? -1;
+            if (id == -1)
             {
                 Category cat1 = new Category { CategoryName = pCat, IsPrimaryCategory = true };
-                db.Categories.Add (cat1);
-                db.SaveChanges ();
-                CatIdList.Add (cat1.CategoryId);
+                db.Categories.Add(cat1);
+                db.SaveChanges();
+                CatIdList.Add(cat1.CategoryId);
             }
-            else if ( id > 0 )
+            else if (id > 0)
             {
-                CatIdList.Add (id);
+                CatIdList.Add(id);
             }
             else
             { }
 
             id = 0;
-            id = (int?) db.Categories.Where (c => c.CategoryName == sCat && c.IsSecondaryCategory).FirstOrDefault ().CategoryId ?? -1;
-            if ( id == -1 )
+            id = (int?)db.Categories.Where(c => c.CategoryName == sCat && c.IsSecondaryCategory).FirstOrDefault().CategoryId ?? -1;
+            if (id == -1)
             {
                 Category cat2 = new Category { CategoryName = sCat, IsSecondaryCategory = true };
-                db.Categories.Add (cat2);
-                db.SaveChanges ();
-                CatIdList.Add (cat2.CategoryId);
+                db.Categories.Add(cat2);
+                db.SaveChanges();
+                CatIdList.Add(cat2.CategoryId);
             }
-            else if ( id > 0 )
+            else if (id > 0)
             {
-                CatIdList.Add (id);
+                CatIdList.Add(id);
             }
             else
             { }
             id = 0;
 
-            id = (int?) db.Categories.Where (c => c.CategoryName == tCat && c.IsPrimaryCategory && !c.IsSecondaryCategory).FirstOrDefault ().CategoryId ?? -1;
-            if ( id == -1 )
+            id = (int?)db.Categories.Where(c => c.CategoryName == tCat && c.IsPrimaryCategory && !c.IsSecondaryCategory).FirstOrDefault().CategoryId ?? -1;
+            if (id == -1)
             {
                 Category cat3 = new Category { CategoryName = tCat };
-                db.Categories.Add (cat3);
-                db.SaveChanges ();
-                CatIdList.Add (cat3.CategoryId);
+                db.Categories.Add(cat3);
+                db.SaveChanges();
+                CatIdList.Add(cat3.CategoryId);
             }
-            else if ( id > 0 )
+            else if (id > 0)
             {
-                CatIdList.Add (id);
+                CatIdList.Add(id);
             }
             else
             { }
@@ -179,48 +179,48 @@ namespace AprajitaRetails.Ops.TAS
             //TODO: create if not exsits
             try
             {
-                int ids = (int?) db.Brands.Where (c => c.BCode == code).FirstOrDefault ().BrandId ?? -1;
+                int ids = (int?)db.Brands.Where(c => c.BCode == code).FirstOrDefault().BrandId ?? -1;
                 return ids;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 Brand brand = new Brand
                 {
                     BCode = code,
                     BrandName = code
                 };
-                db.Brands.Add (brand);
-                db.SaveChanges ();
+                db.Brands.Add(brand);
+                db.SaveChanges();
                 return brand.BrandId;
             }
         }
 
         private int GetBrand(AprajitaRetailsContext db, string StyleCode)
         {
-            if ( StyleCode.StartsWith ("U") )
+            if (StyleCode.StartsWith("U"))
             {
                 //USPAit
-                return GetBrandID (db, "USPA");
+                return GetBrandID(db, "USPA");
             }
-            else if ( StyleCode.StartsWith ("AR") )
+            else if (StyleCode.StartsWith("AR"))
             {
                 //Arvind RTW
-                return GetBrandID (db, "RTW");
+                return GetBrandID(db, "RTW");
             }
-            else if ( StyleCode.StartsWith ("A") )
+            else if (StyleCode.StartsWith("A"))
             {
                 //Arrow
-                return GetBrandID (db, "ARW");
+                return GetBrandID(db, "ARW");
             }
-            else if ( StyleCode.StartsWith ("FM") )
+            else if (StyleCode.StartsWith("FM"))
             {
                 //FM
-                return GetBrandID (db, "FM");
+                return GetBrandID(db, "FM");
             }
             else
             {
                 // Arvind Store
-                return GetBrandID (db, "AS");
+                return GetBrandID(db, "AS");
             }
         }
 
@@ -228,32 +228,32 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                int ids = (int?) db.Suppliers.Where (c => c.SuppilerName == sup).FirstOrDefault ().SupplierID ?? -1;
-                if ( ids > 0 )
+                int ids = (int?)db.Suppliers.Where(c => c.SuppilerName == sup).FirstOrDefault().SupplierID ?? -1;
+                if (ids > 0)
                     return ids;
-                else if ( ids == -1 )
+                else if (ids == -1)
                 {
                     Supplier supplier = new Supplier
                     {
                         SuppilerName = sup,
                         Warehouse = sup
                     };
-                    db.Suppliers.Add (supplier);
-                    db.SaveChanges ();
+                    db.Suppliers.Add(supplier);
+                    db.SaveChanges();
                     return supplier.SupplierID;
                 }
                 else
                     return 1;// Suspense Supplier
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 Supplier supplier = new Supplier
                 {
                     SuppilerName = sup,
                     Warehouse = sup
                 };
-                db.Suppliers.Add (supplier);
-                db.SaveChanges ();
+                db.Suppliers.Add(supplier);
+                db.SaveChanges();
                 return supplier.SupplierID;
             }
         }
@@ -267,35 +267,35 @@ namespace AprajitaRetails.Ops.TAS
         public int ProcessPurchaseInward(AprajitaRetailsContext db, DateTime inDate, bool IsLocal)
         {
             int ctr = 0;
-            var data = db.ImportPurchases.Where (c => c.IsDataConsumed == false && ( c.GRNDate.Date ) == ( inDate.Date )).OrderBy (c => c.InvoiceNo).ToList ();
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
 
-            if ( data != null && data.Count > 0 )
+            if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
 
-                foreach ( var item in data )
+                foreach (var item in data)
                 {
-                    int pid = CreateProductItem (db, item);
-                    if ( pid != -999 )
-                        CreateStockItem (db, item, pid);
-                    PurchasedProduct = CreatePurchaseInWard (db, item, PurchasedProduct);
-                    PurchasedProduct.PurchaseItems.Add (CreatePurchaseItem (db, item, pid, IsLocal));
+                    int pid = CreateProductItem(db, item);
+                    if (pid != -999)
+                        CreateStockItem(db, item, pid);
+                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct);
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
                     item.IsDataConsumed = true;
-                    db.Entry (item).State = EntityState.Modified;
+                    db.Entry(item).State = EntityState.Modified;
                     ctr++;
                 }
-                if ( PurchasedProduct != null )
-                    db.ProductPurchases.Add (PurchasedProduct);
-                db.SaveChanges ();
+                if (PurchasedProduct != null)
+                    db.ProductPurchases.Add(PurchasedProduct);
+                db.SaveChanges();
             }
             return ctr;
         }
 
         public int CreateProductItem(AprajitaRetailsContext db, ImportPurchase purchase)
         {
-            int barc = db.ProductItems.Where (c => c.Barcode == purchase.Barcode).Count ();
+            int barc = db.ProductItems.Where(c => c.Barcode == purchase.Barcode).Count();
 
-            if ( barc <= 0 )
+            if (barc <= 0)
             {
                 ProductItem item = new ProductItem
                 {
@@ -305,24 +305,24 @@ namespace AprajitaRetails.Ops.TAS
                     StyleCode = purchase.StyleCode,
                     ProductName = purchase.ProductName,
                     ItemDesc = purchase.ItemDesc,
-                    BrandId = GetBrand (db, purchase.StyleCode),
+                    BrandId = GetBrand(db, purchase.StyleCode),
                 };
 
                 //splinting ProductName
-                string [] PN = purchase.ProductName.Split ('/');
+                string[] PN = purchase.ProductName.Split('/');
 
                 // Apparel / Work / Blazers
-                if ( PN [0] == "Apparel" )
+                if (PN[0] == "Apparel")
                 {
                     item.Units = Units.Pcs;
                     item.Categorys = ProductCategorys.ReadyMade;
                 }
-                else if ( PN [0] == "Suiting" || PN [0] == "Shirting" )
+                else if (PN[0] == "Suiting" || PN[0] == "Shirting")
                 {
                     item.Units = Units.Meters;
                     item.Categorys = ProductCategorys.Fabric;
                 }
-                else if ( PN [0] == "Tailoring" )
+                else if (PN[0] == "Tailoring")
                 {
                     item.Units = Units.Nos;
                     item.Categorys = ProductCategorys.Tailoring;
@@ -334,19 +334,19 @@ namespace AprajitaRetails.Ops.TAS
                     item.Categorys = ProductCategorys.Others; //TODO: For time being
                 }
 
-                List<Category> catIds = GetCategory (db, PN [0], PN [1], PN [2]);
+                List<Category> catIds = GetCategory(db, PN[0], PN[1], PN[2]);
 
-                item.MainCategory = catIds [0];
-                item.ProductCategory = catIds [1];
-                item.ProductType = catIds [2];
+                item.MainCategory = catIds[0];
+                item.ProductCategory = catIds[1];
+                item.ProductType = catIds[2];
 
-                db.ProductItems.Add (item);
-                db.SaveChanges ();
+                db.ProductItems.Add(item);
+                db.SaveChanges();
                 return item.ProductItemId;
             }
-            else if ( barc > 0 )
+            else if (barc > 0)
             {
-                barc = db.ProductItems.Where (c => c.Barcode == purchase.Barcode).First ().ProductItemId;
+                barc = db.ProductItems.Where(c => c.Barcode == purchase.Barcode).First().ProductItemId;
 
                 return barc;
                 // Already Added
@@ -360,12 +360,12 @@ namespace AprajitaRetails.Ops.TAS
 
         public void CreateStockItem(AprajitaRetailsContext db, ImportPurchase purchase, int pItemId)
         {
-            Stock stcks = db.Stocks.Where (c => c.ProductItemId == pItemId).FirstOrDefault ();
-            if ( stcks != null )
+            Stock stcks = db.Stocks.Where(c => c.ProductItemId == pItemId).FirstOrDefault();
+            if (stcks != null)
             {
                 stcks.PurchaseQty += purchase.Quantity;
                 stcks.Quantity += purchase.Quantity;
-                db.Entry (stcks).State = EntityState.Modified;
+                db.Entry(stcks).State = EntityState.Modified;
             }
             else
             {
@@ -375,21 +375,21 @@ namespace AprajitaRetails.Ops.TAS
                     Quantity = purchase.Quantity,
                     ProductItemId = pItemId,
                     SaleQty = 0,
-                    Units = db.ProductItems.Find (pItemId).Units,
+                    Units = db.ProductItems.Find(pItemId).Units,
                     StoreId = StoreID
                 };
-                db.Stocks.Add (stock);
+                db.Stocks.Add(stock);
             }
-            db.SaveChanges ();
+            db.SaveChanges();
         }
 
         public ProductPurchase CreatePurchaseInWard(AprajitaRetailsContext db, ImportPurchase purchase, ProductPurchase product)
         {
-            if ( product != null )
+            if (product != null)
             {
-                if ( purchase.InvoiceNo == product.InvoiceNo )
+                if (purchase.InvoiceNo == product.InvoiceNo)
                 {
-                    product.TotalAmount += ( purchase.CostValue + purchase.TaxAmt );
+                    product.TotalAmount += (purchase.CostValue + purchase.TaxAmt);
                     product.ShippingCost += 0;//TODO: add option for adding shipping cost for fabric
                     product.TotalBasicAmount += purchase.CostValue;
                     product.TotalTax += purchase.TaxAmt;
@@ -397,8 +397,8 @@ namespace AprajitaRetails.Ops.TAS
                 }
                 else
                 {
-                    db.ProductPurchases.Add (product);
-                    db.SaveChanges ();
+                    db.ProductPurchases.Add(product);
+                    db.SaveChanges();
                     product = new ProductPurchase
                     {
                         InvoiceNo = purchase.InvoiceNo,
@@ -412,10 +412,10 @@ namespace AprajitaRetails.Ops.TAS
                         TotalQty = purchase.Quantity,
                         TotalAmount = purchase.CostValue + purchase.TaxAmt,// TODO: Check for actual DATA.
                         Remarks = "",
-                        SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName),
+                        SupplierID = GetSupplierIdOrAdd(db, purchase.SupplierName),
                         StoreId = StoreID
                     };
-                    product.PurchaseItems = new List<PurchaseItem> ();
+                    product.PurchaseItems = new List<PurchaseItem>();
                 }
             }
             else
@@ -433,10 +433,10 @@ namespace AprajitaRetails.Ops.TAS
                     TotalQty = purchase.Quantity,
                     TotalAmount = purchase.CostValue + purchase.TaxAmt,// TODO: Check for actual DATA.
                     Remarks = "",
-                    SupplierID = GetSupplierIdOrAdd (db, purchase.SupplierName),
+                    SupplierID = GetSupplierIdOrAdd(db, purchase.SupplierName),
                     StoreId = StoreID
                 };
-                product.PurchaseItems = new List<PurchaseItem> ();
+                product.PurchaseItems = new List<PurchaseItem>();
             }
             return product;
         }
@@ -450,8 +450,8 @@ namespace AprajitaRetails.Ops.TAS
                 CostValue = purchase.CostValue,
                 Qty = purchase.Quantity,
                 TaxAmout = purchase.TaxAmt,
-                Unit = db.ProductItems.Find (productId).Units,
-                PurchaseTaxTypeId = CreatePurchaseTaxType (db, purchase, IsLocal),
+                Unit = db.ProductItems.Find(productId).Units,
+                PurchaseTaxTypeId = CreatePurchaseTaxType(db, purchase, IsLocal),
                 ProductItemId = productId
             };
             return item;
@@ -463,33 +463,33 @@ namespace AprajitaRetails.Ops.TAS
             int taxRate = 0;
             try
             {
-                taxRate = (int) ( ( purchase.TaxAmt * 100 ) / purchase.CostValue );
+                taxRate = (int)((purchase.TaxAmt * 100) / purchase.CostValue);
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 taxRate = 0;
             }
 
             //TODO:BUG:  error can come if tax amount is zero.
-            if ( IsLocal )
+            if (IsLocal)
             {
                 try
                 {
-                    int id = db.PurchaseTaxTypes.Where (c => c.CompositeRate == taxRate && c.TaxType == TaxType.GST).Select (c => c.PurchaseTaxTypeId).FirstOrDefault ();
-                    if ( id == 0 )
+                    int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.GST).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
+                    if (id == 0)
                     {
                         PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax GST(SGST+CGST) @" + taxRate };
-                        db.PurchaseTaxTypes.Add (taxType);
-                        db.SaveChanges ();
+                        db.PurchaseTaxTypes.Add(taxType);
+                        db.SaveChanges();
                         return taxType.PurchaseTaxTypeId;
                     }
                     return id;
                 }
-                catch ( Exception )
+                catch (Exception)
                 {
                     PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax GST(SGST+CGST) @" + taxRate };
-                    db.PurchaseTaxTypes.Add (taxType);
-                    db.SaveChanges ();
+                    db.PurchaseTaxTypes.Add(taxType);
+                    db.SaveChanges();
                     return taxType.PurchaseTaxTypeId;
                 }
             }
@@ -497,21 +497,21 @@ namespace AprajitaRetails.Ops.TAS
             {
                 try
                 {
-                    int id = db.PurchaseTaxTypes.Where (c => c.CompositeRate == taxRate && c.TaxType == TaxType.IGST).Select (c => c.PurchaseTaxTypeId).FirstOrDefault ();
-                    if ( id == 0 )
+                    int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.IGST).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
+                    if (id == 0)
                     {
                         PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
-                        db.PurchaseTaxTypes.Add (taxType);
-                        db.SaveChanges ();
+                        db.PurchaseTaxTypes.Add(taxType);
+                        db.SaveChanges();
                         return taxType.PurchaseTaxTypeId;
                     }
                     return id;
                 }
-                catch ( Exception )
+                catch (Exception)
                 {
                     PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
-                    db.PurchaseTaxTypes.Add (taxType);
-                    db.SaveChanges ();
+                    db.PurchaseTaxTypes.Add(taxType);
+                    db.SaveChanges();
                     return taxType.PurchaseTaxTypeId;
                 }
             }
@@ -521,30 +521,30 @@ namespace AprajitaRetails.Ops.TAS
 
         #region Sale
 
-        public int CreateSaleEntry(AprajitaRetailsContext db, DateTime onDate, AprajitaRetailsContext arDB)
+        public int CreateSaleEntry(AprajitaRetailsContext db, DateTime onDate)
         {
             int ctr = 0;
             bool isVat = false;
-            if ( onDate < new DateTime (2017, 7, 1) )
+            if (onDate < new DateTime(2017, 7, 1))
             {
                 isVat = true;
                 return -1;// TODO: Temp implement for vat system
             }
             RegularInvoice saleInvoice = null;
-            var data = db.ImportSaleItemWises.Where (c => c.IsDataConsumed == false && c.InvoiceDate.Date == onDate.Date).OrderBy (c => c.InvoiceNo).ToList ();
-            if ( data != null )
+            var data = db.ImportSaleItemWises.Where(c => c.IsDataConsumed == false && c.InvoiceDate.Date == onDate.Date).OrderBy(c => c.InvoiceNo).ToList();
+            if (data != null)
             {
-                foreach ( var item in data )
+                foreach (var item in data)
                 {
-                    saleInvoice = CreateSaleInvoice (db, arDB, item, saleInvoice);  //Create SaleInvoice
-                    saleInvoice.SaleItems.Add (CreateSaleItem (db, item)); // Create SaleItems
+                    saleInvoice = CreateSaleInvoice(db, item, saleInvoice);  //Create SaleInvoice
+                    saleInvoice.SaleItems.Add(CreateSaleItem(db, item)); // Create SaleItems
                     ctr++;
                 }
-                if ( saleInvoice != null )
+                if (saleInvoice != null)
                 {
-                   //TODO: db.RegularInvoices.Add (saleInvoice); // Save Last Sale Invoice
-                    db.SaveChanges ();
-                    CreateDailySale (arDB, db, saleInvoice); // Create DailySale Entry
+                    db.RegularInvoices.Add(saleInvoice); // Save Last Sale Invoice
+                    db.SaveChanges();
+                    CreateDailySale(db, saleInvoice); // Create DailySale Entry
                 }
                 return ctr;
             }
@@ -554,11 +554,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        //Invoice No	Invoice Date	Invoice Type
-        //Brand Name	Product Name	Item Desc
-        //HSN Code	BAR CODE	Style Code	Quantity
-        //MRP	Discount Amt	Basic Amt	Tax Amt	SGST Amt	CGST Amt	Line Total	Round Off
-        //Bill Amt	Payment Mode	SalesMan Name
+        //Invoice No	Invoice Date	Invoice Type Brand Name	Product Name	Item Desc HSN Code	BAR CODE	Style Code	Quantity MRP	Discount Amt	Basic Amt	Tax Amt	SGST Amt	CGST Amt	Line Total	Round Off Bill Amt	Payment Mode	SalesMan Name
         private int StockItem(AprajitaRetailsContext db, ImportSaleItemWise item, out Units unit)
         {
             ProductItem pItem = new ProductItem
@@ -569,24 +565,24 @@ namespace AprajitaRetails.Ops.TAS
                 StyleCode = item.StyleCode,
                 ProductName = item.ProductName,
                 ItemDesc = item.ItemDesc,
-                BrandId = GetBrand (db, item.StyleCode),
+                BrandId = GetBrand(db, item.StyleCode),
             };
 
             //spliting ProductName
-            string [] PN = item.ProductName.Split ('/');
+            string[] PN = item.ProductName.Split('/');
 
             // Apparel / Work / Blazers
-            if ( PN [0] == "Apparel" )
+            if (PN[0] == "Apparel")
             {
                 pItem.Units = Units.Pcs;
                 pItem.Categorys = ProductCategorys.ReadyMade;
             }
-            else if ( PN [0] == "Suiting" || PN [0] == "Shirting" )
+            else if (PN[0] == "Suiting" || PN[0] == "Shirting")
             {
                 pItem.Units = Units.Meters;
                 pItem.Categorys = ProductCategorys.Fabric;
             }
-            else if ( PN [0] == "Tailoring" )
+            else if (PN[0] == "Tailoring")
             {
                 pItem.Units = Units.Nos;
                 pItem.Categorys = ProductCategorys.Tailoring;
@@ -597,95 +593,99 @@ namespace AprajitaRetails.Ops.TAS
                 pItem.Categorys = ProductCategorys.Others; //TODO: For time being
             }
 
-            List<Category> catIds = GetCategory (db, PN [0], PN [1], PN [2]);
+            List<Category> catIds = GetCategory(db, PN[0], PN[1], PN[2]);
 
-            pItem.MainCategory = catIds [0];
-            pItem.ProductCategory = catIds [1];
-            pItem.ProductType = catIds [2];
+            pItem.MainCategory = catIds[0];
+            pItem.ProductCategory = catIds[1];
+            pItem.ProductType = catIds[2];
 
-            db.ProductItems.Add (pItem);
-            db.SaveChanges ();
+            db.ProductItems.Add(pItem);
+            db.SaveChanges();
 
             unit = pItem.Units;
             return pItem.ProductItemId;
         }
 
-        private /*RegularPaymentDetail*/ PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
-        {
+        private PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item, bool isManualBill = false)
+        {//TODO: make is less complicated.
             PaymentDetail payment = null;
-           
-            if ( string.IsNullOrEmpty (item.PaymentType)  /*== null || item.PaymentType == "" */)
+
+            if (string.IsNullOrEmpty(item.PaymentType)  /*== null || item.PaymentType == "" */)
             {
                 return null;
             }
-            else if ( item.PaymentType == "CAS" )
+            else if (item.PaymentType == "CAS")
             {
                 //cash Payment
-                 payment = new PaymentDetail
-                 {
+                payment = new PaymentDetail
+                {
                     CashAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Cash
+                    PayMode = SalePayMode.Cash,
+                    IsManualBill = isManualBill
                 };
 
                 //return payment;
             }
-            else if ( item.PaymentType == "CRD" )
+            else if (item.PaymentType == "CRD")
             {
                 payment = new PaymentDetail
                 {
                     CardAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Card
+                    PayMode = SalePayMode.Card,
+                    IsManualBill = isManualBill
                 };
                 //Mix Payment
                 //return payment;
             }
-            else if ( item.PaymentType == "MIX" )
+            else if (item.PaymentType == "MIX")
             {
                 payment = new PaymentDetail
                 {
                     MixAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Mix
+                    PayMode = SalePayMode.Mix,
+                    IsManualBill = isManualBill
                 };
                 //CASH
                 //return payment;
             }
-            else if ( item.PaymentType == "SR" )
+            else if (item.PaymentType == "SR")
             {
                 payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
-                    PayMode = SalePayMode.SR
+                    PayMode = SalePayMode.SR,
+                    IsManualBill = isManualBill
                 };
-              //  return payment;
+                //  return payment;
             }
             //else
-                return payment;
+            return payment;
         }
 
-        private RegularInvoice CreateSaleInvoice(AprajitaRetailsContext db, AprajitaRetailsContext arDB, ImportSaleItemWise item, RegularInvoice invoice)
+        private RegularInvoice CreateSaleInvoice(AprajitaRetailsContext db, ImportSaleItemWise item, RegularInvoice invoice)
         {
-            if ( invoice != null )
+            if (invoice != null)
             {
-                if ( invoice.InvoiceNo == item.InvoiceNo )
+                if (invoice.InvoiceNo == item.InvoiceNo)
                 {
                     //invoice.InvoiceNo = item.InvoiceNo;
                     //invoice.OnDate = item.InvoiceDate;
                     invoice.TotalDiscountAmount += item.Discount;
-                    invoice.TotalBillAmount += item.LineTotal;   // Check for if it is empty
+                    invoice.TotalBillAmount += item.LineTotal;   // TODO: Check for if it is empty
                     invoice.TotalItems += 1;//TODO: Check for count
                     invoice.TotalQty += item.Quantity;
                     invoice.RoundOffAmount += item.RoundOff;
-                    invoice.TotalTaxAmount += ( item.SGST + item.CGST ); //TODO: Check Future make it tax
-                    invoice.StoreId = item.StoreId;
-                    if ( invoice.PaymentDetail == null )
-                        invoice.PaymentDetail = CreatePaymentDetails (db, item); //Create Payment details
-                    invoice.CustomerId = GetCustomerId (db, item);  // CustomerId
+                    invoice.TotalTaxAmount += (item.SGST + item.CGST); //TODO: Check Future make it tax
+                    invoice.StoreId = item.StoreId;                    
+                    if (invoice.PaymentDetail == null)
+                        invoice.PaymentDetail = CreatePaymentDetails(db, item, false); //Create Payment details
+                    invoice.CustomerId = GetCustomerId(db, item);  // CustomerId
                 }
                 else
                 {
-                    //TODO: db.RegularInvoices.Add (invoice);
-                    db.SaveChanges ();
-                    CreateDailySale (arDB, db, invoice);
+                    db.RegularInvoices.Add(invoice);
+                    db.SaveChanges();
+                    CreateDailySale(db, invoice);
 
                     invoice = new RegularInvoice
                     {
@@ -696,11 +696,12 @@ namespace AprajitaRetails.Ops.TAS
                         TotalItems = 1,//TODO: Check for count
                         TotalQty = item.Quantity,
                         RoundOffAmount = item.RoundOff,
-                        TotalTaxAmount = ( item.SGST + item.CGST ), //TODO: Check
-                        PaymentDetail = CreatePaymentDetails (db, item),
-                        CustomerId = GetCustomerId (db, item),
+                        TotalTaxAmount = (item.SGST + item.CGST), //TODO: Check
+                        PaymentDetail = CreatePaymentDetails(db, item, false),
+                        CustomerId = GetCustomerId(db, item),
                         StoreId = item.StoreId,
-                        SaleItems = new List<RegularSaleItem> ()
+                        IsManualBill = false,//For ManualBill Check.
+                        SaleItems = new List<RegularSaleItem>()
                     };
                 }
             }
@@ -715,11 +716,12 @@ namespace AprajitaRetails.Ops.TAS
                     TotalItems = 1,//TODO: Check for count
                     TotalQty = item.Quantity,
                     RoundOffAmount = item.RoundOff,
-                    TotalTaxAmount = ( item.SGST + item.CGST ), //TODO: Check
-                    PaymentDetail = CreatePaymentDetails (db, item),
-                    CustomerId = GetCustomerId (db, item),
+                    TotalTaxAmount = (item.SGST + item.CGST), //TODO: Check
+                    PaymentDetail = CreatePaymentDetails(db, item),
+                    CustomerId = GetCustomerId(db, item),
                     StoreId = item.StoreId,
-                    SaleItems = new List<RegularSaleItem> ()
+                    IsManualBill = false,
+                    SaleItems = new List<RegularSaleItem>()
                 };
             }
 
@@ -728,12 +730,12 @@ namespace AprajitaRetails.Ops.TAS
 
         private RegularSaleItem CreateSaleItem(AprajitaRetailsContext db, ImportSaleItemWise item)
         {
-            var pi = db.ProductItems.Where (c => c.Barcode == item.Barcode).Select (c => new { c.ProductItemId, c.Units }).FirstOrDefault ();
-            if ( pi == null )
+            var pi = db.ProductItems.Where(c => c.Barcode == item.Barcode).Select(c => new { c.ProductItemId, c.Units }).FirstOrDefault();
+            if (pi == null)
             {
                 //TODO: Handle for ProductItem Doesn't Exists.
                 //create item and stock
-                int id = StockItem (db, item, out Units UNTS);
+                int id = StockItem(db, item, out Units UNTS);
                 pi = new { ProductItemId = id, Units = UNTS };
             }
 
@@ -748,16 +750,17 @@ namespace AprajitaRetails.Ops.TAS
                 BillAmount = item.LineTotal,
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
-                SalesmanId = GetSalesPersonId (db, item.Saleman),
-                SaleTaxTypeId = CreateSaleTax (db, item)
+                SalesmanId = GetSalesPersonId(db, item.Saleman),
+                SaleTaxTypeId = CreateSaleTax(db, item),
+                InvoiceNo = item.InvoiceNo
             };
-            if ( !SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, item.StoreId) )
+            if (!SalePurchaseManager.UpDateStock(db, pi.ProductItemId, item.Quantity, false, item.StoreId))
             {
                 //TODO: Create Stock and update
-                CreateStockItem (db, saleItem.Qty, saleItem.ProductItemId, saleItem.Units);
+                CreateStockItem(db, saleItem.Qty, saleItem.ProductItemId, saleItem.Units);
             }
             item.IsDataConsumed = true;
-            db.Entry (item).State = EntityState.Modified;
+            db.Entry(item).State = EntityState.Modified;
             return saleItem;
         }
 
@@ -778,9 +781,9 @@ namespace AprajitaRetails.Ops.TAS
                 SaleQty = qty,
                 Units = unts
             };
-            db.Stocks.Add (stock);
+            db.Stocks.Add(stock);
 
-            db.SaveChanges ();
+            db.SaveChanges();
         }
 
         private int CreateSaleTax(AprajitaRetailsContext db, ImportSaleItemWise item)
@@ -791,9 +794,9 @@ namespace AprajitaRetails.Ops.TAS
             decimal rate = 0;
             try
             {
-                rate = ( ( item.SGST + item.CGST ) * 100 ) / item.BasicRate;
+                rate = ((item.SGST + item.CGST) * 100) / item.BasicRate;
             }
-            catch ( DivideByZeroException )
+            catch (DivideByZeroException)
             {
                 rate = 0;
             }
@@ -802,14 +805,14 @@ namespace AprajitaRetails.Ops.TAS
 
             try
             {
-                taxId = db.SaleTaxTypes.Where (c => c.CompositeRate == rate).FirstOrDefault ().SaleTaxTypeId;
+                taxId = db.SaleTaxTypes.Where(c => c.CompositeRate == rate).FirstOrDefault().SaleTaxTypeId;
                 return taxId;
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 SaleTaxType taxType = new SaleTaxType { CompositeRate = rate, TaxName = "OutPut Tax  GST(CGST+SGST) @" + rate, TaxType = TaxType.GST };
-                db.SaleTaxTypes.Add (taxType);
-                db.SaveChanges ();
+                db.SaleTaxTypes.Add(taxType);
+                db.SaveChanges();
                 return taxType.SaleTaxTypeId;
             }
         }
@@ -818,50 +821,50 @@ namespace AprajitaRetails.Ops.TAS
 
         #region DailySale
 
-        private void CreateDailySale(AprajitaRetailsContext db, AprajitaRetailsContext voyager, RegularInvoice inv)
+        private void CreateDailySale(AprajitaRetailsContext db, RegularInvoice inv)
         {
-            var dSale = db.DailySales.Where (c => c.InvNo == inv.InvoiceNo).FirstOrDefault ();
-            if ( dSale != null )
+            var dSale = db.DailySales.Where(c => c.InvNo == inv.InvoiceNo).FirstOrDefault();
+            if (dSale != null)
             {
                 dSale.IsMatchedWithVOy = true;
-                if ( dSale.Amount != inv.TotalBillAmount )
+                if (dSale.Amount != inv.TotalBillAmount)
                 {
                     dSale.Remarks += "Amount doesn't match";
                     dSale.IsMatchedWithVOy = false;
-                    db.Entry (dSale).State = EntityState.Modified;
+                    db.Entry(dSale).State = EntityState.Modified;
                 }
 
-                if ( dSale.PayMode == PayModes.Cash )
+                if (dSale.PayMode == PayModes.Cash)
                 {
-                    if ( inv.PaymentDetail.PayMode != SalePayMode.Cash )
+                    if (inv.PaymentDetail.PayMode != SalePayMode.Cash)
                     {
                         dSale.Remarks += "payment mode doesn't match";
                         dSale.IsMatchedWithVOy = false;
-                        db.Entry (dSale).State = EntityState.Modified;
+                        db.Entry(dSale).State = EntityState.Modified;
                     }
 
-                    if ( dSale.CashAmount != inv.TotalBillAmount )
+                    if (dSale.CashAmount != inv.TotalBillAmount)
                     {
                         dSale.Remarks += "cash amount doesn't match";
                         dSale.IsMatchedWithVOy = false;
-                        db.Entry (dSale).State = EntityState.Modified;
+                        db.Entry(dSale).State = EntityState.Modified;
                     }
                 }
-                else if ( dSale.PayMode == PayModes.Card )
+                else if (dSale.PayMode == PayModes.Card)
                 {
-                    if ( inv.PaymentDetail.PayMode != SalePayMode.Card )
+                    if (inv.PaymentDetail.PayMode != SalePayMode.Card)
                     {
                         dSale.Remarks += "payment mode doesn't match";
                         dSale.IsMatchedWithVOy = false;
-                        db.Entry (dSale).State = EntityState.Modified;
+                        db.Entry(dSale).State = EntityState.Modified;
                     }
                 }
 
-                if ( dSale.SaleDate != inv.OnDate )
+                if (dSale.SaleDate != inv.OnDate)
                 {
                     dSale.Remarks += "Date doesn't match";
                     dSale.IsMatchedWithVOy = false;
-                    db.Entry (dSale).State = EntityState.Modified;
+                    db.Entry(dSale).State = EntityState.Modified;
                 }
             }
             else
@@ -879,54 +882,54 @@ namespace AprajitaRetails.Ops.TAS
                     IsSaleReturn = false,
                     IsTailoringBill = false
                 };
-                dailySale.SalesmanId = db.Salesmen.Where (c => c.SalesmanName == inv.SaleItems.First ().Salesman.SalesmanName).Select (c => c.SalesmanId).FirstOrDefault ();
-                if ( dailySale.SalesmanId <= 0 )
+                dailySale.SalesmanId = db.Salesmen.Where(c => c.SalesmanName == inv.SaleItems.First().Salesman.SalesmanName).Select(c => c.SalesmanId).FirstOrDefault();
+                if (dailySale.SalesmanId <= 0)
                 {
-                    dailySale.SalesmanId = CreateSalesman (db, inv.SaleItems.First ().Salesman.SalesmanName);
+                    dailySale.SalesmanId = CreateSalesman(db, inv.SaleItems.First().Salesman.SalesmanName);
                 }
                 // Payment Mode.
-                if ( inv.PaymentDetail.PayMode == SalePayMode.Cash )
+                if (inv.PaymentDetail.PayMode == SalePayMode.Cash)
                 {
                     dailySale.PayMode = PayModes.Cash;
                     dailySale.CashAmount = inv.TotalBillAmount;
                 }
-                else if ( inv.PaymentDetail.PayMode == SalePayMode.Card )
+                else if (inv.PaymentDetail.PayMode == SalePayMode.Card)
                 {
                     dailySale.PayMode = PayModes.Card;
                 }
-                else if ( inv.PaymentDetail.PayMode == SalePayMode.Mix )
+                else if (inv.PaymentDetail.PayMode == SalePayMode.Mix)
                 {
                     dailySale.PayMode = PayModes.MixPayments;
                     dailySale.Remarks += " Mix Payments. Update based on real Data";
                 }
-                else if ( inv.PaymentDetail.PayMode == SalePayMode.SR )
+                else if (inv.PaymentDetail.PayMode == SalePayMode.SR)
                 { // Sale Return flag is marked
                     dailySale.PayMode = PayModes.Cash;
                     dailySale.CashAmount = inv.TotalBillAmount;
                     dailySale.IsSaleReturn = true;
                 }
                 //IsTailoring
-                if ( inv.SaleItems.First ().ProductItem != null && inv.SaleItems.First ().ProductItem.Categorys == ProductCategorys.Tailoring )
+                if (inv.SaleItems.First().ProductItem != null && inv.SaleItems.First().ProductItem.Categorys == ProductCategorys.Tailoring)
                 {
                     dailySale.IsTailoringBill = true;
                 }
-                else if ( inv.SaleItems.First ().ProductItem == null )
+                else if (inv.SaleItems.First().ProductItem == null)
                 {
-                    if ( voyager.ProductItems.Find (inv.SaleItems.First ().ProductItemId).Categorys == ProductCategorys.Tailoring )
+                    if (db.ProductItems.Find(inv.SaleItems.First().ProductItemId).Categorys == ProductCategorys.Tailoring)
                     {
                         dailySale.IsTailoringBill = true;
                     }
                 }
-                db.DailySales.Add (dailySale);
+                db.DailySales.Add(dailySale);
             }
-            db.SaveChanges ();
+            db.SaveChanges();
         }
 
         private int CreateSalesman(AprajitaRetailsContext db, string name)
         {
             Salesman sm = new Salesman { SalesmanName = name };
-            db.Salesmen.Add (sm);
-            db.SaveChanges ();
+            db.Salesmen.Add(sm);
+            db.SaveChanges();
             return sm.SalesmanId;
         }
 
@@ -956,11 +959,11 @@ namespace AprajitaRetails.Ops.TAS
         /// <returns></returns>
         public static bool UpDateStock(AprajitaRetailsContext db, int ItemCode, double Qty, bool IsPurchased, int StoreId)
         {
-            var stock = db.Stocks.Where (c => c.ProductItemId == ItemCode && c.StoreId == StoreId).FirstOrDefault ();
+            var stock = db.Stocks.Where(c => c.ProductItemId == ItemCode && c.StoreId == StoreId).FirstOrDefault();
 
-            if ( stock != null )
+            if (stock != null)
             {
-                if ( IsPurchased )
+                if (IsPurchased)
                 {
                     // Purchase Stock;
                     stock.PurchaseQty += Qty;
@@ -972,7 +975,7 @@ namespace AprajitaRetails.Ops.TAS
                     stock.SaleQty += Qty;
                     stock.Quantity -= Qty;
                 }
-                db.Entry (stock).State = EntityState.Modified;
+                db.Entry(stock).State = EntityState.Modified;
 
                 return true;
             }
@@ -989,24 +992,24 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                var id = db.SalesPerson.Where (c => c.SalesmanName == salesman).FirstOrDefault ().SalesPersonId;
-                if ( id > 0 )
+                var id = db.SalesPerson.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesPersonId;
+                if (id > 0)
                 {
                     return id;
                 }
                 else
                 {
                     SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                    db.SalesPerson.Add (sm);
-                    db.SaveChanges ();
+                    db.SalesPerson.Add(sm);
+                    db.SaveChanges();
                     return sm.SalesPersonId;
                 }
             }
-            catch ( Exception )
+            catch (Exception)
             {
                 SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                db.SalesPerson.Add (sm);
-                db.SaveChanges ();
+                db.SalesPerson.Add(sm);
+                db.SaveChanges();
                 return sm.SalesPersonId;
             }
         }
@@ -1016,62 +1019,65 @@ namespace AprajitaRetails.Ops.TAS
             return 1;
         }
 
-        private /*RegularPaymentDetail*/PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item)
+        private PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item, bool isManualBill=false)
         {
             PaymentDetail payment = null;
-            if ( string.IsNullOrEmpty (item.PaymentType)/* item.PaymentType == null || item.PaymentType == "" */)
+            if (string.IsNullOrEmpty(item.PaymentType)/* item.PaymentType == null || item.PaymentType == "" */)
             {
                 return null;
             }
-            else if ( item.PaymentType == "CAS" )
+            else if (item.PaymentType == "CAS")
             {
                 //cash Payment
                 payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Cash
+                    PayMode = SalePayMode.Cash, IsManualBill=false
                 };
 
-               // return payment;
+                // return payment;
             }
-            else if ( item.PaymentType == "CRD" )
+            else if (item.PaymentType == "CRD")
             {
                 payment = new PaymentDetail
                 {
                     CardAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Card
+                    PayMode = SalePayMode.Card,
+                    IsManualBill = false
                 };
                 //Mix Payment
                 //return payment;
             }
-            else if ( item.PaymentType == "MIX" )
+            else if (item.PaymentType == "MIX")
             {
                 payment = new PaymentDetail
                 {
                     MixAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Mix
+                    PayMode = SalePayMode.Mix,
+                    IsManualBill = false
                 };
                 //CASH
-              //  return payment;
+                //  return payment;
             }
-            else if ( item.PaymentType == "SR" )
+            else if (item.PaymentType == "SR")
             {
                 payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
-                    PayMode = SalePayMode.SR
+                    PayMode = SalePayMode.SR,
+                    IsManualBill = false
                 };
-               // return payment;
+                // return payment;
             }
-           // else
-                return payment;
+            // else
+            return payment;
         }
 
         private RegularInvoice CreateSaleInvoice(AprajitaRetailsContext db, ImportSaleItemWise item, RegularInvoice invoice)
         {
-            if ( invoice != null )
+            if (invoice != null)
             {
-                if ( invoice.InvoiceNo == item.InvoiceNo )
+                if (invoice.InvoiceNo == item.InvoiceNo)
                 {
                     // invoice.InvoiceNo = item.InvoiceNo;
                     //invoice.OnDate = item.InvoiceDate;
@@ -1082,13 +1088,13 @@ namespace AprajitaRetails.Ops.TAS
                     invoice.RoundOffAmount += item.RoundOff;
                     invoice.TotalTaxAmount += item.SGST; //TODO: Check
                     invoice.StoreId = item.StoreId;
-                    invoice.PaymentDetail = CreatePaymentDetails (db, item);
-                    invoice.CustomerId = GetCustomerId (db, item);
+                    invoice.PaymentDetail = CreatePaymentDetails(db, item,false);
+                    invoice.CustomerId = GetCustomerId(db, item);
                 }
                 else
                 {
                     //TODO:  db.RegularInvoices.Add (invoice);
-                    db.SaveChanges ();
+                    db.SaveChanges();
 
                     invoice = new RegularInvoice
                     {
@@ -1100,10 +1106,10 @@ namespace AprajitaRetails.Ops.TAS
                         TotalQty = item.Quantity,
                         RoundOffAmount = item.RoundOff,
                         TotalTaxAmount = item.SGST, //TODO: Check
-                        PaymentDetail = CreatePaymentDetails (db, item),
-                        CustomerId = GetCustomerId (db, item),
-                        StoreId=item.StoreId,
-                        SaleItems = new List<RegularSaleItem> ()
+                        PaymentDetail = CreatePaymentDetails(db, item, false),
+                        CustomerId = GetCustomerId(db, item),
+                        StoreId = item.StoreId,IsManualBill=false,
+                        SaleItems = new List<RegularSaleItem>()
                     };
                 }
             }
@@ -1119,10 +1125,10 @@ namespace AprajitaRetails.Ops.TAS
                     TotalQty = item.Quantity,
                     RoundOffAmount = item.RoundOff,
                     TotalTaxAmount = item.SGST, //TODO: Check
-                    PaymentDetail = CreatePaymentDetails (db, item),
-                    CustomerId = GetCustomerId (db, item),
-                    StoreId=item.StoreId,
-                    SaleItems = new List<RegularSaleItem> ()
+                    PaymentDetail = CreatePaymentDetails(db, item),
+                    CustomerId = GetCustomerId(db, item),
+                    StoreId = item.StoreId,IsManualBill=false,
+                    SaleItems = new List<RegularSaleItem>()
                 };
             }
 
@@ -1131,7 +1137,7 @@ namespace AprajitaRetails.Ops.TAS
 
         private RegularSaleItem CreateSaleItem(AprajitaRetailsContext db, ImportSaleItemWise item, int StoreId)
         {
-            var pi = db.ProductItems.Where (c => c.Barcode == item.Barcode).Select (c => new { c.ProductItemId, c.Units }).FirstOrDefault ();
+            var pi = db.ProductItems.Where(c => c.Barcode == item.Barcode).Select(c => new { c.ProductItemId, c.Units }).FirstOrDefault();
 
             RegularSaleItem saleItem = new RegularSaleItem
             {
@@ -1144,20 +1150,20 @@ namespace AprajitaRetails.Ops.TAS
                 BillAmount = item.LineTotal,
                 Units = pi.Units,
                 ProductItemId = pi.ProductItemId,
-                SalesmanId = GetSalesPersonId (db, item.Saleman),
-                SaleTaxTypeId = CreateSaleTax (db, item)
+                SalesmanId = GetSalesPersonId(db, item.Saleman),
+                SaleTaxTypeId = CreateSaleTax(db, item)
             };
-            SalePurchaseManager.UpDateStock (db, pi.ProductItemId, item.Quantity, false, StoreId);// TODO: Check for this working
+            SalePurchaseManager.UpDateStock(db, pi.ProductItemId, item.Quantity, false, StoreId);// TODO: Check for this working
             return saleItem;
         }
 
         private int CreateSaleTax(AprajitaRetailsContext db, ImportSaleItemWise item, bool isIGST = false)
         {
-            if ( item.Tax != 0 && item.SGST != 0 )
+            if (item.Tax != 0 && item.SGST != 0)
             {
                 //GST Bill
             }
-            else if ( item.Tax == 0 && item.SGST == 0 )
+            else if (item.Tax == 0 && item.SGST == 0)
             {
                 //TODO: Tax implementation
             }

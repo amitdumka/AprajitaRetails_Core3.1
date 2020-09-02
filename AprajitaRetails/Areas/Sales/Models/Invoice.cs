@@ -24,6 +24,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         [Display(Name = "Customer Name")]
         public int CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
         public DateTime OnDate { get; set; }

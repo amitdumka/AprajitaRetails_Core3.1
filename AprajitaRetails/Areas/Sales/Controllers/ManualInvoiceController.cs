@@ -21,7 +21,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         }
         public IActionResult Index()
         {
-           
+            var vm = aprajitaContext.RegularInvoices.Where(c => c.IsManualBill).OrderByDescending(c => c.OnDate).ThenBy(c => c.InvoiceNo).ToList();
 
             return View ();
         }

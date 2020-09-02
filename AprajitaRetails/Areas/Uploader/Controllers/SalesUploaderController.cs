@@ -48,7 +48,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             int StoreId = HelperUtil.GetStoreID (HttpContext);
             InventoryManger iManage = new InventoryManger (StoreId);
 
-            int a = iManage.CreateSaleEntry (db, ddDate, aprajitaContext);
+            int a = iManage.CreateSaleEntry (db, ddDate);
             if ( a > 0 )
             {
                 return RedirectToAction ("ProcessedSale", new { id = a, onDate = ddDate });
