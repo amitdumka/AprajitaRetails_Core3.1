@@ -67,11 +67,18 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             }
             //return Json ( Data=pItem, JsonRequestBehavior = JsonRequestBehavior.AllowGet );
         }
+
+        public class SaveOrderDTO
+        {
+            public string Name { get; set; }
+            public string Address { get; set; }
+            public List<SaleItemList> SaleItems { get; set; }
+        }
         [HttpPost]
-        public ActionResult SaveOrder([FromBody] string name, [FromBody] String address, [FromBody] SaleItemList[] saleItems)
+        public ActionResult SaveOrder([FromBody] SaveOrderDTO dTO) /*string name, [FromBody] String address, [FromBody] SaleItemList[] saleItems)*/
         {
             string result = "Error! Order Is Not Complete!";
-            if (name != null && address != null && saleItems != null)
+            if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
                 //        var cutomerId = Guid.NewGuid();
                 //        Customer model = new Customer();
@@ -82,7 +89,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 //        db.Customers.Add(model);
 
                 List<RegularSaleItem> itemList = new List<RegularSaleItem>();
-                foreach (var item in saleItems)
+                foreach (var item in dTO.SaleItems)
                 {
                     //            var orderId = Guid.NewGuid();
                     RegularSaleItem O = new RegularSaleItem();
