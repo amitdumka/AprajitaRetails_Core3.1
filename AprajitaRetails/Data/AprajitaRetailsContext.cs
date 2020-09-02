@@ -20,9 +20,9 @@ namespace AprajitaRetails.Data
 {
     public class AprajitaRetailsContext : DbContext
     {
-        public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options) : base (options)
+        public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options) : base(options)
         {
-            ApplyMigrations (this);
+            ApplyMigrations(this);
         }
 
         public DbSet<TodoItem> Todos { get; set; }
@@ -30,50 +30,50 @@ namespace AprajitaRetails.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating (modelBuilder);
-            modelBuilder.Entity<TodoItem> ().ToTable ("Todo");
-            modelBuilder.Entity<FileInfo> ().ToTable ("File");
-            modelBuilder.Entity<TodoItem> ()
-                .Property (e => e.Tags)
-                .HasConversion (v => string.Join (',', v),
-                v => v.Split (',', StringSplitOptions.RemoveEmptyEntries));
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<TodoItem>().ToTable("Todo");
+            modelBuilder.Entity<FileInfo>().ToTable("File");
+            modelBuilder.Entity<TodoItem>()
+                .Property(e => e.Tags)
+                .HasConversion(v => string.Join(',', v),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
 
-            modelBuilder.Entity<CashInBank> ()
-                .HasIndex (b => b.CIBDate)
-                .IsUnique ();
-            modelBuilder.Entity<CashInHand> ()
-               .HasIndex (b => b.CIHDate)
-               .IsUnique ();
-            modelBuilder.Entity<EndOfDay> ()
-               .HasIndex (b => b.EOD_Date)
-               .IsUnique ();
-            modelBuilder.Entity<TranscationMode> ()
-              .HasIndex (b => b.Transcation)
-              .IsUnique ();
+            modelBuilder.Entity<CashInBank>()
+                .HasIndex(b => b.CIBDate)
+                .IsUnique();
+            modelBuilder.Entity<CashInHand>()
+               .HasIndex(b => b.CIHDate)
+               .IsUnique();
+            modelBuilder.Entity<EndOfDay>()
+               .HasIndex(b => b.EOD_Date)
+               .IsUnique();
+            modelBuilder.Entity<TranscationMode>()
+              .HasIndex(b => b.Transcation)
+              .IsUnique();
 
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreId=1 });
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreId = 1 });
-            modelBuilder.Entity<Salesman> ().HasData (new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreId = 1 });
+            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreId = 1 });
+            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreId = 1 });
+            modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreId = 1 });
             modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 4, SalesmanName = "Bikash Kumar Sah", StoreId = 1 });
 
 
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 1, BankName = "SBI" });
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 2, BankName = "ICICI" });
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 3, BankName = "Bandhan Bank" });
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 4, BankName = "PNB" });
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 5, BankName = "BOB" });
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 6, BankName = "Axis" });
-            modelBuilder.Entity<Bank> ().HasData (new Bank () { BankId = 7, BankName = "HDFC" });
-            
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 1, BankName = "SBI" });
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 2, BankName = "ICICI" });
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 3, BankName = "Bandhan Bank" });
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 4, BankName = "PNB" });
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 5, BankName = "BOB" });
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 6, BankName = "Axis" });
+            modelBuilder.Entity<Bank>().HasData(new Bank() { BankId = 7, BankName = "HDFC" });
 
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 1, Transcation = "Home Expenses" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 2, Transcation = "Other Home Expenses" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 3, Transcation = "Mukesh(Home Staff)" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 4, Transcation = "Amit Kumar" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 5, Transcation = "Amit Kumar Expenses" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 6, Transcation = "CashIn" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 7, Transcation = "CashOut" });
-            modelBuilder.Entity<TranscationMode> ().HasData (new TranscationMode { TranscationModeId = 8, Transcation = "Regular" });
+
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 1, Transcation = "Home Expenses" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 2, Transcation = "Other Home Expenses" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 3, Transcation = "Mukesh(Home Staff)" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 4, Transcation = "Amit Kumar" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 5, Transcation = "Amit Kumar Expenses" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 6, Transcation = "CashIn" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 7, Transcation = "CashOut" });
+            modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 8, Transcation = "Regular" });
 
             modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
             modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
@@ -193,9 +193,9 @@ namespace AprajitaRetails.Data
 
         public void ApplyMigrations(AprajitaRetailsContext context)
         {
-            if ( context.Database.GetPendingMigrations ().Any () )
+            if (context.Database.GetPendingMigrations().Any())
             {
-                context.Database.Migrate ();
+                context.Database.Migrate();
             }
         }
 
@@ -204,7 +204,7 @@ namespace AprajitaRetails.Data
         public DbSet<AprajitaRetails.Models.OnlineVendor> OnlineVendor { get; set; }
         public DbSet<OnlineSaleReturn> OnlineSaleReturns { get; set; }
         public DbSet<AttendanceVM> AttendancesImport { get; set; }
-        
+
 
 
         // Unifiing of Database . 
@@ -221,18 +221,18 @@ namespace AprajitaRetails.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<PurchaseTaxType> PurchaseTaxTypes { get; set; }
         public DbSet<SalesPerson> SalesPerson { get; set; }
-       
-         public DbSet<Areas.Sales.Models.SaleInvoice> SaleInvoices { get; set; }
+
+        public DbSet<Areas.Sales.Models.SaleInvoice> SaleInvoices { get; set; }
         public DbSet<Areas.Sales.Models.SaleItem> SaleItems { get; set; }
-        
+
         public DbSet<SaleTaxType> SaleTaxTypes { get; set; }
-       // public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
-       // public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
+        // public DbSet<SalePaymentDetail> SalePaymentDetails { get; set; }
+        // public DbSet<CardPaymentDetail> CardPaymentDetails { get; set; }
         public DbSet<ArvindPayment> ArvindPayments { get; set; }
 
         // New Invoice System
-        //  public DbSet<RegularInvoice> RegularInvoices { get; set; }
-        //public DbSet<RegularSaleItem> RegularSaleItems { get; set; }
+        public DbSet<RegularInvoice> RegularInvoices { get; set; }
+        public DbSet<RegularSaleItem> RegularSaleItems { get; set; }
         //public DbSet<RegularPaymentDetail> RegularPaymentDetails { get; set; }
         //public DbSet<RegularCardDetail> RegularCardDetails { get; set; }
 
@@ -241,6 +241,7 @@ namespace AprajitaRetails.Data
 
 
         // New Invoice System  Manual
+
         //public DbSet<ManualInvoice> ManualInvoices { get; set; }
         //public DbSet<ManualSaleItem> ManualSaleItems { get; set; }
         //public DbSet<ManualPaymentDetail> ManualPaymentDetails { get; set; }
@@ -254,16 +255,15 @@ namespace AprajitaRetails.Data
 
         public DbSet<BookEntry> ImportBookEntries { get; set; }
 
-
         //Accounts
         public DbSet<LedgerMaster> Masters { get; set; }
         public DbSet<Party> Parties { get; set; }
-       // public DbSet<LedgerEntry> LedgerEntries { get; set; }
-       public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
-       // public DbSet<LedgerEntry> LedgerEntries { get; set; }
-     //  public DbSet<AprajitaRetails.Areas.Reports.Models.EmpAttReport> EmpAttReport { get; set; }
-       // public DbSet<LedgerEntry> LedgerEntries { get; set; }
-       //public DbSet<AprajitaRetails.Areas.Reports.Models.EmpFinReport> EmpFinReport { get; set; }
+        // public DbSet<LedgerEntry> LedgerEntries { get; set; }
+        public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
+        // public DbSet<LedgerEntry> LedgerEntries { get; set; }
+        // public DbSet<AprajitaRetails.Areas.Reports.Models.EmpAttReport> EmpAttReport { get; set; }
+        // public DbSet<LedgerEntry> LedgerEntries { get; set; }
+        //public DbSet<AprajitaRetails.Areas.Reports.Models.EmpFinReport> EmpFinReport { get; set; }
 
     }
 

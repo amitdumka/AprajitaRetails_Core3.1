@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AprajitaRetails.Migrations
 {
     [DbContext(typeof(AprajitaRetailsContext))]
-    [Migration("20200902144228_PayId")]
-    partial class PayId
+    [Migration("20200902145457_PayRemove")]
+    partial class PayRemove
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -615,65 +615,6 @@ namespace AprajitaRetails.Migrations
                             SalesPersonId = 4,
                             SalesmanName = "Bikash Kumar Sah"
                         });
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.CardDetail", b =>
-                {
-                    b.Property<int>("CardDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("AuthCode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CardType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InvoiceNo")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("LastDigit")
-                        .HasColumnType("int");
-
-                    b.HasKey("CardDetailId");
-
-                    b.HasIndex("InvoiceNo")
-                        .IsUnique()
-                        .HasFilter("[InvoiceNo] IS NOT NULL");
-
-                    b.ToTable("CardDetails");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.PaymentDetail", b =>
-                {
-                    b.Property<string>("InvoiceNo")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<decimal>("CardAmount")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("CashAmount")
-                        .HasColumnType("money");
-
-                    b.Property<bool>("IsManualBill")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("MixAmount")
-                        .HasColumnType("money");
-
-                    b.Property<int>("PayMode")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentDetailId")
-                        .HasColumnType("int");
-
-                    b.HasKey("InvoiceNo");
-
-                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("AprajitaRetails.Areas.ToDo.Models.FileInfo", b =>
@@ -3255,13 +3196,6 @@ namespace AprajitaRetails.Migrations
                         .HasForeignKey("AprajitaRetails.Areas.Sales.Models.SalePaymentDetail", "SalePaymentDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Sales.Models.Views.CardDetail", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Sales.Models.Views.PaymentDetail", "PaymentDetail")
-                        .WithOne("CardDetail")
-                        .HasForeignKey("AprajitaRetails.Areas.Sales.Models.Views.CardDetail", "InvoiceNo");
                 });
 
             modelBuilder.Entity("AprajitaRetails.Areas.ToDo.Models.TodoItem", b =>
