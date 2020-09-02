@@ -90,7 +90,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     public class PaymentDetail
     {
         public int PaymentDetailId { get; set; }
-
+        [Key]
         public string InvoiceNo { get; set; }
 
         public SalePayMode PayMode { get; set; }
@@ -123,7 +123,11 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         public int AuthCode { get; set; }
         public int LastDigit { get; set; }
-        public int PaymentDetailId { get; set; }
+
+        //public int PaymentDetailId { get; set; }
+       
+        public string InvoiceNo { get; set; }
+        [ForeignKey("InvoiceNo")]
         public virtual PaymentDetail PaymentDetail { get; set; }
     }
 
