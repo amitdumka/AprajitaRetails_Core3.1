@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<AprajitaRetails.Areas.Sales.Models.Views.RegularInvoice>
 
 @{
-    ViewData ["Title"] = "Manual Invoice";
+    ViewData["Title"] = "Manual Invoice";
 }
 @*<br />
-<br />*@
+    <br />*@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
             <h2 class="panel-title pull-left purple-text" style="margin-left:10px;">
                 <strong>Invoice(M)</strong>
             </h2>
-           
+
         </div>
         <div class="row align-self-lg-end pull-right">
             <button style="margin-right:10px" class="btn btn-outline-green pull-right btn-sm" onclick="addNewOrder()">New Invoice</button>
@@ -20,9 +20,9 @@
 
     @*Receive All Database Data From Controller And Display Those Data In Client Side*@
 
-    @if ( Model.Count () != 0 )
+    @if (Model.Count() != 0)
     {
-        foreach ( var item in Model )
+        foreach (var item in Model)
         {
             <div class="panel-body">
                 <table class="table table-striped table-responsive">
@@ -36,7 +36,8 @@
                             <td colspan="3">
                                 <table class="table table-bordered">
                                     <tbody>
-                                        <tr><th>BarCode</th>
+                                        <tr>
+                                            <th>BarCode</th>
                                             <th>Product</th>
                                             <th>Quantity</th>
                                             <th>Unit Price</th>
@@ -45,7 +46,7 @@
                                         @{
                                             var totalBill = 0;
                                         }
-                                        @foreach ( var order in item.SaleItems )
+                                        @foreach (var order in item.SaleItems)
                                         {
                                             <tr>
                                                 <td>@order.BarCode</td>
@@ -54,7 +55,7 @@
                                                 <td>@order.MRP</td>
                                                 <td>@order.BasicAmount</td>
                                             </tr>
-                                            totalBill = totalBill + @Convert.ToInt32 (order.BasicAmount);
+                                            totalBill = totalBill + @Convert.ToInt32(order.BasicAmount);
                                         }
                                     </tbody>
                                 </table>
@@ -113,11 +114,20 @@
                         <input type="hidden" id="OrderId" />
                         <div class="form-group">
                             <label class="control-label col-md-2">
+                                Salesman
+                            </label>
+                            <div class="col-md-4">
+                                <select id="salesMan" name="saleMan" class="form-control" >
+                                    <option>Select Salesman</option>
+                                </select>
+                                <span class="error">Select Saleman</span>
+                            </div>
+                            <label class="control-label col-md-2">
                                 BarCode
                             </label>
                             <div class="col-md-4">
-                                <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control"  />
-                                
+                                <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
+
                             </div>
                             <div class="col-md-2"><a id="getBarCode" class="btn btn-sm btn-outline-success form-control">Get</a></div>
                             <label class="control-label col-md-3">
@@ -148,12 +158,13 @@
 
                         <table id="detailsTable" class="table">
                             <thead>
-                                <tr><th style="width:20%">BarCode</th style="width:30%">
+                                <tr>
+                                    <th style="width:20%">BarCode</th>
                                     <th style="width:25%">Product</th>
                                     <th style="width:15%">Unit Price</th>
                                     <th style="width:15%">Quantity</th>
                                     <th style="width:15%">Amount</th>
-                                    <th style="width:10%"></th>
+                                    <th style="width:10%">Units</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -297,5 +308,263 @@
                 console.log(err);
             });
         });
+
+
+        // Here
+        var Salesman=[];
+        function LoadSaleman(element) {
+            if (Salesman.length == 0) {
+                //ajax function for fetch data
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetSalesmanList", "ManualInvoice")',//'/home/GetSalesmanList',
+                    success: function (data) {
+                        //alert("data");
+                        console.log(data);
+                        Salesman = data;
+                        //render catagory
+                        renderSalesman(element);
+                    }
+                    
+                })
+            }
+            else {
+                //render catagory to the element
+                renderSalesman(element);
+            }
+        }
+
+        function renderSalesman(element) {
+            var $ele = $(element);
+            $ele.empty();
+            $ele.append($('<option/>').val('0').text('Select'));
+            $.each(Salesman, function (i, val) {
+                $ele.append($('<option/>').val(val.salesmanId).text(val.salesmanName));
+            })
+        }
+
+        LoadSaleman($('#salesMan'));
+
+
+
     </script>
 }
+
+@*/*
+var Categories = []
+//fetch categories from database
+function LoadCategory(element) {
+    if (Categories.length == 0) {
+        //ajax function for fetch data
+        $.ajax({
+            type: "GET",
+            url: '/home/getProductCategories',
+            success: function (data) {
+                Categories = data;
+                //render catagory
+                renderCategory(element);
+            }
+        })
+    }
+    else {
+        //render catagory to the element
+        renderCategory(element);
+    }
+}
+
+function renderCategory(element) {
+    var $ele = $(element);
+    $ele.empty();
+    $ele.append($('
+<option />').val('0').text('Select'));
+    $.each(Categories, function (i, val) {
+        $ele.append($('
+<option />').val(val.CategoryID).text(val.CategortyName));
+    })
+}
+
+//fetch products
+function LoadProduct(categoryDD) {
+    $.ajax({
+        type: "GET",
+        url: "/home/getProducts",
+        data: { 'categoryID': $(categoryDD).val() },
+        success: function (data) {
+            //render products to appropriate dropdown
+            renderProduct($(categoryDD).parents('.mycontainer').find('select.product'), data);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+}
+
+function renderProduct(element, data) {
+    //render product
+    var $ele = $(element);
+    $ele.empty();
+    $ele.append($('
+<option />').val('0').text('Select'));
+    $.each(data, function (i, val) {
+        $ele.append($('
+<option />').val(val.ProductID).text(val.ProductName));
+    })
+}
+
+$(document).ready(function () {
+    //Add button click event
+    $('#add').click(function () {
+        //validation and add order items
+        var isAllValid = true;
+        if ($('#productCategory').val() == "0") {
+            isAllValid = false;
+            $('#productCategory').siblings('span.error').css('visibility', 'visible');
+        }
+        else {
+            $('#productCategory').siblings('span.error').css('visibility', 'hidden');
+        }
+
+        if ($('#product').val() == "0") {
+            isAllValid = false;
+            $('#product').siblings('span.error').css('visibility', 'visible');
+        }
+        else {
+            $('#product').siblings('span.error').css('visibility', 'hidden');
+        }
+
+        if (!($('#quantity').val().trim() != '' && (parseInt($('#quantity').val()) || 0))) {
+            isAllValid = false;
+            $('#quantity').siblings('span.error').css('visibility', 'visible');
+        }
+        else {
+            $('#quantity').siblings('span.error').css('visibility', 'hidden');
+        }
+
+        if (!($('#rate').val().trim() != '' && !isNaN($('#rate').val().trim()))) {
+            isAllValid = false;
+            $('#rate').siblings('span.error').css('visibility', 'visible');
+        }
+        else {
+            $('#rate').siblings('span.error').css('visibility', 'hidden');
+        }
+
+        if (isAllValid) {
+            var $newRow = $('#mainrow').clone().removeAttr('id');
+            $('.pc', $newRow).val($('#productCategory').val());
+            $('.product', $newRow).val($('#product').val());
+
+            //Replace add button with remove button
+            $('#add', $newRow).addClass('remove').val('Remove').removeClass('btn-success').addClass('btn-danger');
+
+            //remove id attribute from new clone row
+            $('#productCategory,#product,#quantity,#rate,#add', $newRow).removeAttr('id');
+            $('span.error', $newRow).remove();
+            //append clone row
+            $('#orderdetailsItems').append($newRow);
+
+            //clear select data
+            $('#productCategory,#product').val('0');
+            $('#quantity,#rate').val('');
+            $('#orderItemError').empty();
+        }
+
+    })
+
+    //remove button click event
+    $('#orderdetailsItems').on('click', '.remove', function () {
+        $(this).parents('tr').remove();
+    });
+
+    $('#submit').click(function () {
+        var isAllValid = true;
+
+        //validate order items
+        $('#orderItemError').text('');
+        var list = [];
+        var errorItemCount = 0;
+        $('#orderdetailsItems tbody tr').each(function (index, ele) {
+            if (
+                $('select.product', this).val() == "0" ||
+                (parseInt($('.quantity', this).val()) || 0) == 0 ||
+                $('.rate', this).val() == "" ||
+                isNaN($('.rate', this).val())
+                ) {
+                errorItemCount++;
+                $(this).addClass('error');
+            } else {
+                var orderItem = {
+                    ProductID: $('select.product', this).val(),
+                    Quantity: parseInt($('.quantity', this).val()),
+                    Rate: parseFloat($('.rate', this).val())
+                }
+                list.push(orderItem);
+            }
+        })
+
+        if (errorItemCount > 0) {
+            $('#orderItemError').text(errorItemCount + " invalid entry in order item list.");
+            isAllValid = false;
+        }
+
+        if (list.length == 0) {
+            $('#orderItemError').text('At least 1 order item required.');
+            isAllValid = false;
+        }
+
+        if ($('#orderNo').val().trim() == '') {
+            $('#orderNo').siblings('span.error').css('visibility', 'visible');
+            isAllValid = false;
+        }
+        else {
+            $('#orderNo').siblings('span.error').css('visibility', 'hidden');
+        }
+
+        if ($('#orderDate').val().trim() == '') {
+            $('#orderDate').siblings('span.error').css('visibility', 'visible');
+            isAllValid = false;
+        }
+        else {
+            $('#orderDate').siblings('span.error').css('visibility', 'hidden');
+        }
+
+        if (isAllValid) {
+            var data = {
+                OrderNo: $('#orderNo').val().trim(),
+                OrderDateString: $('#orderDate').val().trim(),
+                Description: $('#description').val().trim(),
+                OrderDetails: list
+            }
+
+            $(this).val('Please wait...');
+
+            $.ajax({
+                type: 'POST',
+                url: '/home/save',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data.status) {
+                        alert('Successfully saved');
+                        //here we will clear the form
+                        list = [];
+                        $('#orderNo,#orderDate,#description').val('');
+                        $('#orderdetailsItems').empty();
+                    }
+                    else {
+                        alert('Error');
+                    }
+                    $('#submit').val('Save');
+                },
+                error: function (error) {
+                    console.log(error);
+                    $('#submit').val('Save');
+                }
+            });
+        }
+
+    });
+
+});
+
+LoadCategory($('#productCategory'));
+*/*@

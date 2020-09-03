@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Data;
+using AprajitaRetails.Ops.Triggers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +16,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     public class ManualInvoiceController : Controller
     {
         private readonly AprajitaRetailsContext aprajitaContext;
-
+        private readonly int StoreId = 1; //TODO: Fixed now
         public ManualInvoiceController(AprajitaRetailsContext aCtx)
         {
             aprajitaContext = aCtx;
@@ -67,41 +68,21 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             }
             //return Json ( Data=pItem, JsonRequestBehavior = JsonRequestBehavior.AllowGet );
         }
-
-        public class SaveOrderDTO
-        {
-            public string Name { get; set; }
-            public string Address { get; set; }
-            public List<SaleItemList> SaleItems { get; set; }
+        [HttpGet]
+        public JsonResult GetSalesmanList() {
+            var list = aprajitaContext.Salesmen.Where(c=>c.StoreId == StoreId).OrderBy(c => c.SalesmanName ).Select(c=> new { c.SalesmanId,c.SalesmanName}).ToList();
+            return  new JsonResult(list);
         }
+
         [HttpPost]
         public ActionResult SaveOrder([FromBody] SaveOrderDTO dTO) /*string name, [FromBody] String address, [FromBody] SaleItemList[] saleItems)*/
         {
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-                //        var cutomerId = Guid.NewGuid();
-                //        Customer model = new Customer();
-                //        model.CustomerId = cutomerId;
-                //        model.Name = name;
-                //        model.Address = address;
-                //        model.OrderDate = DateTime.Now;
-                //        db.Customers.Add(model);
-
-                List<RegularSaleItem> itemList = new List<RegularSaleItem>();
-                foreach (var item in dTO.SaleItems)
-                {
-                    //            var orderId = Guid.NewGuid();
-                    RegularSaleItem O = new RegularSaleItem();
-                    
-                    O.BarCode = item.BarCode;
-                    O.Qty = item.Quantity;
-                    O.MRP = item.Price;
-                    O.BasicAmount = item.Amount;
-                    itemList.Add(O);
-                     
-                }
-        //        db.SaveChanges();
+               /*bool x=*/ new RegularSaleManager().OnInsert(aprajitaContext, dTO);
+                //if (!x) result = "Error while saving bill, Kindly try again!";
+                //else
                 result = "Success! Order Is Complete!";
             }
             return Json(result);

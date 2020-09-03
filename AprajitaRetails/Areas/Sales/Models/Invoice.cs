@@ -160,47 +160,11 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     }
 
 
-    public class SaleItemList
-    {
-        public string BarCode { get; set; }
-        public string ProductName { get; set; }
-        public double Quantity { get; set; }
-        public decimal Price { get; set; }
-        public decimal Amount { get; set; }
-    }
+   
     #endregion
 
     #region ManualInvoice
-    public class ManualInvoice : Invoice
-    {
-        public int ManualInvoiceId { get; set; }
-        public virtual ICollection<ManualSaleItem> SaleItems { get; set; }
-        public virtual ManualPaymentDetail PaymentDetail { get; set; }
-        public virtual ManualCardDetail CardDetail { get; set; }
-    }
-
-    public class ManualSaleItem : SaleItem
-    {
-        public int ManualSaleItemId { get; set; }
-        public int ManualInvoiceId { get; set; }
-        public virtual ManualInvoice ManualInvoice { get; set; }
-    }
-
-    public class ManualPaymentDetail : PaymentDetail
-    {
-        //  [ForeignKey("ManualInvoices")]
-        public int ManualPaymentDetailId { get; set; }
-        public int ManualInvoiceId { get; set; }
-        public virtual ManualInvoice ManualInvoice { get; set; }
-    }
-
-    public class ManualCardDetail : CardDetail
-    {
-        //[ForeignKey("ManualInvoices")]
-        public int ManualCardDetailId { get; set; }
-        public int ManualInvoiceId { get; set; }
-        public virtual ManualInvoice ManualInvoice { get; set; }
-    }
+    
 
     #endregion
 
@@ -220,7 +184,29 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     }
 
     #endregion
-   
+
+    #region DTO
+    public class SaveOrderDTO
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public List<SaleItemList> SaleItems { get; set; }
+        [MinLength(10), MaxLength(15)]
+        public string MobileNumber { get;  set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
+        public DateTime OnDate { get; set; }
+    }
+    public class SaleItemList
+    {
+        public string BarCode { get; set; }
+        public string ProductName { get; set; }
+        public double Quantity { get; set; }
+        public decimal Price { get; set; }
+        public decimal Amount { get; set; }
+        public int Salesman { get; set; }
+        public Units Units { get; set; }
+    }
+    #endregion
     //TODO: Need to generalized
 
     public class SaleInvoice

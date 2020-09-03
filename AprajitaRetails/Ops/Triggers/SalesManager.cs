@@ -1,7 +1,12 @@
-﻿using AprajitaRetails.Data;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Sales.Models.Views;
+using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Bot;
-using Microsoft.AspNetCore.Authorization;    using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -196,6 +201,35 @@ namespace AprajitaRetails.Ops.Triggers
             }
 
             SaleBot.NotifySale (db,  dailySale.SalesmanId, dailySale.Amount);
+
+
+        }
+    }
+
+    public class RegularSaleManager
+    {
+        public void OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales)
+        {
+            Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNumber).FirstOrDefault();
+            if (cust == null)
+            {
+                cust = new Customer {
+                    City=sales.Address, Age=30, FirstName=sales.Name, Gender=Genders.Male, LastName=sales.Name, MobileNo=sales.MobileNumber, 
+                    NoOfBills=0,TotalAmount=0, CreatedDate=DateTime.Now.Date
+                };
+            }
+
+            List<RegularSaleItem> itemList = new List<RegularSaleItem>();
+            foreach (var item in sales.SaleItems)
+            {
+                RegularSaleItem sItem = new RegularSaleItem {
+                    BarCode=item.BarCode, MRP=item.Price, Qty=item.Quantity, BasicAmount=item.Amount, Discount=0, SalesmanId=item.Salesman, Units=item.Units, 
+                    
+                };
+                ProductItem pItem = db.ProductItems.Where(c => c.Barcode == item.BarCode).FirstOrDefault();
+
+
+            }
 
 
         }
