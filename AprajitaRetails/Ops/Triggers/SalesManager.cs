@@ -210,11 +210,11 @@ namespace AprajitaRetails.Ops.Triggers
     {
         public void OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales)
         {
-            Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNumber).FirstOrDefault();
+            Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
             {
                 cust = new Customer {
-                    City=sales.Address, Age=30, FirstName=sales.Name, Gender=Genders.Male, LastName=sales.Name, MobileNo=sales.MobileNumber, 
+                    City=sales.Address, Age=30, FirstName=sales.Name, Gender=Genders.Male, LastName=sales.Name, MobileNo=sales.MobileNo, 
                     NoOfBills=0,TotalAmount=0, CreatedDate=DateTime.Now.Date
                 };
             }

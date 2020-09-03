@@ -192,7 +192,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string Address { get; set; }
         public List<SaleItemList> SaleItems { get; set; }
         [MinLength(10), MaxLength(15)]
-        public string MobileNumber { get;  set; }
+        public string MobileNo { get;  set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
         public DateTime OnDate { get; set; }
     }

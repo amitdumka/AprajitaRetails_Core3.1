@@ -39,12 +39,23 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         {
             try
             {
-                var pItem = aprajitaContext.ProductItems.Where(c => c.Barcode == barcode).Select(c => new { c.MRP, c.ProductName, c.TaxRate,  Units= Enum.GetName(typeof(Units), c.Units) }).First();
+                var pItem = aprajitaContext.ProductItems.Where(c => c.Barcode == barcode).Select(c => new { c.MRP, c.ProductName, c.TaxRate, Units = "" + c.Units }).First();
 
                 if (pItem == null)
                 {
-                    pItem = new { MRP = (decimal)0.0, ProductName = "Not Found", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs)
-                        };
+                    pItem = new
+                    {
+                        MRP = (decimal)0.0,
+                        ProductName = "Not Found",
+                        TaxRate = (decimal)0,
+                        Units = Enum.GetName(typeof(Units), Units.Pcs)
+                    };
+                }
+                else
+                {
+                    var pItem2 = new { MRP = pItem.MRP, ProductName = pItem.ProductName, TaxRate = pItem.TaxRate, Units = Enum.GetName(typeof(Units), Int32.Parse(pItem.Units)) };
+                    // pItem.Units = Enum.GetName(typeof(Units), Int32.Parse( pItem.Units));
+                    return new JsonResult(pItem2);
                 }
 
                 JsonResult result = new JsonResult(pItem)
@@ -56,9 +67,10 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs )};
+
+                var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!" , TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs) };
                 JsonResult result = new JsonResult(pItem)
                 {
                     Value = pItem
@@ -70,9 +82,10 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             //return Json ( Data=pItem, JsonRequestBehavior = JsonRequestBehavior.AllowGet );
         }
         [HttpGet]
-        public JsonResult GetSalesmanList() {
-            var list = aprajitaContext.Salesmen.Where(c=>c.StoreId == StoreId).OrderBy(c => c.SalesmanId ).Select(c=> new { c.SalesmanId,c.SalesmanName}).ToList();
-            return  new JsonResult(list);
+        public JsonResult GetSalesmanList()
+        {
+            var list = aprajitaContext.Salesmen.Where(c => c.StoreId == StoreId).OrderBy(c => c.SalesmanId).Select(c => new { c.SalesmanId, c.SalesmanName }).ToList();
+            return new JsonResult(list);
         }
 
         [HttpPost]
@@ -81,7 +94,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-               /*bool x=*/ new RegularSaleManager().OnInsert(aprajitaContext, dTO);
+                /*bool x=*/
+                new RegularSaleManager().OnInsert(aprajitaContext, dTO);
                 //if (!x) result = "Error while saving bill, Kindly try again!";
                 //else
                 result = "Success! Order Is Complete!";
