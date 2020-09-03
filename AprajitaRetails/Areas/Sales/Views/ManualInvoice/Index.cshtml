@@ -89,20 +89,29 @@
                     @*Customer Details*@
                     <h5 style="color:#ff6347">Customer Details</h5>
                     <hr />
-                    <div class="form-inline">
-                        <input type="hidden" id="CustomerId" />
+                    <div class="form-row">
+
                         <div class="form-group">
                             <label class="control-label col-md-2">
                                 CustomerName
                             </label>
-                            <div class="col-md-4">
-                                <input type="text" id="name" name="name" placeholder="Customer Name" class="form-control" />
+                            <div class="col-md-10">
+                                <input type="text" id="name" name="name" placeholder=" Name" class="form-control" />
                             </div>
+                        </div><div class="form-group">
                             <label class="control-label col-md-2">
                                 Address
                             </label>
-                            <div class="col-md-4">
-                                <input type="text" id="address" name="address" placeholder="Customer Address" class="form-control" />
+                            <div class="col-md-10">
+                                <input type="text" id="address" name="address" placeholder=" Address" class="form-control" />
+                            </div>
+                        </div><div class="form-group">
+
+                            <label class="control-label col-md-2">
+                                MobileNo
+                            </label>
+                            <div class="col-md-8">
+                                <input type="text" id="mobileNo" name="mobileNo" placeholder="MobileNo" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -110,52 +119,40 @@
                     @*Order Details*@
                     <h5 style="margin-top:10px;color:#ff6347">Item(s)</h5>
                     <hr />
-                    <div class="form-horizontal">
-                        <input type="hidden" id="OrderId" />
-                        <div class="form-group">
-                            <label class="control-label col-md-2">
-                                Salesman
-                            </label>
-                            <div class="col-md-4">
-                                <select id="salesMan" name="saleMan" class="form-control" >
-                                    <option>Select Salesman</option>
-                                </select>
-                                <span class="error">Select Saleman</span>
-                            </div>
-                            <label class="control-label col-md-2">
-                                BarCode
-                            </label>
-                            <div class="col-md-4">
-                                <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Salesman</th>
+                                <th>BarCode</th>
+                                <th></th>
+                                <th>ProductName</th>
+                                <th>Price</th>
+                                <th>Qty</th>
 
-                            </div>
-                            <div class="col-md-2"><a id="getBarCode" class="btn btn-sm btn-outline-success form-control">Get</a></div>
-                            <label class="control-label col-md-3">
-                                Product Name
-                            </label>
-                            <div class="col-md-4">
-                                <input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" />
-                            </div>
-                            <label class="control-label col-md-2">
-                                Price
-                            </label>
-                            <div class="col-md-4">
-                                <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" />
-                            </div>
-                        </div>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="salesMan" name="saleMan" class="form-control">
+                                        <option>Select Salesman</option>
+                                    </select>
+                                </td>
+                                <td >
+                                    <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
+                                </td>
+                                <td>
+                                    <a id="getBarCode" class="btn btn-sm btn-outline-success">Get</a>
+                                </td>
+                                <td><input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" /></td>
+                                <td> <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" /></td>
+                                <td>  <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" /></td>
 
-                        <div class="form-group">
-                            <label class="control-label col-md-2">
-                                Quantity
-                            </label>
-                            <div class="col-md-4">
-                                <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" />
-                            </div>
-                            <div class="col-md-2 col-lg-offset-4">
-                                <a id="addToList" class="btn btn-sm btn-outline-primary">Add</a>
-                            </div>
-                        </div>
+                                <td>
+                                    <input type="hidden" id="units" name="units" />
+                                    <a id="addToList" name="addToList" class="btn btn-sm btn-outline-primary">Add</a>
 
+                                </td>
+                            </tr>
+                        </table>
                         <table id="detailsTable" class="table">
                             <thead>
                                 <tr>
@@ -170,6 +167,7 @@
                             <tbody></tbody>
                         </table>
                     </div>
+                   
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
@@ -201,9 +199,11 @@
                 barcode=$("#barCode").val(),
                 price = $("#price").val(),
                 quantity = $("#quantity").val(),
+                units = $("#units").val(),
                 detailsTableBody = $("#detailsTable tbody");
 
-            var productItem = '<tr><td>'+barcode + '</td><td>' + productName + '</td><td>' + quantity + '</td><td>' + price + '</td><td>' + (parseFloat(price) * parseInt(quantity)) + '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td></tr>';
+            var productItem = '<tr><td>' + barcode + '</td><td>' + productName + '</td><td>' + quantity + '</td><td>' + price + '</td><td>' +
+                (parseFloat(price) * parseInt(quantity)) + '</td><td>' +units + '</td><td><a data-itemId="0" href="#" class="btn btn-sm btn-outline-danger deleteItem">Remove</a></td></tr>';
             detailsTableBody.append(productItem);
             clearItem();
         });
@@ -260,6 +260,7 @@
             $("#price").val(data.mrp);
             $("#quantity").val('0');
             $("#productName").val(data.productName);
+            $("#units").val(data.units);
 
         }
         function saveOrder(data1) {
