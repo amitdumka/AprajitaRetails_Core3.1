@@ -208,7 +208,12 @@ namespace AprajitaRetails.Ops.Triggers
 
     public class RegularSaleManager
     {
-        public void OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales)
+        public string GenerateInvoiceNo(bool isManual=true)
+        {
+            return "InvoiceNo.";
+        }
+
+        public void OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId=1)
         {
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
@@ -217,17 +222,32 @@ namespace AprajitaRetails.Ops.Triggers
                     City=sales.Address, Age=30, FirstName=sales.Name, Gender=Genders.Male, LastName=sales.Name, MobileNo=sales.MobileNo, 
                     NoOfBills=0,TotalAmount=0, CreatedDate=DateTime.Now.Date
                 };
+                db.Customers.Add(cust);
+                
             }
-
+            string InvNo = GenerateInvoiceNo(true);
             List<RegularSaleItem> itemList = new List<RegularSaleItem>();
+            RegularInvoice Invoice = new RegularInvoice {
+                Customer = cust, InvoiceNo = InvNo, OnDate = sales.OnDate, IsManualBill=true, StoreId=StoreId
+            };
+            
             foreach (var item in sales.SaleItems)
             {
                 RegularSaleItem sItem = new RegularSaleItem {
                     BarCode=item.BarCode, MRP=item.Price, Qty=item.Quantity, BasicAmount=item.Amount, Discount=0, SalesmanId=item.Salesman, Units=item.Units, 
+                    InvoiceNo=InvNo,ProductItemId=-1 
                     
                 };
                 ProductItem pItem = db.ProductItems.Where(c => c.Barcode == item.BarCode).FirstOrDefault();
+                Stock stock = db.Stocks.Where(c => c.ProductItemId == pItem.ProductItemId && c.StoreId == StoreId).FirstOrDefault();
 
+                sItem.ProductItemId = pItem.ProductItemId;
+                decimal amt = (decimal)item.Quantity * item.Price;
+
+                sItem.BasicAmount = (amt*100)/(100+pItem.TaxRate);
+                
+                sItem.TaxAmount = (sItem.BasicAmount * pItem.TaxRate) / 100;
+                sItem.BillAmount = sItem.BasicAmount + sItem.TaxAmount;
 
             }
 

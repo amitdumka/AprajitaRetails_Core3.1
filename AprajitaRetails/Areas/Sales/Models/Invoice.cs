@@ -46,7 +46,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Taxes")]
         public decimal TotalTaxAmount { get; set; }
-        
+
     }
 
     public class SaleItem
@@ -55,40 +55,30 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public int ProductItemId { get; set; }
         [Display(Name = "Product")]
         public virtual ProductItem ProductItem { get; set; }
-
         public string BarCode { get; set; }
-
         [Display(Name = "Quantity")]
         public double Qty { get; set; }
-
         [Display(Name = "Unit")]
         public Units Units { get; set; }
-
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
-
         [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "Basic Amount")]
         public decimal BasicAmount { get; set; }
-
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Discount { get; set; }
-
         [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "Tax Amount")]
         public decimal TaxAmount { get; set; }
-        
-        [Display(Name ="Sale Tax")]
+        [Display(Name = "Sale Tax")]
         public int? SaleTaxTypeId { get; set; }
         public virtual SaleTaxType SaleTaxType { get; set; }
-
         [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "Bill Amount")]
         public decimal BillAmount { get; set; }
-
         public int SalesmanId { get; set; }
         public virtual Salesman Salesman { get; set; }
-     
+
 
     }
 
@@ -141,8 +131,8 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     #endregion
     //Tables
     #region RegularInvoiec
-   
-    public class RegularInvoice:Invoice
+
+    public class RegularInvoice : Invoice
     {
         public int RegularInvoiceId { get; set; }
         public PaymentDetail PaymentDetail { get; set; }
@@ -160,11 +150,11 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     }
 
 
-   
+
     #endregion
 
     #region ManualInvoice
-    
+
 
     #endregion
 
@@ -173,7 +163,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public int SaleReturnId { get; set; }
         public int RegularInvoiceId { get; set; }
-       // public virtual RegularInvoice RegularInvoice { get; set; }
+        // public virtual RegularInvoice RegularInvoice { get; set; }
         public virtual ICollection<SaleItemReturn> ItemReturns { get; set; }
         //AutoCredit Note Created Id:
     }
@@ -192,7 +182,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string Address { get; set; }
         public List<SaleItemList> SaleItems { get; set; }
         [MinLength(10), MaxLength(15)]
-        public string MobileNo { get;  set; }
+        public string MobileNo { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
         public DateTime OnDate { get; set; }
     }
