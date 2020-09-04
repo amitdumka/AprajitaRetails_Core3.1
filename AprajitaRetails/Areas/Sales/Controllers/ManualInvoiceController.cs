@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         }
         public IActionResult Index()
         {
-            var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer)
+            var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c=>c.SaleItems).Include(c=>c.PaymentDetail)
                 .Where(c => c.IsManualBill).OrderByDescending(c => c.OnDate).ThenBy(c => c.InvoiceNo).ToList();
 
             return View(vm);
@@ -94,10 +94,9 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-                /*bool x=*/
-                new RegularSaleManager().OnInsert(aprajitaContext, dTO);
-                //if (!x) result = "Error while saving bill, Kindly try again!";
-                //else
+                int x=                new RegularSaleManager().OnInsert(aprajitaContext, dTO);
+                if (x>0) result = "Error while saving bill, Kindly try again!";
+                else
                 result = "Success! Order Is Complete!";
             }
             return Json(result);

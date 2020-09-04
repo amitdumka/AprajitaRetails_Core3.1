@@ -24,54 +24,60 @@
     {
         foreach (var item in Model)
         {
-            <div class="panel-body">
-                <table class="table table-striped table-responsive">
-                    <tbody>
-                        <tr>
-                            <td>Customer Name :@item.Customer.FirstName @item.Customer.LastName  </td>
-                            <td>Address :  @item.Customer.City </td>
-                            <td>Invoice Date : @item.OnDate</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <th>BarCode</th>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Unit Price</th>
-                                            <th>Total</th>
-                                        </tr>
-                                        @{
+    <div class="panel-body">
+        <table class="table table-striped table-responsive">
+            <thead class="table-danger">
+                <tr>
+                    <td class="text-primary">Customer Name :@item.Customer.FullName  </td>
+                    @*<td>Address :  @item.Customer.City </td>*@
+                    <td>Invoice Date : @item.OnDate</td>
+                </tr>
+            </thead>
+            <tbody class="table-info">
+                
+                <tr>
+                    <td colspan="3">
+                        <table class="table table-bordered ">
+                            <thead class="bg-success">
+                                <tr>
+                                    <th>BarCode</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                
+                                @{
                                             var totalBill = 0;
-                                        }
-                                        @foreach (var order in item.SaleItems)
+                                }
+                                @foreach (var order in item.SaleItems)
                                         {
-                                            <tr>
-                                                <td>@order.BarCode</td>
-                                                <td>@order.ProductItem</td>
-                                                <td>@order.Qty</td>
-                                                <td>@order.MRP</td>
-                                                <td>@order.BasicAmount</td>
-                                            </tr>
+                                <tr>
+                                    <td>@order.BarCode</td>
+                                    <td>@order.ProductItem</td>
+                                    <td>@order.Qty</td>
+                                    <td>@order.MRP</td>
+                                    <td>@order.BasicAmount</td>
+                                </tr>
                                             totalBill = totalBill + @Convert.ToInt32(order.BasicAmount);
                                         }
-                                    </tbody>
-                                </table>
-                                <span class="pull-right" style="margin-right:100px;"><strong>Total Bill :  </strong> @totalBill</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </tbody>
+                        </table>
+                        <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
         }
     }
     else
     {
-        <div class="panel-body">
-            <h3 style="color:red;">No Invoice!</h3>
-        </div>
+    <div class="panel-body">
+        <h3 style="color:red;">No Invoice!</h3>
+    </div>
 
     }
 </div>
@@ -112,16 +118,16 @@
                     <div class="form-row">
                         <table class="table table-active table-sm">
                             <tr>
-                                <th >Total Amount</th>
-                                <th >Total Qty</th>
-                                <th >Total Discount</th>
-                                <th >NoofItem</th>
+                                <th>Total Amount</th>
+                                <th>Total Qty</th>
+                                <th>Total Discount</th>
+                                <th>NoofItem</th>
                             </tr>
                             <tr>
                                 <td><input type="number" readonly value="0" id="totalAmount" class="form-control" /></td>
                                 <td><input type="number" readonly value="0" id="totalQty" class="form-control" /></td>
-                                <td><input type="number" readonly value="0"  id="totalDiscount" class="form-control" /></td>
-                                <td><input type="number" readonly value="0"  id="totalItem" class="form-control" /></td>
+                                <td><input type="number" readonly value="0" id="totalDiscount" class="form-control" /></td>
+                                <td><input type="number" readonly value="0" id="totalItem" class="form-control" /></td>
                             </tr>
                         </table>
 
@@ -167,7 +173,7 @@
                         <table id="detailsTable" class="table">
                             <thead>
                                 <tr>
-                                    <th>SM</th>
+                                    <th style="width:5%">SM</th>
                                     <th style="width:20%">BarCode</th>
                                     <th style="width:25%">Product</th>
                                     <th style="width:15%">Unit Price</th>
@@ -192,11 +198,11 @@
                                 <th>Auth Code</th>
                             </tr>
                             <tr>
-                                <td><input type="text" id="cashAmt" name="cashAmt" placeholder="Cash" class="form-control" /></td>
-                                <td><input type="text" id="cardAmt" name="cardAmt" placeholder="Card" class="form-control" /></td>
-                                <td><input type="text" id="cardType" name="cardType" placeholder="Card Type" class="form-control" /></td>
-                                <td><input type="text" id="cardNo" name="cardNo" placeholder="Card No" class="form-control" /></td>
-                                <td><input type="text" id="authCode" name="authCode" placeholder="Auth Code" class="form-control" /></td>
+                                <td><input type="text" id="cashAmt" name="cashAmt" placeholder="Cash" value="0.0" class="form-control" /></td>
+                                <td><input type="text" id="cardAmt" name="cardAmt" placeholder="Card" value="0.0" class="form-control" /></td>
+                                <td><input type="text" id="cardType" name="cardType" placeholder="Card Type" value="" class="form-control" /></td>
+                                <td><input type="text" id="cardNo" name="cardNo" placeholder="Card No" value="" class="form-control" /></td>
+                                <td><input type="text" id="authCode" name="authCode" placeholder="Auth Code" value="" class="form-control" /></td>
                             </tr>
 
                         </table>
@@ -238,7 +244,8 @@
                 sman = $("#salesMan").val(),
                 detailsTableBody = $("#detailsTable tbody");
             var amt = (parseFloat(price) * parseInt(quantity));
-            var tamt = parseFloat($("#totalAmount").val() + amt);
+
+            var tamt = parseFloat($("#totalAmount").val()) +  amt;
             $("#totalAmount").val(tamt);
             var tqty = parseInt($("#totalQty").val()) + quantity;
             $("#totalQty").val(tqty);
@@ -331,7 +338,7 @@
 
             $.each($("#detailsTable tbody tr"), function () {
                 orderArr.push({
-                    sman: $(this).find('td:eq(0)').html(),
+                    salesman: $(this).find('td:eq(0)').html(),
                     barcode: $(this).find('td:eq(1)').html(),
                     productName: $(this).find('td:eq(2)').html(),
                     quantity: $(this).find('td:eq(3)').html(),
@@ -340,13 +347,23 @@
                 });
             });
 
+            var payar = {
+                cardAmount: $("#cardAmt").val(),
+                CashAmount: $("#cashAmt").val(),
+                CardType: $("#cardType").val(),
+                AuthCode: $("#authCode").val(),
+                CardNo: $("#cardNo").val()
+            };
+
 
             var data = JSON.stringify({
                 name: $("#name").val(),
                 address: $("#address").val(),
                 mobileNo: $("#mobileNo").val(),
                 onDate: $("#onDate").val(),
-                saleItems: orderArr
+                saleItems: orderArr,
+                paymentInfo:payar
+
             });
             console.log(data);
             $.when(saveOrder(data)).then(function (response) {

@@ -113,7 +113,8 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public int CardDetailId { get; set; }
         [Display(Name = "Card Type")]
-        public int CardType { get; set; }
+        public CardModes CardType { get; set; }
+        public CardTypes CardCode { get; set; }
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
@@ -185,6 +186,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string MobileNo { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
         public DateTime OnDate { get; set; }
+        public PaymentInfo PaymentInfo { get; set; }
     }
     public class SaleItemList
     {
@@ -195,6 +197,14 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public decimal Amount { get; set; }
         public int Salesman { get; set; }
         public Units Units { get; set; }
+    }
+    public class PaymentInfo
+    {
+        public decimal CardAmount { get; set; }
+        public decimal CashAmount { get; set; }
+        public string CardType { get; set; }
+        public string AuthCode { get; set; }
+        public string CardNo { get; set; }
     }
     #endregion
     //TODO: Need to generalized

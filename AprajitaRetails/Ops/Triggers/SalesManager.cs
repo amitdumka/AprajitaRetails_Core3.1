@@ -131,7 +131,7 @@ namespace AprajitaRetails.Ops.Triggers
                 UpdateSalesRetun(db, dailySale, false);
 
             }
-            SaleBot.NotifySale (db, dailySale.SalesmanId, dailySale.Amount);
+            SaleBot.NotifySale(db, dailySale.SalesmanId, dailySale.Amount);
         }
 
         public void OnDelete(AprajitaRetailsContext db, DailySale dailySale)
@@ -159,7 +159,7 @@ namespace AprajitaRetails.Ops.Triggers
                     // If payment is cash and cashamount is zero then need to handle this option also 
                     // may be error entry , might be due.
 
-                   // throw new Exception();
+                    // throw new Exception();
                 }
 
                 UpDateAmount(db, dailySale, true);
@@ -200,7 +200,7 @@ namespace AprajitaRetails.Ops.Triggers
                 UpDateAmount(db, dailySale, false);
             }
 
-            SaleBot.NotifySale (db,  dailySale.SalesmanId, dailySale.Amount);
+            SaleBot.NotifySale(db, dailySale.SalesmanId, dailySale.Amount);
 
 
         }
@@ -208,49 +208,160 @@ namespace AprajitaRetails.Ops.Triggers
 
     public class RegularSaleManager
     {
-        public string GenerateInvoiceNo(bool isManual=true)
+        public string GenerateInvoiceNo(bool isManual = true)
         {
             return "InvoiceNo.";
         }
 
-        public void OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId=1)
+        public int OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1)
         {
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
             {
-                cust = new Customer {
-                    City=sales.Address, Age=30, FirstName=sales.Name, Gender=Genders.Male, LastName=sales.Name, MobileNo=sales.MobileNo, 
-                    NoOfBills=0,TotalAmount=0, CreatedDate=DateTime.Now.Date
+                cust = new Customer
+                {
+                    City = sales.Address,
+                    Age = 30,
+                    FirstName = sales.Name,
+                    Gender = Genders.Male,
+                    LastName = sales.Name,
+                    MobileNo = sales.MobileNo,
+                    NoOfBills = 0,
+                    TotalAmount = 0,
+                    CreatedDate = DateTime.Now.Date
                 };
                 db.Customers.Add(cust);
-                
+
             }
             string InvNo = GenerateInvoiceNo(true);
             List<RegularSaleItem> itemList = new List<RegularSaleItem>();
-            RegularInvoice Invoice = new RegularInvoice {
-                Customer = cust, InvoiceNo = InvNo, OnDate = sales.OnDate, IsManualBill=true, StoreId=StoreId
-            };
-            
+            List<Stock> stockList = new List<Stock>();
+
             foreach (var item in sales.SaleItems)
             {
-                RegularSaleItem sItem = new RegularSaleItem {
-                    BarCode=item.BarCode, MRP=item.Price, Qty=item.Quantity, BasicAmount=item.Amount, Discount=0, SalesmanId=item.Salesman, Units=item.Units, 
-                    InvoiceNo=InvNo,ProductItemId=-1 
-                    
+                RegularSaleItem sItem = new RegularSaleItem
+                {
+                    BarCode = item.BarCode,
+                    MRP = item.Price,
+                    Qty = item.Quantity,
+                    Discount = 0,
+                    SalesmanId = item.Salesman,
+                    Units = item.Units,
+                    InvoiceNo = InvNo,
+                    BasicAmount = item.Amount,
+                    TaxAmount = 0,
+                    ProductItemId = -1,
+                    BillAmount = 0,
+                    SaleTaxTypeId = 1, //TODO: default tax id needed
+
                 };
                 ProductItem pItem = db.ProductItems.Where(c => c.Barcode == item.BarCode).FirstOrDefault();
                 Stock stock = db.Stocks.Where(c => c.ProductItemId == pItem.ProductItemId && c.StoreId == StoreId).FirstOrDefault();
 
                 sItem.ProductItemId = pItem.ProductItemId;
                 decimal amt = (decimal)item.Quantity * item.Price;
-
-                sItem.BasicAmount = (amt*100)/(100+pItem.TaxRate);
-                
+                sItem.BasicAmount = (amt * 100) / (100 + pItem.TaxRate);
                 sItem.TaxAmount = (sItem.BasicAmount * pItem.TaxRate) / 100;
                 sItem.BillAmount = sItem.BasicAmount + sItem.TaxAmount;
+                //SaleTax Id
+                var taxid = db.SaleTaxTypes.Where(c => c.CompositeRate == pItem.TaxRate).Select(c => c.SaleTaxTypeId).FirstOrDefault();
+                if (taxid <= 0)
+                {
+                    taxid = 1; //TODO: Handle it for creating new saletax id
+                }
+                sItem.SaleTaxTypeId = taxid;
 
+                itemList.Add(sItem);
+
+
+                stock.SaleQty += item.Quantity;
+                stock.Quantity -= item.Quantity;
+                stockList.Add(stock);
             }
 
+            var totalBillamt = itemList.Sum(c => c.BillAmount);
+            var totaltaxamt = itemList.Sum(c => c.TaxAmount);
+            var totalDiscount = itemList.Sum(c => c.Discount);
+            var totalQty = itemList.Sum(c => c.Qty);
+            var totalitem = itemList.Count;
+
+            decimal roundoffamt = Math.Round(totalBillamt) - totalBillamt;
+
+            PaymentDetail pd = new PaymentDetail
+            {
+                CardAmount = sales.PaymentInfo.CardAmount,
+                CashAmount = sales.PaymentInfo.CashAmount,
+                InvoiceNo = InvNo,
+                IsManualBill = true,
+                MixAmount = 0,
+                PayMode = SalePayMode.Cash
+            };
+
+            if (sales.PaymentInfo.CardAmount > 0)
+            {
+                if (sales.PaymentInfo.CashAmount > 0)
+                {
+                    pd.PayMode = SalePayMode.Mix;
+                }
+                else
+                {
+                    pd.PayMode = SalePayMode.Card;
+                }
+
+                CardDetail cd = new CardDetail
+                {
+                    CardCode = CardTypes.Visa,//TODO: default
+                    Amount = sales.PaymentInfo.CardAmount,
+                    AuthCode = (int)Int64.Parse(sales.PaymentInfo.AuthCode),
+                    InvoiceNo = InvNo,
+                    LastDigit = (int)Int64.Parse(sales.PaymentInfo.CardNo),
+                    CardType = CardModes.DebitCard//TODO: default 
+
+                };
+
+                if (sales.PaymentInfo.CardType.Contains("Debit") || sales.PaymentInfo.CardType.Contains("debit") || sales.PaymentInfo.CardType.Contains("DEBIT"))
+                { cd.CardType = CardModes.DebitCard; }
+                else if (sales.PaymentInfo.CardType.Contains("Credit") || sales.PaymentInfo.CardType.Contains("credit") || sales.PaymentInfo.CardType.Contains("CREDIT"))
+                { cd.CardType = CardModes.CreditCard; }
+
+                if (sales.PaymentInfo.CardType.Contains("visa") || sales.PaymentInfo.CardType.Contains("Visa") || sales.PaymentInfo.CardType.Contains("VISA"))
+                { cd.CardCode = CardTypes.Visa; }
+                else if (sales.PaymentInfo.CardType.Contains("MasterCard") || sales.PaymentInfo.CardType.Contains("mastercard") || sales.PaymentInfo.CardType.Contains("MASTERCARD"))
+                { cd.CardCode = CardTypes.MasterCard; }
+                else if (sales.PaymentInfo.CardType.Contains("Rupay") || sales.PaymentInfo.CardType.Contains("rupay") || sales.PaymentInfo.CardType.Contains("RUPAY"))
+                { cd.CardCode = CardTypes.Rupay; }
+                else if (sales.PaymentInfo.CardType.Contains("MASTRO") || sales.PaymentInfo.CardType.Contains("mastro") || sales.PaymentInfo.CardType.Contains("Mastro"))
+                { cd.CardCode = CardTypes.Rupay; }
+
+                pd.CardDetail = cd;
+            }
+
+
+            RegularInvoice Invoice = new RegularInvoice
+            {
+                Customer = cust,
+                InvoiceNo = InvNo,
+                OnDate = sales.OnDate,
+                IsManualBill = true,
+                StoreId = StoreId,
+                SaleItems = itemList,
+                CustomerId = cust.CustomerId,
+                TotalBillAmount = totalBillamt + roundoffamt,
+                TotalDiscountAmount = totalDiscount,
+                TotalItems = totalitem,
+                TotalQty = totalQty,
+                TotalTaxAmount = totaltaxamt,
+                RoundOffAmount = roundoffamt,
+                PaymentDetail = pd
+
+            };
+
+            db.RegularInvoices.Add(Invoice);
+            db.Stocks.UpdateRange(stockList);
+
+           
+            int nor= db.SaveChanges();
+            return nor;
 
         }
     }
