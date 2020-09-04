@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         }
         public IActionResult Index()
         {
-            var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c=>c.SaleItems).Include(c=>c.PaymentDetail)
+            var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c => c.SaleItems).Include(c => c.PaymentDetail)
                 .Where(c => c.IsManualBill).OrderByDescending(c => c.OnDate).ThenBy(c => c.InvoiceNo).ToList();
 
             return View(vm);
@@ -34,6 +34,12 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             return View();
         }
+        //TODO: Negative or zero stock waring. 
+        //Only admin can zero or neg stock 
+        // Manual Stock Ajustment record . 
+        // Implement Delete Invoice and Edit. or Marked Deleted /Canceled Invoice
+        // must have option to provide Manul Invice no entry of Phsycaial Invoice. 
+
 
         public JsonResult GetBarCode(string barcode)
         {
@@ -70,7 +76,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             catch (Exception ex)
             {
 
-                var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!" , TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs) };
+                var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs) };
                 JsonResult result = new JsonResult(pItem)
                 {
                     Value = pItem
@@ -94,10 +100,11 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-                int x=                new RegularSaleManager().OnInsert(aprajitaContext, dTO);
-                if (x>0) result = "Error while saving bill, Kindly try again!";
+                int x = new RegularSaleManager().OnInsert(aprajitaContext, dTO);
+                if (x <= 0) 
+                    result = "Error while saving bill, Kindly try again!";
                 else
-                result = "Success! Order Is Complete!";
+                    result = "Success! Order Is Complete!";
             }
             return Json(result);
         }

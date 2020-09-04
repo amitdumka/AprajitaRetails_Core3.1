@@ -84,6 +84,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
     public class PaymentDetail
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentDetailId { get; set; }
         [Key]
         public string InvoiceNo { get; set; }
@@ -135,6 +136,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
     public class RegularInvoice : Invoice
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RegularInvoiceId { get; set; }
         public PaymentDetail PaymentDetail { get; set; }
         public virtual ICollection<RegularSaleItem> SaleItems { get; set; }

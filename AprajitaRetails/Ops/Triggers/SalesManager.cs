@@ -205,12 +205,142 @@ namespace AprajitaRetails.Ops.Triggers
 
         }
     }
+    //public class InvoiceNo
+    //{
+    //    private readonly string FP = "C33";
+    //    private string SP = "IN";
+
+    //    public long TP { get; set; }
+
+    //    public InvoiceNo() { }
+
+    //    public InvoiceNo(string sp) { this.SP = sp; }
+
+    //    public InvoiceNo(string sp, long tp) { this.SP = sp; this.TP = tp; }
+
+    //    public override string ToString() { return FP + SP + TP; }
+
+    //    public static string GetInvoiceNo(int old, int newno) { InvoiceNo inv = new InvoiceNo { TP = newno }; return inv.ToString(); }
+
+    //    public static string GetInvoiceNo(int nos) { InvoiceNo inv = new InvoiceNo { TP = nos }; return inv.ToString(); }
+
+    //    public static InvoiceNo GetNewInvoviceNo(int oldinv) { InvoiceNo inv = new InvoiceNo { TP = oldinv + 1 }; return inv; }
+
+    //    public static InvoiceNo GetNewInvoviceNo(InvoiceNo oldinv) { oldinv.TP++; return (oldinv); }
+
+    //    public static long GetInvNo(string inv)
+    //    {
+    //        string s = inv.Substring(5).Trim();
+    //        long nums = -1;
+    //        if (s != null && s.Length > 0)
+    //        {
+    //            try
+    //            {
+    //                nums = long.Parse(s);
+    //            }
+    //            catch (Exception)
+    //            {
+    //                nums = -2;
+    //                return -2;
+    //            }
+    //        }
+    //        return nums;
+    //    }
+
+    //    public static long GetInvNo(InvoiceNo inv) { return inv.TP; }
+
+    //    public static string GetInvoiceNo(int old, int newno, string sp)
+    //    {  //C33 IN 500001
+    //        InvoiceNo inv = new InvoiceNo { TP = newno, SP = sp };
+    //        return inv.ToString();
+    //    }
+
+    //    public static string GetInvoiceNo(int nos, string sp)
+    //    {  //C33 IN 500001
+    //        InvoiceNo inv = new InvoiceNo { TP = nos, SP = sp };
+    //        return inv.ToString();
+    //    }
+
+    //    public static InvoiceNo GetNewInvoviceNo(int oldinv, string sp)
+    //    {
+    //        InvoiceNo inv = new InvoiceNo { TP = oldinv + 1, SP = sp };
+    //        return inv;
+    //    }
+    //}
 
     public class RegularSaleManager
     {
-        public string GenerateInvoiceNo(bool isManual = true)
+        private const string FPart = "C33";
+        private const string ArvindSeries = "IN";
+        private const string ManualSeries = "MI";
+        private const long SeriesStart =  1000000;
+        private const long SeriesStartA = 2000000;
+
+        public string GetLastInvoiceNo(AprajitaRetailsContext db, int StoreId, bool IsManual = false)
         {
-            return "InvoiceNo.";
+            try
+            {
+
+                var  inv= db.RegularInvoices.Where(c => c.IsManualBill && c.StoreId == StoreId).OrderBy(c => c.RegularInvoiceId).Select(c=>new { c.RegularInvoiceId, c.InvoiceNo}).LastOrDefault();
+                if (inv != null) return inv.InvoiceNo; else return String.Empty;
+            }
+            catch (Exception)
+            {
+                return String.Empty;
+            }
+        }
+        //public InvoiceNo GenerateInvoiceNo2(AprajitaRetailsContext db, int StoreId, bool IsManual = true)
+        //{
+        //    InvoiceNo inv = new InvoiceNo(ManualSeries);
+        //    //TODO: series Start should be changed every Finnical Year;
+        //    //TODO: Should have option to check data and based on that generate it
+        //    string iNo = GetLastInvoiceNo(db,StoreId, false);
+        //    if (iNo.Length > 0)
+        //    {
+        //        if (iNo != "0")
+        //        {
+        //            iNo = iNo.Substring(5);
+        //            long i = long.Parse(iNo);
+        //            inv.TP = i + 1;
+        //        }
+        //        else
+        //        { inv.TP = SeriesStart + 1; }
+        //    }
+        //    else
+        //    {
+        //        //TODO: check future what happens and what condtion  come here
+        //        inv.TP = SeriesStart + 1;
+
+        //    }
+        //    return inv;
+        //}
+
+        /// <summary>
+        ///  TODO:make it  static function
+        /// </summary>
+        /// <param name="db"></param>
+        /// <param name="StoreId"></param>
+        /// <param name="isManual"></param>
+        /// <returns></returns>
+        public string GenerateInvoiceNo(AprajitaRetailsContext db, int StoreId, bool isManual = true)
+        {
+            string inv = GetLastInvoiceNo(db, StoreId, true);
+            if (String.IsNullOrEmpty(inv))
+            {
+                if (isManual)
+                {
+                    inv = FPart + ManualSeries + SeriesStart;
+                }
+                else
+                {
+                    inv = FPart + ArvindSeries + SeriesStartA;
+                }
+            }
+            string iNo = inv.Substring(5);
+            //long i = ;
+            string newInv = inv.Substring(0, 5)+(long.Parse(iNo) + 1);
+            return newInv;
+
         }
 
         public int OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1)
@@ -218,13 +348,19 @@ namespace AprajitaRetails.Ops.Triggers
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
             {
+                string[] names = sales.Name.Split(" ");
+                string FName = names[0];
+                string LName = "";
+                for (int i = 1; i < names.Length; i++)
+                    LName += names[i] + " ";
+
                 cust = new Customer
                 {
                     City = sales.Address,
                     Age = 30,
-                    FirstName = sales.Name,
+                    FirstName = FName,
                     Gender = Genders.Male,
-                    LastName = sales.Name,
+                    LastName = LName,
                     MobileNo = sales.MobileNo,
                     NoOfBills = 0,
                     TotalAmount = 0,
@@ -233,7 +369,7 @@ namespace AprajitaRetails.Ops.Triggers
                 db.Customers.Add(cust);
 
             }
-            string InvNo = GenerateInvoiceNo(true);
+            string InvNo = GenerateInvoiceNo(db,StoreId,true);
             List<RegularSaleItem> itemList = new List<RegularSaleItem>();
             List<Stock> stockList = new List<Stock>();
 
@@ -359,8 +495,8 @@ namespace AprajitaRetails.Ops.Triggers
             db.RegularInvoices.Add(Invoice);
             db.Stocks.UpdateRange(stockList);
 
-           
-            int nor= db.SaveChanges();
+
+            int nor = db.SaveChanges();
             return nor;
 
         }
