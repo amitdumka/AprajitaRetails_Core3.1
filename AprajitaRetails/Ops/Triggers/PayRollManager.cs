@@ -16,6 +16,8 @@ namespace AprajitaRetails.Ops.Triggers
 
             try
             {
+                
+
                 if ( !isDeleted && !isUpdated )
                 {
                     var sName = db.Employees.Find (attendance.EmployeeId).StaffName;

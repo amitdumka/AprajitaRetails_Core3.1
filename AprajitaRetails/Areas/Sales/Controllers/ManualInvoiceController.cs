@@ -104,3 +104,28 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         }
     }
 }
+
+/*
+ * customer Name
+Sn, BarCode Qty Des MRP Dis% DisAmt Addl Dis Value Scheme
+
+Bin, SM BarCode Dept Qty Des	 MRP Disc% Disc Amt	Value
+
+T Qty
+T MRP 
+T Dis
+T Tax
+===========
+NEt Bill Amt
+Round Off
+Reciving Amt
+Refund 
+
+Payment 
+Cash Paid    Card Amt
+Card Type 	Auth Code
+Card Bank	Vocuher Am
+Card Code  Other Col	
+Card Number
+
+ */

@@ -48,7 +48,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             YearList.Sort();
             ViewBag.YearList = YearList;
             var MonthList = DateTimeFormatInfo.CurrentInfo.MonthNames.ToList();
-            
+
             ViewBag.MonthList = MonthList;
 
             if (id == 101)
@@ -73,7 +73,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                     if (!MonthName.IsNullOrEmpty())
                     {
                         //  mName = MonthName;
-                        int mn = MonthList.IndexOf(MonthName)+1;
+                        int mn = MonthList.IndexOf(MonthName) + 1;
                         aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Year == id && c.AttDate.Month == mn).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
 
                     }
@@ -180,6 +180,17 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if (ModelState.IsValid)
             {
+                var eType = _context.Employees.Find(attendance.EmployeeId).Category;
+                if (eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster)
+                {
+                    attendance.IsTailoring = true;
+
+                }
+                else
+                {
+                    attendance.IsTailoring = false;
+                }
+
                 _context.Add(attendance);
                 await _context.SaveChangesAsync();
                 new PayRollManager().ONInsertOrUpdate(_context, attendance, false, false);

@@ -12,7 +12,7 @@ public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, Tai
 
 public enum Genders { Male, Female, TransGender }
 public enum Units { Meters, Nos, Pcs, Packets }
-public enum TaxType {  GST, SGST, CGST, IGST, VAT }
+public enum TaxType {  GST, SGST, CGST, IGST, VAT , CST}
 
 //public enum SalePayMode { Cash, Card, Mix }//TODO: check update based on data present
 public enum SalePayMode { Cash, Card, Mix, SR }//TODO: check update based on data present
