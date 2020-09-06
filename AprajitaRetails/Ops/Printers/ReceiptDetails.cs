@@ -18,7 +18,7 @@ namespace AprajitaRetails.Ops.Printers
 
         public ReceiptDetails(string invNo, DateTime onDate, string time, string custName)
         {
-            BillNo = "Bill NO: "+invNo;
+            BillNo = "Bill No: "+invNo;
             BillDate = "                Date: "+onDate.Date.ToShortDateString();
             BillTime = "                Time: "+time;
             CustomerName = "Customer Name: "+custName;

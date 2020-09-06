@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
+
 namespace AprajitaRetails.Areas.ToDo.Extensions
 {
     public static class ServiceCollectionExtensions

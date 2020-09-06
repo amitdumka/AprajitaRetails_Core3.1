@@ -34,6 +34,18 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             return View();
         }
+
+        public IActionResult ReprintInvoice(int? id)
+        {
+
+            var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c => c.SaleItems).Include(c => c.PaymentDetail).
+                ThenInclude(c => c.CardDetail).Where(c => c.RegularInvoiceId == id).FirstOrDefault();
+
+            new RegularSaleManager().RePrintManaulInvoice(aprajitaContext,vm, StoreId);
+            return RedirectToAction(nameof(Index));
+
+        }
+
         //TODO: Negative or zero stock waring. 
         //Only admin can zero or neg stock 
         // Manual Stock Ajustment record . 

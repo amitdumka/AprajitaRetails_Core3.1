@@ -504,13 +504,13 @@ namespace AprajitaRetails.Ops.Triggers
             {
 
                 ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
-                ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo,Invoice.OnDate,DateTime.Today.ToShortTimeString(),sales.Name);
+                ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo,Invoice.OnDate,DateTime.Now.ToShortTimeString(),sales.Name);
 
                 ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(Invoice);
 
                 List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, itemList);
 
-                InvoicePrinter.PrintManaulInvoice(header,itemtotal,details,itemDetailList);
+                InvoicePrinter.PrintManaulInvoice(header,itemtotal,details,itemDetailList,false);
 
             }
 
@@ -518,5 +518,30 @@ namespace AprajitaRetails.Ops.Triggers
             return nor;
 
         }
+    
+    
+        public void RePrintManaulInvoice(AprajitaRetailsContext db,RegularInvoice invoice, int StoreId = 1)
+        {
+
+            if (invoice != null)
+            {
+
+                ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
+                ReceiptDetails details = PrinterHelper.GetReceiptDetails(invoice.InvoiceNo, invoice.OnDate, DateTime.Now.ToShortTimeString(), invoice.Customer.FullName);
+
+                ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(invoice);
+
+                List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, invoice.SaleItems.ToList());
+
+                InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, true);
+
+            }
+            else
+            {
+                //TODO: when ivnpuce is null. 
+            }
+        }
+    
+    
     }
 }

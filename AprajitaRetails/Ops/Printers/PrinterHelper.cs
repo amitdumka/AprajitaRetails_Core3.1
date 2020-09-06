@@ -1,84 +1,34 @@
-﻿//using iText.Pdfa;
-using AprajitaRetails.Areas.Sales.Models.Views;
+﻿using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Data;
 using System;
 using System.Collections.Generic;
-//using iText.Kernel.Pdf;
-//using iText.Layout;
-//using iText.Layout.Element;
-//using System.Windows.Forms;
+
 
 namespace AprajitaRetails.Ops.Printers
 {
-    /*
-    Store Name
-    Address
-    City
-    Phone
-    GST
-    ++++++++++++++++++++++++++++++
-    Retail Invoice
-    +++++++++++++++++++++++++++++++
-    Cashier :m01        Name:Manager
-    Bill NO: 67676767
-                        Date:8989
-                        Time:909090
-    Customer Name :hjhjhh
-    ++++++++++++++++++++++++++++++++
-    SKU Code/Description
-    HSN     MRP     Qty     Disc
-    cgst%   AMT    sgst%    AMT
-    +++++++++++++++++++++++++++++++++
-    M767676767/Tesca
-            1000     1.2     0.0
-    2.50     20.50   2.50    20.50
-    +++++++++++++++++++++++++++++++
-    Total :1.2              1041
-    item(s) 1   Net Amount  1041
-    ++++++++++++++++++++++++++++++++
-    Tender
-    Cash Amount       Rs  1041
-    ++++++++++++++++++++++++++++++
-    Basic Price             1000
-    Cgst                    20.50
-    sgst                    20.50
-    ++++++++++++++++++++++++++++++=
-            ** Amount included GST
-    +++++++++++++++++++++++++++++++
-    Thanks You
-    Visit Again
-    ++++++++++++++++++++++++++++++++++
-    */
 
-    public class ReceiptItemDetails
-    {
-        public string BasicPrice { get; set; }
-        public string HSN { get; set; }
-        public string SKUDescription { get; set; }
-        public string MRP { get; set; }
-        public string QTY { get; set; }
-        public string Discount { get; set; }
-        public string GSTPercentage { get; set; }
-        public string GSTAmount { get; set; }
-    }
 
-    
     public class PrinterHelper
     {
-       
+       /// <summary>
+       /// Get Get Item Details
+       /// </summary>
+       /// <param name="db">Database Context</param>
+       /// <param name="saleItem">RegularSale Item List</param>
+       /// <returns></returns>
         public static List<ReceiptItemDetails> GetInvoiceDetails(AprajitaRetailsContext db, List<RegularSaleItem> saleItem)
         {
             List<ReceiptItemDetails> itemList = new List<ReceiptItemDetails>();
             foreach (var item in saleItem)
             {
                 ReceiptItemDetails rid = new ReceiptItemDetails { 
-                    BasicPrice=item.BasicAmount.ToString(), Discount=item.Discount.ToString(), MRP=item.MRP.ToString(), 
-                    QTY=item.Qty.ToString() , GSTAmount=(item.TaxAmount/2).ToString(), HSN="", GSTPercentage="", SKUDescription=item.BarCode
+                    BasicPrice=item.BasicAmount.ToString("0.##"), Discount=item.Discount.ToString("0.##"), MRP=item.MRP.ToString("0.##"), 
+                    QTY=item.Qty.ToString("0.##") , GSTAmount=(item.TaxAmount/2).ToString("0.##"), HSN="", GSTPercentage="", SKUDescription=item.BarCode
                 };
 
                 if (item.HSNCode != null) rid.HSN = item.HSNCode.ToString();
                 rid.SKUDescription+="/" +db.ProductItems.Find(item.ProductItemId).ItemDesc;
-                rid.GSTPercentage = (db.SaleTaxTypes.Find(item.SaleTaxTypeId).CompositeRate / 2).ToString();
+                rid.GSTPercentage = (db.SaleTaxTypes.Find(item.SaleTaxTypeId).CompositeRate / 2).ToString("0.##");
                 itemList.Add(rid);
             }
             return itemList;
@@ -95,9 +45,9 @@ namespace AprajitaRetails.Ops.Printers
             ReceiptItemTotal total = new ReceiptItemTotal
             {
                 ItemCount = inv.TotalItems.ToString(),
-                TotalItem = inv.TotalQty.ToString(),
-                NetAmount = inv.TotalBillAmount.ToString(),
-                CashAmount = inv.PaymentDetail.CashAmount.ToString()
+                TotalItem = inv.TotalQty.ToString("0.##"),
+                NetAmount = inv.TotalBillAmount.ToString("0.##"),
+                CashAmount = inv.PaymentDetail.CashAmount.ToString("0.##")
             };
             return total;
 

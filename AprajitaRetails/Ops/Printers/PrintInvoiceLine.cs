@@ -1,9 +1,4 @@
-﻿//using iText.Pdfa;
-//using iText.Kernel.Pdf;
-//using iText.Layout;
-//using iText.Layout.Element;
-//using System.Windows.Forms;
-
+﻿
 namespace AprajitaRetails.Ops.Printers
 {
     public sealed  class PrintInvoiceLine
@@ -12,7 +7,7 @@ namespace AprajitaRetails.Ops.Printers
 
         public const string ItemLineHeader1 = "SKU Code/Description";
         public const string ItemLineHeader2 = "HSN      MRP     Qty     Disc";
-        public const string ItemLineHeader3 = "cgst%    AMT     sgst%   AMT";
+        public const string ItemLineHeader3 = "CGST%    AMT     SGST%   AMT";
 
         public const string FooterFirstMessage = "** Amount included GST";
         public const string FooterThanksMessage = "Thank You";

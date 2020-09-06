@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using iText;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using PDFtoPrinter;
-using RawPrint;
-//using iTextSharp.text;
-using Document = iText.Layout.Document;
+
 
 namespace AprajitaRetails.Ops.Printers
 {
@@ -28,9 +23,9 @@ namespace AprajitaRetails.Ops.Printers
 
         public static void TestPrint()
         {
-            string fileName = "testprint.pdf";
-            string path = Path.GetTempPath();
-            fileName = path + fileName;
+           
+            string fileName = Path.GetTempPath()+ "testprint.pdf";
+            
             using PdfWriter pdfWriter = new PdfWriter(fileName);
             using PdfDocument pdf = new PdfDocument(pdfWriter);
             Document pdfDoc = new Document(pdf);
@@ -43,10 +38,11 @@ namespace AprajitaRetails.Ops.Printers
             PrintPDFLocal(fileName);
         }
 
-        public static string PrintManaulInvoice(ReceiptHeader header, /*ReceiptFooter footer,*/ ReceiptItemTotal itemTotals, ReceiptDetails details, List<ReceiptItemDetails> itemDetail)
+        public static string PrintManaulInvoice(ReceiptHeader header, /*ReceiptFooter footer,*/ ReceiptItemTotal itemTotals, ReceiptDetails details, List<ReceiptItemDetails> itemDetail, bool isRePrint=true)
         {
-            string path = Path.GetTempPath();
-            string fileName = path + "invoiceNo_" + details.BillNo.Substring(new string("Bill NO: ").Length) + ".pdf";
+
+           // string path = Path.GetTempPath();
+            string fileName = Path.GetTempPath() + "MInvoiceNo_" + details.BillNo.Substring(9) + ".pdf";
             using PdfWriter pdfWriter = new PdfWriter(fileName);
             using PdfDocument pdf = new PdfDocument(pdfWriter);
             Document pdfDoc = new Document(pdf);
@@ -61,6 +57,7 @@ namespace AprajitaRetails.Ops.Printers
             p.Add(PrintInvoiceLine.InvoiceTitle + "\n");
             p.Add(PrintLine.DotedLine);
             pdfDoc.Add(p);
+            
             //Details
             Paragraph dp = new Paragraph(ReceiptDetails.Employee + "\n");
             dp.Add(details.BillNo + "\n");
@@ -75,7 +72,7 @@ namespace AprajitaRetails.Ops.Printers
             dp.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
             pdfDoc.Add(dp);
             Paragraph ip = new Paragraph();
-            // ip.Alignment = PdfAppearance.ALIGN_CENTER;
+            p.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
             double gstPrice = 0.00;
             double basicPrice = 0.00;
             string tab = "    ";
@@ -100,9 +97,9 @@ namespace AprajitaRetails.Ops.Printers
             ip.Add(PrintInvoiceLine.DotedLine);
             ip.Add("Tender\n Paid Amount:\t\t Rs. " + itemTotals.CashAmount);
             ip.Add("\n" + PrintInvoiceLine.DotedLine);
-            ip.Add("Basic Price:\t\t" + basicPrice);
-            ip.Add("\nCGST:\t\t" + gstPrice);
-            ip.Add("\nSGST:\t\t" + gstPrice + "\n");
+            ip.Add("Basic Price:\t\t" + basicPrice.ToString("0.##"));
+            ip.Add("\nCGST:\t\t" + gstPrice.ToString("0.##"));
+            ip.Add("\nSGST:\t\t" + gstPrice.ToString("0.##") + "\n");
             //ip.Add (PrintLine.DotedLine);
             pdfDoc.Add(ip);
 
@@ -115,7 +112,11 @@ namespace AprajitaRetails.Ops.Printers
             foot.Add(PrintInvoiceLine.FooterLastMessage + "\n");
             foot.Add(PrintInvoiceLine.DotedLine);
             foot.Add("\n");// Just to Check;
-            foot.Add("Printed on: " + DateTime.Today+"\n");
+            if (isRePrint)
+            {
+                foot.Add("(Reprinted)\n");
+            }
+            foot.Add("Printed on: " + DateTime.Now + "\n");
 
             pdfDoc.Add(foot);
 
@@ -132,10 +133,3 @@ namespace AprajitaRetails.Ops.Printers
         }
     }
 }
-/*
- *  Response.ContentType = "application/pdf";
-            Response.AddHeader("content-disposition", "attachment;filename=Invoice_" + orderNo + ".pdf");
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Response.Write(pdfDoc);
-            Response.End();
- */
