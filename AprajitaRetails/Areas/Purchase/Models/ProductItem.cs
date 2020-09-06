@@ -40,6 +40,7 @@ namespace AprajitaRetails.Areas.Purchase.Models
         [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal Cost { get; set; }
 
+        public string? HSNCode { get; set; }
         public Sizes Size { get; set; }
         public Units Units { get; set; }
 

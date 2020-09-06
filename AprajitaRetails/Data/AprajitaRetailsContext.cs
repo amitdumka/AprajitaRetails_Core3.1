@@ -250,6 +250,7 @@ namespace AprajitaRetails.Data
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<CardDetail> CardDetails { get; set; }
 
+        public DbSet<HSN> HSNList { get; set; }
 
         // New Invoice System  Manual
 

@@ -4,6 +4,7 @@ using AprajitaRetails.Areas.Voyager.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Bot;
+using AprajitaRetails.Ops.Printers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -343,7 +344,7 @@ namespace AprajitaRetails.Ops.Triggers
 
         }
 
-        public int OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1)
+        public int OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1, bool willPrint=false)
         {
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
@@ -497,6 +498,23 @@ namespace AprajitaRetails.Ops.Triggers
 
 
             int nor = db.SaveChanges();
+
+
+            if (nor > 0 && willPrint)
+            {
+
+                ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
+                ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo,Invoice.OnDate,DateTime.Today.ToShortTimeString(),sales.Name);
+
+                ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(Invoice);
+
+                List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, itemList);
+
+                InvoicePrinter.PrintManaulInvoice(header,itemtotal,details,itemDetailList);
+
+            }
+
+
             return nor;
 
         }

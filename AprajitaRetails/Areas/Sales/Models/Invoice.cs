@@ -78,6 +78,8 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public decimal BillAmount { get; set; }
         public int SalesmanId { get; set; }
         public virtual Salesman Salesman { get; set; }
+        public long? HSNCode { get; set; }
+        public virtual HSN HSN { get; set; }
 
 
     }
@@ -208,7 +210,9 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string AuthCode { get; set; }
         public string CardNo { get; set; }
     }
-    #endregion
+
+#endregion
+
     //TODO: Need to generalized
 
     public class SaleInvoice
