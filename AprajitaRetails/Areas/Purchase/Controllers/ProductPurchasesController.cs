@@ -17,6 +17,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
     public class ProductPurchasesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreID = 1; // TODO: fixed for now
 
         public ProductPurchasesController(AprajitaRetailsContext context)
         {
@@ -39,10 +40,10 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            HelperUtil.IsSessionSet (HttpContext);
-            int storeid = HelperUtil.GetStoreID (HttpContext);
+           // HelperUtil.IsSessionSet (HttpContext);
+           // int storeid = HelperUtil.GetStoreID (HttpContext);
 
-            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c=>c.StoreId==storeid);
+            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c=>c.StoreId==StoreID);
            return View(await PaginatedList<ProductPurchase>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             
             

@@ -30,6 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200907120111_bUgx1Fixed.cs" />
+    <Compile Remove="Migrations\20200907120111_bUgx1Fixed.Designer.cs" />
     <Compile Remove="Migrations\AccountsContextModelSnapshot.cs" />
   </ItemGroup>
 
@@ -217,6 +219,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="HttpToSocks5Proxy" Version="1.4.0" />
     <PackageReference Include="itext7" Version="7.1.12" />
@@ -250,6 +253,7 @@
     <PackageReference Include="Microsoft.Owin.Hosting" Version="4.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="MimeKit" Version="2.5.1" />
+    <PackageReference Include="Neodynamic.SDK.WebClientPrint" Version="5.0.0" />
     <PackageReference Include="NodaTime" Version="3.0.0" />
     <PackageReference Include="OpenTl.ClientApi" Version="0.7.97" />
     <PackageReference Include="PDFtoPrinter" Version="1.2.1" />
@@ -292,6 +296,7 @@
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Areas\Voyager\Data\" />
     <Folder Include="Data\Reports\" />
+    <Folder Include="Docs\PrintFiles\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
     <Folder Include="wwwroot\todolist\" />

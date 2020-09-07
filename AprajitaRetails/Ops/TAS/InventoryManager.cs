@@ -676,7 +676,7 @@ namespace AprajitaRetails.Ops.TAS
                     invoice.TotalQty += item.Quantity;
                     invoice.RoundOffAmount += item.RoundOff;
                     invoice.TotalTaxAmount += (item.SGST + item.CGST); //TODO: Check Future make it tax
-                    invoice.StoreId = item.StoreId;                    
+                  invoice.StoreId = item.StoreId;                    
                     if (invoice.PaymentDetail == null)
                         invoice.PaymentDetail = CreatePaymentDetails(db, item, false); //Create Payment details
                     invoice.CustomerId = GetCustomerId(db, item);  // CustomerId
@@ -754,7 +754,7 @@ namespace AprajitaRetails.Ops.TAS
                 SaleTaxTypeId = CreateSaleTax(db, item),
                 InvoiceNo = item.InvoiceNo
             };
-            if (!SalePurchaseManager.UpDateStock(db, pi.ProductItemId, item.Quantity, false, item.StoreId))
+            if (!SalePurchaseManager.UpDateStock(db, pi.ProductItemId, item.Quantity, false,  item.StoreId))
             {
                 //TODO: Create Stock and update
                 CreateStockItem(db, saleItem.Qty, saleItem.ProductItemId, saleItem.Units);
@@ -1087,7 +1087,7 @@ namespace AprajitaRetails.Ops.TAS
                     invoice.TotalQty += item.Quantity;
                     invoice.RoundOffAmount += item.RoundOff;
                     invoice.TotalTaxAmount += item.SGST; //TODO: Check
-                    invoice.StoreId = item.StoreId;
+                                                         invoice.StoreId = item.StoreId;
                     invoice.PaymentDetail = CreatePaymentDetails(db, item,false);
                     invoice.CustomerId = GetCustomerId(db, item);
                 }
@@ -1108,7 +1108,8 @@ namespace AprajitaRetails.Ops.TAS
                         TotalTaxAmount = item.SGST, //TODO: Check
                         PaymentDetail = CreatePaymentDetails(db, item, false),
                         CustomerId = GetCustomerId(db, item),
-                        StoreId = item.StoreId,IsManualBill=false,
+                       StoreId = item.StoreId,
+                        IsManualBill = false,
                         SaleItems = new List<RegularSaleItem>()
                     };
                 }
@@ -1127,7 +1128,8 @@ namespace AprajitaRetails.Ops.TAS
                     TotalTaxAmount = item.SGST, //TODO: Check
                     PaymentDetail = CreatePaymentDetails(db, item),
                     CustomerId = GetCustomerId(db, item),
-                    StoreId = item.StoreId,IsManualBill=false,
+                   StoreId = item.StoreId,
+                    IsManualBill = false,
                     SaleItems = new List<RegularSaleItem>()
                 };
             }

@@ -4,6 +4,7 @@
     ViewData["Title"] = "Manual Invoice";
     bool flag = false;
 }
+    <link rel="stylesheet" type="text/css" href="~/css/print.min.css">
 @*<br />
     <br />*@
 <div class="panel panel-default">
@@ -309,6 +310,7 @@
 
 
 @section scripts{
+    <script src="~/js/print.min.js"></script>
     <script>
         //Show Modal.
         function addNewOrder() {
@@ -411,7 +413,11 @@
                 url: '@Url.Action("SaveOrder", "ManualInvoice")',// "/Sales/ManualInvoice/SaveOrder",
                 data: data1,
                 success: function (result) {
-                    alert(result);
+
+                    //if (result.FileName != "Error")
+                       // printJS({ printable: result.FileName, type: 'pdf', showModal: true });
+                    //else alert("Err: " + result.result);
+                    alert(result.result);
                     location.reload();
                 },
                 error: function () {

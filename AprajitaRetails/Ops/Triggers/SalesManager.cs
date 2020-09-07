@@ -269,12 +269,19 @@ namespace AprajitaRetails.Ops.Triggers
     //    }
     //}
 
+
+    public class InvoiceSaveReturn
+    {
+        public int NoOfRecord { get; set; }
+        public string FileName { get; set; }
+    }
+
     public class RegularSaleManager
     {
         private const string FPart = "C33";
         private const string ArvindSeries = "IN";
         private const string ManualSeries = "MI";
-        private const long SeriesStart =  1000000;
+        private const long SeriesStart = 1000000;
         private const long SeriesStartA = 2000000;
 
         public string GetLastInvoiceNo(AprajitaRetailsContext db, int StoreId, bool IsManual = false)
@@ -282,7 +289,7 @@ namespace AprajitaRetails.Ops.Triggers
             try
             {
 
-                var  inv= db.RegularInvoices.Where(c => c.IsManualBill && c.StoreId == StoreId).OrderBy(c => c.RegularInvoiceId).Select(c=>new { c.RegularInvoiceId, c.InvoiceNo}).LastOrDefault();
+                var inv = db.RegularInvoices.Where(c => c.IsManualBill && c.StoreId == StoreId).OrderBy(c => c.RegularInvoiceId).Select(c => new { c.RegularInvoiceId, c.InvoiceNo }).LastOrDefault();
                 if (inv != null) return inv.InvoiceNo; else return String.Empty;
             }
             catch (Exception)
@@ -339,12 +346,12 @@ namespace AprajitaRetails.Ops.Triggers
             }
             string iNo = inv.Substring(5);
             //long i = ;
-            string newInv = inv.Substring(0, 5)+(long.Parse(iNo) + 1);
+            string newInv = inv.Substring(0, 5) + (long.Parse(iNo) + 1);
             return newInv;
 
         }
 
-        public int OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1, bool willPrint=false)
+        public InvoiceSaveReturn OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1)
         {
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
@@ -370,7 +377,7 @@ namespace AprajitaRetails.Ops.Triggers
                 db.Customers.Add(cust);
 
             }
-            string InvNo = GenerateInvoiceNo(db,StoreId,true);
+            string InvNo = GenerateInvoiceNo(db, StoreId, true);
             List<RegularSaleItem> itemList = new List<RegularSaleItem>();
             List<Stock> stockList = new List<Stock>();
 
@@ -496,52 +503,40 @@ namespace AprajitaRetails.Ops.Triggers
             db.RegularInvoices.Add(Invoice);
             db.Stocks.UpdateRange(stockList);
 
+            InvoiceSaveReturn returnData = new InvoiceSaveReturn{
+                NoOfRecord= db.SaveChanges(), FileName="NotSaved"
+            };
+            
 
-            int nor = db.SaveChanges();
-
-
-            if (nor > 0 && willPrint)
+            if (returnData.NoOfRecord > 0)
             {
 
                 ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
-                ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo,Invoice.OnDate,DateTime.Now.ToShortTimeString(),sales.Name);
+                ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo, Invoice.OnDate, DateTime.Now.ToShortTimeString(), sales.Name);
 
                 ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(Invoice);
 
                 List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, itemList);
 
-                InvoicePrinter.PrintManaulInvoice(header,itemtotal,details,itemDetailList,false);
+              returnData.FileName= "https://localhost:44334/" + InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, false);
 
             }
 
 
-            return nor;
+            return returnData;
 
         }
-    
-    
-        public void RePrintManaulInvoice(AprajitaRetailsContext db,RegularInvoice invoice, int StoreId = 1)
+
+
+        public string RePrintManaulInvoice(AprajitaRetailsContext db, RegularInvoice invoice, int StoreId = 1)
         {
-
-            if (invoice != null)
-            {
-
-                ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
-                ReceiptDetails details = PrinterHelper.GetReceiptDetails(invoice.InvoiceNo, invoice.OnDate, DateTime.Now.ToShortTimeString(), invoice.Customer.FullName);
-
-                ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(invoice);
-
-                List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, invoice.SaleItems.ToList());
-
-                InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, true);
-
-            }
-            else
-            {
-                //TODO: when ivnpuce is null. 
-            }
+            ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
+            ReceiptDetails details = PrinterHelper.GetReceiptDetails(invoice.InvoiceNo, invoice.OnDate, DateTime.Now.ToShortTimeString(), invoice.Customer.FullName);
+            ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(invoice);
+            List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, invoice.SaleItems.ToList());
+            return InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, true);
         }
-    
-    
+
+
     }
 }

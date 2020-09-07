@@ -70,6 +70,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;// is data imported to relevent table
+      
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }

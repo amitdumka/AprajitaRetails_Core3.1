@@ -13,13 +13,13 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
 namespace AprajitaRetails.Ops.Uploader
-{  //Store Based Changes is made in this class , All function support Store
+{  
+    //Store Based Changes is made in this class , All function support Store
     public class ExcelUploaders
     {
         public UploadReturns UploadExcel(AprajitaRetailsContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
         {
-            //UploadType = "InWard";
-            //List<string> data = new List<string> ();
+            
             if (FileUpload != null)
             {
                 // tdata.ExecuteCommand("truncate table OtherCompanyAssets");
@@ -273,7 +273,7 @@ namespace AprajitaRetails.Ops.Uploader
                     TotalQty = (decimal)workSheet.Cells[i, 6].Value,
                     TotalMRPValue = (decimal)workSheet.Cells[i, 7].GetValue<decimal>(),
                     TotalCost = (decimal)workSheet.Cells[i, 8].GetValue<decimal>(),
-                    StoreId = StoreID,
+                     StoreId = StoreID,
                     IsDataConsumed = false,
                     // ImportDate = DateTime.Today,
                 });

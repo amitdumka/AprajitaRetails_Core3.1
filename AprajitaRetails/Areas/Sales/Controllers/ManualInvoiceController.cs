@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Triggers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+
+
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
@@ -17,16 +24,18 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     {
         private readonly AprajitaRetailsContext aprajitaContext;
         private readonly int StoreId = 1; //TODO: Fixed now
+
         public ManualInvoiceController(AprajitaRetailsContext aCtx)
         {
             aprajitaContext = aCtx;
+            
         }
         public IActionResult Index()
         {
             var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c => c.SaleItems).Include(c => c.PaymentDetail)
-                .Where(c => c.IsManualBill).OrderByDescending(c => c.OnDate).ThenBy(c => c.InvoiceNo).ToList();
+                .Where(c => c.IsManualBill).OrderByDescending(c => c.OnDate).ThenByDescending(c => c.InvoiceNo).ToList();
 
-            return  View(vm);
+            return View(vm);
         }
 
         public IActionResult MainView()
@@ -35,14 +44,20 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             return View();
         }
 
-        public IActionResult ReprintInvoice(int? id)
+        public IActionResult ReprintInvoice(int? id, int? Download)
         {
 
             var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c => c.SaleItems).Include(c => c.PaymentDetail).
                 ThenInclude(c => c.CardDetail).Where(c => c.RegularInvoiceId == id).FirstOrDefault();
 
-            new RegularSaleManager().RePrintManaulInvoice(aprajitaContext,vm, StoreId);
-            return RedirectToAction(nameof(Index));
+            string fileName = new RegularSaleManager().RePrintManaulInvoice(aprajitaContext, vm, StoreId);
+
+            if(Download!=null && Download == 101)
+            {
+                return File(fileName, "application/pdf", Path.GetFileName(fileName));
+            }
+
+            return File(fileName, "application/pdf");
 
         }
 
@@ -112,17 +127,25 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-                int x = new RegularSaleManager().OnInsert(aprajitaContext, dTO, StoreId, true);
-                if (x <= 0) 
+                InvoiceSaveReturn x = new RegularSaleManager().OnInsert(aprajitaContext, dTO, StoreId);
+                if (x.NoOfRecord <= 0)
                     result = "Error while saving bill, Kindly try again!";
                 else
                 {
-                    result = "Success! Order Is Complete!";                   
+                    result = "Invoice is Generated! Kindly print if required";
+                  
+
+                   return Json( new { x.FileName, result });
                 }
-                    
+
             }
-            return Json(result);
+            return Json(new { FileName = new String("Error"), result });
         }
+
+
+
+
+
     }
 }
 

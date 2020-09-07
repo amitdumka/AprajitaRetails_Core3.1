@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -34,13 +35,15 @@ namespace AprajitaRetails.Areas.Uploader.Models
                 LineTotal = data.LineTotal,
                 MRP = data.MRP,
                 PaymentType = data.PaymentType,
-                StoreId=data.StoreId,
+                StoreId = data.StoreId,
                 ProductName = data.ProductName,
                 RoundOff = data.RoundOff,
                 Saleman = data.Saleman,
                 SGST = data.SGST,
                 StyleCode = data.StyleCode,
-                Tax = data.Tax, IsLocal=data.IsLocal, IsVatBill=data.IsVatBill
+                Tax = data.Tax,
+                IsLocal = data.IsLocal,
+                IsVatBill = data.IsVatBill
             };
             return item;
         }
@@ -110,7 +113,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         [ExcelColumn("CGST Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CGST { get; set; }
-         [ExcelColumn("Line Total")]
+        [ExcelColumn("Line Total")]
         [Display(Name = "Line Total")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal LineTotal { get; set; }
@@ -118,19 +121,20 @@ namespace AprajitaRetails.Areas.Uploader.Models
         [ExcelColumn("Round Off")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal RoundOff { get; set; }
-         [ExcelColumn("Bill Amt")]
+        [ExcelColumn("Bill Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "Bill Amount")]
         public decimal BillAmnt { get; set; }
-         [ExcelColumn("Payment Mode")]
-         [Display(Name = "Payment Type")]
+        [ExcelColumn("Payment Mode")]
+        [Display(Name = "Payment Type")]
         public string PaymentType { get; set; }
-         [ExcelColumn("SalesMan Name")]
+        [ExcelColumn("SalesMan Name")]
         public string Saleman { get; set; }
-         [DefaultValue(false)]
+        [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;
-         public bool IsVatBill { get; set; }
+        public bool IsVatBill { get; set; }
         public bool IsLocal { get; set; }
+
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }

@@ -8,10 +8,12 @@ using iText.Layout.Element;
 using PDFtoPrinter;
 
 
+
 namespace AprajitaRetails.Ops.Printers
 {
     public class InvoicePrinter
     {
+
         public static void PrintPDFLocal(string filePath)
         {
             PrinterSettings settings = new PrinterSettings();
@@ -19,13 +21,14 @@ namespace AprajitaRetails.Ops.Printers
             if (!String.IsNullOrEmpty(settings.PrinterName)) printerName = settings.PrinterName;
             var printer = new PDFtoPrinterPrinter();
             printer.Print(new PrintingOptions(printerName, filePath));
+
         }
 
         public static void TestPrint()
         {
-           
-            string fileName = Path.GetTempPath()+ "testprint.pdf";
-            
+
+            string fileName = Path.GetTempPath() + "testprint.pdf";
+
             using PdfWriter pdfWriter = new PdfWriter(fileName);
             using PdfDocument pdf = new PdfDocument(pdfWriter);
             Document pdfDoc = new Document(pdf);
@@ -38,14 +41,18 @@ namespace AprajitaRetails.Ops.Printers
             PrintPDFLocal(fileName);
         }
 
-        public static string PrintManaulInvoice(ReceiptHeader header, /*ReceiptFooter footer,*/ ReceiptItemTotal itemTotals, ReceiptDetails details, List<ReceiptItemDetails> itemDetail, bool isRePrint=true)
+        public static string PrintManaulInvoice(ReceiptHeader header, ReceiptItemTotal itemTotals, ReceiptDetails details, List<ReceiptItemDetails> itemDetail, bool isRePrint = true)
         {
 
-           // string path = Path.GetTempPath();
-            string fileName = Path.GetTempPath() + "MInvoiceNo_" + details.BillNo.Substring(9) + ".pdf";
+            string PrintFolder = "Docs\\PrintFiles";
+            string fName = Path.Combine(PrintFolder, "MInvoiceNo_" + details.BillNo.Substring(9) + ".pdf");
+            string fileName = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fName);
+
+
             using PdfWriter pdfWriter = new PdfWriter(fileName);
             using PdfDocument pdf = new PdfDocument(pdfWriter);
             Document pdfDoc = new Document(pdf);
+
             //Header
             Paragraph p = new Paragraph(header.StoreName + "\n");
             p.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
@@ -57,7 +64,7 @@ namespace AprajitaRetails.Ops.Printers
             p.Add(PrintInvoiceLine.InvoiceTitle + "\n");
             p.Add(PrintLine.DotedLine);
             pdfDoc.Add(p);
-            
+
             //Details
             Paragraph dp = new Paragraph(ReceiptDetails.Employee + "\n");
             dp.Add(details.BillNo + "\n");
@@ -117,19 +124,14 @@ namespace AprajitaRetails.Ops.Printers
                 foot.Add("(Reprinted)\n");
             }
             foot.Add("Printed on: " + DateTime.Now + "\n");
-
             pdfDoc.Add(foot);
-
-            // pdfDoc.NewPage();
-            //Close Documents
-            // pdf.AddNewPage();
             pdfDoc.Close();
 
             //Print to Default Local Added Printer
             PrintPDFLocal(fileName);
-
-            return fileName;
+            return fName;
 
         }
+
     }
 }

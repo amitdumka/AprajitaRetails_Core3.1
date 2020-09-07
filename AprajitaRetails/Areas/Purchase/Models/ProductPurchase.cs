@@ -12,9 +12,11 @@ namespace AprajitaRetails.Areas.Purchase.Models
     public class ProductPurchase
     {
         public int ProductPurchaseId { get; set; }
-        [Display (Name = "Store")]
+        
+        [Display (Name = "Store")]       
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
+       
         public string InWardNo { get; set; }
         [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime InWardDate { get; set; }
@@ -41,6 +43,8 @@ namespace AprajitaRetails.Areas.Purchase.Models
         [Display (Name = "Paid")]
         public bool IsPaid { get; set; }
         public ICollection<PurchaseItem> PurchaseItems { get; set; }
+
+        
 
     }
 
