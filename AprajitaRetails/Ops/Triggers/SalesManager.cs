@@ -518,7 +518,7 @@ namespace AprajitaRetails.Ops.Triggers
 
                 List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, itemList);
 
-              returnData.FileName= "https://localhost:44334/" + InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, false);
+              returnData.FileName= "/" + InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, false);
 
             }
 

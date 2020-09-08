@@ -13,7 +13,7 @@ namespace AprajitaRetails.Ops.Printers
         public const string FooterThanksMessage = "Thank You";
         public const string FooterLastMessage = "Visit Again";
 
-        public const string DotedLine = "-----------------------------------\n";
+        public const string DotedLine = "---------------------------------------------\n";
 
     }
 
