@@ -4,7 +4,7 @@
     ViewData["Title"] = "Manual Invoice";
     bool flag = false;
 }
-    <link rel="stylesheet" type="text/css" href="~/css/print.min.css">
+<link rel="stylesheet" type="text/css" href="~/css/print.min.css">
 @*<br />
     <br />*@
 <div class="panel panel-default">
@@ -32,129 +32,135 @@
                     @for (int i = 0; i < Model.Count(); i = i + 2)
                     {
                         var item = Model.ElementAt(i);
-                    <tr>
-                        <td>
-                            <table class="table table-striped table-responsive table-responsive-lg">
-                                <thead class="table-danger">
-                                    <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#@item.InvoiceNo">
-                                        <td class="text-primary  font-weight-bold">Customer Name :@item.Customer.FullName  </td>
-                                        <td class="purple-text">Bill No: @item.InvoiceNo</td>
-                                        <td class="dark-grey-text">Bill Date :@String.Format("{0:dd/MM/yyyy}", item.OnDate.Date)</td>
-                                        <td class="expand-button text-success"> <i class="indicator fa fa-chevron-circle-down" aria-hidden="true"></i></td>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-success">
+                        <tr>
+                            <td>
+                                <table class="table table-striped table-responsive table-responsive-lg">
+                                    <thead class="table-danger">
+                                        <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#@item.InvoiceNo">
+                                            @*<td class="text-primary  font-weight-bold">Customer Name :@item.Customer.FullName  </td>*@
+                                            <td class="purple-text">Bill No: @item.InvoiceNo</td>
+                                            <td class="dark-grey-text">Bill Date :@String.Format("{0:dd/MM/yyyy}", item.OnDate.Date)</td>
+                                            <td class="expand-button text-success"> <i class="indicator fa fa-chevron-circle-down" aria-hidden="true"></i></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-success">
 
-                                    <tr>
-                                        <td colspan="4">
-                                            <table class="table table-bordered collapse in p-3" id="@item.InvoiceNo">
-                                                <thead class="bg-success">
-                                                    <tr>
-                                                        <th>BarCode</th>
-                                                        <th>Quantity</th>
-                                                        <th>Unit Price</th>
-                                                        <th>Discount</th>
-                                                        <th>Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="bg-white">
-
-                                                    @{
-                                                        var totalBill = 0;
-                                                    }
-                                                    @foreach (var order in item.SaleItems)
-                                                    {
+                                        <tr>
+                                            <td colspan="4">
+                                                <table class="table table-bordered collapse in p-3" id="@item.InvoiceNo">
+                                                    <thead class="bg-success">
                                                         <tr>
-                                                            <td>@order.BarCode</td>
-
-                                                            <td>@order.Qty</td>
-                                                            <td>@order.MRP</td>
-                                                            <td>@order.Discount</td>
-                                                            <td>@order.BasicAmount</td>
+                                                            <th>BarCode</th>
+                                                            <th>Quantity</th>
+                                                            <th>Unit Price</th>
+                                                            <th>Discount</th>
+                                                            <th>Total</th>
                                                         </tr>
-                                                        totalBill = totalBill + @Convert.ToInt32(order.BasicAmount);
-                                                    }
-                                                </tbody>
-                                            </table>
-                                            <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
-                                            <span class="pull-left text-danger" style="margin-right:45px;">
-                                                <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-deep-orange btn-sm" asp-controller="ManualInvoice" asp-action="ReprintInvoice" asp-area="Sales">Print</a>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
+                                                    </thead>
+                                                    <tbody class="bg-white">
 
-                        @{
-                            if ((i + 1) < Model.Count())
-                            {
-                                item = Model.ElementAt(i + 1);
-                                <td>
-
-
-                                    <table class="table table-striped table-responsive table-responsive-lg table-bordered">
-                                        <thead class="table-danger">
-                                            <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#@item.InvoiceNo">
-                                                <td class="text-primary  font-weight-bold">Customer Name :@item.Customer.FullName  </td>
-                                                <td class="purple-text">Bill No: @item.InvoiceNo</td>
-                                                <td class="dark-grey-text">Bill Date :@String.Format("{0:dd/MM/yyyy}", item.OnDate.Date)</td>
-                                                <td class="expand-button text-success"> <i class="indicator fa fa-chevron-circle-down" aria-hidden="true"></i></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-success">
-
-                                            <tr>
-                                                <td colspan="4">
-                                                    <table class="table table-bordered collapse in p-3" id="@item.InvoiceNo">
-                                                        <thead class="bg-success">
+                                                        @{
+                                                            var totalBill = 0;
+                                                        }
+                                                        @foreach (var order in item.SaleItems)
+                                                        {
                                                             <tr>
-                                                                <th>BarCode</th>
-                                                                <th>Quantity</th>
-                                                                <th>Unit Price</th>
-                                                                <th>Discount</th>
-                                                                <th>Total</th>
+                                                                <td>@order.BarCode</td>
+
+                                                                <td>@order.Qty</td>
+                                                                <td>@order.MRP</td>
+                                                                <td>@order.Discount</td>
+                                                                <td>@order.BasicAmount</td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody class="bg-white">
+                                                            totalBill = totalBill + @Convert.ToInt32(order.BasicAmount);
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
+                                                <span class="pull-left text-danger" style="margin-right:45px;">
+                                                    <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-deep-orange btn-sm" asp-controller="ManualInvoice" asp-action="ReprintInvoice" asp-area="Sales">Print</a>
+                                                    <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-danger btn-sm" asp-controller="ManualInvoice" asp-action="DeleteInvoice" asp-area="Sales">Delete</a>
+                                                    <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-lime btn-sm" asp-controller="ManualInvoice" asp-action="EditInvoice" asp-area="Sales">Edit</a>
 
-                                                            @{
-                                                                totalBill = 0;
-                                                            }
-                                                            @foreach (var order in item.SaleItems)
-                                                            {
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+
+                            @{
+                                if ((i + 1) < Model.Count())
+                                {
+                                    item = Model.ElementAt(i + 1);
+                                    <td>
+
+
+                                        <table class="table table-striped table-responsive table-responsive-lg table-bordered">
+                                            <thead class="table-danger">
+                                                <tr class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#@item.InvoiceNo">
+                                                    <td class="text-primary  font-weight-bold">Customer Name :@item.Customer.FullName  </td>
+                                                    <td class="purple-text">Bill No: @item.InvoiceNo</td>
+                                                    <td class="dark-grey-text">Bill Date :@String.Format("{0:dd/MM/yyyy}", item.OnDate.Date)</td>
+                                                    <td class="expand-button text-success"> <i class="indicator fa fa-chevron-circle-down" aria-hidden="true"></i></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-success">
+
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <table class="table table-bordered collapse in p-3" id="@item.InvoiceNo">
+                                                            <thead class="bg-success">
                                                                 <tr>
-                                                                    <td>@order.BarCode</td>
-
-                                                                    <td>@order.Qty</td>
-                                                                    <td>@order.MRP</td>
-                                                                    <td>@order.Discount</td>
-                                                                    <td>@order.BasicAmount</td>
+                                                                    <th>BarCode</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Unit Price</th>
+                                                                    <th>Discount</th>
+                                                                    <th>Total</th>
                                                                 </tr>
-                                                                totalBill = totalBill + @Convert.ToInt32(order.BasicAmount);
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                    <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
-                                                    <span class="pull-left text-danger" style="margin-right:45px;">
-                                                        <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-deep-orange btn-sm" asp-controller="ManualInvoice" asp-action="ReprintInvoice" asp-area="Sales">Print</a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
+                                                            </thead>
+                                                            <tbody class="bg-white">
+
+                                                                @{
+                                                                    totalBill = 0;
+                                                                }
+                                                                @foreach (var order in item.SaleItems)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@order.BarCode</td>
+
+                                                                        <td>@order.Qty</td>
+                                                                        <td>@order.MRP</td>
+                                                                        <td>@order.Discount</td>
+                                                                        <td>@order.BasicAmount</td>
+                                                                    </tr>
+                                                                    totalBill = totalBill + @Convert.ToInt32(order.BasicAmount);
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                        <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
+                                                        <span class="pull-left text-danger" style="margin-right:45px;">
+                                                            <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-deep-orange btn-sm" asp-controller="ManualInvoice" asp-action="ReprintInvoice" asp-area="Sales">Print</a>
+                                                            <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-danger btn-sm" asp-controller="ManualInvoice" asp-action="DeleteInvoice" asp-area="Sales">Delete</a>
+                                                            <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-lime btn-sm" asp-controller="ManualInvoice" asp-action="EditInvoice" asp-area="Sales">Edit</a>
+
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
 
                             }
-                            else
-                            {
-                                <td></td>
-                            }
-
-                        }
 
 
-                    </tr>
+                        </tr>
                     }
 
                 </tbody>
@@ -171,6 +177,144 @@
     }
 </div>
 
+
+@*Model box for Editing*@
+<div class="modal fade" id="editInvoiceModal">
+    <div class="modal-dialog modal-lg" style=" width: 900px !important;">
+        <div class="modal-content">
+            <div class="modal-header table-primary">
+                <h4 class="text-success">Edit Invoice</h4> <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <form id="NewOrderForm">
+                <div class="modal-body">
+                    @*Customer Details*@
+                    <h5 style="color:#ff6347">Customer Details</h5>
+                    <hr />
+                    <div class="form-row">
+                        <table class="table table-active">
+                            <tr>
+                                <th>CustomerName</th>
+                                <th>MobileNo</th>
+                                <th>InvoiceNo</th>
+                                <th>Sale Date</th>
+                            </tr>
+                            <tr>
+                                <td><input readonly value="" type="text" id="name" name="name" placeholder=" Name" class="form-control" /></td>
+                                <td><input  readonly value="" type="text" id="mobileNo" name="mobileNo" placeholder="MobileNo" class="form-control" /></td>
+                                <td><input  readonly value="" type="text" id="invoiceNo" name="invoiceNo" placeholder=" invoiceNo" class="form-control" /></td>
+                                <td><input type="date" id="onDate" name="onDate" class="form-control" value="@DateTime.Today" /></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    @*Order Details*@
+                    <h5 style="margin-top:10px;color:#ff6347">Bill Details</h5>
+                    <hr />
+                    <div class="form-row">
+                        <table class="table table-active table-sm">
+                            <tr>
+                                <th>Total Amount</th>
+                                <th>Total Qty</th>
+                                <th>Total Discount</th>
+                                <th>NoofItem</th>
+                            </tr>
+                            <tr>
+                                <td><input type="number" readonly value="0" id="totalAmount" class="form-control" /></td>
+                                <td><input type="number" readonly value="0" id="totalQty" class="form-control" /></td>
+                                <td><input type="number" readonly value="0" id="totalDiscount" class="form-control" /></td>
+                                <td><input type="number" readonly value="0" id="totalItem" class="form-control" /></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    @*Order Details*@
+                    <h5 style="margin-top:10px;color:#ff6347">Item(s)</h5>
+                    <hr />
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Salesman</th>
+                                <th>BarCode</th>
+                                <th></th>
+                                <th>ProductName</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="salesMan" name="saleMan" class="form-control">
+                                        <option>Select Salesman</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
+                                </td>
+                                <td>
+                                    <a id="getBarCode" class="btn btn-sm btn-outline-success">Get</a>
+                                </td>
+                                <td><input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" /></td>
+                                <td> <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" /></td>
+                                <td>  <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" /></td>
+
+                                <td>
+                                    <input type="hidden" id="units" name="units" />
+                                    <a id="saveToList" name="saveToList" class="btn btn-sm btn-outline-primary">Save</a>
+
+                                </td>
+                            </tr>
+                        </table>
+                        <table id="detailsTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">SM</th>
+                                    <th style="width:20%">BarCode</th>
+                                    <th style="width:25%">Product</th>
+                                    <th style="width:15%">Unit Price</th>
+                                    <th style="width:15%">Quantity</th>
+                                    <th style="width:15%">Amount</th>
+                                    <th style="width:10%">Units</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <h5 class="purple-text"> Payment Details</h5>
+                    <hr />
+                    <div>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Cash Amount</th>
+                                <th>Card Amount</th>
+                                <th>CardType</th>
+                                <th>CardNo</th>
+                                <th>Auth Code</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="cashAmt" name="cashAmt" placeholder="Cash" value="0.0" class="form-control" /></td>
+                                <td><input type="text" id="cardAmt" name="cardAmt" placeholder="Card" value="0.0" class="form-control" /></td>
+                                <td><input type="text" id="cardType" name="cardType" placeholder="Card Type" value="" class="form-control" /></td>
+                                <td><input type="text" id="cardNo" name="cardNo" placeholder="Card No" value="" class="form-control" /></td>
+                                <td><input type="text" id="authCode" name="authCode" placeholder="Auth Code" value="" class="form-control" /></td>
+
+                            </tr>
+
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button id="saveOrder" type="submit" class="btn btn-sm btn-danger">Save Order</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
 @*Desing Bootdtrap Modal With Order Form*@
 
 <div class="modal fade" id="newOrderModal">
@@ -349,6 +493,42 @@
             detailsTableBody.append(productItem);
             clearItem();
         });
+
+        $("#saveToList").click(function (e) {
+            e.preventDefault();
+
+            if ($.trim($("#productName").val()) == "" || $.trim($("#price").val()) == "" || $.trim($("#quantity").val()) == "") {
+                alert("Kindly Enter all field(s).");
+                return
+            };
+            if ($.trim($("#productName").val()) == "Not Found") { alert("Kinldy add product!!!."); return; }
+            else if ($.trim($("#quantity").val()) == "" || $.trim($("#quantity").val()) == "0") { alert("Kinldy add quantity."); return; }
+
+            var productName = $("#productName").val(),
+                barcode = $("#barCode").val(),
+                price = $("#price").val(),
+                quantity = $("#quantity").val(),
+                units = $("#units").val(),
+                sman = $("#salesMan").val(),
+                detailsTableBody = $("#detailsTable tbody");
+            var amt = (parseFloat(price) * parseInt(quantity));
+
+            var tamt = parseFloat($("#totalAmount").val()) + amt;
+            tamt = Math.round(tamt);//RoundOff
+            $("#totalAmount").val(tamt);
+            var tqty = parseInt($("#totalQty").val()) + quantity;
+            $("#totalQty").val(tqty);
+            $("#totalItem").val((parseInt($("#totalItem").val()) + 1));
+
+
+            var productItem = '<tr><td>' + sman + '</td><td>' + barcode + '</td><td>' + productName + '</td><td>' + price + '</td><td>' + quantity + '</td><td>' +
+                (parseFloat(price) * parseInt(quantity)) + '</td><td>' + units + '</td><td><a data-itemId="0" href="#" class="btn btn-sm btn-outline-danger deleteItem">Remove</a></td></tr>';
+            detailsTableBody.append(productItem);
+            clearItem();
+        });
+
+
+
         $("#getBarCode").click(function (e) {
             e.preventDefault();
             if ($.trim($("#barCode").val()) == "") return;

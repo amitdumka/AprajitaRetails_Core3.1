@@ -28,7 +28,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         public ManualInvoiceController(AprajitaRetailsContext aCtx)
         {
             aprajitaContext = aCtx;
-            
+
         }
         public IActionResult Index()
         {
@@ -52,7 +52,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             string fileName = new RegularSaleManager().RePrintManaulInvoice(aprajitaContext, vm, StoreId);
 
-            if(Download!=null && Download == 101)
+            if (Download != null && Download == 101)
             {
                 return File(fileName, "application/pdf", Path.GetFileName(fileName));
             }
@@ -60,6 +60,19 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             return File(fileName, "application/pdf");
 
         }
+
+        public IActionResult EditInvoice(int? id)
+        {
+            return View();
+        }
+
+        public IActionResult DeleteInvoice(int? id)
+        {
+            return View();
+        }
+
+
+
 
         //TODO: Negative or zero stock waring. 
         //Only admin can zero or neg stock 
@@ -133,13 +146,53 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 else
                 {
                     result = "Invoice is Generated! Kindly print if required";
-                  
 
-                   return Json( new { x.FileName, result });
+
+                    return Json(new { x.FileName, result });
                 }
 
             }
             return Json(new { FileName = new String("Error"), result });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBillNo([FromBody] int? id)
+        {
+            
+            string errMsg = "Error!";
+            int ret = 0;
+            if (id == null)
+            {
+                errMsg = "Kindly send Invoice No!";
+                return Json(new { Count = ret, Msg = errMsg });
+            }
+
+            var inv = aprajitaContext.RegularInvoices.Find(id);
+            if (inv == null) errMsg = "Invoice Number Not found!";
+            else
+            {
+                aprajitaContext.RegularInvoices.Remove(inv);
+                ret = aprajitaContext.SaveChanges();
+                if (ret > 0)
+                    errMsg = "It fails to delete Invoice!";
+            }
+
+
+            return Json(new { Count = ret, Msg = errMsg });
+        }
+
+        [HttpPost]
+        public ActionResult SaveBillNo([FromBody] SaveOrderDTO dTO)
+        {
+            string errMsg = "Error!";
+            int ret = 0;
+            if (dTO == null)
+            {
+                errMsg = "Kindly send Invoice Data!";
+                return Json(new { Count = ret, Msg = errMsg });
+            }
+
+            return Json(new { Count = ret, Msg = errMsg });
         }
 
 
