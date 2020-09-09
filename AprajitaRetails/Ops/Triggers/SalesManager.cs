@@ -288,7 +288,6 @@ namespace AprajitaRetails.Ops.Triggers
         {
             try
             {
-
                 var inv = db.RegularInvoices.Where(c => c.IsManualBill && c.StoreId == StoreId).OrderBy(c => c.RegularInvoiceId).Select(c => new { c.RegularInvoiceId, c.InvoiceNo }).LastOrDefault();
                 if (inv != null) return inv.InvoiceNo; else return String.Empty;
             }
@@ -324,7 +323,7 @@ namespace AprajitaRetails.Ops.Triggers
         //}
 
         /// <summary>
-        ///  TODO:make it  static function
+        ///  TODO: Make it  static function
         /// </summary>
         /// <param name="db"></param>
         /// <param name="StoreId"></param>

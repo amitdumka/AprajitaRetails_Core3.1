@@ -56,6 +56,7 @@ namespace AprajitaRetails.Ops.Printers
         public string Discount { get; set; }
         public string GSTPercentage { get; set; }
         public string GSTAmount { get; set; }
+        public string Amount { get; set; }
     }
 
 

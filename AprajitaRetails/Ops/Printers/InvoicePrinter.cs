@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.IO;
+using iText.IO.Font;
+using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -46,45 +48,56 @@ namespace AprajitaRetails.Ops.Printers
 
             try
             {
-               // string PrintFolder = "Docs\\PrintFiles";
-                string fName =  "MInvoiceNo_" + details.BillNo.Substring(9) + ".pdf";
-                string fileName = Path.Combine(/*Directory.GetCurrentDirectory(),*/ "wwwroot", fName);
-
-
-                using PdfWriter pdfWriter = new PdfWriter( fileName);
-                using PdfDocument pdf = new PdfDocument (pdfWriter);
                 
-                Document pdfDoc = new Document (pdf, new PageSize(315, 1170));
+                string fName = "MInvoiceNo_" + details.BillNo.Substring(9) + ".pdf";
+                string fileName = Path.Combine("wwwroot", fName);
+
+
+                using PdfWriter pdfWriter = new PdfWriter(fileName);
+                using PdfDocument pdf = new PdfDocument(pdfWriter);
+
+                Document pdfDoc = new Document(pdf, new PageSize(240, 1170));
 
                 pdfDoc.SetMargins(10, 5, 10, 5);
-               
+
+                Style code = new Style();
+                PdfFont timesRoman = PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.TIMES_ROMAN);
+                code.SetFont(timesRoman).SetFontSize(12);
+
                 //Header
-                Paragraph p = new Paragraph(header.StoreName + "\n");
+                Paragraph p = new Paragraph(header.StoreName + "\n").SetFontSize(12);
                 p.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
                 p.Add(header.StoreAddress + "\n");
                 p.Add(header.StoreCity + "\n");
-                p.Add(header.StorePhoneNo + "\n");
+                p.Add("Ph No: " + header.StorePhoneNo + "\n");
                 p.Add(header.StoreGST + "\n");
-                p.Add(PrintInvoiceLine.DotedLine);
-                p.Add(PrintInvoiceLine.InvoiceTitle + "\n");
-                p.Add(PrintLine.DotedLine);
+                
                 pdfDoc.Add(p);
 
                 //Details
-                Paragraph dp = new Paragraph(ReceiptDetails.Employee + "\n");
-                dp.Add(details.BillNo + "\n");
-                dp.Add(details.BillDate + "\n");
-                dp.Add(details.BillTime + "\n");
-                dp.Add(details.CustomerName + "\n");
-                dp.Add(PrintLine.DotedLine);
-                dp.Add(PrintInvoiceLine.ItemLineHeader1 + "\n");
-                dp.Add(PrintInvoiceLine.ItemLineHeader2 + "\n");
-                dp.Add(PrintInvoiceLine.ItemLineHeader3 + "\n");
-                dp.Add(PrintInvoiceLine.DotedLine + "\n");
-                dp.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                pdfDoc.Add(dp);
-                Paragraph ip = new Paragraph();
-                ip.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                Paragraph ip = new Paragraph().SetFontSize(12);
+              
+                ip.Add(PrintInvoiceLine.DotedLine);
+                ip.AddTabStops(new TabStop(50));
+                ip.Add(" " + PrintInvoiceLine.InvoiceTitle + "\n");
+                ip.Add(PrintInvoiceLine.DotedLine);
+                ip.Add(ReceiptDetails.Employee + "\n");
+                ip.Add(details.BillNo + "\n");
+                ip.AddTabStops(new TabStop(30));
+                ip.Add("  " + details.BillDate + "\n");
+                ip.AddTabStops( new TabStop(30));
+                ip.Add("  " + details.BillTime + "\n");
+                
+
+                ip.Add(details.CustomerName + "\n");
+                ip.Add(PrintInvoiceLine.DotedLine);
+
+                ip.Add(PrintInvoiceLine.ItemLineHeader1 + "\n");
+                ip.Add(PrintInvoiceLine.ItemLineHeader2 + "\n");
+                
+                ip.Add(PrintInvoiceLine.DotedLine);
+      
+               
                 double gstPrice = 0.00;
                 double basicPrice = 0.00;
                 string tab = "    ";
@@ -93,31 +106,34 @@ namespace AprajitaRetails.Ops.Printers
                 {
                     if (itemDetails != null)
                     {
-                        ip.Add(itemDetails.SKUDescription + "\n");
-                        ip.Add(itemDetails.HSN + tab + tab + itemDetails.MRP + tab + tab);
-                        ip.Add(itemDetails.QTY + tab + tab + itemDetails.Discount + "\n");
-                        ip.Add(itemDetails.GSTPercentage + "%" + tab + tab + itemDetails.GSTAmount + tab + tab);
-                        ip.Add(itemDetails.GSTPercentage + "%" + tab + tab + itemDetails.GSTAmount + "\n");
+                        ip.Add(itemDetails.SKUDescription + itemDetails.HSN + "/\n");
+                        ip.Add(itemDetails.MRP + tab + tab);
+                        ip.Add(itemDetails.QTY + tab + tab + itemDetails.Discount + tab + tab + itemDetails.Amount);
+                        //ip.Add(itemDetails.GSTPercentage + "%" + tab + tab + itemDetails.GSTAmount + tab + tab);
+                        //ip.Add(itemDetails.GSTPercentage + "%" + tab + tab + itemDetails.GSTAmount + "\n");
                         gstPrice += Double.Parse(itemDetails.GSTAmount);
                         basicPrice += Double.Parse(itemDetails.BasicPrice);
                     }
                 }
 
                 ip.Add("\n" + PrintInvoiceLine.DotedLine);
-                ip.Add("Total: " + itemTotals.TotalItem + tab + tab + tab + itemTotals.NetAmount + "\n");
+
+                ip.Add("Total: " + itemTotals.TotalItem + tab + tab + tab + tab + tab + itemTotals.NetAmount + "\n");
                 ip.Add("item(s): " + itemTotals.ItemCount + tab + "Net Amount:" + tab + itemTotals.NetAmount + "\n");
                 ip.Add(PrintInvoiceLine.DotedLine);
-                ip.Add("Tender\n Paid Amount:\t\t Rs. " + itemTotals.CashAmount);
-                ip.Add("\n" + PrintInvoiceLine.DotedLine);
-                ip.Add("Basic Price:\t\t" + basicPrice.ToString("0.##"));
-                ip.Add("\nCGST:\t\t" + gstPrice.ToString("0.##"));
-                ip.Add("\nSGST:\t\t" + gstPrice.ToString("0.##") + "\n");
+
+                ip.Add("Tender(s)\n Paid Amount:\t\t Rs. " + itemTotals.CashAmount); //TODO: cash/Card option can be changed here
+
+                // ip.Add("\n" + PrintInvoiceLine.DotedLine);
+                //ip.Add("Basic Price:\t\t" + basicPrice.ToString("0.##"));
+                //ip.Add("\nCGST:\t\t" + gstPrice.ToString("0.##"));
+                //ip.Add("\nSGST:\t\t" + gstPrice.ToString("0.##") + "\n");
                 //ip.Add (PrintLine.DotedLine);
                 pdfDoc.Add(ip);
 
                 //Footer
-                Paragraph foot = new Paragraph(PrintLine.DotedLine);
-                foot.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                Paragraph foot = new Paragraph().SetFontSize(12);
+                //foot.SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
                 foot.Add(PrintInvoiceLine.FooterFirstMessage + "\n");
                 foot.Add(PrintInvoiceLine.DotedLine);
                 foot.Add(PrintInvoiceLine.FooterThanksMessage + "\n");
@@ -141,7 +157,7 @@ namespace AprajitaRetails.Ops.Printers
 
                 return exp.Message;
             }
-           
+
 
         }
 

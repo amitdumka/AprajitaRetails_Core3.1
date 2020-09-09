@@ -23,7 +23,8 @@ namespace AprajitaRetails.Ops.Printers
             {
                 ReceiptItemDetails rid = new ReceiptItemDetails { 
                     BasicPrice=item.BasicAmount.ToString("0.##"), Discount=item.Discount.ToString("0.##"), MRP=item.MRP.ToString("0.##"), 
-                    QTY=item.Qty.ToString("0.##") , GSTAmount=(item.TaxAmount/2).ToString("0.##"), HSN="", GSTPercentage="", SKUDescription=item.BarCode
+                    QTY=item.Qty.ToString("0.##") , GSTAmount=(item.TaxAmount/2).ToString("0.##"), HSN="", GSTPercentage="", SKUDescription=item.BarCode, 
+                    Amount=item.BillAmount.ToString("0.##")
                 };
 
                 if (item.HSNCode != null) rid.HSN = item.HSNCode.ToString();
@@ -47,7 +48,9 @@ namespace AprajitaRetails.Ops.Printers
                 ItemCount = inv.TotalItems.ToString(),
                 TotalItem = inv.TotalQty.ToString("0.##"),
                 NetAmount = inv.TotalBillAmount.ToString("0.##"),
-                CashAmount = inv.PaymentDetail.CashAmount.ToString("0.##")
+                CashAmount = inv.PaymentDetail.CashAmount.ToString("0.##"),
+                
+                
             };
             return total;
 
