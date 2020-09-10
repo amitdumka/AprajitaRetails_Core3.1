@@ -61,15 +61,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
         }
 
-        public IActionResult EditInvoice(int? id)
-        {
-            return View();
-        }
-
-        public IActionResult DeleteInvoice(int? id)
-        {
-            return View();
-        }
 
 
 
@@ -79,6 +70,63 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         // Manual Stock Ajustment record . 
         // Implement Delete Invoice and Edit. or Marked Deleted /Canceled Invoice
         // must have option to provide Manul Invice no entry of Phsycaial Invoice. 
+
+        class InvoiceDetails
+        {
+            public RegularInvoice Invoice;
+            public List<RegularSaleItem> SaleItem;
+            public PaymentDetail PaymentDetail;
+            public bool IsCardPayment;
+            public CardDetail? CardDetails;
+            public string Msg;
+            public string Error;
+        }
+
+
+        [HttpGet]
+        public JsonResult GetInvoiceDetails(int? id)
+        {
+
+            string errMsg = "Error!";
+
+            InvoiceDetails retunDetails;
+            if (id == null)
+            {
+                errMsg = "Kindly send Invoice No!";
+                return Json(new { Msg = errMsg, Error = "true" });
+            }
+
+            var inv = aprajitaContext.RegularInvoices.Where(c => c.RegularInvoiceId == id).FirstOrDefault();
+
+            if (inv == null)
+            {
+                errMsg = "Invoice Number Not found!";
+                return Json(new { Msg = errMsg, Error = "true" });
+            }
+
+            var pay = aprajitaContext.PaymentDetails.Where(c => c.InvoiceNo == inv.InvoiceNo).FirstOrDefault();
+            var listitem = aprajitaContext.RegularSaleItems.Where(c => c.InvoiceNo == inv.InvoiceNo).ToList();
+            var card = aprajitaContext.CardDetails.Where(c => c.InvoiceNo == inv.InvoiceNo).FirstOrDefault();
+
+
+            retunDetails = new InvoiceDetails();
+
+            retunDetails.Invoice = inv;
+            retunDetails.CardDetails = card;
+            retunDetails.PaymentDetail = pay;
+            retunDetails.SaleItem = listitem;
+
+            retunDetails.Msg = "Data is loaded successfuly";
+            retunDetails.Error = "OK";
+            if (pay.CardAmount > 0)
+            {
+                retunDetails.IsCardPayment = true;
+            }
+
+            return Json(retunDetails);
+
+            //TODO: need to create a complete view model and model copied for get data copied to item based on requriment.
+        }
 
 
         public JsonResult GetBarCode(string barcode)
@@ -155,10 +203,16 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             return Json(new { FileName = new String("Error"), result });
         }
 
-        [HttpPost]
-        public ActionResult DeleteBillNo([FromBody] int? id)
+
+        /// <summary>
+        /// Delete Bill No from Regular Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteBillNo(int? id)
         {
-            
+
             string errMsg = "Error!";
             int ret = 0;
             if (id == null)
@@ -167,19 +221,60 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 return Json(new { Count = ret, Msg = errMsg });
             }
 
-            var inv = aprajitaContext.RegularInvoices.Find(id);
+            var inv = aprajitaContext.RegularInvoices.Include(c => c.PaymentDetail).Include(c => c.SaleItems).Include(c => c.PaymentDetail.CardDetail).Where(c => c.RegularInvoiceId == id).FirstOrDefault();
             if (inv == null) errMsg = "Invoice Number Not found!";
             else
             {
                 aprajitaContext.RegularInvoices.Remove(inv);
                 ret = aprajitaContext.SaveChanges();
                 if (ret > 0)
+                {
+                    errMsg = "Invoice is Deleted!";
+                }
+                else
                     errMsg = "It fails to delete Invoice!";
+
             }
 
 
             return Json(new { Count = ret, Msg = errMsg });
         }
+
+        /// <summary>
+        ///  Delete Invoice from InvoiceNo
+        /// </summary>
+        /// <param name="InvoiceNo"></param>
+        /// <returns></returns>
+        //[HttpGet]
+        //public ActionResult DeleteBillNo(string InvoiceNo)
+        //{
+
+        //    string errMsg = "Error!";
+        //    int ret = 0;
+        //    if (String.IsNullOrEmpty(InvoiceNo))
+        //    {
+        //        errMsg = "Kindly send Invoice No!";
+        //        return Json(new { Count = ret, Msg = errMsg });
+        //    }
+
+        //    var inv = aprajitaContext.RegularInvoices.Include(c => c.PaymentDetail).Include(c => c.SaleItems).Include(c => c.PaymentDetail.CardDetail).Where(c => c.InvoiceNo == InvoiceNo).FirstOrDefault();
+        //    if (inv == null) errMsg = "Invoice Number Not found!";
+        //    else
+        //    {
+        //        aprajitaContext.RegularInvoices.Remove(inv);
+        //        ret = aprajitaContext.SaveChanges();
+        //        if (ret > 0)
+        //        {
+        //            errMsg = "Invoice is Deleted!";
+        //        }
+        //        else
+        //            errMsg = "It fails to delete Invoice!";
+
+        //    }
+
+
+        //    return Json(new { Count = ret, Msg = errMsg });
+        //}
 
         [HttpPost]
         public ActionResult SaveBillNo([FromBody] SaveOrderDTO dTO)

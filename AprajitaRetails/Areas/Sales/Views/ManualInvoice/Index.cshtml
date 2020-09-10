@@ -79,8 +79,10 @@
                                                 <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
                                                 <span class="pull-left text-danger" style="margin-right:45px;">
                                                     <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-deep-orange btn-sm" asp-controller="ManualInvoice" asp-action="ReprintInvoice" asp-area="Sales">Print</a>
-                                                    <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-danger btn-sm" asp-controller="ManualInvoice" asp-action="DeleteInvoice" asp-area="Sales">Delete</a>
-                                                    <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-lime btn-sm" asp-controller="ManualInvoice" asp-action="EditInvoice" asp-area="Sales">Edit</a>
+                                                    <a class="btn btn-outline-danger btn-sm" onclick="deleteInvoiceNo(@item.RegularInvoiceId)">Delete</a>
+                                                    <a class="btn btn-outline-lime btn-sm" onclick="getInvoiceDetails(@item.RegularInvoiceId)">Edit</a>
+                                                    @*<a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-danger btn-sm" asp-controller="ManualInvoice" asp-action="DeleteInvoice" asp-area="Sales">Delete</a>*@
+                                                    @*<a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-lime btn-sm" asp-controller="ManualInvoice" asp-action="EditInvoice" asp-area="Sales">Edit</a>*@
 
                                                 </span>
                                             </td>
@@ -141,8 +143,10 @@
                                                         <span class="pull-right text-danger" style="margin-right:45px;"><strong>Total Bill :  </strong> @totalBill</span>
                                                         <span class="pull-left text-danger" style="margin-right:45px;">
                                                             <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-deep-orange btn-sm" asp-controller="ManualInvoice" asp-action="ReprintInvoice" asp-area="Sales">Print</a>
-                                                            <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-danger btn-sm" asp-controller="ManualInvoice" asp-action="DeleteInvoice" asp-area="Sales">Delete</a>
-                                                            <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-lime btn-sm" asp-controller="ManualInvoice" asp-action="EditInvoice" asp-area="Sales">Edit</a>
+                                                            <a class="btn btn-outline-danger btn-sm" onclick="deleteInvoiceNo(@item.RegularInvoiceId)">Delete</a>
+                                                            <a class="btn btn-outline-lime btn-sm" onclick="getInvoiceDetails(@item.RegularInvoiceId)">Edit</a>
+                                                            @*<a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-danger btn-sm" asp-controller="ManualInvoice" asp-action="DeleteInvoice" asp-area="Sales">Delete</a>
+                                                                <a asp-route-id="@item.RegularInvoiceId" class="btn btn-outline-lime btn-sm" asp-controller="ManualInvoice" asp-action="EditInvoice" asp-area="Sales">Edit</a>*@
 
                                                         </span>
                                                     </td>
@@ -185,132 +189,132 @@
             <div class="modal-header table-primary">
                 <h4 class="text-success">Edit Invoice</h4> <a href="#" class="close" data-dismiss="modal">&times;</a>
                 <form id="NewOrderForm">
-                <div class="modal-body">
-                    @*Customer Details*@
-                    <h5 style="color:#ff6347">Customer Details</h5>
-                    <hr />
-                    <div class="form-row">
-                        <table class="table table-active">
-                            <tr>
-                                <th>CustomerName</th>
-                                <th>MobileNo</th>
-                                <th>InvoiceNo</th>
-                                <th>Sale Date</th>
-                            </tr>
-                            <tr>
-                                <td><input readonly value="" type="text" id="name" name="name" placeholder=" Name" class="form-control" /></td>
-                                <td><input  readonly value="" type="text" id="mobileNo" name="mobileNo" placeholder="MobileNo" class="form-control" /></td>
-                                <td><input  readonly value="" type="text" id="invoiceNo" name="invoiceNo" placeholder=" invoiceNo" class="form-control" /></td>
-                                <td><input type="date" id="onDate" name="onDate" class="form-control" value="@DateTime.Today" /></td>
-                            </tr>
-
-                        </table>
-                    </div>
-                    @*Order Details*@
-                    <h5 style="margin-top:10px;color:#ff6347">Bill Details</h5>
-                    <hr />
-                    <div class="form-row">
-                        <table class="table table-active table-sm">
-                            <tr>
-                                <th>Total Amount</th>
-                                <th>Total Qty</th>
-                                <th>Total Discount</th>
-                                <th>NoofItem</th>
-                            </tr>
-                            <tr>
-                                <td><input type="number" readonly value="0" id="totalAmount" class="form-control" /></td>
-                                <td><input type="number" readonly value="0" id="totalQty" class="form-control" /></td>
-                                <td><input type="number" readonly value="0" id="totalDiscount" class="form-control" /></td>
-                                <td><input type="number" readonly value="0" id="totalItem" class="form-control" /></td>
-                            </tr>
-                        </table>
-
-                    </div>
-
-                    @*Order Details*@
-                    <h5 style="margin-top:10px;color:#ff6347">Item(s)</h5>
-                    <hr />
-                    <div>
-                        <table>
-                            <tr>
-                                <th>Salesman</th>
-                                <th>BarCode</th>
-                                <th></th>
-                                <th>ProductName</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select id="salesMan" name="saleMan" class="form-control">
-                                        <option>Select Salesman</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
-                                </td>
-                                <td>
-                                    <a id="getBarCode" class="btn btn-sm btn-outline-success">Get</a>
-                                </td>
-                                <td><input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" /></td>
-                                <td> <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" /></td>
-                                <td>  <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" /></td>
-
-                                <td>
-                                    <input type="hidden" id="units" name="units" />
-                                    <a id="saveToList" name="saveToList" class="btn btn-sm btn-outline-primary">Save</a>
-
-                                </td>
-                            </tr>
-                        </table>
-                        <table id="detailsTable" class="table">
-                            <thead>
+                    <div class="modal-body">
+                        @*Customer Details*@
+                        <h5 style="color:#ff6347">Customer Details</h5>
+                        <hr />
+                        <div class="form-row">
+                            <table class="table table-active">
                                 <tr>
-                                    <th style="width:5%">SM</th>
-                                    <th style="width:20%">BarCode</th>
-                                    <th style="width:25%">Product</th>
-                                    <th style="width:15%">Unit Price</th>
-                                    <th style="width:15%">Quantity</th>
-                                    <th style="width:15%">Amount</th>
-                                    <th style="width:10%">Units</th>
-                                    <th></th>
+                                    <th>CustomerName</th>
+                                    <th>MobileNo</th>
+                                    <th>InvoiceNo</th>
+                                    <th>Sale Date</th>
                                 </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                                <tr>
+                                    <td><input readonly value="" type="text" id="name" name="name" placeholder=" Name" class="form-control" /></td>
+                                    <td><input readonly value="" type="text" id="mobileNo" name="mobileNo" placeholder="MobileNo" class="form-control" /></td>
+                                    <td><input readonly value="" type="text" id="invoiceNo" name="invoiceNo" placeholder=" invoiceNo" class="form-control" /></td>
+                                    <td><input type="date" id="onDate" name="onDate" class="form-control" value="@DateTime.Today" /></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        @*Order Details*@
+                        <h5 style="margin-top:10px;color:#ff6347">Bill Details</h5>
+                        <hr />
+                        <div class="form-row">
+                            <table class="table table-active table-sm">
+                                <tr>
+                                    <th>Total Amount</th>
+                                    <th>Total Qty</th>
+                                    <th>Total Discount</th>
+                                    <th>NoofItem</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="number" readonly value="0" id="totalAmount" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="totalQty" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="totalDiscount" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="totalItem" class="form-control" /></td>
+                                </tr>
+                            </table>
+
+                        </div>
+
+                        @*Order Details*@
+                        <h5 style="margin-top:10px;color:#ff6347">Item(s)</h5>
+                        <hr />
+                        <div>
+                            <table>
+                                <tr>
+                                    <th>Salesman</th>
+                                    <th>BarCode</th>
+                                    <th></th>
+                                    <th>ProductName</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select id="salesMan" name="saleMan" class="form-control">
+                                            <option>Select Salesman</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
+                                    </td>
+                                    <td>
+                                        <a id="getBarCode" class="btn btn-sm btn-outline-success">Get</a>
+                                    </td>
+                                    <td><input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" /></td>
+                                    <td> <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" /></td>
+                                    <td>  <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" /></td>
+
+                                    <td>
+                                        <input type="hidden" id="units" name="units" />
+                                        <a id="saveToList" name="saveToList" class="btn btn-sm btn-outline-primary">Save</a>
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="detailsTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:5%">SM</th>
+                                        <th style="width:20%">BarCode</th>
+                                        <th style="width:25%">Product</th>
+                                        <th style="width:15%">Unit Price</th>
+                                        <th style="width:15%">Quantity</th>
+                                        <th style="width:15%">Amount</th>
+                                        <th style="width:10%">Units</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <h5 class="purple-text"> Payment Details</h5>
+                        <hr />
+                        <div>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Cash Amount</th>
+                                    <th>Card Amount</th>
+                                    <th>CardType</th>
+                                    <th>CardNo</th>
+                                    <th>Auth Code</th>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" id="cashAmt" name="cashAmt" placeholder="Cash" value="0.0" class="form-control" /></td>
+                                    <td><input type="text" id="cardAmt" name="cardAmt" placeholder="Card" value="0.0" class="form-control" /></td>
+                                    <td><input type="text" id="cardType" name="cardType" placeholder="Card Type" value="" class="form-control" /></td>
+                                    <td><input type="text" id="cardNo" name="cardNo" placeholder="Card No" value="" class="form-control" /></td>
+                                    <td><input type="text" id="authCode" name="authCode" placeholder="Auth Code" value="" class="form-control" /></td>
+
+                                </tr>
+
+                            </table>
+
+                        </div>
+
                     </div>
-                    <hr />
-                    <h5 class="purple-text"> Payment Details</h5>
-                    <hr />
-                    <div>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Cash Amount</th>
-                                <th>Card Amount</th>
-                                <th>CardType</th>
-                                <th>CardNo</th>
-                                <th>Auth Code</th>
-                            </tr>
-                            <tr>
-                                <td><input type="text" id="cashAmt" name="cashAmt" placeholder="Cash" value="0.0" class="form-control" /></td>
-                                <td><input type="text" id="cardAmt" name="cardAmt" placeholder="Card" value="0.0" class="form-control" /></td>
-                                <td><input type="text" id="cardType" name="cardType" placeholder="Card Type" value="" class="form-control" /></td>
-                                <td><input type="text" id="cardNo" name="cardNo" placeholder="Card No" value="" class="form-control" /></td>
-                                <td><input type="text" id="authCode" name="authCode" placeholder="Auth Code" value="" class="form-control" /></td>
-
-                            </tr>
-
-                        </table>
-
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                        <button id="saveOrder" type="submit" class="btn btn-sm btn-danger">Save Order</button>
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                    <button id="saveOrder" type="submit" class="btn btn-sm btn-danger">Save Order</button>
-                </div>
-            </form>
+                </form>
             </div>
         </div>
     </div>
@@ -563,6 +567,58 @@
         });
         //After Click Save Button Pass All Data View To Controller For Save Database
 
+
+        function getInvoiceDetails(data) {
+            console.log(data);
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: "/Sales/ManualInvoice/GetInvoiceDetails?id=" + data,
+               
+                success: function (result) {
+                    console.log(result);
+                    if (result.error == "Error")
+                        alert(result.msg);
+                    else
+                        alert(result.msg);
+
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Error!!!");
+                }
+            });
+
+        }
+
+
+        function deleteInvoiceNo(data) {
+            var param = { id: data };
+            var oP = JSON.stringify({ id: data });
+
+            console.log(data);
+            console.log(param);
+            console.log(oP);
+
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'GET',
+                url: "/Sales/ManualInvoice/DeleteBillNo?id="+data,
+                data: oP,
+                success: function (result) {
+                    console.log(result);
+                    alert(result.msg);
+                    location.reload();
+
+                },
+                error: function () {
+                    alert("Error!!!");
+                }
+            });
+        }
+
         function getBarCodeData(data) {
             return $.ajax({
                 contentType: 'application/json; charset=utf-8',
@@ -605,6 +661,18 @@
                 }
             });
         }
+
+        $("#deleteInvoice").click(function (e) {
+            e.preventDefault();
+
+
+            $.when(deleteInvoiceNo(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+
         //Collect Multiple Order List For Pass To Controller
         $("#saveOrder").click(function (e) {
             e.preventDefault();
