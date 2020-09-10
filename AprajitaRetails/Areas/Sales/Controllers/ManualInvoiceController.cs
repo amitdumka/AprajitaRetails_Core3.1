@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using AprajitaRetails.Areas.Sales.Data;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Triggers;
@@ -12,6 +12,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+
+//TODO: Negative or zero stock waring. 
+//      Only admin can zero or neg stock 
+//      Manual Stock Ajustment record . 
+//      Implement Delete Invoice and Edit. or Marked Deleted /Canceled Invoice
+//      must have option to provide Manul Invice no entry of Phsycaial Invoice. 
 
 
 
@@ -61,28 +67,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
         }
 
-
-
-
-
-        //TODO: Negative or zero stock waring. 
-        //Only admin can zero or neg stock 
-        // Manual Stock Ajustment record . 
-        // Implement Delete Invoice and Edit. or Marked Deleted /Canceled Invoice
-        // must have option to provide Manul Invice no entry of Phsycaial Invoice. 
-
-        class InvoiceDetails
-        {
-            public RegularInvoice Invoice;
-            public List<RegularSaleItem> SaleItem;
-            public PaymentDetail PaymentDetail;
-            public bool IsCardPayment;
-            public CardDetail? CardDetails;
-            public string Msg;
-            public string Error;
-        }
-
-
         [HttpGet]
         public JsonResult GetInvoiceDetails(int? id)
         {
@@ -90,38 +74,25 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string errMsg = "Error!";
 
             InvoiceDetails retunDetails;
+
             if (id == null)
             {
                 errMsg = "Kindly send Invoice No!";
                 return Json(new { Msg = errMsg, Error = "true" });
             }
 
-            var inv = aprajitaContext.RegularInvoices.Where(c => c.RegularInvoiceId == id).FirstOrDefault();
+            retunDetails = SaleHelper.GetInvoiceData(aprajitaContext, (int)id);
 
-            if (inv == null)
+
+            if (retunDetails == null)
             {
                 errMsg = "Invoice Number Not found!";
                 return Json(new { Msg = errMsg, Error = "true" });
             }
 
-            var pay = aprajitaContext.PaymentDetails.Where(c => c.InvoiceNo == inv.InvoiceNo).FirstOrDefault();
-            var listitem = aprajitaContext.RegularSaleItems.Where(c => c.InvoiceNo == inv.InvoiceNo).ToList();
-            var card = aprajitaContext.CardDetails.Where(c => c.InvoiceNo == inv.InvoiceNo).FirstOrDefault();
-
-
-            retunDetails = new InvoiceDetails();
-
-            retunDetails.Invoice = inv;
-            retunDetails.CardDetails = card;
-            retunDetails.PaymentDetail = pay;
-            retunDetails.SaleItem = listitem;
-
             retunDetails.Msg = "Data is loaded successfuly";
             retunDetails.Error = "OK";
-            if (pay.CardAmount > 0)
-            {
-                retunDetails.IsCardPayment = true;
-            }
+
 
             return Json(retunDetails);
 
@@ -194,15 +165,19 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 else
                 {
                     result = "Invoice is Generated! Kindly print if required";
-
-
                     return Json(new { x.FileName, result });
                 }
-
             }
             return Json(new { FileName = new String("Error"), result });
         }
 
+        public ActionResult SaveEditedInvoice([FromBody] SaveOrderDTO dTO)
+        {
+
+            string result = "Error! Order Is Not Complete!";
+
+            return Json(new { FileName = new String("Error"), result });
+        }
 
         /// <summary>
         /// Delete Bill No from Regular Id
@@ -289,11 +264,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             return Json(new { Count = ret, Msg = errMsg });
         }
-
-
-
-
-
     }
 }
 
