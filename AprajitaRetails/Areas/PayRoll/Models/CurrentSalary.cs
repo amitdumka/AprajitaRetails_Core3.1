@@ -42,7 +42,8 @@ namespace AprajitaRetails.Models
         public bool? IsTailoring { get; set; }
 
         public virtual ICollection<PaySlip> PaySlips { get; set; }
-        
+
+        public string UserName { get; set; }
     }
 
 }

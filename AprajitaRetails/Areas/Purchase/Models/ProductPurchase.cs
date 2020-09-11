@@ -44,7 +44,9 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public bool IsPaid { get; set; }
         public ICollection<PurchaseItem> PurchaseItems { get; set; }
 
-        
+        public string UserName { get; set; }
+
+
 
     }
 

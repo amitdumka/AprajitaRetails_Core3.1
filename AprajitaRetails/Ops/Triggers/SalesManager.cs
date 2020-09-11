@@ -349,8 +349,7 @@ namespace AprajitaRetails.Ops.Triggers
             return newInv;
 
         }
-
-        public InvoiceSaveReturn OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, int StoreId = 1)
+        public InvoiceSaveReturn OnInsert(AprajitaRetailsContext db, SaveOrderDTO sales, string userName, int StoreId = 1)
         {
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
@@ -379,7 +378,6 @@ namespace AprajitaRetails.Ops.Triggers
             string InvNo = GenerateInvoiceNo(db, StoreId, true);
             List<RegularSaleItem> itemList = new List<RegularSaleItem>();
             List<Stock> stockList = new List<Stock>();
-
             foreach (var item in sales.SaleItems)
             {
                 RegularSaleItem sItem = new RegularSaleItem
@@ -421,15 +419,12 @@ namespace AprajitaRetails.Ops.Triggers
                 stock.Quantity -= item.Quantity;
                 stockList.Add(stock);
             }
-
             var totalBillamt = itemList.Sum(c => c.BillAmount);
             var totaltaxamt = itemList.Sum(c => c.TaxAmount);
             var totalDiscount = itemList.Sum(c => c.Discount);
             var totalQty = itemList.Sum(c => c.Qty);
             var totalitem = itemList.Count;
-
             decimal roundoffamt = Math.Round(totalBillamt) - totalBillamt;
-
             PaymentDetail pd = new PaymentDetail
             {
                 CardAmount = sales.PaymentInfo.CardAmount,
@@ -439,7 +434,6 @@ namespace AprajitaRetails.Ops.Triggers
                 MixAmount = 0,
                 PayMode = SalePayMode.Cash
             };
-
             if (sales.PaymentInfo.CardAmount > 0)
             {
                 if (sales.PaymentInfo.CashAmount > 0)
@@ -478,8 +472,6 @@ namespace AprajitaRetails.Ops.Triggers
 
                 pd.CardDetail = cd;
             }
-
-
             RegularInvoice Invoice = new RegularInvoice
             {
                 Customer = cust,
@@ -495,36 +487,91 @@ namespace AprajitaRetails.Ops.Triggers
                 TotalQty = totalQty,
                 TotalTaxAmount = totaltaxamt,
                 RoundOffAmount = roundoffamt,
-                PaymentDetail = pd
+                PaymentDetail = pd, UserName = userName
 
             };
-
             db.RegularInvoices.Add(Invoice);
             db.Stocks.UpdateRange(stockList);
-
             InvoiceSaveReturn returnData = new InvoiceSaveReturn{
                 NoOfRecord= db.SaveChanges(), FileName="NotSaved"
             };
-            
-
             if (returnData.NoOfRecord > 0)
             {
-
                 ReceiptHeader header = PrinterHelper.GetReceiptHeader(db, StoreId);
                 ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo, Invoice.OnDate, DateTime.Now.ToShortTimeString(), sales.Name);
-
                 ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(Invoice);
-
                 List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, itemList);
-
               returnData.FileName= "/" + InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, false);
-
             }
-
-
             return returnData;
+        }
+
+        public InvoiceSaveReturn OnEdit(AprajitaRetailsContext db, EditOrderDTO sales, int StoreId = 1)
+        {
+            Customer cust = db.Customers.Where(c=>c.MobileNo==sales.MobileNo).FirstOrDefault();
+            if (cust == null)
+            {
+                string[] names = sales.Name.Split(" ");
+                string FName = names[0];
+                string LName = "";
+                for (int i = 1; i < names.Length; i++)
+                    LName += names[i] + " ";
+
+                cust = new Customer
+                {
+                    City = "",
+                    Age = 30,
+                    FirstName = FName,
+                    Gender = Genders.Male,
+                    LastName = LName,
+                    MobileNo = sales.MobileNo,
+                    NoOfBills = 0,
+                    TotalAmount = 0,
+                    CreatedDate = DateTime.Now.Date
+                };
+                db.Customers.Add(cust);
+                db.SaveChanges();
+            }
+            RegularInvoice inv = db.RegularInvoices.Find(sales.InvoiceNo);
+            if (inv == null)
+            {
+                return null;
+            }
+            inv.SaleItems = db.RegularSaleItems.Where(c => c.InvoiceNo == sales.InvoiceNo).ToList();
+            inv.PaymentDetail = db.PaymentDetails.Include(c => c.CardAmount).Where(c => c.InvoiceNo == sales.InvoiceNo).FirstOrDefault();
+
+            return null;//TODO: temp
 
         }
+
+        public RegularSaleItem AddSaleItem(AprajitaRetailsContext db,SaleItemList saleitem , int StoreId = 1)
+        {
+            ProductItem pItem = db.ProductItems.Include(c => c.Units).Where(c => c.Barcode == saleitem.BarCode).FirstOrDefault();
+            if(pItem==null) { }
+
+            RegularSaleItem rSale = new RegularSaleItem {
+                BarCode=saleitem.BarCode 
+            };
+            Stock stock = db.Stocks.Where(c => c.StoreId == StoreId && c.ProductItemId == rSale.ProductItemId).FirstOrDefault();
+            
+            stock.SaleQty += rSale.Qty;
+            stock.Quantity -= rSale.Qty;
+            db.Stocks.Update(stock);
+            return rSale;
+        }
+
+        public bool RemoveSaleItem(AprajitaRetailsContext db, RegularSaleItem saleItem, int StoreId = 1)
+        {
+            Stock stock = db.Stocks.Where(c => c.StoreId == StoreId && c.ProductItemId == saleItem.ProductItemId).FirstOrDefault();
+            if (stock == null) return false;
+            stock.SaleQty -= saleItem.Qty;
+            stock.Quantity += saleItem.Qty;
+            db.Stocks.Update(stock);
+            db.RegularSaleItems.Remove(saleItem);
+            return true;
+
+        }
+
 
 
         public string RePrintManaulInvoice(AprajitaRetailsContext db, RegularInvoice invoice, int StoreId = 1)

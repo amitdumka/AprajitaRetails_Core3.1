@@ -36,6 +36,9 @@ namespace AprajitaRetails.Models
         [Display(Name = "To Aprajita Retails")]
         public bool IsDepositedOnAprajitaRetails { get; set; }
         public string Remarks { get; set; }
+
+
+        public string UserName { get; set; }
     }
 
   

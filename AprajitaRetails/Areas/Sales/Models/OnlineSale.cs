@@ -42,6 +42,8 @@ namespace AprajitaRetails.Models
 
         public virtual OnlineSaleReturn SaleReturn { get; set; }
 
+        public string UserName { get; set; }
+
     }
 
     public class OnlineSaleReturn
@@ -77,6 +79,8 @@ namespace AprajitaRetails.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Recived Date")]
         public DateTime? RecivedDate { get; set; }
+
+        public string UserName { get; set; }
 
         //[ForeignKey("OnlineVendor")]
         //public int OnlineVendorId { get; set; }

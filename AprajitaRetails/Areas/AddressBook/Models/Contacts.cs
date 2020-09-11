@@ -24,5 +24,7 @@ namespace AprajitaRetails.Areas.AddressBook.Models
         public string? EMailAddress { get; set; }
         [Display (Name = "Notes")]
         public string? Remarks { get; set; }
+
+        public string UserName { get; set; }
     }
 }

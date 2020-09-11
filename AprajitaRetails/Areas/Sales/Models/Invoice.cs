@@ -145,6 +145,8 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
 
         [DefaultValue(false)]
         public bool IsManualBill { get; set; }
+
+        public string UserName { get; set; }
     }
     public class RegularSaleItem : SaleItem
     {
@@ -190,6 +192,18 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string MobileNo { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
         public DateTime OnDate { get; set; }
+        public PaymentInfo PaymentInfo { get; set; }
+    }
+    public class EditOrderDTO
+    {
+        public string Name { get; set; }
+        public string InvoiceNo { get; set; }
+    
+        [MinLength(10), MaxLength(15)]
+        public string MobileNo { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
+        public DateTime OnDate { get; set; }
+        public List<SaleItemList> SaleItems { get; set; }
         public PaymentInfo PaymentInfo { get; set; }
     }
     public class SaleItemList

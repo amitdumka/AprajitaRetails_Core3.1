@@ -14,6 +14,7 @@ using AprajitaRetails.Areas.Uploader.Models;
 //using SaleInvoice = AprajitaRetails.Areas.Sales.Models.SaleInvoice;
 using AprajitaRetails.Areas.Accounts.Models;
 using AprajitaRetails.Areas.Reports.Models;
+using AprajitaRetails.Areas.Admin.Models;
 //using AprajitaRetails.Areas.Chat.Models;
 
 namespace AprajitaRetails.Data
@@ -276,6 +277,10 @@ namespace AprajitaRetails.Data
         // public DbSet<AprajitaRetails.Areas.Reports.Models.EmpAttReport> EmpAttReport { get; set; }
         // public DbSet<LedgerEntry> LedgerEntries { get; set; }
         //public DbSet<AprajitaRetails.Areas.Reports.Models.EmpFinReport> EmpFinReport { get; set; }
+
+
+        //Admin
+        public DbSet<RegisteredUser> RegisteredUsers { get; set; }
 
     }
 

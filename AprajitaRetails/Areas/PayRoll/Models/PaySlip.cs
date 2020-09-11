@@ -56,7 +56,7 @@ namespace AprajitaRetails.Models
 
         public bool? IsTailoring { get; set; }
 
-
+        public string UserName { get; set; }
 
 
     }

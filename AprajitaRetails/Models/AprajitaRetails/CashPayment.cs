@@ -35,6 +35,8 @@ namespace AprajitaRetails.Models
         public int? StoreId { get; set; }
         public virtual Store Store { get; set; }
 
+        public string UserName { get; set; }
+
     }
 
   

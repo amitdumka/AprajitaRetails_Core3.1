@@ -16,5 +16,7 @@ namespace AprajitaRetails.Areas.Voyager.Models
         public string BankDetails { get; set; }
         public string Remarks { get; set; }
 
+        public string UserName { get; set; }
+
     }
 }

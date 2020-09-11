@@ -9,6 +9,7 @@ using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -18,22 +19,23 @@ using Microsoft.Extensions.Caching.Memory;
 //      Manual Stock Ajustment record . 
 //      Implement Delete Invoice and Edit. or Marked Deleted /Canceled Invoice
 //      must have option to provide Manul Invice no entry of Phsycaial Invoice. 
-
+//      http://abctutorial.com/Post/35/mvc-5-master-details-using-jquery-ajax
+//      http://www.dotnetawesome.com/2016/07/advance-master-details-entry-form-in-mvc.html
 
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
-    //http://abctutorial.com/Post/35/mvc-5-master-details-using-jquery-ajax
-    //http://www.dotnetawesome.com/2016/07/advance-master-details-entry-form-in-mvc.html
+  
     [Area("Sales")]
+    [Authorize]
     public class ManualInvoiceController : Controller
     {
         private readonly AprajitaRetailsContext aprajitaContext;
         private readonly int StoreId = 1; //TODO: Fixed now
-
-        public ManualInvoiceController(AprajitaRetailsContext aCtx)
+        private readonly UserManager<IdentityUser> UserManager;
+        public ManualInvoiceController(AprajitaRetailsContext aCtx, UserManager<IdentityUser> userManager)
         {
-            aprajitaContext = aCtx;
+            aprajitaContext = aCtx; UserManager = userManager;
 
         }
         public IActionResult Index()
@@ -70,33 +72,22 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         [HttpGet]
         public JsonResult GetInvoiceDetails(int? id)
         {
-
             string errMsg = "Error!";
-
             InvoiceDetails retunDetails;
-
             if (id == null)
             {
                 errMsg = "Kindly send Invoice No!";
                 return Json(new { Msg = errMsg, Error = "true" });
             }
-
             retunDetails = SaleHelper.GetInvoiceData(aprajitaContext, (int)id);
-
-
             if (retunDetails == null)
             {
                 errMsg = "Invoice Number Not found!";
                 return Json(new { Msg = errMsg, Error = "true" });
             }
-
             retunDetails.Msg = "Data is loaded successfuly";
             retunDetails.Error = "OK";
-
-
-            return Json(retunDetails);
-
-            //TODO: need to create a complete view model and model copied for get data copied to item based on requriment.
+            return Json(retunDetails);          
         }
 
 
@@ -159,7 +150,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-                InvoiceSaveReturn x = new RegularSaleManager().OnInsert(aprajitaContext, dTO, StoreId);
+                InvoiceSaveReturn x = new RegularSaleManager().OnInsert(aprajitaContext, dTO, User.Identity.Name, StoreId );
                 if (x.NoOfRecord <= 0)
                     result = "Error while saving bill, Kindly try again!";
                 else

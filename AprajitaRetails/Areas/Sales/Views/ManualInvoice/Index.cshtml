@@ -203,10 +203,10 @@
                                     <th>Sale Date</th>
                                 </tr>
                                 <tr>
-                                    <td><input readonly value="" type="text" id="name" name="name" placeholder=" Name" class="form-control" /></td>
+                                    <td><input readonly value="" type="text" id="eName" name="eName" placeholder=" Name" class="form-control" /></td>
                                     @*<td><input readonly value="" type="text" id="mobileNo" name="mobileNo" placeholder="MobileNo" class="form-control" /></td>*@
                                     <td><input readonly value="" type="text" id="invoiceNo" name="invoiceNo" placeholder=" invoiceNo" class="form-control" /></td>
-                                    <td><input type="date" id="onDate" name="onDate" class="form-control" value="@DateTime.Today" /></td>
+                                    <td><input type="date" id="eOnDate" name="eOnDate" class="form-control" value="@DateTime.Today" /></td>
                                 </tr>
 
                             </table>
@@ -223,10 +223,10 @@
                                     <th>NoofItem</th>
                                 </tr>
                                 <tr>
-                                    <td><input type="number" readonly value="0" id="totalAmount" class="form-control" /></td>
-                                    <td><input type="number" readonly value="0" id="totalQty" class="form-control" /></td>
-                                    <td><input type="number" readonly value="0" id="totalDiscount" class="form-control" /></td>
-                                    <td><input type="number" readonly value="0" id="totalItem" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="eTotalAmount" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="eTotalQty" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="eTotalDiscount" class="form-control" /></td>
+                                    <td><input type="number" readonly value="0" id="eTotalItem" class="form-control" /></td>
                                 </tr>
                             </table>
 
@@ -248,19 +248,19 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select id="salesMan" name="saleMan" class="form-control">
+                                        <select id="salesManEdit" name="saleManEdit" class="form-control">
                                             <option>Select Salesman</option>
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="text" id="barCode" name="barCode" placeholder="BarCode" class="form-control" />
+                                        <input type="text" id="eBarCode" name="eBarCode" placeholder="BarCode" class="form-control" />
                                     </td>
                                     <td>
                                         <a id="getBarCode" class="btn btn-sm btn-outline-success">Get</a>
                                     </td>
-                                    <td><input type="text" id="productName" name="productName" placeholder="Product Name" class="form-control" /></td>
-                                    <td> <input type="number" id="price" name="price" placeholder="Product Price" class="form-control" /></td>
-                                    <td>  <input type="number" id="quantity" name="quantity" placeholder="Quantity" class="form-control" /></td>
+                                    <td><input type="text" id="eProductName" name="eProductName" placeholder="Product Name" class="form-control" /></td>
+                                    <td> <input type="number" id="ePrice" name="ePrice" placeholder="Product Price" class="form-control" /></td>
+                                    <td>  <input type="number" id="eQuantity" name="eQuantity" placeholder="Quantity" class="form-control" /></td>
 
                                     <td>
                                         <input type="hidden" id="units" name="units" />
@@ -298,11 +298,11 @@
                                     <th>Auth Code</th>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" id="cashAmt" name="cashAmt" placeholder="Cash" value="0.0" class="form-control" /></td>
-                                    <td><input type="text" id="cardAmt" name="cardAmt" placeholder="Card" value="0.0" class="form-control" /></td>
-                                    <td><input type="text" id="cardType" name="cardType" placeholder="Card Type" value="" class="form-control" /></td>
-                                    <td><input type="text" id="cardNo" name="cardNo" placeholder="Card No" value="" class="form-control" /></td>
-                                    <td><input type="text" id="authCode" name="authCode" placeholder="Auth Code" value="" class="form-control" /></td>
+                                    <td><input type="text" id="eCashAmt" name="eCashAmt" placeholder="Cash" value="0.0" class="form-control" /></td>
+                                    <td><input type="text" id="eCardAmt" name="eCardAmt" placeholder="Card" value="0.0" class="form-control" /></td>
+                                    <td><input type="text" id="eCardType" name="eCardType" placeholder="Card Type" value="" class="form-control" /></td>
+                                    <td><input type="text" id="eCardNo" name="eCardNo" placeholder="Card No" value="" class="form-control" /></td>
+                                    <td><input type="text" id="eAuthCode" name="eAuthCode" placeholder="Auth Code" value="" class="form-control" /></td>
 
                                 </tr>
 
@@ -777,6 +777,7 @@
             })
         }
         LoadSaleman($('#salesMan'));
+        LoadSaleman($('#salesManEdit'));
     </script>
 }
 
