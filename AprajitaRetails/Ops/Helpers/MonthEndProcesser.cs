@@ -42,7 +42,7 @@ namespace AprajitaRetails.Models.Helpers
         private MonthEnd CalculateTotalExpenses(AprajitaRetailsContext db, DateTime onDate, MonthEnd mEnd)
         {
             mEnd.TotalSalary = db.SalaryPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount);
-            mEnd.TotalTailoringExpenses = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount);
+           // mEnd.TotalTailoringExpenses = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount);
             mEnd.TotalCashExpenses = db.PettyCashExpenses.Where (c => ( c.ExpDate ).Month == ( onDate ).Month).Sum (c => c.Amount);
 
             mEnd.TotalHomeExpenses = db.CashPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount);

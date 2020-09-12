@@ -124,13 +124,13 @@ namespace AprajitaRetails.Ops.Utility
             var dCashRec = db.CashReceipts.Where(c => (c.InwardDate.Date) == (date.Date)).OrderBy(c => c.InwardDate);//ok
             var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => (c.DepoDate.Date) == (date.Date)).OrderBy(c => c.DepoDate);
-            var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
+           // var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
 
-            foreach (var item in dTalRec)
-            {
-                CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in dTalRec)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
+            //    book.Add(b);
+            //}
             foreach (var item in dSale)
             {
                 CashBook b = new CashBook() { EDate = item.SaleDate, CashIn = item.Amount, Particulars = item.InvNo, CashOut = 0, CashBalance = 0 };
@@ -171,20 +171,20 @@ namespace AprajitaRetails.Ops.Utility
             var eDue = db.DuesLists.Include(c => c.DailySale).Where(c => c.IsRecovered == false && (c.DailySale.SaleDate.Date) == (date.Date)).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => (c.ExpDate.Date) == (date.Date)).OrderBy(c => c.ExpDate);
 
-            var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate) == (date.Date)).OrderBy(c => c.PaymentDate);
-            var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
+            //var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate) == (date.Date)).OrderBy(c => c.PaymentDate);
+           // var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
 
-            foreach (var item in eTalStPay)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in eTalStPay)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
 
-            foreach (var item in eTalSal)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in eTalSal)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
 
             foreach (var item in eexp)
             {
@@ -260,16 +260,16 @@ namespace AprajitaRetails.Ops.Utility
             var dCashRec = db.CashReceipts.Where(c => c.InwardDate.Month == date.Month && c.InwardDate.Year == date.Year).OrderBy(c => c.InwardDate);
             var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.ReceiptDate.Year == date.Year && c.ReceiptDate.Month == date.Month).OrderBy(c => c.ReceiptDate);
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year).OrderBy(c => c.DepoDate);
-            var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && c.ReceiptDate.Month == date.Month && c.ReceiptDate.Year == date.Year).OrderBy(c => c.ReceiptDate);//ok
+           // var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && c.ReceiptDate.Month == date.Month && c.ReceiptDate.Year == date.Year).OrderBy(c => c.ReceiptDate);//ok
 
 
 
 
-            foreach (var item in dTalRec)
-            {
-                CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in dTalRec)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
+            //    book.Add(b);
+            //}
             foreach (var item in dSale)
             {
                 CashBook b = new CashBook() { EDate = item.SaleDate, CashIn = item.Amount, Particulars = item.InvNo, CashOut = 0, CashBalance = 0 };
@@ -308,20 +308,20 @@ namespace AprajitaRetails.Ops.Utility
             var eDepo = db.BankDeposits.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year).OrderBy(c => c.DepoDate);
             var eDue = db.DuesLists.Include(e => e.DailySale).Where(c => c.IsRecovered == false && c.DailySale.SaleDate.Month == date.Month && c.DailySale.SaleDate.Year == date.Year).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => c.ExpDate.Month == date.Month && c.ExpDate.Year == date.Year).OrderBy(c => c.ExpDate);
-            var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
-            var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
+           // var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
+           // var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
 
 
-            foreach (var item in eTalStPay)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
-            foreach (var item in eTalSal)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in eTalStPay)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
+            //foreach (var item in eTalSal)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
             foreach (var item in eexp)
             {
                 CashBook b = new CashBook() { EDate = item.ExpDate, CashIn = 0, Particulars = item.Particulars, CashOut = item.Amount, CashBalance = 0 };
@@ -559,13 +559,13 @@ namespace AprajitaRetails.Ops.Utility
             var dCashRec = db.CashReceipts.Where(c => (c.InwardDate.Date) == (date.Date)).OrderBy(c => c.InwardDate);//ok
             var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => (c.DepoDate.Date) == (date.Date)).OrderBy(c => c.DepoDate);
-            var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
+          //  var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
 
-            foreach (var item in dTalRec)
-            {
-                CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in dTalRec)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
+            //    book.Add(b);
+            //}
             foreach (var item in dSale)
             {
                 CashBook b = new CashBook() { EDate = item.SaleDate, CashIn = item.Amount, Particulars = item.InvNo, CashOut = 0, CashBalance = 0 };
@@ -606,20 +606,20 @@ namespace AprajitaRetails.Ops.Utility
             var eDue = db.DuesLists.Include(c => c.DailySale).Where(c => c.IsRecovered == false && (c.DailySale.SaleDate.Date) == (date.Date)).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => (c.ExpDate.Date) == (date.Date)).OrderBy(c => c.ExpDate);
 
-            var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate) == (date.Date)).OrderBy(c => c.PaymentDate);
-            var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
+           // var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate) == (date.Date)).OrderBy(c => c.PaymentDate);
+           // var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
 
-            foreach (var item in eTalStPay)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in eTalStPay)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
 
-            foreach (var item in eTalSal)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in eTalSal)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
 
             foreach (var item in eexp)
             {
@@ -696,13 +696,13 @@ namespace AprajitaRetails.Ops.Utility
             var dCashRec = db.CashReceipts.Where(c => c.InwardDate.Month == date.Month && c.InwardDate.Year == date.Year).OrderBy(c => c.InwardDate);
             var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.ReceiptDate.Year == date.Year && c.ReceiptDate.Month == date.Month).OrderBy(c => c.ReceiptDate);
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year).OrderBy(c => c.DepoDate);
-            var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && c.ReceiptDate.Month == date.Month && c.ReceiptDate.Year == date.Year).OrderBy(c => c.ReceiptDate);//ok
+           // var dTalRec = db.TailoringStaffAdvanceReceipts.Include(c => c.Employee).Where(c => c.PayMode == PayModes.Cash && c.ReceiptDate.Month == date.Month && c.ReceiptDate.Year == date.Year).OrderBy(c => c.ReceiptDate);//ok
                         
-            foreach (var item in dTalRec)
-            {
-                CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in dTalRec)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.ReceiptDate, CashIn = item.Amount, Particulars = item.Employee.StaffName, CashOut = 0, CashBalance = 0 };
+            //    book.Add(b);
+            //}
             foreach (var item in dSale)
             {
                 CashBook b = new CashBook() { EDate = item.SaleDate, CashIn = item.Amount, Particulars = item.InvNo, CashOut = 0, CashBalance = 0 };
@@ -740,22 +740,22 @@ namespace AprajitaRetails.Ops.Utility
             var eDepo = db.BankDeposits.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year).OrderBy(c => c.DepoDate);
             var eDue = db.DuesLists.Include(e => e.DailySale).Where(c => c.IsRecovered == false && c.DailySale.SaleDate.Month == date.Month && c.DailySale.SaleDate.Year == date.Year).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => c.ExpDate.Month == date.Month && c.ExpDate.Year == date.Year).OrderBy(c => c.ExpDate);
-            var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
-            var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
+           // var eTalSal = db.TailoringSalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
+           // var eTalStPay = db.TailoringStaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
 
            
-            foreach (var item in eTalStPay)
-            {
+            //foreach (var item in eTalStPay)
+            //{
                 
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars ="TSAP_ID:# "+item.TailoringStaffAdvancePaymentId+" SN: "+item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars ="TSAP_ID:# "+item.TailoringStaffAdvancePaymentId+" SN: "+item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
 
-            foreach (var item in eTalSal)
-            {
-                CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = "TSP_ID:# " + item.TailoringSalaryPaymentId + " SN: " + item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
-                book.Add(b);
-            }
+            //foreach (var item in eTalSal)
+            //{
+            //    CashBook b = new CashBook() { EDate = item.PaymentDate, CashIn = 0, Particulars = "TSP_ID:# " + item.TailoringSalaryPaymentId + " SN: " + item.Employee.StaffName, CashOut = item.Amount, CashBalance = 0 };
+            //    book.Add(b);
+            //}
 
             foreach (var item in eexp)
             {

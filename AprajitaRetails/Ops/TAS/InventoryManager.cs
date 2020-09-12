@@ -34,25 +34,25 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                var id = db.SalesPerson.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesPersonId;
+                var id = db.Salesmen.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesmanId;
                 if (id > 0)
                 {
                     return id;
                 }
                 else
                 {
-                    SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                    db.SalesPerson.Add(sm);
+                    Salesman sm = new Salesman { SalesmanName = salesman };
+                    db.Salesmen.Add(sm);
                     db.SaveChanges();
-                    return sm.SalesPersonId;
+                    return sm.SalesmanId;
                 }
             }
             catch (Exception)
             {
-                SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                db.SalesPerson.Add(sm);
+                Salesman sm = new Salesman { SalesmanName = salesman };
+                db.Salesmen.Add(sm);
                 db.SaveChanges();
-                return sm.SalesPersonId;
+                return sm.SalesmanId;
             }
         }
 
@@ -992,25 +992,25 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                var id = db.SalesPerson.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesPersonId;
+                var id = db.Salesmen.Where(c => c.SalesmanName == salesman).FirstOrDefault().SalesmanId;
                 if (id > 0)
                 {
                     return id;
                 }
                 else
                 {
-                    SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                    db.SalesPerson.Add(sm);
+                    Salesman sm = new Salesman { SalesmanName = salesman };
+                    db.Salesmen.Add(sm);
                     db.SaveChanges();
-                    return sm.SalesPersonId;
+                    return sm.SalesmanId;
                 }
             }
             catch (Exception)
             {
-                SalesPerson sm = new SalesPerson { SalesmanName = salesman };
-                db.SalesPerson.Add(sm);
+                Salesman sm = new Salesman { SalesmanName = salesman };
+                db.Salesmen.Add(sm);
                 db.SaveChanges();
-                return sm.SalesPersonId;
+                return sm.SalesmanId;
             }
         }
 

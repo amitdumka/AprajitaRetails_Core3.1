@@ -30,6 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Tailoring\Controllers\TailorAttendancesController.cs" />
+    <Compile Remove="Areas\Tailoring\Controllers\TailoringEmployeesController.cs" />
+    <Compile Remove="Areas\Tailoring\Controllers\TailoringSalaryPaymentsController.cs" />
+    <Compile Remove="Areas\Tailoring\Controllers\TailoringStaffAdvancePaymentsController.cs" />
+    <Compile Remove="Areas\Tailoring\Controllers\TailoringStaffAdvanceReceiptsController.cs" />
     <Compile Remove="Migrations\20200907120111_bUgx1Fixed.cs" />
     <Compile Remove="Migrations\20200907120111_bUgx1Fixed.Designer.cs" />
     <Compile Remove="Migrations\AccountsContextModelSnapshot.cs" />

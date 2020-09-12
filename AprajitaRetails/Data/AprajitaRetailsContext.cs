@@ -76,10 +76,10 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 7, Transcation = "CashOut" });
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 8, Transcation = "Regular" });
 
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
-            modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 4, SalesmanName = "Bikash Kumar Sah" });
+           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
+           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
+           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
+           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 4, SalesmanName = "Bikash Kumar Sah" });
 
 
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 1, CompositeRate = 5, TaxName = "Local Output GST@ 5%  ", TaxType = TaxType.GST });
@@ -165,11 +165,11 @@ namespace AprajitaRetails.Data
 
         //Tailoring
 
-        public DbSet<TailorAttendance> TailorAttendances { get; set; }
-        public DbSet<TailoringEmployee> TailoringEmployees { get; set; }
-        public DbSet<TailoringSalaryPayment> TailoringSalaryPayments { get; set; }
-        public DbSet<TailoringStaffAdvancePayment> TailoringStaffAdvancePayments { get; set; }
-        public DbSet<TailoringStaffAdvanceReceipt> TailoringStaffAdvanceReceipts { get; set; }
+        //public DbSet<TailorAttendance> TailorAttendances { get; set; }
+        //public DbSet<TailoringEmployee> TailoringEmployees { get; set; }
+       // public DbSet<TailoringSalaryPayment> TailoringSalaryPayments { get; set; }
+       // public DbSet<TailoringStaffAdvancePayment> TailoringStaffAdvancePayments { get; set; }
+       // public DbSet<TailoringStaffAdvanceReceipt> TailoringStaffAdvanceReceipts { get; set; }
 
         public DbSet<TalioringBooking> TalioringBookings { get; set; }
         public DbSet<TalioringDelivery> TailoringDeliveries { get; set; }
@@ -232,7 +232,7 @@ namespace AprajitaRetails.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<PurchaseTaxType> PurchaseTaxTypes { get; set; }
-        public DbSet<SalesPerson> SalesPerson { get; set; }
+        //public DbSet<SalesPerson> SalesPerson { get; set; }
 
         public DbSet<Areas.Sales.Models.SaleInvoice> SaleInvoices { get; set; }
         public DbSet<Areas.Sales.Models.SaleItem> SaleItems { get; set; }

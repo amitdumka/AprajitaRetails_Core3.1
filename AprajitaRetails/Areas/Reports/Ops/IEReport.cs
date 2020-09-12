@@ -34,8 +34,8 @@ namespace AprajitaRetails.Areas.Reports.Ops
                 TotalPayments = db.Payments.Where(c => c.PayDate.Date >= start.Date && c.PayDate.Date <= end.Date).Sum(c => c.Amount),
                 TotalStaffPayments = db.SalaryPayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date).Sum(c => c.Amount) +
                                     db.StaffAdvancePayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date).Sum(c => c.Amount),
-                TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date).Sum(c => c.Amount) +
-                                        db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date).Sum(c => c.Amount),
+                //TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date).Sum(c => c.Amount) +
+                //                        db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date).Sum(c => c.Amount),
 
                 TotalCashPayments = db.CashPayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date && c.Mode.Transcation != "Home Expenses").Sum(c => c.Amount),
                 TotalHomeExpenses = db.CashPayments.Where(c => c.PaymentDate.Date >= start.Date && c.PaymentDate.Date <= end.Date && c.Mode.Transcation == "Home Expenses").Sum(c => c.Amount),
@@ -67,7 +67,7 @@ namespace AprajitaRetails.Areas.Reports.Ops
                 TotalOthersExpenses = 0,
                 TotalPayments = db.Payments.Where(c => c.PayDate.Month == onDate.Month).Sum(c => c.Amount),
                 TotalStaffPayments = db.SalaryPayments.Where(c => c.PaymentDate.Month == onDate.Month).Sum(c => c.Amount) + db.StaffAdvancePayments.Where(c => c.PaymentDate.Month == onDate.Month).Sum(c => c.Amount),
-                TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Month == onDate.Month).Sum(c => c.Amount) + db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Month == onDate.Month).Sum(c => c.Amount),
+               // TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Month == onDate.Month).Sum(c => c.Amount) + db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Month == onDate.Month).Sum(c => c.Amount),
                 TotalCashPayments = db.CashPayments.Where(c => c.PaymentDate.Month == onDate.Month && c.Mode.Transcation != "Home Expenses").Sum(c => c.Amount),
                 TotalHomeExpenses = db.CashPayments.Where(c => c.PaymentDate.Month == onDate.Month && c.Mode.Transcation == "Home Expenses").Sum(c => c.Amount),
                 //Dues
@@ -96,7 +96,7 @@ namespace AprajitaRetails.Areas.Reports.Ops
                 TotalOthersExpenses = 0,
                 TotalPayments = db.Payments.Where(c => c.PayDate.Year == onDate.Year).Sum(c => c.Amount),
                 TotalStaffPayments = db.SalaryPayments.Where(c => c.PaymentDate.Year == onDate.Year).Sum(c => c.Amount) + db.StaffAdvancePayments.Where(c => c.PaymentDate.Year == onDate.Year).Sum(c => c.Amount),
-                TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Year == onDate.Year).Sum(c => c.Amount) + db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Year == onDate.Year).Sum(c => c.Amount),
+              //  TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Year == onDate.Year).Sum(c => c.Amount) + db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Year == onDate.Year).Sum(c => c.Amount),
                 TotalCashPayments = db.CashPayments.Where(c => c.PaymentDate.Year == onDate.Year && c.Mode.Transcation != "Home Expenses").Sum(c => c.Amount),
                 TotalHomeExpenses = db.CashPayments.Where(c => c.PaymentDate.Year == onDate.Year && c.Mode.Transcation == "Home Expenses").Sum(c => c.Amount),
                 //Dues
@@ -124,7 +124,7 @@ namespace AprajitaRetails.Areas.Reports.Ops
                 TotalOthersExpenses = 0,
                 TotalPayments = db.Payments.Where(c => c.PayDate.Date == onDate.Date).Sum(c => c.Amount),
                 TotalStaffPayments = db.SalaryPayments.Where(c => c.PaymentDate.Date == onDate.Date).Sum(c => c.Amount) + db.StaffAdvancePayments.Where(c => c.PaymentDate.Date == onDate.Date).Sum(c => c.Amount),
-                TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Date == onDate.Date).Sum(c => c.Amount) + db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Date == onDate.Date).Sum(c => c.Amount),
+               // TotalTailoringPayments = db.TailoringSalaryPayments.Where(c => c.PaymentDate.Date == onDate.Date).Sum(c => c.Amount) + db.TailoringStaffAdvancePayments.Where(c => c.PaymentDate.Date == onDate.Date).Sum(c => c.Amount),
                 TotalCashPayments = db.CashPayments.Where(c => c.PaymentDate.Date == onDate.Date && c.Mode.Transcation != "Home Expenses").Sum(c => c.Amount),
                 TotalHomeExpenses = db.CashPayments.Where(c => c.PaymentDate.Date == onDate.Date && c.Mode.Transcation == "Home Expenses").Sum(c => c.Amount),
                 //Dues

@@ -70,12 +70,12 @@ namespace AprajitaRetails.Models.Helpers
 
                     //Staff/Tailoring
                     TotalStaffPayments = db.SalaryPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount) + db.StaffAdvancePayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
-                    TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
+                    //TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
 
                     //Reciepts
                     TotalRecipts = db.Receipts.Where (c => ( c.RecieptDate ).Month == ( onDate ).Month).Sum (c => c.Amount) +
-              db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Month == ( onDate ).Month).Sum (c => c.Amount) +
-              db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
+              db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Month == ( onDate ).Month).Sum (c => c.Amount), 
+             //+ db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
                     TotalCashRecipts = db.CashReceipts.Where (c => ( c.InwardDate ).Month == ( onDate ).Month).Sum (c => c.Amount),
 
                     TotalRecovery = db.DuesLists.Where (c => c.RecoveryDate.Value.Month == onDate.Month).Sum (c => c.Amount),
@@ -112,12 +112,12 @@ namespace AprajitaRetails.Models.Helpers
 
                     //Staff/Tailoring
                     TotalStaffPayments = db.SalaryPayments.Where (c => ( c.PaymentDate ).Year == ( onDate ).Year).Sum (c => c.Amount) + db.StaffAdvancePayments.Where (c => ( c.PaymentDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
-                    TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Year == ( onDate ).Year).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
+                    //TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Year == ( onDate ).Year).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
 
                     //Reciepts
                     TotalRecipts = db.Receipts.Where (c => ( c.RecieptDate ).Year == ( onDate ).Year).Sum (c => c.Amount) +
-              db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Year == ( onDate ).Year).Sum (c => c.Amount) +
-              db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
+              db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
+              //+db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
                     TotalCashRecipts = db.CashReceipts.Where (c => ( c.InwardDate ).Year == ( onDate ).Year).Sum (c => c.Amount),
 
                     TotalRecovery = db.DuesLists.Where (c => c.RecoveryDate.Value.Year == onDate.Year).Sum (c => c.Amount),
@@ -156,12 +156,12 @@ namespace AprajitaRetails.Models.Helpers
 
                     //Staff/Tailoring
                     TotalStaffPayments = db.SalaryPayments.Where (c => ( c.PaymentDate ).Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).Sum (c => c.Amount) + db.StaffAdvancePayments.Where (c => ( c.PaymentDate ).Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).Sum (c => c.Amount),
-                    TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).Sum (c => c.Amount),
+                   // TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).Sum (c => c.Amount),
 
                     //Reciepts
                     TotalRecipts = db.Receipts.Where (c => ( c.RecieptDate ).Date >= startDate.Date && c.RecieptDate.Date <= endDate.Date).Sum (c => c.Amount) +
-             db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).Sum (c => c.Amount) +
-             db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).Sum (c => c.Amount),
+             db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).Sum (c => c.Amount), 
+            //+ db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).Sum (c => c.Amount),
                     TotalCashRecipts = db.CashReceipts.Where (c => ( c.InwardDate ).Date >= startDate.Date && c.InwardDate.Date <= endDate.Date).Sum (c => c.Amount),
 
                     TotalRecovery = db.DuesLists.Where (c => c.RecoveryDate.Value.Date == onDate.Date).Sum (c => c.Amount),
@@ -198,12 +198,12 @@ namespace AprajitaRetails.Models.Helpers
 
                     //Staff/Tailoring
                     TotalStaffPayments = db.SalaryPayments.Where (c => ( c.PaymentDate ).Date == ( onDate ).Date).Sum (c => c.Amount) + db.StaffAdvancePayments.Where (c => ( c.PaymentDate ).Date == ( onDate ).Date).Sum (c => c.Amount),
-                    TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Date == ( onDate ).Date).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Date == ( onDate ).Date).Sum (c => c.Amount),
+                   // TotalTailoringPayments = db.TailoringSalaryPayments.Where (c => ( c.PaymentDate ).Date == ( onDate ).Date).Sum (c => c.Amount) + db.TailoringStaffAdvancePayments.Where (c => ( c.PaymentDate ).Date == ( onDate ).Date).Sum (c => c.Amount),
 
                     //Reciepts
                     TotalRecipts = db.Receipts.Where (c => ( c.RecieptDate ).Date == ( onDate ).Date).Sum (c => c.Amount) +
-              db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date == ( onDate ).Date).Sum (c => c.Amount) +
-              db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date == ( onDate ).Date).Sum (c => c.Amount),
+              db.StaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date == ( onDate ).Date).Sum (c => c.Amount) ,
+            //+  db.TailoringStaffAdvanceReceipts.Where (c => ( c.ReceiptDate ).Date == ( onDate ).Date).Sum (c => c.Amount),
                     TotalCashRecipts = db.CashReceipts.Where (c => ( c.InwardDate ).Date == ( onDate ).Date).Sum (c => c.Amount),
 
                     TotalRecovery = db.DuesLists.Where (c => c.RecoveryDate.Value.Date == onDate.Date).Sum (c => c.Amount),
@@ -222,7 +222,7 @@ namespace AprajitaRetails.Models.Helpers
 
             var sales = db.DailySales.Where (c => c.SaleDate.Date == onDate.Date);
             var cashRec = db.CashReceipts.Where (c => c.InwardDate.Date == onDate.Date);
-            var tailor = db.TailoringStaffAdvanceReceipts.Where (c => c.ReceiptDate.Date == onDate.Date);
+           // var tailor = db.TailoringStaffAdvanceReceipts.Where (c => c.ReceiptDate.Date == onDate.Date);
             var staff = db.StaffAdvanceReceipts.Where (c => c.ReceiptDate.Date == onDate.Date);
             var rec = db.Receipts.Where (c => c.RecieptDate.Date == onDate.Date);
             var recover = db.DueRecoverds.Where (c => c.PaidDate.Date == onDate.Date);
@@ -250,17 +250,17 @@ namespace AprajitaRetails.Models.Helpers
                 IncomeDetails.Add (vmdata);
             }
 
-            foreach ( var item in tailor )
-            {
-                IncomeExpensesVM vmdata = new IncomeExpensesVM
-                {
-                    Amount = item.Amount,
-                    OnDate = item.ReceiptDate,
-                    Particulars = item.Employee.StaffName,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
-                };
-                IncomeDetails.Add (vmdata);
-            }
+            //foreach ( var item in tailor )
+            //{
+            //    IncomeExpensesVM vmdata = new IncomeExpensesVM
+            //    {
+            //        Amount = item.Amount,
+            //        OnDate = item.ReceiptDate,
+            //        Particulars = item.Employee.StaffName,
+            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //    };
+            //    IncomeDetails.Add (vmdata);
+            //}
 
             foreach ( var item in staff )
             {
@@ -306,11 +306,11 @@ namespace AprajitaRetails.Models.Helpers
             var exp = db.Expenses.Where (c => c.ExpDate.Date == onDate.Date);
             var pettycashexp = db.PettyCashExpenses.Where (c => c.ExpDate.Date == onDate.Date);
             var cashpay = db.CashPayments.Include (c => c.Mode).Where (c => c.PaymentDate.Date == onDate.Date);
-            var tailor = db.TailoringSalaryPayments.Where (c => c.PaymentDate.Date == onDate.Date);
+            //var tailor = db.TailoringSalaryPayments.Where (c => c.PaymentDate.Date == onDate.Date);
             var staff = db.SalaryPayments.Where (c => c.PaymentDate.Date == onDate.Date);
             var TotalDues = db.DuesLists.Include (c => c.DailySale).Where (c => !c.IsRecovered && c.DailySale.SaleDate.Date == onDate.Date);
             var paym = db.Payments.Where (c => c.PayDate.Date == onDate.Date);
-            var tailoradv = db.TailoringStaffAdvancePayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date == onDate.Date).ToList ();
+            //var tailoradv = db.TailoringStaffAdvancePayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date == onDate.Date).ToList ();
             var staffavc = db.StaffAdvancePayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date == onDate.Date).ToList ();
 
             foreach ( var item in paym )
@@ -357,29 +357,29 @@ namespace AprajitaRetails.Models.Helpers
                 };
                 ExpensesDetails.Add (vmdata);
             }
-            foreach ( var item in tailor )
-            {
-                IncomeExpensesVM vmdata = new IncomeExpensesVM
-                {
-                    Amount = item.Amount,
-                    OnDate = item.PaymentDate,
-                    Particulars = item.Employee.StaffName + "\t " + item.SalaryMonth,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
-                };
-                ExpensesDetails.Add (vmdata);
-            }
+            //foreach ( var item in tailor )
+            //{
+            //    IncomeExpensesVM vmdata = new IncomeExpensesVM
+            //    {
+            //        Amount = item.Amount,
+            //        OnDate = item.PaymentDate,
+            //        Particulars = item.Employee.StaffName + "\t " + item.SalaryMonth,
+            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //    };
+            //    ExpensesDetails.Add (vmdata);
+            //}
 
-            foreach ( var item in tailoradv )
-            {
-                IncomeExpensesVM vmdata = new IncomeExpensesVM
-                {
-                    Amount = item.Amount,
-                    OnDate = item.PaymentDate,
-                    Particulars = item.Employee.StaffName + "\t " + item.Details,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
-                };
-                ExpensesDetails.Add (vmdata);
-            }
+            //foreach ( var item in tailoradv )
+            //{
+            //    IncomeExpensesVM vmdata = new IncomeExpensesVM
+            //    {
+            //        Amount = item.Amount,
+            //        OnDate = item.PaymentDate,
+            //        Particulars = item.Employee.StaffName + "\t " + item.Details,
+            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //    };
+            //    ExpensesDetails.Add (vmdata);
+            //}
             foreach ( var item in exp )
             {
                 IncomeExpensesVM vmdata = new IncomeExpensesVM
@@ -424,7 +424,7 @@ namespace AprajitaRetails.Models.Helpers
 
             DateTime startDate = onDate.StartOfWeek ();
             DateTime endDate = onDate.EndOfWeek ();
-            var tailor = db.TailoringStaffAdvanceReceipts.Include (c => c.Employee).Where (c => c.ReceiptDate.Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).ToList ();
+           // var tailor = db.TailoringStaffAdvanceReceipts.Include (c => c.Employee).Where (c => c.ReceiptDate.Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).ToList ();
             var sales = db.DailySales.Where (c => c.SaleDate.Date >= startDate.Date && c.SaleDate.Date <= endDate.Date).ToList ();
             var cashRec = db.CashReceipts.Where (c => c.InwardDate.Date >= startDate.Date && c.InwardDate.Date <= endDate.Date).ToList ();
             var staff = db.StaffAdvanceReceipts.Include (c => c.Employee).Where (c => c.ReceiptDate.Date >= startDate.Date && c.ReceiptDate.Date <= endDate.Date).ToList ();
@@ -456,17 +456,17 @@ namespace AprajitaRetails.Models.Helpers
                 IncomeDetails.Add (vmdata);
             }
 
-            foreach ( var item in tailor )
-            {
-                IncomeExpensesVM vmdata = new IncomeExpensesVM
-                {
-                    Amount = item.Amount,
-                    OnDate = item.ReceiptDate,
-                    Particulars = item.Employee.StaffName,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
-                };
-                IncomeDetails.Add (vmdata);
-            }
+            //foreach ( var item in tailor )
+            //{
+            //    IncomeExpensesVM vmdata = new IncomeExpensesVM
+            //    {
+            //        Amount = item.Amount,
+            //        OnDate = item.ReceiptDate,
+            //        Particulars = item.Employee.StaffName,
+            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //    };
+            //    IncomeDetails.Add (vmdata);
+            //}
 
             foreach ( var item in staff )
             {
@@ -512,10 +512,10 @@ namespace AprajitaRetails.Models.Helpers
             DateTime endDate = onDate.EndOfWeek ();
 
             var exp = db.Expenses.Where (c => c.ExpDate.Date >= startDate.Date && c.ExpDate.Date <= endDate.Date).ToList ();
-            var tailoradv = db.TailoringStaffAdvancePayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).ToList ();
+           // var tailoradv = db.TailoringStaffAdvancePayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).ToList ();
 
             var pettycashexp = db.PettyCashExpenses.Where (c => c.ExpDate.Date >= startDate.Date && c.ExpDate.Date <= endDate.Date).ToList ();
-            var tailor = db.TailoringSalaryPayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).ToList ();
+           // var tailor = db.TailoringSalaryPayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).ToList ();
 
             var cashpay = db.CashPayments.Include (c => c.Mode).Where (c => c.PaymentDate.Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).ToList ();
             var staff = db.SalaryPayments.Include (c => c.Employee).Where (c => c.PaymentDate.Date >= startDate.Date && c.PaymentDate.Date <= endDate.Date).ToList ();
@@ -568,29 +568,29 @@ namespace AprajitaRetails.Models.Helpers
                 ExpensesDetails.Add (vmdata);
             }
 
-            foreach ( var item in tailor )
-            {
-                IncomeExpensesVM vmdata = new IncomeExpensesVM
-                {
-                    Amount = item.Amount,
-                    OnDate = item.PaymentDate,
-                    Particulars = item.Employee.StaffName + "\t " + item.SalaryMonth,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
-                };
-                ExpensesDetails.Add (vmdata);
-            }
+            //foreach ( var item in tailor )
+            //{
+            //    IncomeExpensesVM vmdata = new IncomeExpensesVM
+            //    {
+            //        Amount = item.Amount,
+            //        OnDate = item.PaymentDate,
+            //        Particulars = item.Employee.StaffName + "\t " + item.SalaryMonth,
+            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //    };
+            //    ExpensesDetails.Add (vmdata);
+            //}
 
-            foreach ( var item in tailoradv )
-            {
-                IncomeExpensesVM vmdata = new IncomeExpensesVM
-                {
-                    Amount = item.Amount,
-                    OnDate = item.PaymentDate,
-                    Particulars = item.Employee.StaffName + "\t " + item.Details,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
-                };
-                ExpensesDetails.Add (vmdata);
-            }
+            //foreach ( var item in tailoradv )
+            //{
+            //    IncomeExpensesVM vmdata = new IncomeExpensesVM
+            //    {
+            //        Amount = item.Amount,
+            //        OnDate = item.PaymentDate,
+            //        Particulars = item.Employee.StaffName + "\t " + item.Details,
+            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //    };
+            //    ExpensesDetails.Add (vmdata);
+            //}
             foreach ( var item in exp )
             {
                 IncomeExpensesVM vmdata = new IncomeExpensesVM

@@ -37,36 +37,36 @@ namespace AprajitaRetails.Areas.Tailoring.Data
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, true);
         }
 
-        public void OnUpdate(AprajitaRetailsContext db, TailoringSalaryPayment salPayment)
-        {
+        //public void OnUpdate(AprajitaRetailsContext db, TailoringSalaryPayment salPayment)
+        //{
 
-            var old = db.TailoringSalaryPayments.Where(c => c.TailoringSalaryPaymentId == salPayment.TailoringSalaryPaymentId).Select(d => new { d.Amount, d.PaymentDate, d.PayMode }).FirstOrDefault();
-            if (old != null)
-            {
-                UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
-            }
-            UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
-        }
+        //    var old = db.TailoringSalaryPayments.Where(c => c.TailoringSalaryPaymentId == salPayment.TailoringSalaryPaymentId).Select(d => new { d.Amount, d.PaymentDate, d.PayMode }).FirstOrDefault();
+        //    if (old != null)
+        //    {
+        //        UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
+        //    }
+        //    UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
+        //}
 
-        public void OnUpdate(AprajitaRetailsContext db, TailoringStaffAdvancePayment salPayment)
-        {
-            var old = db.TailoringStaffAdvancePayments.Where(c => c.TailoringStaffAdvancePaymentId == salPayment.TailoringStaffAdvancePaymentId).Select(d => new { d.Amount, d.PaymentDate, d.PayMode }).FirstOrDefault();
-            if (old != null)
-            {
-                UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
-            }
-            UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
-        }
-        public void OnUpdate(AprajitaRetailsContext db, TailoringStaffAdvanceReceipt salPayment)
-        {
+        //public void OnUpdate(AprajitaRetailsContext db, TailoringStaffAdvancePayment salPayment)
+        //{
+        //    var old = db.TailoringStaffAdvancePayments.Where(c => c.TailoringStaffAdvancePaymentId == salPayment.TailoringStaffAdvancePaymentId).Select(d => new { d.Amount, d.PaymentDate, d.PayMode }).FirstOrDefault();
+        //    if (old != null)
+        //    {
+        //        UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
+        //    }
+        //    UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
+        //}
+        //public void OnUpdate(AprajitaRetailsContext db, TailoringStaffAdvanceReceipt salPayment)
+        //{
 
-            var old = db.TailoringStaffAdvanceReceipts.Where(c => c.TailoringStaffAdvanceReceiptId == salPayment.TailoringStaffAdvanceReceiptId).Select(d => new { d.Amount, d.ReceiptDate, d.PayMode }).FirstOrDefault();
-            if (old != null)
-            {
-                UpdateInAmount(db, old.Amount, old.PayMode, old.ReceiptDate, true);
-            }
-            UpdateInAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.ReceiptDate, false);
-        }
+        //    var old = db.TailoringStaffAdvanceReceipts.Where(c => c.TailoringStaffAdvanceReceiptId == salPayment.TailoringStaffAdvanceReceiptId).Select(d => new { d.Amount, d.ReceiptDate, d.PayMode }).FirstOrDefault();
+        //    if (old != null)
+        //    {
+        //        UpdateInAmount(db, old.Amount, old.PayMode, old.ReceiptDate, true);
+        //    }
+        //    UpdateInAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.ReceiptDate, false);
+        //}
 
         //private void UpDateSalaryAmount(AprajitaRetailsContext db, SalaryPayment salPayment, bool IsEdit)
         //{
