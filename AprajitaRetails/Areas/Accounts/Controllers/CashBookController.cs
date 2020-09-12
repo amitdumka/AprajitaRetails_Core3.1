@@ -8,6 +8,7 @@ using AprajitaRetails.Models.ViewModels;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using AprajitaRetails.Ops.Printers.Reports;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -28,7 +29,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
 
         // GET: CashBook
-        public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType)
+        public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType, string OutputType)
         {
             string sWebRootFolder = _hostingEnvironment.WebRootPath;
             string fileName = Path.Combine (sWebRootFolder, "Export_" + DateTime.Now.ToFileTimeUtc().ToString () + ".xlsx");
@@ -36,6 +37,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             CashBookManagerExporter managerexporter = new CashBookManagerExporter ();
             CashBookManager manager = new CashBookManager ();
             List<CashBook> cashList;
+           
             if ( !String.IsNullOrEmpty (OpsType) )
             {
                 if ( OpsType == "Correct" )
@@ -69,10 +71,18 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 cashList = manager.GetMontlyCashBook (db, DateTime.Now);
             }
 
-            if ( cashList != null )
-                return View (cashList);
+            if (cashList != null)
+            {
+                if (!String.IsNullOrEmpty(OutputType))
+                {
+                    string fName = ReportPrinter.PrintCashBook(cashList);
+                    return File(fName, "application/pdf");
+                }
+
+                return View(cashList);
+            }
             else
-                return NotFound ();
+                return NotFound();
         }
 
         // GET: CashBook/Details/5

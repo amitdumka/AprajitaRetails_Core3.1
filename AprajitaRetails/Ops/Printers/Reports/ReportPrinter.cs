@@ -17,8 +17,8 @@ namespace AprajitaRetails.Ops.Printers.Reports
 {
     public class ReportPrinter
     {
-        string tabs = "    ";
-        public string PrintCashBook(List<CashBook> cbList)
+        //string tabs = "    ";
+        public static string PrintCashBook(List<CashBook> cbList)
         {
             string fileName = "cashBook_" + DateTime.Today.ToShortDateString() + ".pdf";
             using PdfWriter pdfWriter = new PdfWriter(fileName);

@@ -14,7 +14,7 @@ namespace AprajitaRetails.Ops.Utility
 
 
     public class CashBookManagerExporter
-    {
+    {//TODO: verify and Implement using Excel and Pdf version of output
         public decimal GetClosingBalance(AprajitaRetailsContext db, DateTime forDate, bool IsBank = false)
         {
             if (IsBank)

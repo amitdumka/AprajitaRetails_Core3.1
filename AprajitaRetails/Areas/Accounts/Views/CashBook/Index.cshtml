@@ -19,7 +19,18 @@
 
             </div>
         </div>
-        @if ( Context.User.IsInRole ("Admin") )
+        <div class="form-group form-row  ">
+
+            <div class="control-label col-md-2 text-danger ">Output :</div>
+            <div class="col-md-10  ">
+
+
+                @Html.RadioButton("OutputType", "OnScreen", true) <b class="text-primary">On Screen </b>
+                @Html.RadioButton("OutputType", "PDF", false)<b class="text-success"> Pdf</b>
+
+            </div>
+        </div>
+        @if (Context.User.IsInRole("Admin"))
         {
             <div class="form-group form-row  ">
 
@@ -35,8 +46,8 @@
         }
         <div class="form-group">
 
-            <strong> By Date:</strong> @Html.EditorFor(model => model.FirstOrDefault ().EDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString (), @class = "form-control-sm " } })
-            @Html.ValidationMessageFor(model => model.FirstOrDefault ().EDate, "", new { @class = "text-danger" })
+            <strong> By Date:</strong> @Html.EditorFor(model => model.FirstOrDefault().EDate, new { htmlAttributes = new { @value = DateTime.Now.ToShortDateString(), @class = "form-control-sm " } })
+            @Html.ValidationMessageFor(model => model.FirstOrDefault().EDate, "", new { @class = "text-danger" })
 
             <input type="submit" value="Get" class=" btn btn-outline-warning btn-sm " />
         </div>

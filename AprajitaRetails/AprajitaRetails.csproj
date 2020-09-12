@@ -268,6 +268,7 @@
     <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="GravatarHelper.AspNetCore" Version="1.1.0" />
     <PackageReference Include="westwind.aspnetcore.markdown" Version="3.0.36" />
+    <PackageReference Include="ZKemkeeper" Version="1.0.2" />
     <!--<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.44" />
