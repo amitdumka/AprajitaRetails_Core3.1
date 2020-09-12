@@ -12,29 +12,57 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Path = System.IO.Path;
 
 namespace AprajitaRetails.Ops.Printers.Reports
 {
     public class ReportPrinter
     {
-        //string tabs = "    ";
+
+        /// <summary>
+        /// Add Page number at top of pdf file. 
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns> filename saved as</returns>
+        public static string AddPageNumberToPdf(string fileName)
+        {
+            using PdfReader reader = new PdfReader(fileName);
+            string fName = "cashBook_" + (DateTime.Now.ToFileTimeUtc() + 1001) + ".pdf";
+            using PdfWriter writer = new PdfWriter(Path.Combine(ReportHeaderDetails.WWWroot, fName));
+
+            using PdfDocument pdfDoc2 = new PdfDocument(reader, writer);
+            Document doc2 = new Document(pdfDoc2);
+
+            int numberOfPages = pdfDoc2.GetNumberOfPages();
+            for (int i = 1; i <= numberOfPages; i++)
+            {
+                doc2.ShowTextAligned(new Paragraph("Page " + i + " of " + numberOfPages),
+                        559, 806, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+            }
+            doc2.Close();
+            return fName;
+        }
+
+
         public static string PrintCashBook(List<CashBook> cbList)
         {
-            string fileName = "cashBook_" + DateTime.Today.ToShortDateString() + ".pdf";
+            string fName = "cashBook_" + DateTime.Now.ToFileTimeUtc() + ".pdf";
+
+            string fileName = Path.Combine(ReportHeaderDetails.WWWroot, fName);
             using PdfWriter pdfWriter = new PdfWriter(fileName);
             using PdfDocument pdfDoc = new PdfDocument(pdfWriter);
-            using Document doc = new Document(pdfDoc, PageSize.A4.Rotate());
-
-            Paragraph header = new Paragraph(ReportHeaderDetails.FirstLine).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-            header.Add(ReportHeaderDetails.SecondLine);
-            header.Add(ReportHeaderDetails.CashBook);
-
+            using Document doc = new Document(pdfDoc, PageSize.A4);
+            Paragraph header = new Paragraph(ReportHeaderDetails.FirstLine + "\n")
+                .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                .SetFontColor(ColorConstants.RED);
+            header.Add(ReportHeaderDetails.SecondLine + "\n");
+            doc.Add(header);
             float[] columnWidths = { 1, 5, 15, 5, 5, 5 };
-            Table table = new Table(UnitValue.CreatePercentArray(columnWidths)).SetBorder(new DashedBorder(2));
+            Table table = new Table(UnitValue.CreatePercentArray(columnWidths)).SetBorder(new OutsetBorder(2));
 
             PdfFont f = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
-            Cell cell = new Cell(1, 3)
-                    .Add(new Paragraph("Cash Book(s)"))
+            Cell cell = new Cell(1, 6)
+                    .Add(new Paragraph(ReportHeaderDetails.CashBook))
                     .SetFont(f)
                     .SetFontSize(13)
                     .SetFontColor(DeviceGray.WHITE)
@@ -43,44 +71,66 @@ namespace AprajitaRetails.Ops.Printers.Reports
 
             table.AddHeaderCell(cell);
 
-            for (int i = 0; i < 2; i++)
-            {
-                Cell[] headerFooter = new Cell[]{
+            Cell[] headerFooter = new Cell[]{
                     new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("#")),
-                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Date")),
-                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Particulars")),
-                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("CashIn")),
-                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("CashOut")),
-                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Cash Balance"))
+                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Date").SetTextAlignment(TextAlignment.CENTER)),
+                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Particulars").SetTextAlignment(TextAlignment.CENTER)),
+                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("In").SetTextAlignment(TextAlignment.CENTER)),
+                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Out").SetTextAlignment(TextAlignment.CENTER)),
+                    new Cell().SetBackgroundColor(new DeviceGray(0.75f)).Add(new Paragraph("Balance").SetTextAlignment(TextAlignment.CENTER))
             };
 
-                foreach (Cell hfCell in headerFooter)
-                {
-                    if (i == 0)
-                    {
-                        table.AddHeaderCell(hfCell);
-                    }
-                    else
-                    {
-                        table.AddFooterCell(hfCell);
-                    }
-                }
+            Cell[] footer = new[]
+            {
+                new Cell(1,4).Add(new Paragraph(ReportHeaderDetails.FirstLine +" / "+ReportHeaderDetails.SecondLine) .SetFontColor(DeviceGray.GRAY)),
+                new Cell(1,2).Add(new Paragraph("D:"+DateTime.Now) .SetFontColor(DeviceGray.GRAY)),
+            };
+
+            foreach (Cell hfCell in headerFooter)
+            {
+                table.AddHeaderCell(hfCell);
+
+            }
+            foreach (Cell hfCell in footer)
+            {
+                table.AddFooterCell(hfCell);
             }
 
+            int count = 0;
             foreach (var item in cbList)
 
             {
+                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph((++count) + "")));
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.EDate.ToShortDateString())));
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.Particulars)));
-                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashIn + "")));
-                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashIn + "")));
-                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashOut + "")));
-                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashBalance + "")));
+                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashIn.ToString("0.##"))));
+                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashOut.ToString("0.##"))));
+                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashBalance.ToString("0.##"))));
             }
             doc.Add(table);
 
             doc.Close();
-            return fileName;
+
+            using PdfReader reader = new PdfReader(fileName);
+            fName = "cashBook_" + (DateTime.Now.ToFileTimeUtc() + 1001) + ".pdf";
+            using PdfWriter writer = new PdfWriter(Path.Combine(ReportHeaderDetails.WWWroot, fName));
+
+            using PdfDocument pdfDoc2 = new PdfDocument(reader, writer);
+            Document doc2 = new Document(pdfDoc2);
+
+            int numberOfPages = pdfDoc2.GetNumberOfPages();
+            for (int i = 1; i <= numberOfPages; i++)
+            {
+
+                // Write aligned text to the specified by parameters point
+                doc2.ShowTextAligned(new Paragraph("Page " + i + " of " + numberOfPages),
+                        559, 806, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+            }
+
+            doc2.Close();
+
+
+            return fName;
 
 
         }
@@ -91,13 +141,8 @@ namespace AprajitaRetails.Ops.Printers.Reports
         // For other Purpose it should take data from stores table
         public const string FirstLine = "Aprajita Retails";
         public const string SecondLine = "Bhagalpur Road, Dumka";
-
         public const string CashBook = "Cash Book";
-
-        public const string CashBookTableHeader = "SNo.     Date	            Particulars	                                        CashIn	            CashOut	            CashBalance     ";
-
-
-
+        public const string WWWroot = "wwwroot";
     }
 
 

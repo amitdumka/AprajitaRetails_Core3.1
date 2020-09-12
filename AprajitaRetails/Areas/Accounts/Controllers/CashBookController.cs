@@ -16,25 +16,27 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
     [Authorize (Roles = "Admin,PowerUser,StoreManager")]
     public class CashBookController : Controller
     {
-        [Obsolete]
-        private readonly IHostingEnvironment _hostingEnvironment;
+        //[Obsolete]
+        //private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AprajitaRetailsContext db;
 
-        [Obsolete]
-        public CashBookController(AprajitaRetailsContext context, IHostingEnvironment hostingEnvironment)
+        //[Obsolete]
+        public CashBookController(AprajitaRetailsContext context/*, IHostingEnvironment hostingEnvironment*/)
         {
             db = context;
-            _hostingEnvironment = hostingEnvironment;
+          //  _hostingEnvironment = hostingEnvironment;
         }
 
 
         // GET: CashBook
         public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType, string OutputType)
         {
-            string sWebRootFolder = _hostingEnvironment.WebRootPath;
-            string fileName = Path.Combine (sWebRootFolder, "Export_" + DateTime.Now.ToFileTimeUtc().ToString () + ".xlsx");
+           // string sWebRootFolder = _hostingEnvironment.WebRootPath;
+           
+            string fileName = Path.Combine ("wwwroot", "Export_" + DateTime.Now.ToFileTimeUtc().ToString () + ".xlsx");
 
             CashBookManagerExporter managerexporter = new CashBookManagerExporter ();
+            
             CashBookManager manager = new CashBookManager ();
             List<CashBook> cashList;
            
@@ -42,8 +44,10 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 if ( OpsType == "Correct" )
                 {
+                    //TODO: Expoerter is helping or not . check and verify
                     //TODO: Implement Correct cash in hand
                     ViewBag.Message = "Cash Book Correction: ";
+                    
                     if ( ModeType == "MonthWise" )
                         managerexporter.CorrectCashInHands (db, EDate.Value.Date, fileName, false);
                     else
@@ -73,7 +77,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
             if (cashList != null)
             {
-                if (!String.IsNullOrEmpty(OutputType))
+                if (!String.IsNullOrEmpty(OutputType) && OutputType=="PDF")
                 {
                     string fName = ReportPrinter.PrintCashBook(cashList);
                     return File(fName, "application/pdf");
@@ -85,79 +89,79 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
         }
 
-        // GET: CashBook/Details/5
-        public IActionResult Details(int id)
-        {
-            return PartialView ();
-        }
+        //// GET: CashBook/Details/5
+        //public IActionResult Details(int id)
+        //{
+        //    return PartialView ();
+        //}
 
-        // GET: CashBook/Create
-        public ActionResult Create()
-        {
-            return PartialView ();
-        }
+        //// GET: CashBook/Create
+        //public ActionResult Create()
+        //{
+        //    return PartialView ();
+        //}
 
         // POST: CashBook/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
 
-                return RedirectToAction (nameof (Index));
-            }
-            catch
-            {
-                return PartialView ();
-            }
-        }
+        //        return RedirectToAction (nameof (Index));
+        //    }
+        //    catch
+        //    {
+        //        return PartialView ();
+        //    }
+        //}
 
-        // GET: CashBook/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return PartialView ();
-        }
+        //// GET: CashBook/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return PartialView ();
+        //}
 
-        // POST: CashBook/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        ////// POST: CashBook/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
 
-                return RedirectToAction (nameof (Index));
-            }
-            catch
-            {
-                return PartialView ();
-            }
-        }
+        //        return RedirectToAction (nameof (Index));
+        //    }
+        //    catch
+        //    {
+        //        return PartialView ();
+        //    }
+        //}
 
-        // GET: CashBook/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return PartialView ();
-        }
+        //// GET: CashBook/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return PartialView ();
+        //}
 
-        // POST: CashBook/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //// POST: CashBook/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
 
-                return RedirectToAction (nameof (Index));
-            }
-            catch
-            {
-                return PartialView ();
-            }
-        }
+        //        return RedirectToAction (nameof (Index));
+        //    }
+        //    catch
+        //    {
+        //        return PartialView ();
+        //    }
+        //}
     }
 }
