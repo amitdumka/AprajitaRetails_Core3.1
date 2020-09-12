@@ -37,6 +37,8 @@ namespace AprajitaRetails.Models
         public virtual Store Store { get; set; }
 
         public string UserName { get; set; }
+        [DefaultValue(false)]
+        public bool? IsDataMoved { get; set; }
     }
 
 
