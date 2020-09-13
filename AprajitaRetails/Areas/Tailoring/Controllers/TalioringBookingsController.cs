@@ -83,6 +83,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         {
             if (ModelState.IsValid)
             {
+                talioringBooking.UserName = User.Identity.Name;
                 _context.Add(talioringBooking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -111,7 +112,8 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("TalioringBookingId,BookingDate,CustName,DeliveryDate,TryDate,BookingSlipNo,TotalAmount,TotalQty,ShirtQty,ShirtPrice,PantQty,PantPrice,CoatQty,CoatPrice,KurtaQty,KurtaPrice,BundiQty,BundiPrice,Others,OthersPrice,IsDelivered")] TalioringBooking talioringBooking)
+       [Authorize(Roles = "Admin,PowerUser")]     
+        public async Task<IActionResult> Edit(int id, [Bind("TalioringBookingId,BookingDate,CustName,DeliveryDate,TryDate,BookingSlipNo,TotalAmount,TotalQty,ShirtQty,ShirtPrice,PantQty,PantPrice,CoatQty,CoatPrice,KurtaQty,KurtaPrice,BundiQty,BundiPrice,Others,OthersPrice,IsDelivered")] TalioringBooking talioringBooking)
         {
             if (id != talioringBooking.TalioringBookingId)
             {
@@ -122,6 +124,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 try
                 {
+                    talioringBooking.UserName = User.Identity.Name;
                     _context.Update(talioringBooking);
                     await _context.SaveChangesAsync();
                 }
@@ -142,7 +145,8 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         }
 
         // GET: TalioringBookings/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+         [Authorize (Roles = "Admin,PowerUser")]   
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {

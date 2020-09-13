@@ -233,6 +233,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 //version 3.0  StoreCode
                 dailySale.StoreId = this.StoreCodeId;
+                dailySale.UserName = User.Identity.Name;
 
                 db.Add (dailySale);
                 new SalesManager ().OnInsert (db, dailySale);
@@ -280,6 +281,8 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 try
                 {
                     dailySale.StoreId = this.StoreCodeId;
+                    dailySale.UserName = User.Identity.Name;
+
                     db.Update (dailySale);
                     await db.SaveChangesAsync ();
                 }

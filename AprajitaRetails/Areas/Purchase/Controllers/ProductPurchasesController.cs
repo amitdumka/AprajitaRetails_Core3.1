@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,13 +41,13 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-           // HelperUtil.IsSessionSet (HttpContext);
-           // int storeid = HelperUtil.GetStoreID (HttpContext);
+            // HelperUtil.IsSessionSet (HttpContext);
+            // int storeid = HelperUtil.GetStoreID (HttpContext);
 
-            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c=>c.StoreId==StoreID);
-           return View(await PaginatedList<ProductPurchase>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
-            
-            
+            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c => c.StoreId == StoreID);
+            return View(await PaginatedList<ProductPurchase>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+
         }
 
         // GET: Purchase/ProductPurchases/Details/5
@@ -65,14 +66,14 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
                 return NotFound();
             }
 
-           return PartialView(productPurchase);
+            return PartialView(productPurchase);
         }
 
         // GET: Purchase/ProductPurchases/Create
         public IActionResult Create()
         {
             ViewData["SupplierID"] = new SelectList(_context.Suppliers, "SupplierID", "SuppilerName");
-           return PartialView();
+            return PartialView();
         }
 
         // POST: Purchase/ProductPurchases/Create
@@ -84,19 +85,21 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         {
             if (ModelState.IsValid)
             {
-                HelperUtil.IsSessionSet (HttpContext);
-                int storeid = HelperUtil.GetStoreID (HttpContext);
+                HelperUtil.IsSessionSet(HttpContext);
+                int storeid = HelperUtil.GetStoreID(HttpContext);
                 productPurchase.StoreId = storeid;
+                productPurchase.UserName = User.Identity.Name;
                 _context.Add(productPurchase);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SupplierID"] = new SelectList(_context.Suppliers, "SupplierID", "SuppilerName", productPurchase.SupplierID);
-           return PartialView(productPurchase);
+            return PartialView(productPurchase);
         }
 
         // GET: Purchase/ProductPurchases/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -109,7 +112,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
                 return NotFound();
             }
             ViewData["SupplierID"] = new SelectList(_context.Suppliers, "SupplierID", "SuppilerName", productPurchase.SupplierID);
-           return PartialView(productPurchase);
+            return PartialView(productPurchase);
         }
 
         // POST: Purchase/ProductPurchases/Edit/5
@@ -117,7 +120,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ProductPurchaseId,InWardNo,InWardDate,PurchaseDate,InvoiceNo,TotalQty,TotalBasicAmount,ShippingCost,TotalTax,TotalAmount,Remarks,SupplierID,IsPaid")] ProductPurchase productPurchase)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("ProductPurchaseId,InWardNo,InWardDate,PurchaseDate,InvoiceNo,TotalQty,TotalBasicAmount,ShippingCost,TotalTax,TotalAmount,Remarks,SupplierID,IsPaid")] ProductPurchase productPurchase)
         {
             if (id != productPurchase.ProductPurchaseId)
             {
@@ -128,6 +132,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             {
                 try
                 {
+                    productPurchase.UserName = User.Identity.Name;
                     _context.Update(productPurchase);
                     await _context.SaveChangesAsync();
                 }
@@ -145,11 +150,12 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["SupplierID"] = new SelectList(_context.Suppliers, "SupplierID", "SuppilerName", productPurchase.SupplierID);
-           return PartialView(productPurchase);
+            return PartialView(productPurchase);
         }
 
         // GET: Purchase/ProductPurchases/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -164,13 +170,14 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
                 return NotFound();
             }
 
-           return PartialView(productPurchase);
+            return PartialView(productPurchase);
         }
 
         // POST: Purchase/ProductPurchases/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var productPurchase = await _context.ProductPurchases.FindAsync(id);
             _context.ProductPurchases.Remove(productPurchase);

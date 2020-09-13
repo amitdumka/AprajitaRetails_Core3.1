@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using AprajitaRetails.Areas.Tailoring.Data;
 
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
-    [Area ("Tailoring")]
+    [Area("Tailoring")]
     [Authorize]
     public class TalioringDeliveriesController : Controller
     {
@@ -37,8 +38,8 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.TailoringDeliveries.Include(t => t.Booking).OrderByDescending (c => c.DeliveryDate);
-           return View(await PaginatedList<TalioringDelivery>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprajitaRetailsContext = _context.TailoringDeliveries.Include(t => t.Booking).OrderByDescending(c => c.DeliveryDate);
+            return View(await PaginatedList<TalioringDelivery>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -58,14 +59,14 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-           return PartialView(talioringDelivery);
+            return PartialView(talioringDelivery);
         }
 
         // GET: TalioringDeliveries/Create
         public IActionResult Create()
         {
-            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings.Where(c=>!c.IsDelivered), "TalioringBookingId", "BookingSlipNo");
-           return PartialView();
+            ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings.Where(c => !c.IsDelivered), "TalioringBookingId", "BookingSlipNo");
+            return PartialView();
         }
 
         // POST: TalioringDeliveries/Create
@@ -77,17 +78,19 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         {
             if (ModelState.IsValid)
             {
+                talioringDelivery.UserName = User.Identity.Name;
                 _context.Add(talioringDelivery);
-                new TailoringManager().OnUpdateData(_context, talioringDelivery, false,false);
+                new TailoringManager().OnUpdateData(_context, talioringDelivery, false, false);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings.Where(c => !c.IsDelivered), "TalioringBookingId", "BookingSlipNo", talioringDelivery.TalioringBookingId);
-           return PartialView(talioringDelivery);
+            return PartialView(talioringDelivery);
         }
 
         // GET: TalioringDeliveries/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -100,7 +103,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "BookingSlipNo", talioringDelivery.TalioringBookingId);
-           return PartialView(talioringDelivery);
+            return PartialView(talioringDelivery);
         }
 
         // POST: TalioringDeliveries/Edit/5
@@ -108,7 +111,8 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("TalioringDeliveryId,DeliveryDate,TalioringBookingId,InvNo,Amount,Remarks")] TalioringDelivery talioringDelivery)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("TalioringDeliveryId,DeliveryDate,TalioringBookingId,InvNo,Amount,Remarks")] TalioringDelivery talioringDelivery)
         {
             if (id != talioringDelivery.TalioringDeliveryId)
             {
@@ -120,6 +124,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 try
                 {
                     new TailoringManager().OnUpdateData(_context, talioringDelivery, true, false);
+                    talioringDelivery.UserName = User.Identity.Name;
                     _context.Update(talioringDelivery);
                     await _context.SaveChangesAsync();
                 }
@@ -137,11 +142,12 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TalioringBookingId"] = new SelectList(_context.TalioringBookings, "TalioringBookingId", "BookingSlipNo", talioringDelivery.TalioringBookingId);
-           return PartialView(talioringDelivery);
+            return PartialView(talioringDelivery);
         }
 
         // GET: TalioringDeliveries/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -156,16 +162,17 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-           return PartialView(talioringDelivery);
+            return PartialView(talioringDelivery);
         }
 
         // POST: TalioringDeliveries/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var talioringDelivery = await _context.TailoringDeliveries.FindAsync(id);
-            new TailoringManager().OnUpdateData(_context, talioringDelivery,false, true);
+            new TailoringManager().OnUpdateData(_context, talioringDelivery, false, true);
             _context.TailoringDeliveries.Remove(talioringDelivery);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

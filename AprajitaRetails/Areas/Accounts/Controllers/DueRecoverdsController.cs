@@ -12,11 +12,11 @@ using AprajitaRetails.Areas.Voyager.Models;
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
     [Area("Accounts")]
-    [Authorize ]
+    [Authorize]
     public class DueRecoverdsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
-        private readonly int StoreCode =1;
+        private readonly int StoreCode = 1;
 
         public DueRecoverdsController(AprajitaRetailsContext context)
         {
@@ -39,9 +39,9 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale).Where(c=>c.StoreId==StoreCode)
-                .OrderByDescending (c => c.PaidDate);
-           return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprajitaRetailsContext = _context.DueRecoverds.Include(d => d.DuesList).Include(d => d.DuesList.DailySale).Where(c => c.StoreId == StoreCode)
+                .OrderByDescending(c => c.PaidDate);
+            return View(await PaginatedList<DueRecoverd>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return PartialView(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -84,6 +84,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             if (ModelState.IsValid)
             {
                 dueRecoverd.StoreId = StoreCode;
+                dueRecoverd.UserName = User.Identity.Name;
+
                 _context.Add(dueRecoverd);
                 new AccountsManager().OnInsert(_context, dueRecoverd);
                 await _context.SaveChangesAsync();
@@ -96,7 +98,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: DueRecoverds/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -120,7 +123,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("DueRecoverdId,PaidDate,DuesListId,AmountPaid,IsPartialPayment,Modes,Remarks")] DueRecoverd dueRecoverd)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("DueRecoverdId,PaidDate,DuesListId,AmountPaid,IsPartialPayment,Modes,Remarks")] DueRecoverd dueRecoverd)
         {
             if (id != dueRecoverd.DueRecoverdId)
             {
@@ -131,6 +135,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 try
                 {
+                    dueRecoverd.UserName = User.Identity.Name;
                     new AccountsManager().OnUpdate(_context, dueRecoverd);
                     _context.Update(dueRecoverd);
                     await _context.SaveChangesAsync();
@@ -156,7 +161,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         }
 
         // GET: DueRecoverds/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -177,7 +183,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // POST: DueRecoverds/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var dueRecoverd = await _context.DueRecoverds.FindAsync(id);
             new AccountsManager().OnDelete(_context, dueRecoverd);

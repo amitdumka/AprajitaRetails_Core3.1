@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +12,9 @@ using AprajitaRetails.Areas.Banking.Models;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
-    [Area ("Banking")]
+    [Area("Banking")]
 
-    [Authorize(Roles ="Admin,PowerUser,StoreManager")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class BankWithdrawalsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -39,7 +40,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.BankWithdrawals.Include(b => b.Account).OrderByDescending (c => c.DepoDate);
+            var aprajitaRetailsContext = _context.BankWithdrawals.Include(b => b.Account).OrderByDescending(c => c.DepoDate);
             return View(await PaginatedList<BankWithdrawal>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
@@ -60,14 +61,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(bankWithdrawal);
+            return PartialView(bankWithdrawal);
         }
 
         // GET: BankWithdrawals/Create
         public IActionResult Create()
         {
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account");
-           return PartialView();
+            return PartialView();
         }
 
         // POST: BankWithdrawals/Create
@@ -79,17 +80,19 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         {
             if (ModelState.IsValid)
             {
+                bankWithdrawal.UserName = User.Identity.Name;
                 _context.Add(bankWithdrawal);
                 new BankingManager().OnInsert(_context, bankWithdrawal);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankWithdrawal.AccountNumberId);
-           return PartialView(bankWithdrawal);
+            return PartialView(bankWithdrawal);
         }
 
         // GET: BankWithdrawals/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -102,7 +105,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankWithdrawal.AccountNumberId);
-           return PartialView(bankWithdrawal);
+            return PartialView(bankWithdrawal);
         }
 
         // POST: BankWithdrawals/Edit/5
@@ -110,7 +113,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("BankWithdrawalId,DepoDate,AccountNumberId,Amount,ChequeNo,SignedBy,ApprovedBy,InNameOf")] BankWithdrawal bankWithdrawal)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("BankWithdrawalId,DepoDate,AccountNumberId,Amount,ChequeNo,SignedBy,ApprovedBy,InNameOf")] BankWithdrawal bankWithdrawal)
         {
             if (id != bankWithdrawal.BankWithdrawalId)
             {
@@ -121,6 +125,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 try
                 {
+                    bankWithdrawal.UserName = User.Identity.Name;
                     new BankingManager().OnUpdate(_context, bankWithdrawal);
                     _context.Update(bankWithdrawal);
                     await _context.SaveChangesAsync();
@@ -139,11 +144,12 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AccountNumberId"] = new SelectList(_context.AccountNumbers, "AccountNumberId", "Account", bankWithdrawal.AccountNumberId);
-           return PartialView(bankWithdrawal);
+            return PartialView(bankWithdrawal);
         }
 
         // GET: BankWithdrawals/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -158,13 +164,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(bankWithdrawal);
+            return PartialView(bankWithdrawal);
         }
 
         // POST: BankWithdrawals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bankWithdrawal = await _context.BankWithdrawals.FindAsync(id);
             new BankingManager().OnDelete(_context, bankWithdrawal);

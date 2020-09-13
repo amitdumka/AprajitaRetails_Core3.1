@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,10 +37,10 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee).OrderByDescending (c => c.PaymentDate);
+            var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee).OrderByDescending(c => c.PaymentDate);
 
             int pageSize = 10;
-           return View(await PaginatedList<SalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<SalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -59,14 +60,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-           return PartialView(salaryPayment);
+            return PartialView(salaryPayment);
         }
 
         // GET: SalaryPayments/Create
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
-           return PartialView();
+            return PartialView();
         }
 
         // POST: SalaryPayments/Create
@@ -78,17 +79,19 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if (ModelState.IsValid)
             {
+                salaryPayment.UserName = User.Identity.Name;
                 _context.Add(salaryPayment);
                 new PayRollManager().OnInsert(_context, salaryPayment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", salaryPayment.EmployeeId);
-           return PartialView(salaryPayment);
+            return PartialView(salaryPayment);
         }
 
         // GET: SalaryPayments/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -101,7 +104,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", salaryPayment.EmployeeId);
-           return PartialView(salaryPayment);
+            return PartialView(salaryPayment);
         }
 
         // POST: SalaryPayments/Edit/5
@@ -109,7 +112,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("SalaryPaymentId,EmployeeId,SalaryMonth,SalaryComponet,PaymentDate,Amount,PayMode,Details")] SalaryPayment salaryPayment)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("SalaryPaymentId,EmployeeId,SalaryMonth,SalaryComponet,PaymentDate,Amount,PayMode,Details")] SalaryPayment salaryPayment)
         {
             if (id != salaryPayment.SalaryPaymentId)
             {
@@ -121,6 +125,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 try
                 {
                     new PayRollManager().OnInsert(_context, salaryPayment);
+                    salaryPayment.UserName = User.Identity.Name;
                     _context.Update(salaryPayment);
                     await _context.SaveChangesAsync();
                 }
@@ -138,11 +143,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", salaryPayment.EmployeeId);
-           return PartialView(salaryPayment);
+            return PartialView(salaryPayment);
         }
 
         // GET: SalaryPayments/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -157,13 +163,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-           return PartialView(salaryPayment);
+            return PartialView(salaryPayment);
         }
 
         // POST: SalaryPayments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var salaryPayment = await _context.SalaryPayments.FindAsync(id);
             new PayRollManager().OnDelete(_context, salaryPayment);

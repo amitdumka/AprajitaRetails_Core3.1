@@ -78,6 +78,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         {
             if (ModelState.IsValid)
             {
+                bankDeposit.UserName = User.Identity.Name;
                 _context.Add(bankDeposit);
                 new BankingManager().OnInsert(_context, bankDeposit);
                 await _context.SaveChangesAsync();
@@ -120,6 +121,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 try
                 {
+                    bankDeposit.UserName = User.Identity.Name;
                     new BankingManager().OnUpdate(_context, bankDeposit);
                     _context.Update(bankDeposit);
                     await _context.SaveChangesAsync();

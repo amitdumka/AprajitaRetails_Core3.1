@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using AprajitaRetails.Areas.Expenses.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
-    [Area ("Expenses")]
+    [Area("Expenses")]
     [Authorize]
     public class PaymentsController : Controller
     {
@@ -37,9 +38,9 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.Payments.OrderByDescending (c => c.PayDate);
-           return View(await PaginatedList<Payment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
-           // return PartialView(await _context.Payments.ToListAsync());
+            var aprajitaRetailsContext = _context.Payments.OrderByDescending(c => c.PayDate);
+            return View(await PaginatedList<Payment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            // return PartialView(await _context.Payments.ToListAsync());
         }
 
         // GET: Payments/Details/5
@@ -75,17 +76,18 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                payment.UserName = User.Identity.Name;
                 _context.Add(payment);
                 new ExpenseManager().OnInsert(_context, payment);
-                await _context.SaveChangesAsync();            
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return PartialView(payment);
         }
 
         // GET: Payments/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -105,7 +107,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PayDate,PaymentPartry,PayMode,PaymentDetails,Amount,PaymentSlipNo,Remarks")] Payment payment)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,PayDate,PaymentPartry,PayMode,PaymentDetails,Amount,PaymentSlipNo,Remarks")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
@@ -116,6 +119,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    payment.UserName = User.Identity.Name;
                     new ExpenseManager().OnUpdate(_context, payment);
                     _context.Update(payment);
                     await _context.SaveChangesAsync();
@@ -137,7 +141,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Payments/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -157,7 +162,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // POST: Payments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var payment = await _context.Payments.FindAsync(id);
             new ExpenseManager().OnDelete(_context, payment);

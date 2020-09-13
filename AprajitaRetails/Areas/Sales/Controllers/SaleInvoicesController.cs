@@ -62,6 +62,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         {
             if ( ModelState.IsValid )
             {
+               
                 _context.Add (saleInvoice);
                 await _context.SaveChangesAsync ();
                 return RedirectToAction (nameof (Index));

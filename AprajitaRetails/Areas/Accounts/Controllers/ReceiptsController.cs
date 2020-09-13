@@ -73,6 +73,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         {
             if ( ModelState.IsValid )
             {
+                receipt.UserName = User.Identity.Name;
                 _context.Add (receipt);
                 new AccountsManager ().OnInsert (_context, receipt);
                 await _context.SaveChangesAsync ();
@@ -115,6 +116,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 try
                 {
+                    receipt.UserName = User.Identity.Name;
                     new AccountsManager ().OnUpdate (_context, receipt);
                     _context.Update (receipt);
                     await _context.SaveChangesAsync ();

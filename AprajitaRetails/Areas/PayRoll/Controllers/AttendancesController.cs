@@ -190,7 +190,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 {
                     attendance.IsTailoring = false;
                 }
-
+                attendance.UserName = User.Identity.Name;
                 _context.Add(attendance);
                 await _context.SaveChangesAsync();
                 new PayRollManager().ONInsertOrUpdate(_context, attendance, false, false);
@@ -238,6 +238,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 try
                 {
                     new PayRollManager().ONInsertOrUpdate(_context, attendance, false, true);
+                    attendance.UserName = User.Identity.Name;
                     _context.Update(attendance);
                     await _context.SaveChangesAsync();
                 }

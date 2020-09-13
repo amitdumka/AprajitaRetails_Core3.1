@@ -79,6 +79,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
+                pettyCashExpense.UserName = User.Identity.Name;
                 _context.Add(pettyCashExpense);
                 new ExpenseManager().OnInsert(_context, pettyCashExpense);
                 await _context.SaveChangesAsync();
@@ -121,6 +122,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    pettyCashExpense.UserName = User.Identity.Name;
                     new ExpenseManager().OnUpdate(_context, pettyCashExpense);
                     _context.Update(pettyCashExpense);
                     await _context.SaveChangesAsync();

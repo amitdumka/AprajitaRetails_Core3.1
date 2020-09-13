@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,8 +39,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
 
-            var aprajitaRetailsContext = _context.Expenses.Include(e => e.PaidBy).OrderByDescending(c=>c.ExpDate);
-           return View(await PaginatedList<Expense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprajitaRetailsContext = _context.Expenses.Include(e => e.PaidBy).OrderByDescending(c => c.ExpDate);
+            return View(await PaginatedList<Expense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -78,6 +79,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
+                expense.UserName = User.Identity.Name;
                 _context.Add(expense);
                 new ExpenseManager().OnInsert(_context, expense);
                 await _context.SaveChangesAsync();
@@ -88,7 +90,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Expenses/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -109,7 +112,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ExpenseId,ExpDate,Particulars,Amount,PayMode,PaymentDetails,EmployeeId,PaidTo,Remarks")] Expense expense)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("ExpenseId,ExpDate,Particulars,Amount,PayMode,PaymentDetails,EmployeeId,PaidTo,Remarks")] Expense expense)
         {
             if (id != expense.ExpenseId)
             {
@@ -120,6 +124,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    expense.UserName = User.Identity.Name;
                     new ExpenseManager().OnUpdate(_context, expense);
                     _context.Update(expense);
                     await _context.SaveChangesAsync();
@@ -142,7 +147,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: Expenses/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -163,7 +169,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // POST: Expenses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var expense = await _context.Expenses.FindAsync(id);
             _context.Expenses.Remove(expense);

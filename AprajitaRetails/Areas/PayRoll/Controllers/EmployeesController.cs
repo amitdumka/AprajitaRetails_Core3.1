@@ -78,6 +78,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if ( ModelState.IsValid )
             {
+                employee.UserName = User.Identity.Name;
                 _context.Add (employee);
                 await _context.SaveChangesAsync ();
                 if ( employee.Category == EmpType.StoreManager )
@@ -125,6 +126,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
+                    employee.UserName = User.Identity.Name;
                     _context.Update (employee);
                     await _context.SaveChangesAsync ();
                 }

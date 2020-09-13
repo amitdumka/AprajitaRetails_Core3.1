@@ -11,8 +11,8 @@ using AprajitaRetails.Areas.Expenses.Models;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
-    [Area ("Expenses")]
-    [Authorize ]
+    [Area("Expenses")]
+    [Authorize]
     public class CashPaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -35,20 +35,20 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var vd = _context.CashPayments.Include(c => c.Mode).Where(c => c.Mode.Transcation == "Home Expenses" && c.PaymentDate.Month == DateTime.Today.Month).OrderByDescending(c=>c.PaymentDate);
+            var vd = _context.CashPayments.Include(c => c.Mode).Where(c => c.Mode.Transcation == "Home Expenses" && c.PaymentDate.Month == DateTime.Today.Month).OrderByDescending(c => c.PaymentDate);
             int pageSize = 10;
-            
+
             if (vd != null)
             {
                 var amt = vd.Sum(c => c.Amount);
                 ViewBag.TotalAmount = amt;
                 //return PartialView(await vd.ToListAsync());
-                
+
                 return PartialView(await PaginatedList<CashPayment>.CreateAsync(vd.AsNoTracking(), pageNumber ?? 1, pageSize));
             }
-            
+
             return PartialView(await PaginatedList<CashPayment>.CreateAsync(vd.AsNoTracking(), pageNumber ?? 1, pageSize));
-           
+
             //TODO: Implement for if vd/Data return is null.
             //else
             // return PartialView(await PaginatedList<CashPayment>.CreateAsync(new CashPayment(), pageNumber ?? 1, pageSize));
@@ -56,7 +56,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: CashPayments
-        public async Task<IActionResult> Index( string currentFilter, string searchString, int? pageNumber)
+        public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
             if (searchString != null)
             {
@@ -69,10 +69,10 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
 
 
             ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.CashPayments.Include(c => c.Mode).OrderByDescending(c=>c.PaymentDate);
+            var aprajitaRetailsContext = _context.CashPayments.Include(c => c.Mode).OrderByDescending(c => c.PaymentDate);
 
             int pageSize = 10;
-           return View(await PaginatedList<CashPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<CashPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
 
             //return View(await aprajitaRetailsContext.ToListAsync());
@@ -113,9 +113,10 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
+                cashPayment.UserName = User.Identity.Name;
                 _context.Add(cashPayment);
                 new ExpenseManager().OnInsert(_context, cashPayment);
-                await _context.SaveChangesAsync();              
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["TranscationModeId"] = new SelectList(_context.TranscationModes, "TranscationModeId", "Transcation", cashPayment.TranscationModeId);
@@ -123,7 +124,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: CashPayments/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -144,7 +146,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("CashPaymentId,PaymentDate,TranscationModeId,PaidTo,Amount,SlipNo")] CashPayment cashPayment)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("CashPaymentId,PaymentDate,TranscationModeId,PaidTo,Amount,SlipNo")] CashPayment cashPayment)
         {
             if (id != cashPayment.CashPaymentId)
             {
@@ -155,6 +158,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    cashPayment.UserName = User.Identity.Name;
                     new ExpenseManager().OnUpdate(_context, cashPayment);
                     _context.Update(cashPayment);
                     await _context.SaveChangesAsync();
@@ -177,7 +181,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         }
 
         // GET: CashPayments/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -198,7 +203,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // POST: CashPayments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cashPayment = await _context.CashPayments.FindAsync(id);
             _context.CashPayments.Remove(cashPayment);

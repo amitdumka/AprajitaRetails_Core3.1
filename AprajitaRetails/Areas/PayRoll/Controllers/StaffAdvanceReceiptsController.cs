@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,11 +38,11 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).OrderByDescending (c => c.ReceiptDate);
+            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).OrderByDescending(c => c.ReceiptDate);
 
-           return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
-            
-            
+            return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+
         }
 
         // GET: StaffAdvanceReceipts/Details/5
@@ -67,7 +68,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         public IActionResult Create()
         {
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
-           return PartialView();
+            return PartialView();
         }
 
         // POST: StaffAdvanceReceipts/Create
@@ -79,18 +80,21 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
+                staffAdvanceReceipt.UserName = User.Identity.Name;
                 _context.Add(staffAdvanceReceipt);
                 new PayRollManager().OnInsert(_context, staffAdvanceReceipt);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
-           return PartialView(staffAdvanceReceipt);
+            return PartialView(staffAdvanceReceipt);
         }
 
         // GET: StaffAdvanceReceipts/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -103,7 +107,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
-           return PartialView(staffAdvanceReceipt);
+            return PartialView(staffAdvanceReceipt);
         }
 
         // POST: StaffAdvanceReceipts/Edit/5
@@ -111,7 +115,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("StaffAdvanceReceiptId,EmployeeId,ReceiptDate,Amount,PayMode,Details")] StaffAdvanceReceipt staffAdvanceReceipt)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("StaffAdvanceReceiptId,EmployeeId,ReceiptDate,Amount,PayMode,Details")] StaffAdvanceReceipt staffAdvanceReceipt)
         {
             if (id != staffAdvanceReceipt.StaffAdvanceReceiptId)
             {
@@ -122,6 +127,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
+                    staffAdvanceReceipt.UserName = User.Identity.Name;
                     new PayRollManager().OnUpdate(_context, staffAdvanceReceipt);
                     _context.Update(staffAdvanceReceipt);
                     await _context.SaveChangesAsync();
@@ -140,11 +146,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
-           return PartialView(staffAdvanceReceipt);
+            return PartialView(staffAdvanceReceipt);
         }
 
         // GET: StaffAdvanceReceipts/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -159,13 +166,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-           return PartialView(staffAdvanceReceipt);
+            return PartialView(staffAdvanceReceipt);
         }
 
         // POST: StaffAdvanceReceipts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var staffAdvanceReceipt = await _context.StaffAdvanceReceipts.FindAsync(id);
             _context.StaffAdvanceReceipts.Remove(staffAdvanceReceipt);

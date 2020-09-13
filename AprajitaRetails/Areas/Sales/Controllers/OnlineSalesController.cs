@@ -64,6 +64,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         {
             if (ModelState.IsValid)
             {
+                onlineSale.UserName = User.Identity.Name;
                 _context.Add(onlineSale);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -105,6 +106,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             {
                 try
                 {
+                    onlineSale.UserName = User.Identity.Name;
                     _context.Update(onlineSale);
                     await _context.SaveChangesAsync();
                 }

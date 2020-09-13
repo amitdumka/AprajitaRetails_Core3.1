@@ -88,6 +88,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
                 HelperUtil.IsSessionSet (HttpContext);
                 int storeid = HelperUtil.GetStoreID (HttpContext);
                 stock.StoreId = storeid;
+                
                 _context.Add(stock);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
