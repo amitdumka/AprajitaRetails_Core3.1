@@ -12,8 +12,8 @@ using AprajitaRetails.Ops.Printers.Reports;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area ("Accounts")]
-    [Authorize (Roles = "Admin,PowerUser,StoreManager")]
+    [Area("Accounts")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class CashBookController : Controller
     {
         //[Obsolete]
@@ -24,64 +24,85 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         public CashBookController(AprajitaRetailsContext context/*, IHostingEnvironment hostingEnvironment*/)
         {
             db = context;
-          //  _hostingEnvironment = hostingEnvironment;
+            //  _hostingEnvironment = hostingEnvironment;
         }
 
 
         // GET: CashBook
         public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType, string OutputType)
         {
-           // string sWebRootFolder = _hostingEnvironment.WebRootPath;
-           
-            string fileName = Path.Combine ("wwwroot", "Export_" + DateTime.Now.ToFileTimeUtc().ToString () + ".xlsx");
+            // string sWebRootFolder = _hostingEnvironment.WebRootPath;
+            string fileName = "ExcelFiles\\"+ "Export_CashBook_" + DateTime.Now.ToFileTimeUtc().ToString() + ".xlsx";
 
-            CashBookManagerExporter managerexporter = new CashBookManagerExporter ();
-            
-            CashBookManager manager = new CashBookManager ();
-            List<CashBook> cashList;
-           
-            if ( !String.IsNullOrEmpty (OpsType) )
+            string path = Path.Combine("wwwroot",fileName );
+
+            FileInfo file = new FileInfo(path);
+            if (!file.Directory.Exists)
             {
-                if ( OpsType == "Correct" )
+                //   var dir = file.Directory.CreateSubdirectory(fileName);
+                file.Directory.Create();
+
+            }
+
+            ViewBag.FileName = "";
+            
+            CashBookManagerExporter managerexporter = new CashBookManagerExporter();
+
+            CashBookManager manager = new CashBookManager();
+            List<CashBook> cashList;
+
+            if (!String.IsNullOrEmpty(OpsType))
+            {
+                if (OpsType == "Correct")
                 {
                     //TODO: Expoerter is helping or not . check and verify
                     //TODO: Implement Correct cash in hand
-                    ViewBag.Message = "Cash Book Correction: ";
-                    
-                    if ( ModeType == "MonthWise" )
-                        managerexporter.CorrectCashInHands (db, EDate.Value.Date, fileName, false);
+                    ViewBag.Message = "Cash Book Correction  ";
+
+                    if (ModeType == "MonthWise")
+                        managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, false);
                     else
-                        managerexporter.CorrectCashInHands (db, EDate.Value.Date, fileName, true);
+                        managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, true);
+                    
+                    ViewBag.FileName = "/" + fileName;
                 }
                 else
-                { ViewBag.Message = ""; }
+                {
+                    ViewBag.Message = ""; 
+                }
             }
 
 
-            if ( EDate != null )
+            if (EDate != null)
             {
-                if ( ModeType == "MonthWise" )
-                    cashList = manager.GetMontlyCashBook (db, EDate.Value.Date);
+                if (ModeType == "MonthWise")
+                    cashList = manager.GetMontlyCashBook(db, EDate.Value.Date);
                 else
-                    cashList = manager.GetDailyCashBook (db, EDate.Value.Date);
+                    cashList = manager.GetDailyCashBook(db, EDate.Value.Date);
 
             }
-            else if ( id == 101 )
+            else if (id == 101)
             {
-                cashList = manager.GetDailyCashBook (db, DateTime.Now);
+                cashList = manager.GetDailyCashBook(db, DateTime.Now);
             }
             else
             {
-                cashList = manager.GetMontlyCashBook (db, DateTime.Now);
+                cashList = manager.GetMontlyCashBook(db, DateTime.Now);
             }
 
             if (cashList != null)
             {
-                if (!String.IsNullOrEmpty(OutputType) && OutputType=="PDF")
+                if (!String.IsNullOrEmpty(OutputType) && OutputType == "PDF")
                 {
-                    string fName = ReportPrinter.PrintCashBook(cashList);
+                    string fName = ReportPrinter.PrintCashBook(cashList);                   
                     return File(fName, "application/pdf");
+
                 }
+                else
+                {
+                    //ViewBag.FileName = "/"+fileName;
+                }
+               
 
                 return View(cashList);
             }

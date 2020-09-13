@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AprajitaRetails.Models.ViewModels.CashBook>
 
 @{
-    ViewData ["Title"] = "Cash Book";
+    ViewData["Title"] = "Cash Book";
 }
 
 <h2 class="green-text">Cash Book</h2>
@@ -52,32 +52,38 @@
             <input type="submit" value="Get" class=" btn btn-outline-warning btn-sm " />
         </div>
     </div>
-    <p class="text-warning">@ViewBag.Message</p>
+    <p class="text-warning">@ViewBag.Message
+   
+    @if (ViewBag.FileName != null && ViewBag.FileName!="")
+    {
+        <a class="btn btn-sm btn-outline-dark-green" href=@ViewBag.FileName>Download</a>
+    }
+    </p>
 </form>
-    <table class="table table-sm table-bordered table-hover">
-        <thead class="table-primary text-center text-monospace font-weight-bolder text-success">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.EDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Particulars)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CashIn)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CashOut)
-                </th>
-                <th class="text-danger">
-                    @Html.DisplayNameFor(model => model.CashBalance)
-                </th>
-                
-            </tr>
-        </thead>
-        <tbody class="table-secondary">
-            @foreach ( var item in Model )
-            {
+<table class="table table-sm table-bordered table-hover">
+    <thead class="table-primary text-center text-monospace font-weight-bolder text-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Particulars)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashOut)
+            </th>
+            <th class="text-danger">
+                @Html.DisplayNameFor(model => model.CashBalance)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody class="table-secondary">
+        @foreach (var item in Model)
+        {
             <tr>
                 @if (item.CashOut > 0)
                 {
@@ -141,6 +147,6 @@
 
 
             </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
