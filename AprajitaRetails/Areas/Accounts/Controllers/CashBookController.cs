@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using AprajitaRetails.Ops.Printers.Reports;
+using AprajitaRetails.Ops.Exporter;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -16,70 +17,50 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
     [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class CashBookController : Controller
     {
-        //[Obsolete]
-        //private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AprajitaRetailsContext db;
-
-        //[Obsolete]
-        public CashBookController(AprajitaRetailsContext context/*, IHostingEnvironment hostingEnvironment*/)
+        public CashBookController(AprajitaRetailsContext context)
         {
             db = context;
-            //  _hostingEnvironment = hostingEnvironment;
         }
-
-
         // GET: CashBook
         public IActionResult Index(int? id, DateTime? EDate, string ModeType, string OpsType, string OutputType)
         {
-            // string sWebRootFolder = _hostingEnvironment.WebRootPath;
-            string fileName = "ExcelFiles\\"+ "Export_CashBook_" + DateTime.Now.ToFileTimeUtc().ToString() + ".xlsx";
 
-            string path = Path.Combine("wwwroot",fileName );
-
+            string fileName = /*"ExcelFiles\\" +*/ "Export_CashBook_" + DateTime.Now.ToFileTimeUtc().ToString() + ".xlsx";
+            string path = Path.Combine("wwwroot", fileName);
             FileInfo file = new FileInfo(path);
             if (!file.Directory.Exists)
-            {
-                //   var dir = file.Directory.CreateSubdirectory(fileName);
                 file.Directory.Create();
-
-            }
-
             ViewBag.FileName = "";
-            
-            CashBookManagerExporter managerexporter = new CashBookManagerExporter();
 
+            CashBookManagerExporter managerexporter = new CashBookManagerExporter();
             CashBookManager manager = new CashBookManager();
             List<CashBook> cashList;
-
             if (!String.IsNullOrEmpty(OpsType))
             {
                 if (OpsType == "Correct")
                 {
-                    //TODO: Expoerter is helping or not . check and verify
                     //TODO: Implement Correct cash in hand
                     ViewBag.Message = "Cash Book Correction  ";
 
                     if (ModeType == "MonthWise")
-                        managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, false);
+                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, false);
                     else
-                        managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, true);
-                    
+                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, true);
+
                     ViewBag.FileName = "/" + fileName;
                 }
                 else
                 {
-                    ViewBag.Message = ""; 
+                    ViewBag.Message = "";
                 }
             }
-
-
             if (EDate != null)
             {
                 if (ModeType == "MonthWise")
                     cashList = manager.GetMontlyCashBook(db, EDate.Value.Date);
                 else
                     cashList = manager.GetDailyCashBook(db, EDate.Value.Date);
-
             }
             else if (id == 101)
             {
@@ -89,100 +70,25 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 cashList = manager.GetMontlyCashBook(db, DateTime.Now);
             }
-
             if (cashList != null)
             {
                 if (!String.IsNullOrEmpty(OutputType) && OutputType == "PDF")
                 {
-                    string fName = ReportPrinter.PrintCashBook(cashList);                   
+                    string fName = ReportPrinter.PrintCashBook(cashList);
                     return File(fName, "application/pdf");
-
                 }
-                else
+                else if (!String.IsNullOrEmpty(OutputType) && OutputType == "XLS")
                 {
-                    //ViewBag.FileName = "/"+fileName;
-                }
-               
+                    if (OpsType == "List")
+                        ExcelExporter.CashBookExporter(path, cashList, "CashBook");
 
+                    return File(fileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                }
                 return View(cashList);
             }
             else
                 return NotFound();
         }
-
-        //// GET: CashBook/Details/5
-        //public IActionResult Details(int id)
-        //{
-        //    return PartialView ();
-        //}
-
-        //// GET: CashBook/Create
-        //public ActionResult Create()
-        //{
-        //    return PartialView ();
-        //}
-
-        // POST: CashBook/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction (nameof (Index));
-        //    }
-        //    catch
-        //    {
-        //        return PartialView ();
-        //    }
-        //}
-
-        //// GET: CashBook/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return PartialView ();
-        //}
-
-        ////// POST: CashBook/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction (nameof (Index));
-        //    }
-        //    catch
-        //    {
-        //        return PartialView ();
-        //    }
-        //}
-
-        //// GET: CashBook/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return PartialView ();
-        //}
-
-        //// POST: CashBook/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add delete logic here
-
-        //        return RedirectToAction (nameof (Index));
-        //    }
-        //    catch
-        //    {
-        //        return PartialView ();
-        //    }
-        //}
+     
     }
 }

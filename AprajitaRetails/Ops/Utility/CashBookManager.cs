@@ -10,11 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Ops.Utility
 {
-    // Remove same functon/methord. 
+    //TODO: Remove same functon/methord. 
 
 
     public class CashBookManagerExporter
-    {//TODO: verify and Implement using Excel and Pdf version of output
+    {
         public decimal GetClosingBalance(AprajitaRetailsContext db, DateTime forDate, bool IsBank = false)
         {
             if (IsBank)
@@ -87,7 +87,7 @@ namespace AprajitaRetails.Ops.Utility
             else
                 cashBookList = GetMontlyCashBook(db, date);
 
-            ExcelExporter.CashBookExporter(fileName, cashBookList, "firstCashBook");
+            ExcelExporter.CashBookExporter(fileName, cashBookList, "CashBook");
 
             List<CashInHand> InHandList = CreateCashInHands(db, cashBookList);
 
@@ -254,6 +254,7 @@ namespace AprajitaRetails.Ops.Utility
             {
                 OpnBal = ColBal;
             }
+
             //income
             var dSale = db.DailySales.Where(c => c.PayMode == PayModes.Cash && c.SaleDate.Month == date.Month && c.SaleDate.Year == date.Year).OrderBy(c => c.SaleDate);
             var dRec = db.Receipts.Where(c => c.PayMode == PaymentModes.Cash && c.RecieptDate.Month == date.Month && c.RecieptDate.Year == date.Year).OrderBy(c => c.RecieptDate);

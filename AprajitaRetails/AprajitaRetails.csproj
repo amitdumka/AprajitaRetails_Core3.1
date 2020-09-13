@@ -304,6 +304,7 @@
     <Folder Include="Docs\PrintFiles\" />
     <Folder Include="Models\Accounts\" />
     <Folder Include="Models\Voyager\" />
+    <Folder Include="wwwroot\ExcelFiles\" />
     <Folder Include="wwwroot\todolist\" />
   </ItemGroup>
 
