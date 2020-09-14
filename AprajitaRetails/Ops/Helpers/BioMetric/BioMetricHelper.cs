@@ -52,6 +52,20 @@ namespace AprajitaRetails.Ops.Helpers.BioMetric
     }
     public class BioMetricHelper
     {
+
+        public static bool ConnectDevice(string ipAddress, int portno)
+        {
+            CZKEM axCZKEM1 = new CZKEM();
+            try
+            {
+                return axCZKEM1.Connect_Net(ipAddress, portno);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public void ReadBioMetricData(string ipAddress, int portno)
         {
             CZKEM axCZKEM1 = new CZKEM();

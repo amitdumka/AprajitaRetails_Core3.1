@@ -297,6 +297,8 @@
     <Folder Include="Areas\Reports\Data\" />
     <Folder Include="Areas\RestAPI\Data\" />
     <Folder Include="Areas\RestAPI\Views\" />
+    <Folder Include="Areas\Tests\Data\" />
+    <Folder Include="Areas\Tests\Models\" />
     <Folder Include="Areas\ToDo\Data\" />
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Areas\Voyager\Data\" />
