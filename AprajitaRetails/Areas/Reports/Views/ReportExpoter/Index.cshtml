@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Report Exporter";
+}
+<h2 class="purple-text"> Report Exporter</h2>
+<div>
+    <form asp-action="ReportViewer" method="post">
+
+        <div class="form-group form-row ">
+            <div class="control-label col-md-2 text-danger ">Report of:</div>
+            <div class="col-md-3  ">
+                @*<select asp-items="@ViewBag.TableList" id="tableLists" name="tableLists"></select>*@
+                <select class="form-control" id="tableLists" name="tableLists" asp-items="Html.GetEnumSelectList<FunctionName>()"></select>
+                @*"ViewBag.TableList"*@
+
+            </div>
+        </div>
+
+        <div class="form-group form-row">
+
+            <div class="control-label col-md-2 text-danger ">Date From</div>
+            <div class="col-md-4  ">
+                <input type="date" name="fromDate" id="fromDate" />
+            </div>
+            <div class="control-label col-md-2 text-danger ">Date To</div>
+            <div class="col-md-4  ">
+                <input type="date" name="toDate" id="toDate" />
+            </div>
+        </div>
+
+
+        <div class="form-group form-row ">
+
+            <div class="control-label col-md-2 text-danger ">OutType:</div>
+            <div class="col-md-10  ">
+                @*@Html.DropDownList("UploadType", EnumHelper.GetSelectList(typeof(UploadTypes)), "Select Upload Type", new { @class = "form-control" })*@
+
+                @Html.RadioButton("OutPutType", "PDF", true) <b class="text-primary">PDF </b>
+                @Html.RadioButton("OutPutType", "XLS", false)<b class="text-success"> Excel</b>
+                @Html.RadioButton("OutPutType", "Screen", false)<b class="text-success"> On Screen</b>
+
+
+            </div>
+        </div>
+        <div class="form-group form-row">
+            <input type="submit" value="Get Report" class="btn btn-sm btn-outline-amber" />
+        </div>
+    </form>
+
+</div>
