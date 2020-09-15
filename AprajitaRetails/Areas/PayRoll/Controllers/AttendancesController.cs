@@ -181,6 +181,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             if (ModelState.IsValid)
             {
                 var eType = _context.Employees.Find(attendance.EmployeeId).Category;
+
                 if (eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster)
                 {
                     attendance.IsTailoring = true;
@@ -190,8 +191,11 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 {
                     attendance.IsTailoring = false;
                 }
+                
                 attendance.UserName = User.Identity.Name;
+                
                 _context.Add(attendance);
+                
                 await _context.SaveChangesAsync();
                 new PayRollManager().ONInsertOrUpdate(_context, attendance, false, false);
 

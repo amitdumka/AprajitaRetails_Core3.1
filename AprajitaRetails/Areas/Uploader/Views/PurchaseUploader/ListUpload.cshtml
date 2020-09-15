@@ -1,51 +1,52 @@
-﻿@model IEnumerable<AprajitaRetails.Areas.Uploader.Models.ImportPurchase>
+﻿@model PaginatedList<AprajitaRetails.Areas.Uploader.Models.ImportPurchase>
 
 @{
     ViewData["Title"] = "ListUpload";
     var ctr = 0;
 }
-    <h2 class="purple-text">Purchase List</h2>
-   
-        <div class="btn-group btn-group-sm">
-            <a class="btn btn-outline-primary" asp-action="ListUpLoad" asp-route-id="101">All</a>
-            <a class="btn btn-outline-secondary" asp-action="ListUpLoad" asp-route-id="100">Processed</a>
-            <a class="btn btn-outline-warning" asp-action="ListUpLoad" asp-route-id="">Pending</a>
+<h2 class="purple-text">Purchase List</h2>
 
-        </div>     
-        <hr/>   
+<div class="btn-group btn-group-sm">
+    <a class="btn btn-outline-primary" asp-action="ListUpLoad" asp-route-id="101">All</a>
+    <a class="btn btn-outline-secondary" asp-action="ListUpLoad" asp-route-id="100">Processed</a>
+    <a class="btn btn-outline-warning" asp-action="ListUpLoad" asp-route-id="">Pending</a>
+
+</div>
+<hr />
 <table class="table table-bordered table-hover table-sm table-striped text-center">
     <thead class="bg-success">
-        <tr> <th>#</th>
+        <tr>
+            <th>#</th>
             <th>
-                @Html.DisplayNameFor(model => model.GRNNo)
+                @Html.DisplayNameFor(model => model.First().GRNNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.GRNDate)
+                @Html.DisplayNameFor(model => model.First().GRNDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InvoiceNo)
+                @Html.DisplayNameFor(model => model.First().InvoiceNo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InvoiceDate)
+                @Html.DisplayNameFor(model => model.First().InvoiceDate)
             </th>
 
             <th>
-                @Html.DisplayNameFor(model => model.Barcode)
+                @Html.DisplayNameFor(model => model.First().Barcode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StyleCode)
+                @Html.DisplayNameFor(model => model.First().StyleCode)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayNameFor(model => model.First().Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MRP)
+                @Html.DisplayNameFor(model => model.First().MRP)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cost)
+                @Html.DisplayNameFor(model => model.First().Cost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CostValue)
+                @Html.DisplayNameFor(model => model.First().CostValue)
             </th>
 
             <th></th>
@@ -55,7 +56,8 @@
         @foreach (var item in Model)
         {
             ctr = ctr + 1;
-            <tr> <td>@ctr</td>
+            <tr>
+                <td>@ctr</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.GRNNo)
                 </td>
@@ -86,7 +88,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CostValue)
                 </td>
-                <td >
+                <td>
+                    <a class="btn btn-sm btn-outline-dark-green" asp-action="ProcessPurchase" asp-route-GrnNo="@item.GRNNo">Add</a>
                     <form asp-action="ProcessPurchase">
                         <input type="hidden" name="dDate" value=@item.GRNDate.ToShortDateString() />
                         <input type="submit" value="Process it" class="btn btn-outline-warning btn-sm" />
@@ -96,3 +99,31 @@
         }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<nav>
+    <ul class="pagination pagination-sm ">
+        <li class="page-item">
+            <a asp-action="ListUpload"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link btn btn-default @prevDisabled">
+                Previous
+            </a>
+        </li>
+        <li class="page-item">
+            <a asp-action="ListUpload"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="page-link btn btn-default @nextDisabled">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>
+

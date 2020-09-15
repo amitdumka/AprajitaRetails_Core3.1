@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS;
 using AprajitaRetails.Ops.Uploader;
@@ -13,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
-    [Area ("Uploader")]
+    [Area("Uploader")]
     [Authorize]
     public class PurchaseUploaderController : Controller
     {
@@ -27,110 +28,141 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         // GET: PurchaseUploader
         public IActionResult Index()
         {
-            return View ();
+            return View();
         }
 
         [HttpPost]
         public IActionResult UploadPurchase(string BillType, string InterState, string StoreCode, IFormFile FileUpload)
         {
             // IFormFile FileUpload = null ;
-            ExcelUploaders uploader = new ExcelUploaders ();
+            ExcelUploaders uploader = new ExcelUploaders();
             bool IsVat = false;
             bool IsLocal = false;
 
-            if ( BillType == "VAT" )
+            if (BillType == "VAT")
             {
                 IsVat = true;
             }
 
-            if ( InterState == "WithInState" )
+            if (InterState == "WithInState")
             {
                 IsLocal = true;
             }
 
-            UploadReturns response = uploader.UploadExcel (db, UploadTypes.Purchase, FileUpload, StoreCode, IsVat, IsLocal);
+            UploadReturns response = uploader.UploadExcel(db, UploadTypes.Purchase, FileUpload, StoreCode, IsVat, IsLocal);
 
-            ViewBag.Status = response.ToString ();
-            if ( response == UploadReturns.Success )
+            ViewBag.Status = response.ToString();
+            if (response == UploadReturns.Success)
             {
-                return RedirectToAction ("ListUpload");
+                return RedirectToAction("ListUpload");
             }
 
-            return View ();
+            return View();
         }
 
-        public IActionResult ListUpload(int? id)
+        public async System.Threading.Tasks.Task<IActionResult> ListUpload(int? id, string currentFilter, string searchString, int? pageNumber)
         {
-            if ( id == 100 )
+            if (searchString != null)
             {
-                var md2 = db.ImportPurchases.Where (c => c.IsDataConsumed == true).OrderByDescending (c => c.GRNDate);
-                return View (md2);
-            }
-            else if ( id == 101 )
-            {
-                var md1 = db.ImportPurchases.OrderByDescending (c => c.GRNDate).ThenBy (c => c.IsDataConsumed);
-                return View (md1);
-            }
-            var md = db.ImportPurchases.Where (c => c.IsDataConsumed == false).OrderByDescending (c => c.GRNDate);
-            return View (md);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult ProcessPurchase(string dDate)
-        {
-            HelperUtil.IsSessionSet (HttpContext);
-
-            DateTime ddDate = DateTime.Parse (dDate).Date;
-
-            int StoreId = HelperUtil.GetStoreID (HttpContext);
-            InventoryManger iManage = new InventoryManger (StoreId);
-
-            int a = iManage.ProcessPurchaseInward (db, ddDate, false);
-
-            if ( a > 0 )
-            {
-                return RedirectToAction ("ProcessedPurchase", new { id = a, onDate = ddDate });
+                pageNumber = 1;
             }
             else
             {
-                //TODO: In view Check for Model is null or not
-                ViewBag.MessageHead = "No Product items added. Some error might has been occurred. a=" + a;
-                return View (new List<ProductPurchase> ());
+                searchString = currentFilter;
             }
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 30;
+            if (id == 100)
+            {
+                var md2 = db.ImportPurchases.Where(c => c.IsDataConsumed == true).OrderByDescending(c => c.GRNDate);
+                return View(await PaginatedList<ImportPurchase>.CreateAsync(md2.AsNoTracking(), pageNumber ?? 1, pageSize));
+            }
+            else if (id == 101)
+            {
+                var md1 = db.ImportPurchases.OrderByDescending(c => c.GRNDate).ThenBy(c => c.IsDataConsumed);
+                return View(await PaginatedList<ImportPurchase>.CreateAsync(md1.AsNoTracking(), pageNumber ?? 1, pageSize));
+            }
+            var md = db.ImportPurchases.Where(c => c.IsDataConsumed == false).OrderByDescending(c => c.GRNDate);
+
+            return View(await PaginatedList<ImportPurchase>.CreateAsync(md.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //return View(md);
         }
 
-        public IActionResult ProcessedPurchase(int id, DateTime onDate)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public IActionResult ProcessPurchase(string? dDate, string? GrnNo)
         {
-            var dm = db.ProductPurchases.Include (c => c.PurchaseItems).Where (c => c.InWardDate.Date == ( onDate.Date ));
-            ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
-            return View (dm.ToList ());
+            HelperUtil.IsSessionSet(HttpContext);
+            DateTime ddDate;
+            int StoreId = HelperUtil.GetStoreID(HttpContext);
+            InventoryManger iManage = new InventoryManger(StoreId);
+            int a = -1;
+            if (!String.IsNullOrEmpty(GrnNo))
+            {
+                a = iManage.ProcessPurchaseInward(db, GrnNo, false);
+                if (a > 0)
+                    return RedirectToAction("ProcessedPurchase", new { id = a, GRNNo = GrnNo });
+            }
+            else if (dDate != null)
+            {
+                ddDate = DateTime.Parse(dDate).Date;
+                a = iManage.ProcessPurchaseInward(db, ddDate, false);
+                if (a > 0)
+                    return RedirectToAction("ProcessedPurchase", new { id = a, onDate = ddDate });
+            }
+
+            ViewBag.MessageHead = "No Product items added. Some error might has been occurred. Item(s)=" + a;
+            return View(new List<ProductPurchase>());
+
+        }
+
+        public IActionResult ProcessedPurchase(int id, DateTime? onDate, string GRNNo)
+        {
+            if (!String.IsNullOrEmpty(GRNNo))
+            {
+                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
+                ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
+                return View(dm.ToList());
+            }
+            else if (onDate != null)
+            {
+                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (onDate.Value.Date));
+                ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
+                return View(dm.ToList());
+            }
+            else
+            {
+                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
+                ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
+                return View(dm.ToList());
+            }
+
         }
 
         // GET: PurchaseUploader/Details/5
         public IActionResult Details(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
-            if ( id > 0 )
+            if (id > 0)
             {
-                var productPurchases1 = db.ProductPurchases.Include (p => p.Supplier).Include (c => c.PurchaseItems).Where (c => c.ProductPurchaseId == id);
-                if ( productPurchases1 == null )
+                var productPurchases1 = db.ProductPurchases.Include(p => p.Supplier).Include(c => c.PurchaseItems).Where(c => c.ProductPurchaseId == id);
+                if (productPurchases1 == null)
                 {
-                    return NotFound ();
+                    return NotFound();
                 }
-                ViewBag.Details = "Invoice No: " + productPurchases1.FirstOrDefault ().InvoiceNo;
-                return View (productPurchases1.ToList ());
+                ViewBag.Details = "Invoice No: " + productPurchases1.FirstOrDefault().InvoiceNo;
+                return View(productPurchases1.ToList());
             }
             ViewBag.Details = "";
-            var productPurchases = db.ProductPurchases.Include (p => p.Supplier).Include (c => c.PurchaseItems);
-            if ( productPurchases == null )
+            var productPurchases = db.ProductPurchases.Include(p => p.Supplier).Include(c => c.PurchaseItems);
+            if (productPurchases == null)
             {
-                return NotFound ();
+                return NotFound();
             }
-            return View (productPurchases.ToList ());
+            return View(productPurchases.ToList());
         }
     }
 }

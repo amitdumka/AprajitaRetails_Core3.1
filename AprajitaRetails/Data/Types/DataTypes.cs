@@ -11,7 +11,7 @@ public static class Constants
 public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, TailorMaster, Tailors, TailoringAssistance, Others }
 
 public enum Genders { Male, Female, TransGender }
-public enum Units { Meters, Nos, Pcs, Packets }
+public enum Units { Meters, Nos, Pcs, Packets, NoUnit }
 public enum TaxType {  GST, SGST, CGST, IGST, VAT , CST}
 
 //public enum SalePayMode { Cash, Card, Mix }//TODO: check update based on data present

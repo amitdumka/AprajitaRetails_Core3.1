@@ -301,6 +301,8 @@
     <Folder Include="Areas\ToDo\Data\" />
     <Folder Include="Areas\Uploader\Data\" />
     <Folder Include="Areas\Voyager\Data\" />
+    <Folder Include="Data\OldData\Purchase\Dumka\" />
+    <Folder Include="Data\OldData\Sale\" />
     <Folder Include="Data\Reports\" />
     <Folder Include="Docs\PrintFiles\" />
     <Folder Include="Models\Accounts\" />

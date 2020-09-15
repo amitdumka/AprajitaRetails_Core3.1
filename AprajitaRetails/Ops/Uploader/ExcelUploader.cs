@@ -198,17 +198,17 @@ namespace AprajitaRetails.Ops.Uploader
 
         private int ImportPurchase(AprajitaRetailsContext db, string fileName, string StoreCode, bool IsVat, bool IsLocal)
         {
-            //string rootFolder = IHostingEnvironment.WebRootPath;
-            //string fileName = @"ImportCustomers.xlsx";
             FileInfo file = new FileInfo(fileName);
 
             using ExcelPackage package = new ExcelPackage(file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
+            
             int StoreID = 1;//Default
             StoreID = db.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
             if (StoreID < 1)
                 StoreID = 1;
+            
             List<ImportPurchase> purchaseList = new List<ImportPurchase>();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
 
@@ -232,7 +232,7 @@ namespace AprajitaRetails.Ops.Uploader
                     CostValue = (decimal)workSheet.Cells[i, 14].GetValue<decimal>(),
                     TaxAmt = (decimal)workSheet.Cells[i, 15].GetValue<decimal>(),
                     IsDataConsumed = false,
-                    // ImportTime = DateTime.Today,
+                  
                     IsLocal = IsLocal,
                     IsVatBill = IsVat,
                     StoreId = StoreID

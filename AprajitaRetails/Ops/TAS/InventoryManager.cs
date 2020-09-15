@@ -179,7 +179,19 @@ namespace AprajitaRetails.Ops.TAS
             //TODO: create if not exsits
             try
             {
-                int ids = (int?)db.Brands.Where(c => c.BCode == code).FirstOrDefault().BrandId ?? -1;
+                int ids = (int?)db.Brands.Where(c => c.BCode == code).Select(c => c.BrandId).FirstOrDefault() ?? -1;
+                if (ids <= 0)
+                {
+                    Brand brand = new Brand
+                    {
+                        BCode = code,
+                        BrandName = code
+                    };
+                    db.Brands.Add(brand);
+                    db.SaveChanges();
+                    return brand.BrandId;
+                }
+
                 return ids;
             }
             catch (Exception ex)
@@ -263,27 +275,68 @@ namespace AprajitaRetails.Ops.TAS
         #region Purchase
 
         // Converting purchase items to stock
+        //TODO: need to update based on Store
 
-        public int ProcessPurchaseInward(AprajitaRetailsContext db, DateTime inDate, bool IsLocal)
+        public int ProcessPurchaseInward(AprajitaRetailsContext db, string GRNNo, bool IsLocal)
         {
             int ctr = 0;
-            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && c.GRNNo == GRNNo).OrderBy(c => c.InvoiceNo).ToList();
 
             if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
-
+                Units UnitName;
                 foreach (var item in data)
                 {
                     int pid = CreateProductItem(db, item);
                     if (pid != -999)
-                        CreateStockItem(db, item, pid);
-                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct);
+                        UnitName = CreateStockItem(db, item, pid);
+                    else
+                        UnitName = Units.NoUnit;
+                    //TODO: else : What to do.
+
+                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
+
                     PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
+
                     item.IsDataConsumed = true;
                     db.Entry(item).State = EntityState.Modified;
                     ctr++;
                 }
+
+                if (PurchasedProduct != null)
+                    db.ProductPurchases.Add(PurchasedProduct);
+                db.SaveChanges();
+            }
+            return ctr;
+        }
+        public int ProcessPurchaseInward(AprajitaRetailsContext db, DateTime inDate, bool IsLocal)
+        {
+            int ctr = 0;
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
+
+            if (data != null && data.Count > 0)
+            {
+                ProductPurchase PurchasedProduct = null;
+                Units UnitName;
+                foreach (var item in data)
+                {
+                    int pid = CreateProductItem(db, item);
+                    if (pid != -999)
+                        UnitName = CreateStockItem(db, item, pid);
+                    else
+                        UnitName = Units.NoUnit;
+                    //TODO: else : What to do.
+
+                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
+
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
+
+                    item.IsDataConsumed = true;
+                    db.Entry(item).State = EntityState.Modified;
+                    ctr++;
+                }
+
                 if (PurchasedProduct != null)
                     db.ProductPurchases.Add(PurchasedProduct);
                 db.SaveChanges();
@@ -291,8 +344,9 @@ namespace AprajitaRetails.Ops.TAS
             return ctr;
         }
 
-        public int CreateProductItem(AprajitaRetailsContext db, ImportPurchase purchase)
+        private int CreateProductItem(AprajitaRetailsContext db, ImportPurchase purchase)
         {
+            //TODO: Here Tax System should be added automaticly in future so no need to handle other place
             int barc = db.ProductItems.Where(c => c.Barcode == purchase.Barcode).Count();
 
             if (barc <= 0)
@@ -305,9 +359,25 @@ namespace AprajitaRetails.Ops.TAS
                     StyleCode = purchase.StyleCode,
                     ProductName = purchase.ProductName,
                     ItemDesc = purchase.ItemDesc,
-                    BrandId = GetBrand(db, purchase.StyleCode),
+                    BrandId = GetBrand(db, purchase.StyleCode)
                 };
 
+                if (purchase.TaxAmt > 0)
+                {
+
+                    try
+                    {
+                        item.TaxRate = (int)(purchase.TaxAmt * 100 / purchase.CostValue);
+                    }
+                    catch (Exception)
+                    {
+                        item.TaxRate = 0;
+                    }
+
+
+                }
+                else
+                    item.TaxRate = 0;
                 //splinting ProductName
                 string[] PN = purchase.ProductName.Split('/');
 
@@ -358,7 +428,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        public void CreateStockItem(AprajitaRetailsContext db, ImportPurchase purchase, int pItemId)
+        private Units CreateStockItem(AprajitaRetailsContext db, ImportPurchase purchase, int pItemId)
         {
             Stock stcks = db.Stocks.Where(c => c.ProductItemId == pItemId).FirstOrDefault();
             if (stcks != null)
@@ -369,7 +439,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             else
             {
-                Stock stock = new Stock
+                stcks = new Stock
                 {
                     PurchaseQty = purchase.Quantity,
                     Quantity = purchase.Quantity,
@@ -378,22 +448,27 @@ namespace AprajitaRetails.Ops.TAS
                     Units = db.ProductItems.Find(pItemId).Units,
                     StoreId = StoreID
                 };
-                db.Stocks.Add(stock);
+                db.Stocks.Add(stcks);
             }
             db.SaveChanges();
+            return stcks.Units;
+
         }
 
-        public ProductPurchase CreatePurchaseInWard(AprajitaRetailsContext db, ImportPurchase purchase, ProductPurchase product)
+        private ProductPurchase CreatePurchaseInWard(AprajitaRetailsContext db, ImportPurchase purchase, ProductPurchase product, Units unitName)
         {
+            decimal sCost = 0;
+            if (unitName == Units.Meters) sCost = 3;
             if (product != null)
             {
                 if (purchase.InvoiceNo == product.InvoiceNo)
                 {
                     product.TotalAmount += (purchase.CostValue + purchase.TaxAmt);
-                    product.ShippingCost += 0;//TODO: add option for adding shipping cost for fabric
+                    product.ShippingCost += sCost * (decimal)purchase.Quantity;
                     product.TotalBasicAmount += purchase.CostValue;
                     product.TotalTax += purchase.TaxAmt;
                     product.TotalQty += purchase.Quantity;
+                    if (purchase.IsVatBill && !purchase.IsLocal) product.TotalTax = purchase.CostValue * (decimal)0.02;
                 }
                 else
                 {
@@ -406,15 +481,22 @@ namespace AprajitaRetails.Ops.TAS
                         InWardNo = purchase.GRNNo,
                         IsPaid = false,
                         PurchaseDate = purchase.InvoiceDate,
-                        ShippingCost = 0,//TODO: add option for adding shipping cost for fabric
+                        ShippingCost = sCost * (decimal)purchase.Quantity,
                         TotalBasicAmount = purchase.CostValue,
                         TotalTax = purchase.TaxAmt,
                         TotalQty = purchase.Quantity,
-                        TotalAmount = purchase.CostValue + purchase.TaxAmt,// TODO: Check for actual DATA.
-                        Remarks = "",
+                        TotalAmount = purchase.CostValue + purchase.TaxAmt,
+                        Remarks = "Added On: " + DateTime.Now.ToString(),
                         SupplierID = GetSupplierIdOrAdd(db, purchase.SupplierName),
-                        StoreId = StoreID
+                        StoreId = StoreID,
+                        UserName = "AutoUploader"
                     };
+                    if (purchase.IsVatBill)
+                    {
+                        product.Remarks += " # VatBill";
+                        if (!purchase.IsLocal)
+                            product.TotalTax = purchase.CostValue * (decimal)0.02;
+                    }
                     product.PurchaseItems = new List<PurchaseItem>();
                 }
             }
@@ -427,7 +509,7 @@ namespace AprajitaRetails.Ops.TAS
                     InWardNo = purchase.GRNNo,
                     IsPaid = false,
                     PurchaseDate = purchase.InvoiceDate,
-                    ShippingCost = 0,//TODO: add option for adding shipping cost for fabric
+                    ShippingCost = sCost * (decimal)purchase.Quantity,
                     TotalBasicAmount = purchase.CostValue,
                     TotalTax = purchase.TaxAmt,
                     TotalQty = purchase.Quantity,
@@ -436,12 +518,18 @@ namespace AprajitaRetails.Ops.TAS
                     SupplierID = GetSupplierIdOrAdd(db, purchase.SupplierName),
                     StoreId = StoreID
                 };
+                if (purchase.IsVatBill)
+                {
+                    product.Remarks += " # VatBill";
+                    if (!purchase.IsLocal)
+                        product.TotalTax = purchase.CostValue * (decimal)0.02;
+                }
                 product.PurchaseItems = new List<PurchaseItem>();
             }
             return product;
         }
 
-        public PurchaseItem CreatePurchaseItem(AprajitaRetailsContext db, ImportPurchase purchase, int productId, bool IsLocal = false)
+        private PurchaseItem CreatePurchaseItem(AprajitaRetailsContext db, ImportPurchase purchase, int productId, bool IsLocal = false)
         {
             PurchaseItem item = new PurchaseItem
             {
@@ -454,67 +542,123 @@ namespace AprajitaRetails.Ops.TAS
                 PurchaseTaxTypeId = CreatePurchaseTaxType(db, purchase, IsLocal),
                 ProductItemId = productId
             };
+
+            if (purchase.IsVatBill && !purchase.IsLocal)
+                item.TaxAmout += purchase.CostValue * (decimal)0.02;
+
             return item;
         }
 
-        public int CreatePurchaseTaxType(AprajitaRetailsContext db, ImportPurchase purchase, bool IsLocal = false)
+        private int CreatePurchaseTaxType(AprajitaRetailsContext db, ImportPurchase purchase, bool IsLocal = false)
         {
             //Calculate tax rate
             int taxRate = 0;
             try
             {
-                taxRate = (int)((purchase.TaxAmt * 100) / purchase.CostValue);
+                taxRate = (int)(purchase.TaxAmt * 100 / purchase.CostValue);
             }
             catch (Exception)
             {
                 taxRate = 0;
             }
 
-            //TODO:BUG:  error can come if tax amount is zero.
-            if (IsLocal)
+            if (purchase.IsVatBill)
             {
-                try
+                if (purchase.IsLocal)
                 {
-                    int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.GST).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
-                    if (id == 0)
+                    try
+                    {
+                        int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.VAT).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
+                        if (id == 0)
+                        {
+                            PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax VAT @" + taxRate };
+                            db.PurchaseTaxTypes.Add(taxType);
+                            db.SaveChanges();
+                            return taxType.PurchaseTaxTypeId;
+                        }
+                        return id;
+                    }
+                    catch (Exception)
+                    {
+                        PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax VAT @" + taxRate };
+                        db.PurchaseTaxTypes.Add(taxType);
+                        db.SaveChanges();
+                        return taxType.PurchaseTaxTypeId;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.VAT).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
+                        if (id == 0)
+                        {
+                            PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.VAT, TaxName = "Input Tax Vat @" + taxRate };
+                            db.PurchaseTaxTypes.Add(taxType);
+                            db.SaveChanges();
+                            return taxType.PurchaseTaxTypeId;
+                        }
+                        return id;
+                    }
+                    catch (Exception)
+                    {
+                        PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax Vat @" + taxRate };
+                        db.PurchaseTaxTypes.Add(taxType);
+                        db.SaveChanges();
+                        return taxType.PurchaseTaxTypeId;
+                    }
+                }
+
+            }
+            else
+            {
+                if (purchase.IsLocal)
+                {
+                    try
+                    {
+                        int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.GST).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
+                        if (id == 0)
+                        {
+                            PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax GST(SGST+CGST) @" + taxRate };
+                            db.PurchaseTaxTypes.Add(taxType);
+                            db.SaveChanges();
+                            return taxType.PurchaseTaxTypeId;
+                        }
+                        return id;
+                    }
+                    catch (Exception)
                     {
                         PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax GST(SGST+CGST) @" + taxRate };
                         db.PurchaseTaxTypes.Add(taxType);
                         db.SaveChanges();
                         return taxType.PurchaseTaxTypeId;
                     }
-                    return id;
                 }
-                catch (Exception)
+                else
                 {
-                    PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.GST, TaxName = "Input Tax GST(SGST+CGST) @" + taxRate };
-                    db.PurchaseTaxTypes.Add(taxType);
-                    db.SaveChanges();
-                    return taxType.PurchaseTaxTypeId;
-                }
-            }
-            else
-            {
-                try
-                {
-                    int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.IGST).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
-                    if (id == 0)
+                    try
+                    {
+                        int id = db.PurchaseTaxTypes.Where(c => c.CompositeRate == taxRate && c.TaxType == TaxType.IGST).Select(c => c.PurchaseTaxTypeId).FirstOrDefault();
+                        if (id == 0)
+                        {
+                            PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
+                            db.PurchaseTaxTypes.Add(taxType);
+                            db.SaveChanges();
+                            return taxType.PurchaseTaxTypeId;
+                        }
+                        return id;
+                    }
+                    catch (Exception)
                     {
                         PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
                         db.PurchaseTaxTypes.Add(taxType);
                         db.SaveChanges();
                         return taxType.PurchaseTaxTypeId;
                     }
-                    return id;
-                }
-                catch (Exception)
-                {
-                    PurchaseTaxType taxType = new PurchaseTaxType { CompositeRate = taxRate, TaxType = TaxType.IGST, TaxName = "Input Tax IGST @" + taxRate };
-                    db.PurchaseTaxTypes.Add(taxType);
-                    db.SaveChanges();
-                    return taxType.PurchaseTaxTypeId;
                 }
             }
+
+
         }
 
         #endregion Purchase
@@ -676,7 +820,7 @@ namespace AprajitaRetails.Ops.TAS
                     invoice.TotalQty += item.Quantity;
                     invoice.RoundOffAmount += item.RoundOff;
                     invoice.TotalTaxAmount += (item.SGST + item.CGST); //TODO: Check Future make it tax
-                  invoice.StoreId = item.StoreId;                    
+                    invoice.StoreId = item.StoreId;
                     if (invoice.PaymentDetail == null)
                         invoice.PaymentDetail = CreatePaymentDetails(db, item, false); //Create Payment details
                     invoice.CustomerId = GetCustomerId(db, item);  // CustomerId
@@ -754,7 +898,7 @@ namespace AprajitaRetails.Ops.TAS
                 SaleTaxTypeId = CreateSaleTax(db, item),
                 InvoiceNo = item.InvoiceNo
             };
-            if (!SalePurchaseManager.UpDateStock(db, pi.ProductItemId, item.Quantity, false,  item.StoreId))
+            if (!SalePurchaseManager.UpDateStock(db, pi.ProductItemId, item.Quantity, false, item.StoreId))
             {
                 //TODO: Create Stock and update
                 CreateStockItem(db, saleItem.Qty, saleItem.ProductItemId, saleItem.Units);
@@ -1019,7 +1163,7 @@ namespace AprajitaRetails.Ops.TAS
             return 1;
         }
 
-        private PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item, bool isManualBill=false)
+        private PaymentDetail CreatePaymentDetails(AprajitaRetailsContext db, ImportSaleItemWise item, bool isManualBill = false)
         {
             PaymentDetail payment = null;
             if (string.IsNullOrEmpty(item.PaymentType)/* item.PaymentType == null || item.PaymentType == "" */)
@@ -1032,7 +1176,8 @@ namespace AprajitaRetails.Ops.TAS
                 payment = new PaymentDetail
                 {
                     CashAmount = item.BillAmnt,
-                    PayMode = SalePayMode.Cash, IsManualBill=false
+                    PayMode = SalePayMode.Cash,
+                    IsManualBill = false
                 };
 
                 // return payment;
@@ -1079,16 +1224,15 @@ namespace AprajitaRetails.Ops.TAS
             {
                 if (invoice.InvoiceNo == item.InvoiceNo)
                 {
-                    // invoice.InvoiceNo = item.InvoiceNo;
-                    //invoice.OnDate = item.InvoiceDate;
+
                     invoice.TotalDiscountAmount += item.Discount;
                     invoice.TotalBillAmount += item.LineTotal;
                     invoice.TotalItems += 1;//TODO: Check for count
                     invoice.TotalQty += item.Quantity;
                     invoice.RoundOffAmount += item.RoundOff;
                     invoice.TotalTaxAmount += item.SGST; //TODO: Check
-                                                         invoice.StoreId = item.StoreId;
-                    invoice.PaymentDetail = CreatePaymentDetails(db, item,false);
+                    invoice.StoreId = item.StoreId;
+                    invoice.PaymentDetail = CreatePaymentDetails(db, item, false);
                     invoice.CustomerId = GetCustomerId(db, item);
                 }
                 else
@@ -1108,7 +1252,7 @@ namespace AprajitaRetails.Ops.TAS
                         TotalTaxAmount = item.SGST, //TODO: Check
                         PaymentDetail = CreatePaymentDetails(db, item, false),
                         CustomerId = GetCustomerId(db, item),
-                       StoreId = item.StoreId,
+                        StoreId = item.StoreId,
                         IsManualBill = false,
                         SaleItems = new List<RegularSaleItem>()
                     };
@@ -1128,7 +1272,7 @@ namespace AprajitaRetails.Ops.TAS
                     TotalTaxAmount = item.SGST, //TODO: Check
                     PaymentDetail = CreatePaymentDetails(db, item),
                     CustomerId = GetCustomerId(db, item),
-                   StoreId = item.StoreId,
+                    StoreId = item.StoreId,
                     IsManualBill = false,
                     SaleItems = new List<RegularSaleItem>()
                 };
