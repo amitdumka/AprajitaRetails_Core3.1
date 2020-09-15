@@ -6,18 +6,14 @@
 
 <h2>Purchase (Imported)</h2>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+<p>
+    <a class="btn btn-sm btn-outline-blue" asp-action="Index">All</a>
+    <a class="btn btn-sm btn-outline-green" asp-action="Index" asp-route-id="100">Processed</a>
+    <a class="btn btn-sm btn-outline-orange" asp-action="Index" asp-route-id="101">Pending</a>
+</p>
 <table class="table table-sm table-striped table-hover table-bordered">
     <thead class="table-info">
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.GRNNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GRNDate)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.InvoiceNo)
             </th>
@@ -30,15 +26,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Barcode)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.StyleCode)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.ItemDesc)
-            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
@@ -59,85 +49,59 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsVatBill)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.IsLocal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDataConsumed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImportTime)
-            </th>*@
+
             <th></th>
         </tr>
     </thead>
     <tbody class="table-success">
-@foreach (var item in Model) {
-        <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.GRNNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GRNDate)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.InvoiceNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvoiceDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Barcode)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.StyleCode)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.ItemDesc)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MRP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MRPValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaxAmt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsVatBill)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IsLocal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDataConsumed)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImportTime)
-            </td>*@
-            <td class="btn-group btn-group-sm">
-                <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.ImportPurchaseId">Edit</a> 
-                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ImportPurchaseId">Details</a> 
-                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ImportPurchaseId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Barcode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StyleCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MRP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MRPValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CostValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxAmt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsVatBill)
+                </td>
+
+                <td class="btn-group btn-group-sm">
+                    <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.ImportPurchaseId">Edit</a>
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ImportPurchaseId">Details</a>
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ImportPurchaseId">Delete</a>
+                    <a class="btn btn-outline-dark-green" asp-action="ProcessBill" asp-route-GrnNo="@item.GRNNo">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<partial name="_Modalpop" />

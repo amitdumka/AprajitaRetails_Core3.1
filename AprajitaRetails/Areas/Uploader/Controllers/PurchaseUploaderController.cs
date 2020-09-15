@@ -120,19 +120,19 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         {
             if (!String.IsNullOrEmpty(GRNNo))
             {
-                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
+                var dm = db.ProductPurchases.Include(c=>c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }
             else if (onDate != null)
             {
-                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (onDate.Value.Date));
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (onDate.Value.Date));
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }
             else
             {
-                var dm = db.ProductPurchases.Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }
