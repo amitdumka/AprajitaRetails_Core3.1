@@ -39,7 +39,7 @@ $(document).ready(function () {
     $('.done-checkbox').on('click', function (e) {
         markCompleted(e.target);
     });
-
+   // LoadThoughts();
 });
 
 function markCompleted(checkbox) {
@@ -75,3 +75,28 @@ function markCompleted(checkbox) {
     }
     modernizeTimeStamps();
 })();
+
+var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://andruxnet-random-famous-quotes.p.rapidapi.com/?count=10&cat=famous",
+    "method": "POST",
+    "headers": {
+        "x-rapidapi-host": "andruxnet-random-famous-quotes.p.rapidapi.com",
+        "x-rapidapi-key": "2794ef64d6msha40bb0fc5b20442p13b8adjsndc64838e1f99",
+        "content-type": "application/x-www-form-urlencoded"
+    },
+    "data": {}
+}
+
+function LoadThoughts() {
+    $.ajax(settings).done(function (response) {
+        console.log(response);
+        RenderThoughs(response);
+    });
+}
+
+
+function RenderThoughs(data) {
+    //TODO:
+}

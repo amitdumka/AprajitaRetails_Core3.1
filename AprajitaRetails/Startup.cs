@@ -94,17 +94,17 @@ namespace AprajitaRetails
             services.ConfigureServices ();
             services.ConfigureStorage (Configuration);
 
-            services.AddQuartz(q =>
-            {
-                // base quartz scheduler, job and trigger configuration
-            });
+            //services.AddQuartz(q =>
+            //{
+            //    // base quartz scheduler, job and trigger configuration
+            //});
 
-            // ASP.NET Core hosting
-            services.AddQuartzServer(options =>
-            {
-                // when shutting down we want jobs to complete gracefully
-                options.WaitForJobsToComplete = true;
-            });
+            //// ASP.NET Core hosting
+            //services.AddQuartzServer(options =>
+            //{
+            //    // when shutting down we want jobs to complete gracefully
+            //    options.WaitForJobsToComplete = true;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

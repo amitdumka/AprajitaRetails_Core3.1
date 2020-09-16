@@ -3,10 +3,11 @@
 @inject UserManager<IdentityUser> UserManager
 @inject ITodoItemService TodoService
 
-
+<br />
+<br />
 <h6 class="purple-text">To Do</h6>
 <a asp-action="Create" asp-area="ToDo" asp-controller="Todos" class="text-success small"><span data-feather="plus-circle"></span>Add</a>
-<h6 class="amber-text small">Recent</h6>
+<h6 class="teal-text small">Recent:</h6>
 <ol>
     @foreach ( var item in TodoService.GetRecentlyAddedItemsAsync(UserManager.GetUserAsync (User).Result).Result.ToList () )
 
@@ -14,7 +15,7 @@
         <li class="font-small text-success"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id"> @item.Title</a></li>
     }
 </ol>
-<h6 class="text-danger small">Due</h6>
+<h6 class="text-danger small">Due:</h6>
 <ol>
     @foreach ( var item in TodoService.GetMonthlyItems(UserManager.GetUserAsync (User).Result, DateTime.Today.Month).Result.ToList () )
 
@@ -22,7 +23,7 @@
         <li class="font-small blue-text"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id">@item.Title</a></li>
     }
 </ol>
-<h6 class="text-danger small">Public</h6>
+<h6 class="text-danger small">Public:</h6>
 <ol>
     @foreach ( var item in TodoService.GetIncompletePublicItemsAsync().Result.ToList () )
 

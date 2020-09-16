@@ -44,7 +44,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             // HelperUtil.IsSessionSet (HttpContext);
             // int storeid = HelperUtil.GetStoreID (HttpContext);
 
-            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c => c.StoreId == StoreID);
+            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c => c.StoreId == StoreID).OrderByDescending(c=>c.InWardNo).ThenBy(c=>c.PurchaseDate);
             return View(await PaginatedList<ProductPurchase>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
 

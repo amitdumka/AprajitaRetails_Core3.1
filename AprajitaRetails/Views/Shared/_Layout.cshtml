@@ -258,17 +258,40 @@
             </main>
 
             <div class="col-md-1 d-none d-md-block bg-light border">
-                @if ( Context.User.Identity.IsAuthenticated )
-                {
+                <div class="row flex-row row-cols-1 bg-white border">
+                    <p class="text-success small justify-content-center"> Message Board</p>
+                    <p>
+                        <h7> Features Coming Soon!!!</h7>
+                        <ol class="small">
+                            <li>Here Message will be displayed</li>
+                            <li>Message will be based on User(s)</li>
+                            <li>You can also send message or chat with user(s)</li>
+                            <li>Public Chat also coming!</li>
+                        </ol>
 
-
-                    <partial name="TodoList" />
-                    <br />
-                }
+                    </p>
+                    @*<p class="text-danger"> Thought of Day:</p>*@
+                </div>
+                    @*<div class="row row-cols-1 bg-white border">                      
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <partial name="TodoList" />
+                            <br />
+                        }
+                    </div>*@
+                    <div class="row flex-row row-cols-1 bg-warning border">
+                        @*<div class="col-md-1 d-none d-md-block bg-light border">*@
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <partial name="TodoList" />
+                            <br />
+                        }
+                    </div>
+                </div>
+               
             </div>
-
         </div>
-    </div>
+    @*</div>*@
     <footer class="border-top footer  font-small text-muted ">
         <div class="container">
             &copy; 2020 - Aprajita Retails - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
