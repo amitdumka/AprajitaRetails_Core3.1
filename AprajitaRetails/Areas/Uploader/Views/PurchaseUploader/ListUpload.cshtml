@@ -10,7 +10,15 @@
     <a class="btn btn-outline-primary" asp-action="ListUpLoad" asp-route-id="101">All</a>
     <a class="btn btn-outline-secondary" asp-action="ListUpLoad" asp-route-id="100">Processed</a>
     <a class="btn btn-outline-warning" asp-action="ListUpLoad" asp-route-id="">Pending</a>
-
+    <a class="btn btn-outline-deep-orange"data-toggle="collapse" href="#YearButton" role="button" aria-expanded="false" aria-controls="YearButton" >Process Year Wise </a>
+</div>
+<div class="collapse" id="YearButton">
+    <div class="btn-group btn-group-sm">
+        @foreach (var item in ViewBag.YearList)
+        {
+           <a class="btn btn-outline-elegant" asp-action="ProcessPurchase" asp-route-id="888" asp-route-year=@item>@item</a>
+        }
+    </div>
 </div>
 <hr />
 <table class="table table-bordered table-hover table-sm table-striped text-center">

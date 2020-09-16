@@ -206,7 +206,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             int a = -1;
             if (!String.IsNullOrEmpty(GrnNo))
             {
-                a = iManage.ProcessPurchaseInward(_context, GrnNo, false);
+                a = iManage.ProcessPurchaseInward(_context, GrnNo);
                 if (a > 0)
                     return RedirectToAction("ProcessedPurchase", new { id = a, GRNNo = GrnNo });
             }

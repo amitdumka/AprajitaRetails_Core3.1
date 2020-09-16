@@ -33,7 +33,7 @@
                         </li>
                         @if ( Context.User.Identity.IsAuthenticated )
                         {
-                            <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale</a></li>
+                            <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">Daily Sale</a></li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
@@ -45,7 +45,7 @@
                                         <p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Purchase" asp-controller="PurchaseTaxTypes" asp-action="Index">Input Tax</a>
                                         <a class="dropdown-item text-dark" asp-area="Sales" asp-controller="SaleTaxTypes" asp-action="Index">Output Tax</a>
-                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
+                                        <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">Suspense Accounts</a>
                                         <p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInHands" asp-action="Index">Cash-In-Hands</a>
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashInBanks" asp-action="Index">Cash-In-Banks</a>
@@ -59,7 +59,7 @@
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
                                     <p role="separator" class="dropdown-divider"></p>
-                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">Dues Recoverds</a>
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DuesLists" asp-action="Index">Dues List</a>
                                 </div>
                             </li>
@@ -123,7 +123,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                                     @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
                                     {
-                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Employees" asp-action="Index">Employees</a>
+                                        <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Employees" asp-action="Index">Employee</a>
                                         <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="SalaryPayments" asp-action="Index">Salary</a>
                                         <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvancePayments" asp-action="Index">Advance Payments</a>
                                         <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
@@ -149,7 +149,7 @@
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashReceipts" asp-action="Index">Cash Receipts</a>
                                     <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="Receipts" asp-action="Index">Receipts</a>
                                     <p role="separator" class="dropdown-divider"></p>
-                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">DueRecoverds</a>
+                                    <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="DueRecoverds" asp-action="Index">Dues Recoverds</a>
 
 
                                 </div>
@@ -163,13 +163,13 @@
                                         {
                                             <a class="dropdown-item text-dark" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>
                                             <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Stores" asp-action="Index">Stores</a>
-                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Index">EndOfDays List</a>
+                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Index">End Of Days List</a>
                                             <p role="separator" class="dropdown-divider"></p>
                                         }
                                         @if ( Context.User.IsInRole ("PowerUser") || Context.User.IsInRole ("Admin") )
                                         {
-                                            <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">SuspenseAccounts</a>
-                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="Index">Income Expense Report</a>
+                                            <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">Suspense Accounts</a>
+                                            <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="Index">Income & Expense Report</a>
                                             <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="IEReport">Balance Sheet</a>
                                             <a class="dropdown-item text-dark" asp-area="" asp-controller="Exporter" asp-action="Index">Exporter</a>
                                             <p role="separator" class="dropdown-divider"></p>
@@ -177,8 +177,8 @@
                                         }
 
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
-                                        <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Create">EndOfDays</a>
-                                        <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Customers" asp-action="Index">Customers</a>
+                                        <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Create">End Of Days</a>
+                                        <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Customers" asp-action="Index">Customer</a>
 
 
                                     </div>
@@ -189,21 +189,21 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imports</a>
                                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ExcelUploader" asp-action="Index">ExcelUploader</a>
-                                        <p role="separator" class="dropdown-divider"></p>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index">SalesUploader</a>
+                                        @*<a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ExcelUploader" asp-action="Index">Excel Uploader</a>
+                                        <p role="separator" class="dropdown-divider"></p>*@
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index">Upload Sales</a>
                                         <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="SalesUploader" asp-action="SaleList">Sale List</a>
                                         <p role="separator" class="dropdown-divider"></p>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index">PurchaseUploader</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index">Upload Purchase</a>
                                         <a class="dropdown-item text-dark " asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="ListUpLoad">Purchase List</a>
                                         <p role="separator" class="dropdown-divider"></p>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportInWards" asp-action="Index">ImportInWards</a>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportPurchases" asp-action="Index">ImportPurchases</a>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleItemWises" asp-action="Index">ImportSaleItemWises</a>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleRegisters" asp-action="Index">ImportSaleRegisters</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportInWards" asp-action="Index">Import InWards</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportPurchases" asp-action="Index">Import Purchases</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleItemWises" asp-action="Index">Import Sale ItemWises</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportSaleRegisters" asp-action="Index">Import Sale Registers</a>
                                         <p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportAttendance" asp-action="Index">Import Attandence</a>
-                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportAddressBook" asp-action="Index">Import contacts</a>
+                                        <a class="dropdown-item text-dark" asp-area="Uploader" asp-controller="ImportAddressBook" asp-action="Index">Import AddressBook</a>
                                     </div>
                                 </li>
                             }
@@ -232,7 +232,7 @@
             <div class="nav-scroller aqua-gradient-rgba shadow-sm " role="toolbar">
                 <nav class="nav nav-underline">
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
-                    <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">DailySale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
+                    <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">Daily Sale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
                     @*<a class="nav-link" href="#">Sale</a>
                         <a class="nav-link" href="#">Purchase</a>*@
                     <a class="nav-link" asp-area="Sales" asp-controller="ManualInvoice" asp-action="Index">Manual Bill</a>

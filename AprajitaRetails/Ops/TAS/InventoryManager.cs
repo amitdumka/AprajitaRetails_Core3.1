@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AprajitaRetails.Ops.TAS
 {
     /// <summary>
-    /// This class help to manage voyager data in perfect and correct manger
+    /// This class help to manage voyager data in perfect and correct manger / This is mostly based on The Arvin Store, Voyager data exported to Excel Sheet
     /// </summary>
     public class InventoryManger
     {
@@ -240,7 +240,7 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                int ids = (int?)db.Suppliers.Where(c => c.SuppilerName == sup).FirstOrDefault().SupplierID ?? -1;
+                int ids = (int?)db.Suppliers.Where(c => c.SuppilerName == sup).Select(c=>c.SupplierID).FirstOrDefault() ?? -1;
                 if (ids > 0)
                     return ids;
                 else if (ids == -1)
@@ -274,10 +274,80 @@ namespace AprajitaRetails.Ops.TAS
 
         #region Purchase
 
-        // Converting purchase items to stock
-        //TODO: need to update based on Store
+        /// <summary>
+        /// Process All Pending Inward
+        /// </summary>
+        /// <param name="db"></param>
+        /// <returns></returns>
+        public int ProcessPurchaseInwardAll(AprajitaRetailsContext db)
+        {
+            int ctr = 0;
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID).OrderBy(c => c.InvoiceNo).ToList();
+            if (data != null && data.Count > 0)
+            {
+                ProductPurchase PurchasedProduct = null;
+                Units UnitName;
+                foreach (var item in data)
+                {
+                    int pid = CreateProductItem(db, item);
+                    if (pid != -999)
+                        UnitName = CreateStockItem(db, item, pid);
+                    else
+                        UnitName = Units.NoUnit;
+                    //TODO: else : What to do.
 
-        public int ProcessPurchaseInward(AprajitaRetailsContext db, string GRNNo, bool IsLocal)
+                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
+
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid));
+
+                    item.IsDataConsumed = true;
+                    db.Entry(item).State = EntityState.Modified;
+                    ctr++;
+                }
+
+                if (PurchasedProduct != null)
+                    db.ProductPurchases.Add(PurchasedProduct);
+                db.SaveChanges();
+            }
+            return ctr;
+
+        }
+
+        public int ProcessPurchaseInwardByYear(AprajitaRetailsContext db, int Year)
+        {
+            int ctr = 0;
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && c.GRNDate.Year==Year).OrderBy(c => c.InvoiceNo).ToList();
+            if (data != null && data.Count > 0)
+            {
+                ProductPurchase PurchasedProduct = null;
+                Units UnitName;
+                foreach (var item in data)
+                {
+                    int pid = CreateProductItem(db, item);
+                    if (pid != -999)
+                        UnitName = CreateStockItem(db, item, pid);
+                    else
+                        UnitName = Units.NoUnit;
+                    //TODO: else : What to do.
+
+                    PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
+
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid));
+
+                    item.IsDataConsumed = true;
+                    db.Entry(item).State = EntityState.Modified;
+                    ctr++;
+                }
+
+                if (PurchasedProduct != null)
+                    db.ProductPurchases.Add(PurchasedProduct);
+                db.SaveChanges();
+            }
+            return ctr;
+
+        }
+
+        public int ProcessPurchaseInward(AprajitaRetailsContext db, string GRNNo)
         {
             int ctr = 0;
             var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && c.GRNNo == GRNNo).OrderBy(c => c.InvoiceNo).ToList();
@@ -297,7 +367,7 @@ namespace AprajitaRetails.Ops.TAS
 
                     PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
 
-                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid));
 
                     item.IsDataConsumed = true;
                     db.Entry(item).State = EntityState.Modified;
@@ -310,7 +380,7 @@ namespace AprajitaRetails.Ops.TAS
             }
             return ctr;
         }
-        public int ProcessPurchaseInward(AprajitaRetailsContext db, DateTime inDate, bool IsLocal)
+        public int ProcessPurchaseInward(AprajitaRetailsContext db, DateTime inDate)
         {
             int ctr = 0;
             var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && (c.GRNDate.Date) == (inDate.Date)).OrderBy(c => c.InvoiceNo).ToList();
@@ -330,7 +400,7 @@ namespace AprajitaRetails.Ops.TAS
 
                     PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
 
-                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid, IsLocal));
+                    PurchasedProduct.PurchaseItems.Add(CreatePurchaseItem(db, item, pid));
 
                     item.IsDataConsumed = true;
                     db.Entry(item).State = EntityState.Modified;
@@ -529,7 +599,7 @@ namespace AprajitaRetails.Ops.TAS
             return product;
         }
 
-        private PurchaseItem CreatePurchaseItem(AprajitaRetailsContext db, ImportPurchase purchase, int productId, bool IsLocal = false)
+        private PurchaseItem CreatePurchaseItem(AprajitaRetailsContext db, ImportPurchase purchase, int productId)
         {
             PurchaseItem item = new PurchaseItem
             {
@@ -539,7 +609,7 @@ namespace AprajitaRetails.Ops.TAS
                 Qty = purchase.Quantity,
                 TaxAmout = purchase.TaxAmt,
                 Unit = db.ProductItems.Find(productId).Units,
-                PurchaseTaxTypeId = CreatePurchaseTaxType(db, purchase, IsLocal),
+                PurchaseTaxTypeId = CreatePurchaseTaxType(db, purchase),
                 ProductItemId = productId
             };
 
@@ -549,7 +619,7 @@ namespace AprajitaRetails.Ops.TAS
             return item;
         }
 
-        private int CreatePurchaseTaxType(AprajitaRetailsContext db, ImportPurchase purchase, bool IsLocal = false)
+        private int CreatePurchaseTaxType(AprajitaRetailsContext db, ImportPurchase purchase)
         {
             //Calculate tax rate
             int taxRate = 0;
@@ -586,7 +656,7 @@ namespace AprajitaRetails.Ops.TAS
                         return taxType.PurchaseTaxTypeId;
                     }
                 }
-                else
+                else 
                 {
                     try
                     {

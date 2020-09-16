@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
@@ -60,7 +61,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View();
         }
 
-        public async System.Threading.Tasks.Task<IActionResult> ListUpload(int? id, string currentFilter, string searchString, int? pageNumber)
+        public async Task<IActionResult> ListUpload(int? id, string currentFilter, string searchString, int? pageNumber)
         {
             if (searchString != null)
             {
@@ -72,6 +73,11 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 30;
+
+            var YearList = db.ImportPurchases.GroupBy(c => c.GRNDate.Year).Select(c => c.Key).ToList();
+            YearList.Sort();
+            ViewBag.YearList = YearList;
+
             if (id == 100)
             {
                 var md2 = db.ImportPurchases.Where(c => c.IsDataConsumed == true).OrderByDescending(c => c.GRNDate);
@@ -90,23 +96,33 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public IActionResult ProcessPurchase(string? dDate, string? GrnNo)
+        //TODO: make these function secure and post 
+        public IActionResult ProcessPurchase(int? id, int? year, string? dDate, string? GrnNo)
         {
             HelperUtil.IsSessionSet(HttpContext);
             DateTime ddDate;
             int StoreId = HelperUtil.GetStoreID(HttpContext);
             InventoryManger iManage = new InventoryManger(StoreId);
             int a = -1;
+           
+            if(id!=null && id== 888 && year!=null)
+            {
+                a = iManage.ProcessPurchaseInwardByYear(db, (int)year);
+                if (a > 0)
+                    return RedirectToAction("ProcessedPurchase", new { id = a, Year=year});
+            }
+            
+            
             if (!String.IsNullOrEmpty(GrnNo))
             {
-                a = iManage.ProcessPurchaseInward(db, GrnNo, false);
+                a = iManage.ProcessPurchaseInward(db, GrnNo);
                 if (a > 0)
                     return RedirectToAction("ProcessedPurchase", new { id = a, GRNNo = GrnNo });
             }
             else if (dDate != null)
             {
                 ddDate = DateTime.Parse(dDate).Date;
-                a = iManage.ProcessPurchaseInward(db, ddDate, false);
+                a = iManage.ProcessPurchaseInward(db, ddDate);
                 if (a > 0)
                     return RedirectToAction("ProcessedPurchase", new { id = a, onDate = ddDate });
             }
@@ -116,7 +132,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         }
 
-        public IActionResult ProcessedPurchase(int id, DateTime? onDate, string GRNNo)
+        public IActionResult ProcessedPurchase(int id, int? year,  DateTime? onDate, string GRNNo)
         {
             if (!String.IsNullOrEmpty(GRNNo))
             {
@@ -126,13 +142,19 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
             else if (onDate != null)
             {
-                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == (onDate.Value.Date));
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardDate.Date == onDate.Value.Date);
+                ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
+                return View(dm.ToList());
+            }
+            else if (year != null)
+            {
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardDate.Year == year);
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }
             else
             {
-                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).OrderByDescending(c=>c.ProductPurchaseId).ThenBy(c=>c.InWardDate);
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }

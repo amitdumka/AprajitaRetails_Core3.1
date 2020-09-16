@@ -14,7 +14,7 @@ namespace AprajitaRetails.Areas.Sales.Data
         {
             var inv = db.RegularInvoices.Include(c => c.Customer).Include(c => c.PaymentDetail).ThenInclude(c => c.CardDetail).Where(c=>c.RegularInvoiceId==id).FirstOrDefault();
             if (inv == null) { return null; }
-            var saleitem = db.RegularSaleItems.Include(c => c.ProductItem).Where(c => c.InvoiceNo == inv.InvoiceNo).ToList();
+            var saleitem = db.RegularSaleItems.Include(c=>c.Salesman).Include(c => c.ProductItem).Where(c => c.InvoiceNo == inv.InvoiceNo).ToList();
 
             InvoiceDetails iDetails = new InvoiceDetails {
                 Invoice=SaleInvoiceView.CopyTo(inv,saleitem),Error="OK", Msg="Data Present"
@@ -39,7 +39,7 @@ namespace AprajitaRetails.Areas.Sales.Data
     public class SaleItemView
     {
         public string BarCode;
-        public int SmCode;
+        public string SmCode;
         public string ProductName;
         public decimal MRP;
         public decimal BillAmount;
@@ -76,7 +76,7 @@ namespace AprajitaRetails.Areas.Sales.Data
                     MRP = item.MRP,
                     Qty = item.Qty,
                     ProductName = item.ProductItem.ProductName,
-                    SmCode = item.SalesmanId, Units="Pcs/Mtrs"
+                    SmCode = item.Salesman.SalesmanName, Units="Pcs/Mtrs"
                 };
                 saleItems.Add(si);
                 //TODO: add unit name
