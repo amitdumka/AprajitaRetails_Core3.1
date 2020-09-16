@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AprajitaRetails.Ops.Helpers.BioMetric;
+//using AprajitaRetails.Ops.Helpers.BioMetric;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AprajitaRetails.Areas.Tests.Controllers
@@ -16,14 +16,14 @@ namespace AprajitaRetails.Areas.Tests.Controllers
             {
                 if(portNo!=null && portNo > 0)
                 {
-                    if(BioMetricHelper.ConnectDevice(ipAddress,(int)portNo))
-                    {
-                        ViewBag.Connected = "Connected to Biometric";
-                    }
-                    else
-                    {
-                        ViewBag.Connected = "Failed to Connect with Biometric";
-                    }
+                    //if(BioMetricHelper.ConnectDevice(ipAddress,(int)portNo))
+                    //{
+                    //    ViewBag.Connected = "Connected to Biometric";
+                    //}
+                    //else
+                    //{
+                    //    ViewBag.Connected = "Failed to Connect with Biometric";
+                    //}
                 }
             }
 

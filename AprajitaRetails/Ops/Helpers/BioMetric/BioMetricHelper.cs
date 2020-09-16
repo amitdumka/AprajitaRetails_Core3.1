@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using zkemkeeper;
+//using zkemkeeper;
 /*
  * https://stackoverflow.com/questions/31377437/zkemkeeper-dll-support-which-biometric-devices
  * https://usermanual.wiki/Document/Biometric20Device20SDK20Programmers20Guide.1906605638/help
@@ -16,79 +16,79 @@ using zkemkeeper;
  * 
  */
 
-namespace AprajitaRetails.Ops.Helpers.BioMetric
-{
-    public class BioMetricDevice
-    {
-        public string Id { get; set; }
-        public string MachineNo { get; set; }
-        public string MachineIP { get; set; }
-        public string PortNo { get; set; }
-        public string Remark { get; set; }
-        public string Tuser { get; set; }
-        public string Tdate { get; set; }
-        public string Status { get; set; }
-        public int DwMachineNumber { get; set; }
-        public string DwEnrollNumber { get; set; }
-        public int DwVerifyMode { get; set; }
-        public int DwInOutMode { get; set; }
-        public int DwYear { get; set; }
-        public int DwMonth { get; set; }
-        public int DwDay { get; set; }
-        public int DwHour { get; set; }
-        public int DwMinute { get; set; }
-        public int DwSecond { get; set; }
-        public int DwWorkcode { get; set; }
-        public string UserId { get; set; }
-        public string Name { get; set; }
-        public int FingerIndex { get; set; }
-        public string FingerImage { get; set; }
-        public int Privilege { get; set; }
-        public string Passwords { get; set; }
-        public bool Enabled { get; set; }
-        public int Flag { get; set; }
-        public string Fromdate { get; set; }
-        public string Todate { get; set; }
-    }
-    public class BioMetricHelper
-    {
+//namespace AprajitaRetails.Ops.Helpers.BioMetric
+//{
+//    public class BioMetricDevice
+//    {
+//        public string Id { get; set; }
+//        public string MachineNo { get; set; }
+//        public string MachineIP { get; set; }
+//        public string PortNo { get; set; }
+//        public string Remark { get; set; }
+//        public string Tuser { get; set; }
+//        public string Tdate { get; set; }
+//        public string Status { get; set; }
+//        public int DwMachineNumber { get; set; }
+//        public string DwEnrollNumber { get; set; }
+//        public int DwVerifyMode { get; set; }
+//        public int DwInOutMode { get; set; }
+//        public int DwYear { get; set; }
+//        public int DwMonth { get; set; }
+//        public int DwDay { get; set; }
+//        public int DwHour { get; set; }
+//        public int DwMinute { get; set; }
+//        public int DwSecond { get; set; }
+//        public int DwWorkcode { get; set; }
+//        public string UserId { get; set; }
+//        public string Name { get; set; }
+//        public int FingerIndex { get; set; }
+//        public string FingerImage { get; set; }
+//        public int Privilege { get; set; }
+//        public string Passwords { get; set; }
+//        public bool Enabled { get; set; }
+//        public int Flag { get; set; }
+//        public string Fromdate { get; set; }
+//        public string Todate { get; set; }
+//    }
+//    public class BioMetricHelper
+//    {
 
-        public static bool ConnectDevice(string ipAddress, int portno)
-        {
-            CZKEM axCZKEM1 = new CZKEM();
-            try
-            {
-                return axCZKEM1.Connect_Net(ipAddress, portno);
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
+//        public static bool ConnectDevice(string ipAddress, int portno)
+//        {
+//            CZKEM axCZKEM1 = new CZKEM();
+//            try
+//            {
+//                return axCZKEM1.Connect_Net(ipAddress, portno);
+//            }
+//            catch (Exception e)
+//            {
+//                return false;
+//            }
+//        }
 
-        public void ReadBioMetricData(string ipAddress, int portno)
-        {
-            CZKEM axCZKEM1 = new CZKEM();
-            try
-            {
-                bool bIsConnected = axCZKEM1.Connect_Net(ipAddress, portno);   // 4370 is port no of attendance machine
-                if (bIsConnected == true)
-                {
-                    // MessageBox.Show("Device Connected Successfully");
+//        public void ReadBioMetricData(string ipAddress, int portno)
+//        {
+//            CZKEM axCZKEM1 = new CZKEM();
+//            try
+//            {
+//                bool bIsConnected = axCZKEM1.Connect_Net(ipAddress, portno);   // 4370 is port no of attendance machine
+//                if (bIsConnected == true)
+//                {
+//                    // MessageBox.Show("Device Connected Successfully");
                     
-                }
-                else
-                {
-                    // MessageBox.Show("Device Not Connect");
-                }
-            }   
-            catch(Exception ex)
-            {
-                // MessageBox.Show(ex.Message.ToString());
-            }
-        }
-    }
-}
+//                }
+//                else
+//                {
+//                    // MessageBox.Show("Device Not Connect");
+//                }
+//            }   
+//            catch(Exception ex)
+//            {
+//                // MessageBox.Show(ex.Message.ToString());
+//            }
+//        }
+//    }
+//}
 /*
  * 
  * 

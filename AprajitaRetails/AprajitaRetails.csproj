@@ -262,13 +262,13 @@
     <PackageReference Include="NodaTime" Version="3.0.0" />
     <PackageReference Include="OpenTl.ClientApi" Version="0.7.97" />
     <PackageReference Include="PDFtoPrinter" Version="1.2.1" />
+    <PackageReference Include="Quartz.AspNetCore" Version="3.1.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="OrchardCore.Localization.Core" Version="1.0.0-beta1-3383" />
     <PackageReference Include="Telegram.Bot" Version="15.3.0" />
     <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="GravatarHelper.AspNetCore" Version="1.1.0" />
     <PackageReference Include="westwind.aspnetcore.markdown" Version="3.0.36" />
-    <PackageReference Include="ZKemkeeper" Version="1.0.2" />
     <!--<PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.44" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.44" />
