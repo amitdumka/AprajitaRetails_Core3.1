@@ -43,7 +43,7 @@ namespace AprajitaRetails.Ops.CornJobs
     }
 
 
-    public class ExampleJob : IJob, IDisposable
+    public sealed class ExampleJob : IJob, IDisposable
     {
        // private readonly ILogger<ExampleJob> logger;
 
@@ -119,12 +119,6 @@ namespace AprajitaRetails.Ops.CornJobs
 
 
 
-
-
-
-
-
-
 }
 
 /*
@@ -142,6 +136,7 @@ namespace AprajitaRetails.Ops.CornJobs
   }
 }
  */
+
 /*
  <?xml version="1.0" encoding="UTF-8"?>
 
