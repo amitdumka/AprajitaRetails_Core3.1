@@ -49,13 +49,7 @@ namespace AprajitaRetails
             services.AddDbContext<AprajitaRetailsContext> (options =>
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("AprajitaRetailsConnection")));
-
-            //services.AddDbContext<AprajitaRetailsContext> (options =>
-            //    options.UseSqlServer (
-            //        Configuration.GetConnectionString ("VoyagerConnection")));
-            //services.AddDbContext<AprajitaRetailsContext> (options =>
-            //   options.UseSqlServer (
-            //       Configuration.GetConnectionString ("AccountsConnection")));
+          
 
             services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole> ()
