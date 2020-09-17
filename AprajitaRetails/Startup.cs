@@ -5,6 +5,8 @@ using AprajitaRetails.Areas.ToDo.Extensions;
 
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.TelgramService;
+using AprajitaRetails.Ops.CornJobs;
+using AprajitaRetails.Ops.CornJobs.Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace AprajitaRetails
 {
@@ -93,6 +97,12 @@ namespace AprajitaRetails
             services.ConfigureCookiePolicy ();
             services.ConfigureServices ();
             services.ConfigureStorage (Configuration);
+
+           // services.AddSingleton<IJobFactory, QuartzJobFactory>();
+           // services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+           // services.AddSingleton<AttendanceCheckJob>();
+           // services.AddSingleton(new JobMetadata(Guid.NewGuid(), typeof(AttendanceCheckJob), "AttendanceChecking Job", "0/200 * * * * ?"));// every 200 Secs
+           // services.AddHostedService<QuartzHostedService>();
 
             //services.AddQuartz(q =>
             //{

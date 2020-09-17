@@ -23,7 +23,7 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelper
 
             int count = 0;
             string EmailMsg = "List of Employee whose Attendance are marked.\n ";
-            string s = "";
+          
             foreach (var item in todayPresent)
             {
                 count++;
@@ -42,7 +42,7 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelper
             }
             EmailMsg += $"\n\n  This report is generate automaticly on {DateTime.Now.ToString()}\n"  ;
 
-            string eAddress = "";
+            string eAddress = "amitnarayansah@gmail.com, thearvindstoredumka@gmail.com";
             MyMail.SendEmail($"Attendance Report On {DateTime.Now.ToString()}", EmailMsg,eAddress);
 
         }

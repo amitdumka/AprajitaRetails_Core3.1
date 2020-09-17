@@ -117,8 +117,6 @@ namespace AprajitaRetails.Ops.CornJobs
     }
 
 
-
-
 }
 
 /*

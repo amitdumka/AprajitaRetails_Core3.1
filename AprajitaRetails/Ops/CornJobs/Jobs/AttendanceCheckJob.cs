@@ -16,11 +16,11 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
         private readonly AprajitaRetailsContext db;
         private readonly int StoreId = 1;
 
-        public AttendanceCheckJob(ILogger<AttendanceCheckJob> logger, AprajitaRetailsContext _db, int storeID=1)
+        public AttendanceCheckJob(ILogger<AttendanceCheckJob> logger, AprajitaRetailsContext _db)
         {
             _logger = logger;
             db = _db;
-            StoreId = storeID;
+            
         }
 
         public void Dispose()
