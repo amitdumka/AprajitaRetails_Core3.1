@@ -13,13 +13,13 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
 namespace AprajitaRetails.Ops.Uploader
-{  
+{
     //Store Based Changes is made in this class , All function support Store
     public class ExcelUploaders
     {
         public UploadReturns UploadExcel(AprajitaRetailsContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
         {
-            
+
             if (FileUpload != null)
             {
                 // tdata.ExecuteCommand("truncate table OtherCompanyAssets");
@@ -203,12 +203,12 @@ namespace AprajitaRetails.Ops.Uploader
             using ExcelPackage package = new ExcelPackage(file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
-            
+
             int StoreID = 1;//Default
             StoreID = db.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
             if (StoreID < 1)
                 StoreID = 1;
-            
+
             List<ImportPurchase> purchaseList = new List<ImportPurchase>();
             //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
 
@@ -232,7 +232,7 @@ namespace AprajitaRetails.Ops.Uploader
                     CostValue = (decimal)workSheet.Cells[i, 14].GetValue<decimal>(),
                     TaxAmt = (decimal)workSheet.Cells[i, 15].GetValue<decimal>(),
                     IsDataConsumed = false,
-                  
+
                     IsLocal = IsLocal,
                     IsVatBill = IsVat,
                     StoreId = StoreID
@@ -247,20 +247,14 @@ namespace AprajitaRetails.Ops.Uploader
 
         private int ImportPurchaseInward(AprajitaRetailsContext db, string StoreCode, string fileName)
         {
-            //string rootFolder = IHostingEnvironment.WebRootPath;
-            //string fileName = @"ImportCustomers.xlsx";
             FileInfo file = new FileInfo(fileName);
-
             using ExcelPackage package = new ExcelPackage(file);
             ExcelWorksheet workSheet = package.Workbook.Worksheets["Sheet1"];
             int totalRows = workSheet.Dimension.Rows;
             int StoreID = 1;//Default
             StoreID = db.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
-            if (StoreID < 1)
-                StoreID = 1;
+            if (StoreID < 1) StoreID = 1;
             List<ImportInWard> purchaseList = new List<ImportInWard>();
-            //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
-
             for (int i = 2; i <= totalRows; i++)
             {
                 purchaseList.Add(new ImportInWard
@@ -273,22 +267,16 @@ namespace AprajitaRetails.Ops.Uploader
                     TotalQty = (decimal)workSheet.Cells[i, 6].Value,
                     TotalMRPValue = (decimal)workSheet.Cells[i, 7].GetValue<decimal>(),
                     TotalCost = (decimal)workSheet.Cells[i, 8].GetValue<decimal>(),
-                     StoreId = StoreID,
+                    StoreId = StoreID,
                     IsDataConsumed = false,
-                    // ImportDate = DateTime.Today,
                 });
             }
-
             db.ImportInWards.AddRange(purchaseList);
             return db.SaveChanges();
-
-            //return purchaseList;
         }
 
         private int ImportSaleRegister(AprajitaRetailsContext db, string StoreCode, string fileName)
         {
-            //string rootFolder = IHostingEnvironment.WebRootPath;
-            //string fileName = @"ImportCustomers.xlsx";
             FileInfo file = new FileInfo(fileName);
 
             using ExcelPackage package = new ExcelPackage(file);
@@ -296,10 +284,8 @@ namespace AprajitaRetails.Ops.Uploader
             int totalRows = workSheet.Dimension.Rows;
             int StoreID = 1;//Default
             StoreID = db.Stores.Where(c => c.StoreCode == StoreCode).Select(c => c.StoreId).FirstOrDefault();
-            if (StoreID < 1)
-                StoreID = 1;
+            if (StoreID < 1) StoreID = 1;
             List<ImportSaleRegister> saleList = new List<ImportSaleRegister>();
-            //GRNNo	GRNDate	Invoice No	Invoice Date	Supplier Name	Barcode	Product Name	Style Code	Item Desc	Quantity	MRP	MRP Value	Cost	Cost Value	TaxAmt	ExmillCost	Excise1	Excise2	Excise3
             int xo = 0;
             for (int i = 2; i <= totalRows; i++)
             {
@@ -324,16 +310,11 @@ namespace AprajitaRetails.Ops.Uploader
                     StoreId = StoreID,
                     IsConsumed = false
                 };
-
                 saleList.Add(p);
-
                 xo++;
             }
-
             db.ImportSaleRegisters.AddRange(saleList);
             return db.SaveChanges();
-
-            //return purchaseList;
         }
 
         public UploadReturns UploadAddressBook(AprajitaRetailsContext db, IFormFile FileUpload)
@@ -343,22 +324,18 @@ namespace AprajitaRetails.Ops.Uploader
                 if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                 {
                     string filename = FileUpload.FileName;
-
                     string pathToExcelFile = Path.GetTempPath() + filename;
                     using (var stream = new FileStream(pathToExcelFile, FileMode.Create))
                     {
                         FileUpload.CopyTo(stream);
                     }
-
                     try
                     {
                         FileInfo file = new FileInfo(pathToExcelFile);
-
                         using ExcelPackage package = new ExcelPackage(file);
                         ExcelWorksheet workSheet = package.Workbook.Worksheets["Sheet1"];
                         int totalRows = workSheet.Dimension.Rows;
                         List<Contact> addList = new List<Contact>();
-
                         int xo = 0;
                         for (int i = 2; i <= totalRows; i++)
                         {
@@ -382,7 +359,6 @@ namespace AprajitaRetails.Ops.Uploader
                         Console.WriteLine("Error: " + ex.Message);
                         return UploadReturns.Error;
                     }
-
                     if ((System.IO.File.Exists(pathToExcelFile)))
                     {
                         System.IO.File.Delete(pathToExcelFile);
@@ -560,8 +536,6 @@ namespace AprajitaRetails.Ops.Uploader
                 return UploadReturns.FileNotFound;
             }
         }
-
-
         public UploadReturns UploadBookEntry(AprajitaRetailsContext db, IFormFile FileUpload)
         {
             if (FileUpload != null)
@@ -636,7 +610,7 @@ namespace AprajitaRetails.Ops.Uploader
 
                             tempstr = (workSheet.Cells[i, 3].Value ?? string.Empty).ToString();
                             switch (tempstr)
-                            { 
+                            {
                                 case "Cash": c.LedgerTo = LedgerTo.Cash; break;
                                 case "POSSale": c.LedgerTo = LedgerTo.POSSale; break;
                                 case "CashSales": c.LedgerTo = LedgerTo.CashSales; break;
@@ -694,7 +668,6 @@ namespace AprajitaRetails.Ops.Uploader
             }
         }
     }
-
 
     public class PostUpload
     {
@@ -961,14 +934,14 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.CashPayments.Add(cash3);
                                 db.ImportBookEntries.Update(item);
                             }
-                            else if (item.Naration.Contains("PETROL") ||  item.Naration.Contains("PettyCash RM:") || item.Naration.Contains("VERNA") || item.Naration.Contains("NEWSPAPER") || item.Naration.Contains("NET") || item.Naration.Contains("TILES MISTRY"))
+                            else if (item.Naration.Contains("PETROL") || item.Naration.Contains("PettyCash RM:") || item.Naration.Contains("VERNA") || item.Naration.Contains("NEWSPAPER") || item.Naration.Contains("NET") || item.Naration.Contains("TILES MISTRY"))
                             {
                                 PettyCashExpense cashExpense2 = new PettyCashExpense
                                 {
                                     Amount = item.Amount,
                                     ExpDate = item.OnDate,
                                     EmployeeId = 1,//ALOK EMP ID
-                               
+
                                     Particulars = item.Naration,
                                     Remarks = "AutoUpload",
                                     PaidTo = item.Naration,
@@ -1205,18 +1178,24 @@ namespace AprajitaRetails.Ops.Uploader
                                 db.Expenses.Add(expense);
                                 db.ImportBookEntries.Update(item);
                             }
-                            else if(item.Naration.Contains("BULLET SHOWROOM RM:"))
+                            else if (item.Naration.Contains("BULLET SHOWROOM RM:"))
                             {
-                                Payment pay = new Payment {
-                                    Amount=item.Amount, PayDate=item.OnDate, PaymentDetails=item.Naration, 
-                                    PaymentPartry="BULLET SHOWROOM Dumka", PaymentSlipNo="AUTOUPLOAD", 
-                                    PayMode=PaymentModes.Cash, Remarks="AutoUPLOAD", StoreId=StoreId
+                                Payment pay = new Payment
+                                {
+                                    Amount = item.Amount,
+                                    PayDate = item.OnDate,
+                                    PaymentDetails = item.Naration,
+                                    PaymentPartry = "BULLET SHOWROOM Dumka",
+                                    PaymentSlipNo = "AUTOUPLOAD",
+                                    PayMode = PaymentModes.Cash,
+                                    Remarks = "AutoUPLOAD",
+                                    StoreId = StoreId
                                 };
                                 item.IsConsumed = true;
                                 db.Payments.Add(pay);
                                 db.ImportBookEntries.Update(item);
                             }
-                            
+
                             break;
                         case LedgerBy.Zafar:
                             SalaryPayment salary = new SalaryPayment
@@ -1312,12 +1291,3 @@ namespace AprajitaRetails.Ops.Uploader
 
     }
 }
-
-
-/*
- ADVERTISMENT RM:
-
- 
- 
- 
- */
