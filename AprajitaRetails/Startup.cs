@@ -92,11 +92,13 @@ namespace AprajitaRetails
             services.ConfigureServices ();
             services.ConfigureStorage (Configuration);
 
-           // services.AddSingleton<IJobFactory, QuartzJobFactory>();
-           // services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-           // services.AddSingleton<AttendanceCheckJob>();
-           // services.AddSingleton(new JobMetadata(Guid.NewGuid(), typeof(AttendanceCheckJob), "AttendanceChecking Job", "0/200 * * * * ?"));// every 200 Secs
-           // services.AddHostedService<QuartzHostedService>();
+            services.AddHostedService<CronJobService> ();
+
+            // services.AddSingleton<IJobFactory, QuartzJobFactory>();
+            // services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            // services.AddSingleton<AttendanceCheckJob>();
+            // services.AddSingleton(new JobMetadata(Guid.NewGuid(), typeof(AttendanceCheckJob), "AttendanceChecking Job", "0/200 * * * * ?"));// every 200 Secs
+            // services.AddHostedService<QuartzHostedService>();
 
             //services.AddQuartz(q =>
             //{

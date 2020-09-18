@@ -258,6 +258,7 @@
     <PackageReference Include="Microsoft.Owin.Hosting" Version="4.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="MimeKit" Version="2.5.1" />
+    <PackageReference Include="nCronTab" Version="3.3.1" />
     <PackageReference Include="Neodynamic.SDK.WebClientPrint" Version="5.0.0" />
     <PackageReference Include="NodaTime" Version="3.0.0" />
     <PackageReference Include="OpenTl.ClientApi" Version="0.7.97" />
