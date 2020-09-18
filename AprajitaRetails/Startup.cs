@@ -29,9 +29,7 @@ namespace AprajitaRetails
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,20 +39,15 @@ namespace AprajitaRetails
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             services.AddDbContext<ApplicationDbContext> (options =>
                  options.UseSqlServer (
                      Configuration.GetConnectionString ("DefaultConnection")));
-
             services.AddDbContext<AprajitaRetailsContext> (options =>
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("AprajitaRetailsConnection")));
-          
-
             services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
-
             services.AddDistributedMemoryCache ();
             services.AddSession (options =>
             {
@@ -77,35 +70,28 @@ namespace AprajitaRetails
                 new CultureInfo("hi-IN"),
                 new CultureInfo("hi")
              };
-
                  options.DefaultRequestCulture = new RequestCulture ("en-IN");
                  options.SupportedCultures = supportedCultures;
                  options.SupportedUICultures = supportedCultures;
              });
             services.AddApplicationInsightsTelemetry ();
-
             services.AddSingleton<IGiniService, GiniService> ();
-
             services.AddControllers ().AddNewtonsoftJson ();
             services.ConfigureLocalization ();
             services.ConfigureSupportedCultures ();
             services.ConfigureCookiePolicy ();
             services.ConfigureServices ();
             services.ConfigureStorage (Configuration);
-
             services.AddHostedService<CronJobService> ();
-
             // services.AddSingleton<IJobFactory, QuartzJobFactory>();
             // services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
             // services.AddSingleton<AttendanceCheckJob>();
             // services.AddSingleton(new JobMetadata(Guid.NewGuid(), typeof(AttendanceCheckJob), "AttendanceChecking Job", "0/200 * * * * ?"));// every 200 Secs
             // services.AddHostedService<QuartzHostedService>();
-
             //services.AddQuartz(q =>
             //{
             //    // base quartz scheduler, job and trigger configuration
             //});
-
             //// ASP.NET Core hosting
             //services.AddQuartzServer(options =>
             //{
@@ -113,7 +99,6 @@ namespace AprajitaRetails
             //    options.WaitForJobsToComplete = true;
             //});
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -135,13 +120,11 @@ namespace AprajitaRetails
             app.UseAuthorization ();
             app.UseRequestLocalization ();
             app.UseSession ();
-
             app.UseEndpoints (endpoints =>
              {
                  endpoints.MapControllerRoute (
                   name: "areas",
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
                  endpoints.MapControllerRoute (
                      name: "default",
                      pattern: "{controller=Home}/{action=Index}/{id?}");

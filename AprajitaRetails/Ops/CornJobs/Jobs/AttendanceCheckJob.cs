@@ -1,4 +1,5 @@
 ﻿using AprajitaRetails.Data;
+using AprajitaRetails.Ops.CornJobs.JobHelpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -47,7 +48,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
         public Task Execute(IJobExecutionContext context)
         {
             _logger.LogInformation("Attadance checked!");
-            JobHelper.JobHelper.CheckTodayAttendance(db, StoreId);
+            _ = JobHelper.CheckTodayAttendanceAsync(db, StoreId);
             return Task.CompletedTask;
         }
     }
@@ -78,12 +79,11 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
     {
         private CrontabSchedule _schedule;
         private DateTime _nextRun;
-        private readonly AprajitaRetailsContext db;
         private readonly int StoreId = 1;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly ILogger<CronJobService> _logger;
 
-        //private string Schedule => "*/20 * * * * *"; //Runs every 10 seconds
+       // private string Schedule => "*/30 * * * * *"; //Runs every 10 seconds
         private string Schedule => "0 15 10 * * *"; //Runs every day on 10:15
         public CronJobService(ILogger<CronJobService> logger, IServiceScopeFactory scopeFactory)
         {
@@ -91,9 +91,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             _scopeFactory = scopeFactory;
             _schedule = CrontabSchedule.Parse (Schedule, new CrontabSchedule.ParseOptions { IncludingSeconds = true });
             _nextRun = _schedule.GetNextOccurrence (DateTime.Now);
-
-            using var scope = scopeFactory.CreateScope ();
-            db = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext> ();
+      
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -103,7 +101,14 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
                 var nextrun = _schedule.GetNextOccurrence (now);
                 if ( now > _nextRun )
                 {
-                    JobHelper.JobHelper.CheckTodayAttendance (db, StoreId);
+                    using (var scope = _scopeFactory.CreateScope())
+                    {
+                        var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
+                        
+                        await JobHelper.CheckTodayAttendanceAsync(Cdb, StoreId);
+
+                    }
+
                     _nextRun = _schedule.GetNextOccurrence (DateTime.Now);
                 }
                 await Task.Delay (5000, stoppingToken); //5 seconds delay

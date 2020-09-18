@@ -21,6 +21,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
     public class AttendancesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreId=1;  // TODO: default storeId
 
         public AttendancesController(AprajitaRetailsContext context)
         {
@@ -42,7 +43,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today);
+            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today && c.StoreId==StoreId);
 
             var YearList = _context.Attendances.GroupBy(c => c.AttDate.Year).Select(c => c.Key).ToList();
             YearList.Sort();
@@ -53,17 +54,17 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             if (id == 101)
             {
-                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.StoreId == StoreId).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
                 //return View(await aprajitaRetailsContext_all.ToListAsync());
             }
             else if (id == 100)
             {
-                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month && c.AttDate.Year == DateTime.Today.Year).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month && c.AttDate.Year == DateTime.Today.Year && c.StoreId == StoreId).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
                 //return View(await aprajitaRetailsContext_all.ToListAsync());
             }
             else if (id == 102)
             {
-                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month - 1 && c.AttDate.Year == DateTime.Today.Year).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Month == DateTime.Today.Month - 1 && c.AttDate.Year == DateTime.Today.Year && c.StoreId == StoreId).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
             }
             else
             {
@@ -74,11 +75,11 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                     {
                         //  mName = MonthName;
                         int mn = MonthList.IndexOf(MonthName) + 1;
-                        aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Year == id && c.AttDate.Month == mn).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                        aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Year == id && c.AttDate.Month == mn && c.StoreId == StoreId).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
 
                     }
                     else
-                        aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Year == id).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
+                        aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate.Year == id && c.StoreId == StoreId).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
                 }
                 else
                 {
@@ -167,7 +168,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: Attendances/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName");
             return PartialView();
         }
 
@@ -181,6 +182,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             if (ModelState.IsValid)
             {
                 var eType = _context.Employees.Find(attendance.EmployeeId).Category;
+                attendance.StoreId = StoreId;
 
                 if (eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster)
                 {
@@ -201,7 +203,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
             return PartialView(attendance);
         }
 
@@ -219,7 +221,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
             return PartialView(attendance);
         }
 
@@ -243,6 +245,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 {
                     new PayRollManager().ONInsertOrUpdate(_context, attendance, false, true);
                     attendance.UserName = User.Identity.Name;
+                    attendance.StoreId = StoreId;
                     _context.Update(attendance);
                     await _context.SaveChangesAsync();
                 }
@@ -259,7 +262,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", attendance.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.StoreId==StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
             return PartialView(attendance);
         }
 
