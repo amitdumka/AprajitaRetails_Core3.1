@@ -40,7 +40,7 @@ namespace AprajitaRetails.Areas.Reports.Models
             }
             catch (Exception)
             {
-                new CashWork().Process_OpenningBalance(db, DateTime.Today, true);
+                new CashWork().ProcessOpenningBalance(db, DateTime.Today, StoreCodeId, true);
                 info.CashInHand = (decimal)0.00;
             }
             return info;

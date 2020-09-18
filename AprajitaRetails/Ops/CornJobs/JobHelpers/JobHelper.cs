@@ -1,5 +1,6 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS.Mails;
+using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,13 +15,27 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
         public const string EntryTime = "10:00";
         public const int HR = 10;
         public const int MIN = 00;
-      
-        
+
+        //TODO: There should not be for just only one store, but It Should be for all Store and shop do in Loop. 
+        //TODO: Add Logger so that logging info can be traced 
         public static void CorrectCashInHand(AprajitaRetailsContext db, int StoreId = 1)
         {
-            //TODO: add cashin hand correction for today or back day
+            try
+            {
+                CashWork cWork = new CashWork();
+                cWork.JobOpeningClosingBalance(db, StoreId);
+                string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
+                string EmailMsg = "Cash In Correction and Cash In Bank Is done!. ";
+                MyMail.SendEmails($"Cash In Hand/Bank Correction On {DateTime.Now.ToString()}", EmailMsg, eAddress);
+            }
+            catch (Exception exp)
+            {
+
+                throw;
+            }
+
         }
-        
+
         public static async Task CheckTodayAttendanceAsync(AprajitaRetailsContext db, int StoreId=1)
         {
             try
@@ -56,7 +71,7 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
 
             }
         }
-        public static string GetAttUnitName(AttUnits att)
+        private static string GetAttUnitName(AttUnits att)
         {
             return att switch
             {
@@ -70,7 +85,7 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
             };
         }
 
-        public static string IsLate(string time)
+        private static string IsLate(string time)
         {
             try
             {

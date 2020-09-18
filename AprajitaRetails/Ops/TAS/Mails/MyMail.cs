@@ -23,8 +23,6 @@ namespace AprajitaRetails.Ops.TAS.Mails
             message.To.Add (new MailboxAddress (/*"",*/toAddress));
             message.Subject = subjects;
             message.Body = new TextPart ("plain") { Text = messages };
-           
-
             // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
             using var client = new SmtpClient{ ServerCertificateValidationCallback = (s, c, h, e) => true };
             client.Connect (MailConfig.SMTPAddress,MailConfig.SMTPPort, SecureSocketOptions.Auto);
@@ -37,22 +35,13 @@ namespace AprajitaRetails.Ops.TAS.Mails
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress("Aprajita Retails", MailConfig.UserName));
-
             var emailId = toAddress.Split(',');
-
-
-           // List<MailboxAddress> addList = new List<MailboxAddress>();
-
             foreach (var item in emailId)
             {
-                //  addList.Add(new MailboxAddress(item));
                 message.To.Add(MailboxAddress.Parse(item));
             }
-           // message.To.AddRange(addList);
-
             message.Subject = subjects;
             message.Body = new TextPart("plain") { Text = messages };
-
             // For demo-purposes, accept all SSL certificates (in case the server supports STARTTLS)
             using var client = new SmtpClient { ServerCertificateValidationCallback = (s, c, h, e) => true };
             client.Connect(MailConfig.SMTPAddress, MailConfig.SMTPPort, SecureSocketOptions.Auto);

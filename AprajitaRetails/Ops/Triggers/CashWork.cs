@@ -9,7 +9,7 @@ namespace AprajitaRetails.Ops.Triggers
 {
     public class CashWork
     {
-        public void Process_OpenningBalance(AprajitaRetailsContext db, DateTime date, bool saveit = false)
+        public void ProcessOpenningBalance(AprajitaRetailsContext db, DateTime date, int StoreId=1,  bool saveit = false)
         {
 
             CashInHand today;
@@ -34,10 +34,8 @@ namespace AprajitaRetails.Ops.Triggers
             else
             {
                 yesterday.ClosingBalance = yesterday.OpenningBalance + yesterday.CashIn - yesterday.CashOut;
-
                 today.OpenningBalance = yesterday.ClosingBalance;
                 today.ClosingBalance = today.OpenningBalance + today.CashIn - today.CashOut;
-
                 db.Entry(yesterday).State = EntityState.Modified;
 
             }
@@ -51,7 +49,7 @@ namespace AprajitaRetails.Ops.Triggers
                 db.SaveChanges();
         }
 
-        public void Process_ClosingBalance(AprajitaRetailsContext db, DateTime date, bool saveit = false)
+        public void ProcessClosingBalance(AprajitaRetailsContext db, DateTime date, int StoreId = 1, bool saveit = false)
         {
             CashInHand today;
             today = db.CashInHands.Where(c => (c.CIHDate.Date) == (date.Date)).FirstOrDefault();
@@ -67,7 +65,7 @@ namespace AprajitaRetails.Ops.Triggers
             }
         }
 
-        public void Process_BankOpenningBalance(AprajitaRetailsContext db, DateTime date, bool saveit = false)
+        public void ProcessBankOpenningBalance(AprajitaRetailsContext db, DateTime date, int StoreId = 1, bool saveit = false)
         {
 
             CashInBank today;
@@ -110,7 +108,7 @@ namespace AprajitaRetails.Ops.Triggers
                 db.SaveChanges();
         }
 
-        public void Process_BankClosingBalance(AprajitaRetailsContext db, DateTime date, bool saveit = false)
+        public void ProcessBankClosingBalance(AprajitaRetailsContext db, DateTime date, int StoreId = 1, bool saveit = false)
         {
             CashInBank today;
             today = db.CashInBanks.Where(c => (c.CIBDate.Date) == (date.Date)).FirstOrDefault();
@@ -126,28 +124,22 @@ namespace AprajitaRetails.Ops.Triggers
             }
         }
 
-        public void JobOpeningClosingBalance(AprajitaRetailsContext db)
+        public void JobOpeningClosingBalance(AprajitaRetailsContext db,int StoreId= 1)
         {
-
-
-            Process_OpenningBalance(db, DateTime.Today, true);
-            Process_ClosingBalance(db, DateTime.Today, true);
-            Process_BankOpenningBalance(db, DateTime.Today, true);
-            Process_BankClosingBalance(db, DateTime.Today, true);
-
-
-
+            ProcessOpenningBalance(db, DateTime.Today,StoreId, true);
+            ProcessClosingBalance(db, DateTime.Today, StoreId, true);
+            ProcessBankOpenningBalance(db, DateTime.Today, StoreId, true);
+            ProcessBankClosingBalance(db, DateTime.Today, StoreId, true);
         }
 
-        public void CreateNextDayOpenningBalance(AprajitaRetailsContext db, DateTime date, bool saveit = false)
+        public void CreateNextDayOpenningBalance(AprajitaRetailsContext db, DateTime date,int StoreId=1, bool saveit = false)
         {
             date = date.AddDays(1);// Next Day
-
-            Process_OpenningBalance(db, date, saveit); //TODO: many lines is repeating so create inline call or make new function
-            Process_BankOpenningBalance(db, date, saveit);//TODO: many lines is repeating so create inline call or make new function
+            ProcessOpenningBalance(db, date, StoreId, saveit); //TODO: many lines is repeating so create inline call or make new function
+            ProcessBankOpenningBalance(db, date,StoreId, saveit);//TODO: many lines is repeating so create inline call or make new function
         }
 
-        public decimal GetClosingBalance(AprajitaRetailsContext db, DateTime forDate, bool IsBank = false)
+        public decimal GetClosingBalance(AprajitaRetailsContext db, DateTime forDate, int StoreId=1,  bool IsBank = false)
         {
             if (IsBank)
             {
@@ -175,7 +167,7 @@ namespace AprajitaRetails.Ops.Triggers
             }
 
         }
-        public void CashInHandCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate)
+        public void CashInHandCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate, int StoreId=1)
         {
             IEnumerable<CashInHand> cashs = db.CashInHands.Where(c => c.CIHDate.Month == forDate.Month).OrderBy(c => c.CIHDate);
 
@@ -212,7 +204,7 @@ namespace AprajitaRetails.Ops.Triggers
 
         }
 
-        public void CashInBankCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate)
+        public void CashInBankCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate, int Store=1)
         {
             IEnumerable<CashInBank> cashs = db.CashInBanks.Where(c => c.CIBDate.Month == forDate.Month).OrderBy(c => c.CIBDate);
 
