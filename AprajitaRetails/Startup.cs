@@ -55,18 +55,19 @@ namespace AprajitaRetails
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
 
+            services.AddDistributedMemoryCache ();
             services.AddSession (options =>
             {
                 options.IdleTimeout = TimeSpan.FromHours (4);//You can set Time
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+                options.Cookie.Name = ".AprajitaRetails.Session";
             });
             // services.AddSignalR ();
-
             services.AddControllersWithViews ();
             services.AddRazorPages ();
-
             services.AddMvc ().AddViewLocalization (LanguageViewLocationExpanderFormat.Suffix);
             services.AddPortableObjectLocalization ();
-
             services.Configure<RequestLocalizationOptions> (options =>
              {
                  var supportedCultures = new List<CultureInfo>
