@@ -295,7 +295,6 @@ namespace AprajitaRetails.Models.Helpers
                 };
                 IncomeDetails.Add (vmdata);
             }
-
             return IncomeDetails;
         }
 
