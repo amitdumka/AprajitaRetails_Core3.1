@@ -12,6 +12,7 @@ namespace AprajitaRetails.Ops.CornJobs
         private readonly ISchedulerFactory schedulerFactory;
         private readonly IJobFactory jobFactory;
         private readonly JobMetadata jobMetadata;
+
         public QuartzHostedService(ISchedulerFactory
             schedulerFactory,
             JobMetadata jobMetadata,
@@ -21,7 +22,9 @@ namespace AprajitaRetails.Ops.CornJobs
             this.jobMetadata = jobMetadata;
             this.jobFactory = jobFactory;
         }
+
         public IScheduler Scheduler { get; set; }
+
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             Scheduler = await schedulerFactory.GetScheduler();
@@ -31,10 +34,12 @@ namespace AprajitaRetails.Ops.CornJobs
             await Scheduler.ScheduleJob(job, trigger, cancellationToken);
             await Scheduler.Start(cancellationToken);
         }
+
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await Scheduler?.Shutdown(cancellationToken);
         }
+
         private ITrigger CreateTrigger(JobMetadata jobMetadata)
         {
             return TriggerBuilder.Create()
@@ -43,6 +48,7 @@ namespace AprajitaRetails.Ops.CornJobs
             .WithDescription($"{jobMetadata.JobName}")
             .Build();
         }
+
         private IJobDetail CreateJob(JobMetadata jobMetadata)
         {
             return JobBuilder
@@ -56,16 +62,21 @@ namespace AprajitaRetails.Ops.CornJobs
     public class QuartzJobFactory : IJobFactory
     {
         private readonly IServiceProvider _serviceProvider;
+
         public QuartzJobFactory(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
+
         public IJob NewJob(TriggerFiredBundle triggerFiredBundle,
         IScheduler scheduler)
         {
             var jobDetail = triggerFiredBundle.JobDetail;
             return (IJob)_serviceProvider.GetService(jobDetail.JobType);
         }
-        public void ReturnJob(IJob job) { }
+
+        public void ReturnJob(IJob job)
+        {
+        }
     }
 }

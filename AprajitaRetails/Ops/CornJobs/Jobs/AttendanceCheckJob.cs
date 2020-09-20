@@ -3,8 +3,6 @@ using AprajitaRetails.Ops.CornJobs.JobHelpers;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 // private  string Schedule => "*/10 * * * * *";
@@ -23,7 +21,6 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
     [DisallowConcurrentExecution]
     public sealed class AttendanceCheckJob : IJob, IDisposable
     {
-      
         private readonly ILogger<AttendanceCheckJob> _logger;
         private readonly AprajitaRetailsContext db;
         private readonly int StoreId = 1;
@@ -32,7 +29,6 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
         {
             _logger = logger;
             db = _db;
-            
         }
 
         public void Dispose()
@@ -48,6 +44,4 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             return Task.CompletedTask;
         }
     }
-
-
 }

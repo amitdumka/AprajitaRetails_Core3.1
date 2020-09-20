@@ -19,7 +19,6 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
     [DisallowConcurrentExecution]
     public sealed class CashInHandJob : IJob, IDisposable
     {
-
         private readonly ILogger<CashInHandJob> _logger;
 
         public CashInHandJob(ILogger<CashInHandJob> logger)
@@ -38,6 +37,4 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             return Task.CompletedTask;
         }
     }
-
-
 }

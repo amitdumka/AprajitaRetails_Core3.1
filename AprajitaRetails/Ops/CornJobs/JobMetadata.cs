@@ -8,6 +8,7 @@ namespace AprajitaRetails.Ops.CornJobs
         public Type JobType { get; }
         public string JobName { get; }
         public string CronExpression { get; }
+
         public JobMetadata(Guid Id, Type jobType, string jobName,
         string cronExpression)
         {
@@ -17,6 +18,4 @@ namespace AprajitaRetails.Ops.CornJobs
             CronExpression = cronExpression;
         }
     }
-
-
 }

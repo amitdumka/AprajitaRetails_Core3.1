@@ -2,16 +2,13 @@
 using Quartz;
 using Quartz.Listener;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.CornJobs
 {
-
     /// <summary>
-    /// This is Model Class. 
+    /// This is Model Class.
     /// https://www.quartz-scheduler.net/documentation/quartz-3.x/quick-start.html#trying-out-the-application-and-adding-jobs
     /// </summary>
     public class JobSchedular : SchedulerListenerSupport
@@ -19,10 +16,11 @@ namespace AprajitaRetails.Ops.CornJobs
         private bool running;
         private int errorCount;
 
-        Task<int> FunctionNameAsync(AprajitaRetailsContext  context, CancellationToken cancellationToken)
+        private Task<int> FunctionNameAsync(AprajitaRetailsContext context, CancellationToken cancellationToken)
         {
             return Task.FromResult(-1);
         }
+
         public override Task SchedulerError(string msg, SchedulerException cause, CancellationToken cancellationToken = default)
         {
             errorCount++;
@@ -42,10 +40,9 @@ namespace AprajitaRetails.Ops.CornJobs
         }
     }
 
-
     public sealed class ExampleJob : IJob, IDisposable
     {
-       // private readonly ILogger<ExampleJob> logger;
+        // private readonly ILogger<ExampleJob> logger;
 
         public ExampleJob(/*ILogger<ExampleJob> logger*/)
         {
@@ -66,18 +63,18 @@ namespace AprajitaRetails.Ops.CornJobs
 
     public class SampleJobListener : JobListenerSupport
     {
-       // private readonly ILogger<SampleJobListener> logger;
+        // private readonly ILogger<SampleJobListener> logger;
 
         public SampleJobListener(/*ILogger<SampleJobListener> logger*/)
         {
-           // this.logger = logger;
+            // this.logger = logger;
         }
 
         public override string Name => "Sample Job Listener";
 
         public override Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default)
         {
-           // logger.LogInformation("The job is about to be executed, prepare yourself!");
+            // logger.LogInformation("The job is about to be executed, prepare yourself!");
             return Task.CompletedTask;
         }
     }
@@ -88,35 +85,33 @@ namespace AprajitaRetails.Ops.CornJobs
 
         public SampleTriggerListener(/*ILogger<SampleTriggerListener> logger*/)
         {
-           // this.logger = logger;
+            // this.logger = logger;
         }
 
         public override string Name => "Sample Trigger Listener";
 
         public override Task TriggerMisfired(ITrigger trigger, CancellationToken cancellationToken = default)
         {
-           // logger.LogInformation("Observed trigger fire by trigger {TriggerKey}", trigger.Key);
+            // logger.LogInformation("Observed trigger fire by trigger {TriggerKey}", trigger.Key);
             return Task.CompletedTask;
         }
     }
 
     public class SampleSchedulerListener : SchedulerListenerSupport
     {
-       // private readonly ILogger<SampleSchedulerListener> logger;
+        // private readonly ILogger<SampleSchedulerListener> logger;
 
         public SampleSchedulerListener(/*ILogger<SampleSchedulerListener> logger*/)
         {
-           // this.logger = logger;
+            // this.logger = logger;
         }
 
         public override Task SchedulerStarted(CancellationToken cancellationToken = default)
         {
-          //  logger.LogInformation("Observed scheduler start");
+            //  logger.LogInformation("Observed scheduler start");
             return Task.CompletedTask;
         }
     }
-
-
 }
 
 /*
@@ -147,7 +142,7 @@ namespace AprajitaRetails.Ops.CornJobs
   </processing-directives>
 
   <schedule>
-    
+
     <job>
       <name>XML Job</name>
       <group>XML Job Group</group>
@@ -170,7 +165,7 @@ namespace AprajitaRetails.Ops.CornJobs
         </entry>
       </job-data-map>
     </job>
-    
+
     <trigger>
       <simple>
         <name>XML Trigger</name>
@@ -186,7 +181,7 @@ namespace AprajitaRetails.Ops.CornJobs
     </trigger>
 
   </schedule>
-  
+
 </job-scheduling-data>
  */
 

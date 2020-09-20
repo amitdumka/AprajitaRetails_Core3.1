@@ -3,7 +3,6 @@ using AprajitaRetails.Ops.TAS.Mails;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,28 +15,28 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
         public const int HR = 10;
         public const int MIN = 00;
 
-        //TODO: There should not be for just only one store, but It Should be for all Store and shop do in Loop. 
-        //TODO: Add Logger so that logging info can be traced 
+        //TODO: There should not be for just only one store, but It Should be for all Store and shop do in Loop.
+        //TODO: Add Logger so that logging info can be traced
         public static void CorrectCashInHand(AprajitaRetailsContext db, int StoreId = 1)
         {
+            string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
             try
             {
                 CashWork cWork = new CashWork();
                 cWork.JobOpeningClosingBalance(db, StoreId);
-                string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
+
                 string EmailMsg = "Cash In Correction and Cash In Bank Is done!. ";
                 MyMail.SendEmails($"Cash In Hand/Bank Correction On {DateTime.Now.ToString()}", EmailMsg, eAddress);
             }
             catch (Exception exp)
             {
-
-                throw;
+                MyMail.SendEmails($"Cash In Hand/Bank Correction On {DateTime.Now.ToString()}", "Error Occured: " + exp.Message, eAddress);
             }
-
         }
 
-        public static async Task CheckTodayAttendanceAsync(AprajitaRetailsContext db, int StoreId=1)
+        public static async Task CheckTodayAttendanceAsync(AprajitaRetailsContext db, int StoreId = 1)
         {
+            string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
             try
             {
                 var todayPresent = await db.Attendances.Include(c => c.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == DateTime.Today.Date).OrderBy(c => c.IsTailoring).ToListAsync();
@@ -59,18 +58,17 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
                     EmailMsg += $"{count}#  {item.StaffName}  attendance is not  marked.\n";
                 }
                 EmailMsg += $"\n\n  This report is generate automatically on {DateTime.Now.ToString()}\n";
-                string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
+
                 Console.WriteLine("Email=" + eAddress);
                 MyMail.SendEmails($"Attendance Report On {DateTime.Now.ToString()}", EmailMsg, eAddress);
                 return;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                throw;
-
+                MyMail.SendEmails($"Attendance Report On {DateTime.Now.ToString()}", "Error Occured: " + ex.Message, eAddress);
             }
         }
+
         private static string GetAttUnitName(AttUnits att)
         {
             return att switch
@@ -100,22 +98,16 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
                 if (timeSpan.TotalMinutes > -10)
                 {
                     return "";
-
                 }
                 else
                 {
                     return "is Late";
                 }
-
             }
             catch (Exception)
             {
                 return "";
-                
             }
-           
-
-            
         }
     }
 }
