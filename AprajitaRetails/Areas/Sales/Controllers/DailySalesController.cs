@@ -11,6 +11,7 @@ using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using System.Globalization;
 using AprajitaRetails;
+using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Sales.Expenses.Controllers
 {
@@ -33,6 +34,11 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         // GET: DailySales
         public async Task<IActionResult> Index(int? id, string salesmanId, string currentFilter, string searchString, DateTime? SaleDate, string sortOrder, int? pageNumber)
         {
+            if ( !SessionUtil.IsSessionSet (HttpContext) )
+            {
+                        // HttpContext.
+            } 
+
             ViewData ["InvoiceSortParm"] = String.IsNullOrEmpty (sortOrder) ? "inv_desc" : "";
             ViewData ["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData ["ManualSortParm"] = sortOrder == "Manual" ? "notManual_desc" : "Manual";

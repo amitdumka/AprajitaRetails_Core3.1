@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using AprajitaRetails.Ops.Utility;
 
 namespace AprajitaRetails.Areas.Identity.Pages.Account
 {
@@ -81,9 +82,8 @@ namespace AprajitaRetails.Areas.Identity.Pages.Account
                 if ( result.Succeeded )
                 {
                     _logger.LogInformation ("User logged in.");
-                    //Todo: StoreCode/Id at Login
-                    HttpContext.Session.SetString (Constants.STORECODE, "JH0006");
-                    HttpContext.Session.SetInt32 (Constants.STOREID, 1);
+
+                    SessionUtil.SetLoginSessionInfo (HttpContext, 1, Input.Email, 101);                    
                     return LocalRedirect (returnUrl);
                 }
                 if ( result.RequiresTwoFactor )
