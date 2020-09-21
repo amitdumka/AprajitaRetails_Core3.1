@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NodaTime.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace AprajitaRetails.Models.Helpers
     public static class DateTimeExtensions
     {
         public const String ISTTimeZone = "India Standard Time";
-       
+        private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
         public static DateTime StartOfWeek(this DateTime dt, DayOfWeek startOfWeek = DayOfWeek.Monday)
         {
             int diff = dt.DayOfWeek - startOfWeek;
@@ -138,21 +140,21 @@ namespace AprajitaRetails.Models.Helpers
 
         public static DateTime ToIST(this DateTime onDate)
         {
-            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
-            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(onDate, TimeZoneInfo.Local, userTimeZone);
+            //TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
+            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(onDate, TimeZoneInfo.Local, INDIAN_ZONE);
             return userDateTimeOffset.DateTime;
         }
        
         public static DateTime TodayInIST(this DateTime today)
         {
-            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
-            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(DateTime.Today, TimeZoneInfo.Local, userTimeZone);
+            //TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
+            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(DateTime.Today, TimeZoneInfo.Local, INDIAN_ZONE);
             return userDateTimeOffset.DateTime;
         }
         public static DateTime NowInInIST(this DateTime now)
         {
-            TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
-            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, userTimeZone);
+           // TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
+            DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, INDIAN_ZONE);
             return userDateTimeOffset.DateTime;
 
         }

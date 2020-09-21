@@ -36,6 +36,8 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
 
         public static async Task CheckTodayAttendanceAsync(AprajitaRetailsContext db, int StoreId = 1)
         {
+            //TODO: if count of emp or att is below 1 then heading should be removed of that head.
+
             string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
             try
             {
