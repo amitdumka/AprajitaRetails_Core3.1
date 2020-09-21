@@ -23,15 +23,36 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
         // GET: api/Attendances
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances()
-        {
-            return await _context.Attendances.ToListAsync();
-        }
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances() => await _context.Attendances.ToListAsync();
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(int EmployeeId, int Year) => await _context.Attendances.Where(c => c.EmployeeId == EmployeeId && c.AttDate.Year == Year).ToListAsync();
         // GET: api/Attendances/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Attendance>> GetAttendance(int id)
         {
+            var attendance = await _context.Attendances.FindAsync(id);
+
+            if (attendance == null)
+            {
+                return NotFound();
+            }
+
+            return attendance;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(int EmployeeId, int Year, string UserName)
+        {
+            // TODO: Check for UserName. if UserName and EmployeeId is Same then only provide Data. other Wise dont Send Data.
+            return await _context.Attendances.Where(c => c.EmployeeId == EmployeeId && c.AttDate.Year == Year).ToListAsync();
+        }
+        // GET: api/Attendances/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Attendance>> GetAttendance(int id, string UserName)
+        {
+            // TODO: Check for UserName. if UserName and EmployeeId is Same then only provide Data. other Wise dont Send Data.
+            
             var attendance = await _context.Attendances.FindAsync(id);
 
             if (attendance == null)
@@ -102,9 +123,13 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             return attendance;
         }
 
-        private bool AttendanceExists(int id)
-        {
-            return _context.Attendances.Any(e => e.AttendanceId == id);
-        }
+        private bool AttendanceExists(int id) => _context.Attendances.Any(e => e.AttendanceId == id);
+
+        // GET: api/Attendances/5
+        [HttpGet("{id}")]
+        public bool IsAttendanceExists(int id) => _context.Attendances.Any(e => e.AttendanceId == id);
+
+
+
     }
 }

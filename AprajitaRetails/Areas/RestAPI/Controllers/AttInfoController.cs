@@ -32,6 +32,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         public string GetAtt(long id)
         {
             var usr = DBHelper.GetChatUser(db, id);
+           
             if (usr == null) return "You are authorize to use this service!.";
 
             if (usr.EmpType == EmpType.Owner || usr.EmpType == EmpType.StoreManager)
@@ -47,10 +48,8 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                             var present = db.Attendances.Where(c => (c.Status == AttUnits.Present || c.Status == AttUnits.Sunday) && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
                             var absent = db.Attendances.Where(c => c.Status == AttUnits.Absent && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
                             var halfDay = db.Attendances.Where(c => c.Status == AttUnits.HalfDay && c.EmployeeId == emp.EmployeeId && c.AttDate.Month == DateTime.Today.Month).Count();
-
                             float tp = present + (halfDay / 2);
                             msg += $"StaffName: {emp.StaffName} \t  Present: {tp}\t Absent: {absent}\n";
-
                         }
                     }
                     return msg;
@@ -76,9 +75,6 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                     return "Your Information is not avilable, Kindly Contact Store Manager or Admin!";
                 }
             }
-
-
-
         }
 
         // POST: api/AttInfo
