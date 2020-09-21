@@ -39,14 +39,17 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
             string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
             try
             {
-                var todayPresent = await db.Attendances.Include(c => c.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == DateTime.Today.Date).OrderBy(c => c.IsTailoring).ToListAsync();
-                var EmpList = await db.Employees.Where(c => c.IsWorking && c.StoreId == StoreId).ToListAsync();
+                var todayPresent = await db.Attendances.Include(c => c.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == DateTime.Today.Date).OrderBy(c => c.IsTailoring).OrderBy(c=>c.Status).ToListAsync();
+                var EmpList = await db.Employees.Where(c => c.IsWorking && c.StoreId == StoreId && c.Category!=EmpType.Owner).ToListAsync();
                 int count = 0;
                 string EmailMsg = "List of Employee whose Attendance are marked.\n ";
                 foreach (var item in todayPresent)
                 {
                     count++;
-                    EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)} and came at {item.EntryTime} {IsLate(item.EntryTime)}\n";
+                    if(item.Status==AttUnits.Present || item.Status==AttUnits.HalfDay)
+                    EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)} and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
+                    else
+                        EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)}.\n and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
                     EmpList.Remove(item.Employee);
                 }
                 if (todayPresent.Count < 1) return;

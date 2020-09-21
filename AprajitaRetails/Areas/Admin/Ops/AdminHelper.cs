@@ -43,7 +43,7 @@ namespace AprajitaRetails.Areas.Admin.Ops
                     //here we tie the new user to the "Admin" role 
                     await UserManager.AddToRoleAsync (poweruser, "Admin");
 
-                    //TODO: Need to Update Confirmed Email. 
+                    //Need to Update Confirmed Email. 
 
                     _ = await UserManager.GetUserIdAsync (poweruser);
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync (poweruser);

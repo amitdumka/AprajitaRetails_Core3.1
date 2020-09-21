@@ -4,6 +4,7 @@ using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+
 //using AspNetCore;
 
 namespace AprajitaRetails.Areas.Accounts.Models
@@ -25,10 +26,15 @@ namespace AprajitaRetails.Areas.Accounts.Models
             };
             db.Parties.Add(newParty);
             return db.SaveChanges();
-            
         }
-        public void UpdateParty() { }
-        public void DeleteParty() { }
+
+        public void UpdateParty()
+        {
+        }
+
+        public void DeleteParty()
+        {
+        }
 
         public int OnInsert(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refId, string Ref)
         {
@@ -47,19 +53,19 @@ namespace AprajitaRetails.Areas.Accounts.Models
 
             db.BasicLedgerEntries.Add(entry);
             return db.SaveChanges();
-
         }
-        public void OnUpdate(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, decimal updateAmount, LedgerEntryType entryType, int refid, string Ref) { }
+
+        public void OnUpdate(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, decimal updateAmount, LedgerEntryType entryType, int refid, string Ref)
+        {
+        }
+
         public int OnDelete(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refid)
         {
-
             BasicLedgerEntry entry = db.BasicLedgerEntries.Where(c => c.ReferanceId == refid && c.PartyId == party.PartyId && c.EntryType == entryType).FirstOrDefault();
             db.Remove(entryType);
             return db.SaveChanges();
         }
     }
-
-
 
     public class AccountsManager
     {
@@ -67,10 +73,12 @@ namespace AprajitaRetails.Areas.Accounts.Models
         {
             CashTrigger.UpdateCashInHand(db, reciepts.InwardDate, reciepts.Amount);
         }
+
         public void OnDelete(AprajitaRetailsContext db, CashReceipt reciepts)
         {
             CashTrigger.UpdateCashInHand(db, reciepts.InwardDate, 0 - reciepts.Amount);
         }
+
         public void OnUpdate(AprajitaRetailsContext db, CashReceipt reciepts)
         {
             var oldPay = db.CashReceipts.Where(c => c.CashReceiptId == reciepts.CashReceiptId).Select(d => new { d.Amount, d.InwardDate }).FirstOrDefault();
@@ -86,7 +94,6 @@ namespace AprajitaRetails.Areas.Accounts.Models
         {
             if (reciepts.PayMode == PaymentModes.Cash)
             {
-
                 CashTrigger.UpdateCashInHand(db, reciepts.RecieptDate, reciepts.Amount);
             }
             //TODO: in future make it more robust
@@ -94,14 +101,12 @@ namespace AprajitaRetails.Areas.Accounts.Models
             {
                 CashTrigger.UpdateCashInBank(db, reciepts.RecieptDate, reciepts.Amount);
             }
-
-
         }
+
         public void OnDelete(AprajitaRetailsContext db, Receipt reciepts)
         {
             if (reciepts.PayMode == PaymentModes.Cash)
             {
-
                 CashTrigger.UpdateCashInHand(db, reciepts.RecieptDate, 0 - reciepts.Amount);
             }
             //TODO: in future make it more robust
@@ -110,71 +115,48 @@ namespace AprajitaRetails.Areas.Accounts.Models
                 CashTrigger.UpdateCashInBank(db, reciepts.RecieptDate, 0 - reciepts.Amount);
             }
         }
+
         public void OnUpdate(AprajitaRetailsContext db, Receipt reciepts)
         {
-
             var oldPay = db.Receipts.Where(c => c.ReceiptId == reciepts.ReceiptId).Select(d => new { d.Amount, d.RecieptDate, d.PayMode }).FirstOrDefault();
 
             if (oldPay != null)
             {
                 if (oldPay.PayMode == PaymentModes.Cash)
-                {
-
                     CashTrigger.UpdateCashInHand(db, oldPay.RecieptDate, 0 - oldPay.Amount);
-                }
                 //TODO: in future make it more robust
                 if (oldPay.PayMode != PaymentModes.Cash)
-                {
                     CashTrigger.UpdateCashInBank(db, oldPay.RecieptDate, 0 - oldPay.Amount);
-                }
             }
-
 
             if (reciepts.PayMode == PaymentModes.Cash)
-            {
-
                 CashTrigger.UpdateCashInHand(db, reciepts.RecieptDate, reciepts.Amount);
-            }
             //TODO: in future make it more robust
             if (reciepts.PayMode != PaymentModes.Cash)
-            {
                 CashTrigger.UpdateCashInBank(db, reciepts.RecieptDate, reciepts.Amount);
-            }
-
         }
-
-
 
         public void OnInsert(AprajitaRetailsContext db, DueRecoverd objects)
         {
             DuesList duesList = db.DuesLists.Find(objects.DuesListId);
             if (objects.Modes == PaymentModes.Cash)
-            {
                 CashTrigger.UpdateCashInHand(db, objects.PaidDate, objects.AmountPaid);
-            }
             else
-            {
                 CashTrigger.UpdateCashInBank(db, objects.PaidDate, objects.AmountPaid);
-            }
-
             if (objects.IsPartialPayment)
-            {
                 duesList.IsPartialRecovery = true;
-            }
             else
             {
                 duesList.IsRecovered = true;
                 duesList.RecoveryDate = objects.PaidDate;
             }
             db.Entry(duesList).State = EntityState.Modified;
-
         }
 
         public void OnUpdate(AprajitaRetailsContext db, DueRecoverd objects)
         {
             DueRecoverd dr = db.DueRecoverds.Find(objects.DueRecoverdId);
             DuesList duesList = db.DuesLists.Find(objects.DuesListId);
-
 
             if (dr.AmountPaid != objects.AmountPaid)
             {
@@ -216,7 +198,6 @@ namespace AprajitaRetails.Areas.Accounts.Models
 
             db.Entry(dr).State = EntityState.Modified;
             db.Entry(duesList).State = EntityState.Modified;
-
         }
 
         public void OnDelete(AprajitaRetailsContext db, DueRecoverd objects)
@@ -229,7 +210,6 @@ namespace AprajitaRetails.Areas.Accounts.Models
             else
             {
                 CashTrigger.UpdateCashInBank(db, objects.PaidDate, 0 - objects.AmountPaid);
-
             }
 
             if (objects.IsPartialPayment)
@@ -242,8 +222,6 @@ namespace AprajitaRetails.Areas.Accounts.Models
                 duesList.RecoveryDate = null;
             }
             db.Entry(duesList).State = EntityState.Modified;
-
         }
-
     }
 }

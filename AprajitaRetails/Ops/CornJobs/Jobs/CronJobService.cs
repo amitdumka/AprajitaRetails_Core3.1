@@ -35,9 +35,9 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
         private readonly ILogger<CronJobService> _logger;
 
         // private string Schedule => "*/30 * * * * *"; //Runs every 10 seconds
-        private string Schedule => "0 15 10 * * *"; //Runs every day on 10:15
+        private string Schedule => "0 45 4 * * *"; //Runs every day on 10:15 IST and 4:45 GMT
 
-        private string ScheduleForCashCorrection => "0 10 00 * * *"; //Runs every day on 10:15
+        private string ScheduleForCashCorrection => "0 10 00 * * *"; //Runs every day on 00:10 GMT
 
         public CronJobService(ILogger<CronJobService> logger, IServiceScopeFactory scopeFactory)
         {
