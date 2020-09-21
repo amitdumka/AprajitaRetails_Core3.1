@@ -162,13 +162,12 @@ namespace AprajitaRetails.Ops.Utility
         }
         public static bool IsSessionSet(HttpContext context/*, AprajitaRetailsContext  db*/)
         {
-            if (!context.Session.IsAvailable || context.Session.Keys.Count() < 2)
-                return false;
 
-            //HelperUtil.SetStoreCode(context, "JH0006");
-            //HelperUtil.SetStoreId(context, 1);
-
-            return true;
+            if (context.Session.IsAvailable)
+                if (context.Session.Keys.Count() < 2)
+                    return false;
+                else return true;
+            else return false;
         }
     }
 

@@ -13,6 +13,7 @@ using System.Globalization;
 using AprajitaRetails;
 using AprajitaRetails.Ops.Utility;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using Microsoft.Extensions.Logging;
 
 namespace AprajitaRetails.Sales.Expenses.Controllers
 {
@@ -21,23 +22,26 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
     public class DailySalesController : Controller
     {
         //Version 3.0 
-        private readonly int StoreCodeId = 1;   //TODO:Default Value. For Now.
+        private  int StoreCodeId = 1;   //TODO:Default Value. For Now.
 
         private readonly AprajitaRetailsContext db;
         private SortedList<string,string> SessionData;
-        // private readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
+        private readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
+        private readonly ILogger<DailySalesController> logger;
 
 
-        public DailySalesController(AprajitaRetailsContext context)
+        public DailySalesController(AprajitaRetailsContext context, ILogger<DailySalesController> logger)
         {
-            if (SessionCookies.IsSessionSet(HttpContext))
-            {
-                SessionData = SessionCookies.GetLoginSessionInfo(HttpContext);
-                StoreCodeId = Int32.Parse(SessionData[Constants.STOREID]);
-            }
+            this.logger = logger;
+            db = context;
+            //if (SessionCookies.IsSessionSet(HttpContext))
+            //{
+            //    SessionData = SessionCookies.GetLoginSessionInfo(HttpContext);
+            //    StoreCodeId = Int32.Parse(SessionData[Constants.STOREID]);
+            //}
 
             
-            db = context;
+          
         }
 
         // GET: DailySales
@@ -46,6 +50,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             if (SessionCookies.IsSessionSet(HttpContext))
             {
                 SessionData = SessionCookies.GetLoginSessionInfo(HttpContext);
+                StoreCodeId = Int32.Parse(SessionData[Constants.STOREID]);
 
             }
             else
@@ -223,6 +228,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         {
             if (id == null)
             {
+                logger.LogWarning("DailySale:Details/ID is null");
                 return NotFound();
             }
 
@@ -231,6 +237,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 .FirstOrDefaultAsync(m => m.DailySaleId == id);
             if (dailySale == null)
             {
+                logger.LogError("DailySale:Details  Not Found");
                 return NotFound();
             }
 
@@ -263,6 +270,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            logger.LogWarning("DailySale:Create[Post] ModelState is not Valid!");
             ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName", dailySale.SalesmanId);
             return PartialView(dailySale);
         }
@@ -273,14 +281,17 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         {
             if (id == null)
             {
+                logger.LogWarning("DailySale:Edit[Get] ID is null!");
                 return NotFound();
             }
 
             var dailySale = await db.DailySales.FindAsync(id);
             if (dailySale == null)
             {
+                logger.LogWarning("DailySale:Edit[Get] DailSale  not found!");
                 return NotFound();
             }
+            logger.LogWarning("DailySale:Edit[Get] ModelState is not Valid!");
             ViewData["SalesmanId"] = new SelectList(db.Salesmen, "SalesmanId", "SalesmanName", dailySale.SalesmanId);
             return PartialView(dailySale);
         }

@@ -1,31 +1,33 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;    using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 
-namespace AprajitaRetails.Areas.Uploader.Controllers
+namespace AprajitaRetails.Areas.Imported.Controllers
 {
-    [Area("Uploader")]
+    [Area("Imported")]
     [Authorize]
-    public class ImportSaleRegistersController : Controller
+    public class ImportInWardsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
 
-        public ImportSaleRegistersController(AprajitaRetailsContext context)
+        public ImportInWardsController(AprajitaRetailsContext context)
         {
             _context = context;
         }
 
-        // GET: Uploader/ImportSaleRegisters
+        // GET: Uploader/ImportInWards
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ImportSaleRegisters.ToListAsync());
+            return View(await _context.ImportInWards.ToListAsync());
         }
 
-        // GET: Uploader/ImportSaleRegisters/Details/5
+        // GET: Uploader/ImportInWards/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +35,39 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 return NotFound();
             }
 
-            var importSaleRegister = await _context.ImportSaleRegisters
-                .FirstOrDefaultAsync(m => m.ImportSaleRegisterId == id);
-            if (importSaleRegister == null)
+            var importInWard = await _context.ImportInWards
+                .FirstOrDefaultAsync(m => m.ImportInWardId == id);
+            if (importInWard == null)
             {
                 return NotFound();
             }
 
-            return View(importSaleRegister);
+            return View(importInWard);
         }
 
-        // GET: Uploader/ImportSaleRegisters/Create
+        // GET: Uploader/ImportInWards/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Uploader/ImportSaleRegisters/Create
+        // POST: Uploader/ImportInWards/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ImportSaleRegisterId,InvoiceNo,InvoiceType,InvoiceDate,Quantity,MRP,Discount,BasicRate,Tax,RoundOff,BillAmnt,PaymentType,IsConsumed,ImportTime")] ImportSaleRegister importSaleRegister)
+        public async Task<IActionResult> Create([Bind("ImportInWardId,InWardNo,InWardDate,InvoiceNo,InvoiceDate,PartyName,TotalQty,TotalMRPValue,TotalCost,ImportDate")] ImportInWard importInWard)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(importSaleRegister);
+                _context.Add(importInWard);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(importSaleRegister);
+            return View(importInWard);
         }
 
-        // GET: Uploader/ImportSaleRegisters/Edit/5
+        // GET: Uploader/ImportInWards/Edit/5
          [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +75,22 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 return NotFound();
             }
 
-            var importSaleRegister = await _context.ImportSaleRegisters.FindAsync(id);
-            if (importSaleRegister == null)
+            var importInWard = await _context.ImportInWards.FindAsync(id);
+            if (importInWard == null)
             {
                 return NotFound();
             }
-            return View(importSaleRegister);
+            return View(importInWard);
         }
 
-        // POST: Uploader/ImportSaleRegisters/Edit/5
+        // POST: Uploader/ImportInWards/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ImportSaleRegisterId,InvoiceNo,InvoiceType,InvoiceDate,Quantity,MRP,Discount,BasicRate,Tax,RoundOff,BillAmnt,PaymentType,IsConsumed,ImportTime")] ImportSaleRegister importSaleRegister)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ImportInWardId,InWardNo,InWardDate,InvoiceNo,InvoiceDate,PartyName,TotalQty,TotalMRPValue,TotalCost,ImportDate")] ImportInWard importInWard)
         {
-            if (id != importSaleRegister.ImportSaleRegisterId)
+            if (id != importInWard.ImportInWardId)
             {
                 return NotFound();
             }
@@ -97,12 +99,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             {
                 try
                 {
-                    _context.Update(importSaleRegister);
+                    _context.Update(importInWard);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ImportSaleRegisterExists(importSaleRegister.ImportSaleRegisterId))
+                    if (!ImportInWardExists(importInWard.ImportInWardId))
                     {
                         return NotFound();
                     }
@@ -113,10 +115,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(importSaleRegister);
+            return View(importInWard);
         }
 
-        // GET: Uploader/ImportSaleRegisters/Delete/5
+        // GET: Uploader/ImportInWards/Delete/5
          [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +126,30 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 return NotFound();
             }
 
-            var importSaleRegister = await _context.ImportSaleRegisters
-                .FirstOrDefaultAsync(m => m.ImportSaleRegisterId == id);
-            if (importSaleRegister == null)
+            var importInWard = await _context.ImportInWards
+                .FirstOrDefaultAsync(m => m.ImportInWardId == id);
+            if (importInWard == null)
             {
                 return NotFound();
             }
 
-            return View(importSaleRegister);
+            return View(importInWard);
         }
 
-        // POST: Uploader/ImportSaleRegisters/Delete/5
+        // POST: Uploader/ImportInWards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
          [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var importSaleRegister = await _context.ImportSaleRegisters.FindAsync(id);
-            _context.ImportSaleRegisters.Remove(importSaleRegister);
+            var importInWard = await _context.ImportInWards.FindAsync(id);
+            _context.ImportInWards.Remove(importInWard);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ImportSaleRegisterExists(int id)
+        private bool ImportInWardExists(int id)
         {
-            return _context.ImportSaleRegisters.Any(e => e.ImportSaleRegisterId == id);
+            return _context.ImportInWards.Any(e => e.ImportInWardId == id);
         }
     }
 }

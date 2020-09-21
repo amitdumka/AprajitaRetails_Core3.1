@@ -36,7 +36,6 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             return View(await PaginatedList<Customer>.CreateAsync(_context.Customers.AsNoTracking(), pageNumber ?? 1, pageSize));
-            //return View(await _context.Customers.ToListAsync());
         }
 
         // GET: Voyager/Customers/Details/5

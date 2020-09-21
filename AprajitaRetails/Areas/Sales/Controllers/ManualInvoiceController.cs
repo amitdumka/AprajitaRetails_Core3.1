@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
 //TODO: Negative or zero stock waring. 
 //      Only admin can zero or neg stock 
@@ -33,7 +34,9 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         private readonly AprajitaRetailsContext aprajitaContext;
         private readonly int StoreId = 1; //TODO: Fixed now
         private readonly UserManager<IdentityUser> UserManager;
-        public ManualInvoiceController(AprajitaRetailsContext aCtx, UserManager<IdentityUser> userManager)
+        private readonly ILogger<ManualInvoiceController> logger;
+
+        public ManualInvoiceController(AprajitaRetailsContext aCtx, UserManager<IdentityUser> userManager, ILogger<ManualInvoiceController> logger)
         {
             aprajitaContext = aCtx; UserManager = userManager;
 
@@ -77,12 +80,14 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             if (id == null)
             {
                 errMsg = "Kindly send Invoice No!";
+                logger.LogError("ManualInvoice:GetInvoiceDetails # Id is Null!");
                 return Json(new { Msg = errMsg, Error = "true" });
             }
             retunDetails = SaleHelper.GetInvoiceData(aprajitaContext, (int)id);
             if (retunDetails == null)
             {
                 errMsg = "Invoice Number Not found!";
+                logger.LogError($"ManualInvoice:GetInvoiceDetails # {errMsg}!");
                 return Json(new { Msg = errMsg, Error = "true" });
             }
             retunDetails.Msg = "Data is loaded successfuly";

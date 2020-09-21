@@ -11,9 +11,9 @@ using AprajitaRetails.Areas.Purchase.Models;
 using System;
 using System.Collections.Generic;
 
-namespace AprajitaRetails.Areas.Uploader.Controllers
+namespace AprajitaRetails.Areas.Imported.Controllers
 {
-    [Area("Uploader")]
+    [Area("Imported")]
     [Authorize]
     public class ImportPurchasesController : Controller
     {

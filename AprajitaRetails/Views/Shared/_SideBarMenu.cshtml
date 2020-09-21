@@ -2,6 +2,7 @@
     .sidebar-font {
         font-size: .875rem;
     }
+
     .feather {
         width: 16px;
         height: 16px;
@@ -17,6 +18,7 @@
         padding: 0;
         box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     }
+
     .sidebar-sticky {
         position: -webkit-sticky;
         position: sticky;
@@ -26,21 +28,26 @@
         overflow-x: hidden;
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     }
+
     .sidebar .nav-link {
         font-weight: 500;
         color: #333;
     }
+
         .sidebar .nav-link .feather {
             margin-right: 4px;
             color: #999;
         }
+
         .sidebar .nav-link.active {
             color: #007bff;
         }
+
             .sidebar .nav-link:hover .feather,
             .sidebar .nav-link.active .feather {
                 color: inherit;
             }
+
     .sidebar-heading {
         font-size: .75rem;
         text-transform: uppercase;
@@ -73,6 +80,7 @@
     .border-top {
         border-top: 1px solid #e5e5e5;
     }
+
     .border-bottom {
         border-bottom: 1px solid #e5e5e5;
     }
@@ -82,8 +90,8 @@
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             @*<li class="nav-item">
-                <a class="nav-link sidebar-font active " asp-area="" asp-controller="TestPrint" asp-action="Index">  <span data-feather="users"></span> Employee</a>
-            </li>*@
+                    <a class="nav-link sidebar-font active " asp-area="" asp-controller="TestPrint" asp-action="Index">  <span data-feather="users"></span> Employee</a>
+                </li>*@
             <li class="nav-item">
                 <a class="nav-link sidebar-font active " asp-area="Payroll" asp-controller="Employees" asp-action="Index">  <span data-feather="users"></span> Employee</a>
             </li>
@@ -91,10 +99,10 @@
                 <a class="nav-link sidebar-font" asp-area="Sales" asp-controller="DailySales" asp-action="Index"><span data-feather="file"></span>Sale</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index"><span data-feather="shopping-cart"></span>Products</a>
+                <a class="nav-link sidebar-font" asp-area="Purchase" asp-controller="ProductItems" asp-action="Index"><span data-feather="shopping-cart"></span>Products</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index"><span data-feather="users"></span>Customers</a>
+                <a class="nav-link sidebar-font" asp-area="Voyager" asp-controller="Customers" asp-action="Index"><span data-feather="users"></span>Customers</a>
             </li>
 
             <li class="nav-item">
@@ -103,12 +111,7 @@
                     <li class="nav-item">
                         <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="Index" class="nav-link  sidebar-font"> <span data-feather="book-open"></span>Employee</a>
                     </li>
-                    @*<li class="nav-item">
-                    <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="shopping-cart"></span>Delivery</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="PendingBooking" class="nav-link sidebar-font"> <span data-feather="book"></span>Pending Booking</a>
-                </li>*@
+                   
                 </ul>
             </li>
 
@@ -139,6 +142,12 @@
                         <a asp-area="Accounts" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
                     </li>
                     <li class="nav-item">
+                        <a asp-area="Expenses" asp-controller="Payments" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Expenses" asp-controller="Expenses" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Expenses</a>
+                    </li>
+                    <li class="nav-item">
                         <a asp-area="Accounts" asp-controller="DuesLists" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
                     </li>
                 </ul>
@@ -151,18 +160,12 @@
                 <ul class="collapse list-unstyled" id="utilSubmenu">
                     <li class="nav-item">
                         <a asp-area="AddressBook" asp-action="Index" asp-controller="Contacts" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Address Book</a>
-                    </li>
-                    @*<li class="nav-item">
-                    <a asp-area="Accounts" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-area="Accounts" asp-controller="DuesLists" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Due List</a>
-                </li>*@
+                    </li>                   
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="#importSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="users"></span>Imports</a>
-                <ul class="collapse list-unstyled" id="importSubmenu">
+                <a href="#uploaderSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="upload-cloud"></span>Upload</a>
+                <ul class="collapse list-unstyled" id="uploaderSubmenu">
                     <li class="nav-item">
                         <a asp-area="Uploader" asp-controller="ImportAddressBook" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Address Book</a>
                     </li>
@@ -170,35 +173,42 @@
                         <a asp-area="Uploader" asp-controller="ImportAttendance" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Attendance</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Sales</a>
+                        <a asp-area="Uploader" asp-controller="SalesUploader" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="shopping-cart"></span>Sales</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Purchase</a>
+                        <a asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="shopping-bag"></span>Purchase</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a asp-area="Uploader" asp-controller="ImportBookEntry" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="book"></span>Book Entry</a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item">
+                <a href="#importSubmenu" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="users"></span>Imports</a>
+                <ul class="collapse list-unstyled" id="importSubmenu">
+                    <li class="nav-item">
+                        <a asp-area="Imported" asp-controller="ImportInWards" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import InWards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Imported" asp-controller="ImportPurchases" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import Purchases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Imported" asp-controller="ImportSaleItemWises" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import Sale ItemWises</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Imported" asp-controller="ImportSaleRegisters" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import Sale Registers</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="ImportInWards" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import InWards</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="ImportPurchases" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import Purchases</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="ImportSaleItemWises" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import Sale ItemWises</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="ImportSaleRegisters" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Import Sale Registers</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="SalesUploader" asp-action="SaleList" class="nav-link sidebar-font"> <span data-feather="trello"></span>Sale List</a>
-                    </li>
                     <li class="nav-item">
                         <a asp-area="Uploader" asp-controller="PurchaseUploader" asp-action="ListUpLoad" class="nav-link sidebar-font"> <span data-feather="trello"></span>Purchase List</a>
                     </li>
-
                     <li class="nav-item">
-                        <a asp-area="Uploader" asp-controller="ImportBookEntry" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="trello"></span>Book Entry</a>
+                        <a asp-area="Uploader" asp-controller="SalesUploader" asp-action="SaleList" class="nav-link sidebar-font"> <span data-feather="trello"></span>Sale List</a>
                     </li>
+
                     <li class="nav-item">
                         <a asp-area="Uploader" asp-controller="ImportBookEntry" asp-action="ListUpLoad" class="nav-link sidebar-font"> <span data-feather="trello"></span>Book Entry List</a>
                     </li>
@@ -209,31 +219,31 @@
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Saved reports</span>
-            <a class="d-flex align-items-center text-muted"  asp-area=""  asp-controller=""  asp-action="Index" >
+            <a class="d-flex align-items-center text-muted" asp-area="" asp-controller="" asp-action="Index">
                 <span data-feather="plus-circle"></span>
             </a>
         </h6>
         <ul class="nav flex-column mb-2">
             <li class="nav-item">
-                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
+                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index">
                     <span data-feather="file-text"></span>
                     Current Month
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
+                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index">
                     <span data-feather="file-text"></span>
                     Last Quarter
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
+                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index">
                     <span data-feather="file-text"></span>
                     Last Month
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link sidebar-font"  asp-area=""  asp-controller=""  asp-action="Index" >
+                <a class="nav-link sidebar-font" asp-area="" asp-controller="" asp-action="Index">
                     <span data-feather="file-text"></span>
                     Year-end Sale
                 </a>

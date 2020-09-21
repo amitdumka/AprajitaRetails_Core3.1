@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 
-namespace AprajitaRetails.Areas.Uploader.Controllers
+namespace AprajitaRetails.Areas.Imported.Controllers
 {
-    [Area("Uploader")]
+    [Area("Imported")]
     [Authorize]
     public class ImportSaleItemWisesController : Controller
     {

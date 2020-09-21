@@ -302,6 +302,8 @@
     <Folder Include="Areas\Bot\Data\" />
     <Folder Include="Areas\Bot\Models\" />
     <Folder Include="Areas\Expenses\Data\" />
+    <Folder Include="Areas\Imported\Data\" />
+    <Folder Include="Areas\Imported\Models\" />
     <Folder Include="Areas\PayRoll\Data\" />
     <Folder Include="Areas\Purchase\Data\" />
     <Folder Include="Areas\RestAPI\Data\" />
