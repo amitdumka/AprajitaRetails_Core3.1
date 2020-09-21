@@ -1,4 +1,5 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@using AprajitaRetails.Models.Helpers 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -293,8 +294,10 @@
         </div>
     @*</div>*@
     <footer class="border-top footer  font-small text-muted ">
-        <div class="container">
-            &copy; 2020 - Aprajita Retails - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container">@*@{ DateTime d = DateTime.Now;
+           d= d.ToIST ();
+            }
+        Date: @d.ToString()*@  &copy; 2020 - Aprajita Retails - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -49,7 +49,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
 
             _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
             _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence(DateTime.Now);
-            MyMail.SendEmail("CronJob Service Creation", $"Cash Next On {_nextRunForCashCorrection.ToString()} and Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
+            MyMail.SendEmail("CronJob Service Creation", $" Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -58,7 +58,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             {
                 var now = DateTime.Now;
                 var nextrun = _schedule.GetNextOccurrence(now);
-                if (now > nextrun)//_nextRun
+                if (now > _nextRun)//_nextRun
                 {
                     using (var scope = _scopeFactory.CreateScope())
                     {
@@ -67,23 +67,23 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
                     }
 
                     _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
-                    MyMail.SendEmail("CronJob Service Excution of AttandenceChecker ", $"Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
+                    MyMail.SendEmail("CronJob Service Execution of AttandenceChecker ", $"Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
                 }
                 await Task.Delay(5000, stoppingToken); //5 seconds delay
 
-                nextrun = _scheduleForCashCorrection.GetNextOccurrence(now);
-                if (now > nextrun)//_nextRun
+                var nextrunforcash = _scheduleForCashCorrection.GetNextOccurrence (now);
+                if ( now > _nextRunForCashCorrection )//_nextRun
                 {
-                    using (var scope = _scopeFactory.CreateScope())
+                    using ( var scope = _scopeFactory.CreateScope () )
                     {
-                        var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
-                        JobHelper.CorrectCashInHand(Cdb, StoreId);
+                        var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext> ();
+                        JobHelper.CorrectCashInHand (Cdb, StoreId);
                     }
 
-                    _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence(DateTime.Now);
-                    MyMail.SendEmail("CronJob Service Excution of Cash Correction ", $"Cash Correction  on {_nextRunForCashCorrection.ToString()}.", "amitnarayansah@gmail.com");
+                    _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence (DateTime.Now);
+                    MyMail.SendEmail ("CronJob Service Execution of Cash Correction ", $"Cash Correction  on {_nextRunForCashCorrection.ToString ()}.", "amitnarayansah@gmail.com");
                 }
-                await Task.Delay(5000, stoppingToken); //5 seconds delay
+                await Task.Delay (5000, stoppingToken); //5 seconds delay
             }
             while (!stoppingToken.IsCancellationRequested);
         }
