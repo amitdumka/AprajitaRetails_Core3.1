@@ -82,11 +82,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 _context.Add (employee);
                 await _context.SaveChangesAsync ();
                 if ( employee.Category == EmpType.StoreManager )
-                    await UserAdmin.AddUserAsync (_userManager, employee.StaffName, true);
+                    await UserAdmin.AddUserAsync (_userManager, employee.StaffName, true, employee.EmployeeId);
                 else
-                    await UserAdmin.AddUserAsync (_userManager, employee.StaffName, false);
+                    await UserAdmin.AddUserAsync (_userManager, employee.StaffName, false, employee.EmployeeId);
                 //TODO: Implement add employee level security and permissions 
-
+                if (employee.IsWorking)
+                {
+                    await UserAdmin.AddEmployeeUserAsync(_context, employee.StaffName, employee.EmployeeId);
+                }
                 return RedirectToAction (nameof (Index));
             }
             return PartialView (employee);

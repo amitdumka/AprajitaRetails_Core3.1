@@ -14,5 +14,11 @@ namespace AprajitaRetails.Areas.RestAPI.Models
             return db.TelegramAuthUsers.Where(c => c.TelegramChatId == chatId).FirstOrDefault();
 
         }
+
+        public static bool IsValidEmployee(AprajitaRetailsContext db, int EmpId, string UserName)
+        {
+            return db.EmployeeUsers.Where(c => c.EmployeeId == EmpId && c.UserName == UserName).Select(c => c.IsWorking).FirstOrDefault();
+           
+        }
     }
 }

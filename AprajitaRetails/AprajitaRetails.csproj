@@ -11,21 +11,29 @@
     <Compile Remove="Areas\StoneWorks\**" />
     <Compile Remove="Migrations\Accounts\**" />
     <Compile Remove="Migrations\Voyager\**" />
+    <Compile Remove="Models\Accounts\**" />
+    <Compile Remove="Models\Voyager\**" />
     <Compile Remove="oldDataBackup\**" />
     <Content Remove="Areas\Chat\**" />
     <Content Remove="Areas\StoneWorks\**" />
     <Content Remove="Migrations\Accounts\**" />
     <Content Remove="Migrations\Voyager\**" />
+    <Content Remove="Models\Accounts\**" />
+    <Content Remove="Models\Voyager\**" />
     <Content Remove="oldDataBackup\**" />
     <EmbeddedResource Remove="Areas\Chat\**" />
     <EmbeddedResource Remove="Areas\StoneWorks\**" />
     <EmbeddedResource Remove="Migrations\Accounts\**" />
     <EmbeddedResource Remove="Migrations\Voyager\**" />
+    <EmbeddedResource Remove="Models\Accounts\**" />
+    <EmbeddedResource Remove="Models\Voyager\**" />
     <EmbeddedResource Remove="oldDataBackup\**" />
     <None Remove="Areas\Chat\**" />
     <None Remove="Areas\StoneWorks\**" />
     <None Remove="Migrations\Accounts\**" />
     <None Remove="Migrations\Voyager\**" />
+    <None Remove="Models\Accounts\**" />
+    <None Remove="Models\Voyager\**" />
     <None Remove="oldDataBackup\**" />
   </ItemGroup>
 
@@ -307,8 +315,6 @@
     <Folder Include="Data\OldData\Sale\" />
     <Folder Include="Data\Reports\" />
     <Folder Include="Docs\PrintFiles\" />
-    <Folder Include="Models\Accounts\" />
-    <Folder Include="Models\Voyager\" />
     <Folder Include="wwwroot\ExcelFiles\" />
     <Folder Include="wwwroot\todolist\" />
   </ItemGroup>

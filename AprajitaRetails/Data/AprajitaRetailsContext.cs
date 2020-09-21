@@ -138,6 +138,8 @@ namespace AprajitaRetails.Data
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<EmployeeUser> EmployeeUsers { get; set; }
+
         public DbSet<SalaryPayment> SalaryPayments { get; set; }
         public DbSet<StaffAdvancePayment> StaffAdvancePayments { get; set; }
         public DbSet<StaffAdvanceReceipt> StaffAdvanceReceipts { get; set; }

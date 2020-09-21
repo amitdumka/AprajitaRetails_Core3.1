@@ -83,7 +83,7 @@ namespace AprajitaRetails.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation ("User logged in.");
 
-                    SessionUtil.SetLoginSessionInfo (HttpContext, 1, Input.Email, 101);                    
+                    SessionCookies.SetLoginSessionInfo (HttpContext, 1, Input.Email, 101);                    
                     return LocalRedirect (returnUrl);
                 }
                 if ( result.RequiresTwoFactor )

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Areas.RestAPI.Models;
+using DotNetty.Common;
 
 namespace AprajitaRetails.Areas.RestAPI.Controllers
 {
@@ -42,25 +44,35 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(int EmployeeId, int Year, string UserName)
+        public async Task<ActionResult<IEnumerable<Attendance>>> GetAttendances(int EmployeeId, int Year, string userName)
         {
             // TODO: Check for UserName. if UserName and EmployeeId is Same then only provide Data. other Wise dont Send Data.
-            return await _context.Attendances.Where(c => c.EmployeeId == EmployeeId && c.AttDate.Year == Year).ToListAsync();
+            if (DBHelper.IsValidEmployee(_context, EmployeeId, userName))
+                return await _context.Attendances.Where(c => c.EmployeeId == EmployeeId && c.AttDate.Year == Year).ToListAsync();
+            else
+                return NotFound(true);
         }
         // GET: api/Attendances/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Attendance>> GetAttendance(int id, string UserName)
+        public async Task<ActionResult<Attendance>> GetAttendance(int id, string userName)
         {
             // TODO: Check for UserName. if UserName and EmployeeId is Same then only provide Data. other Wise dont Send Data.
-            
-            var attendance = await _context.Attendances.FindAsync(id);
-
-            if (attendance == null)
+            if(DBHelper.IsValidEmployee(_context,id,userName))
             {
-                return NotFound();
-            }
+                var attendance = await _context.Attendances.FindAsync(id);
 
-            return attendance;
+                if (attendance == null)
+                {
+                    return NotFound(false);
+                }
+
+                return attendance;
+            }
+            else
+            {
+                return NotFound(true);
+            }
+           
         }
 
         // PUT: api/Attendances/5

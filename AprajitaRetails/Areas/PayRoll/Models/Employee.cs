@@ -40,6 +40,7 @@ namespace AprajitaRetails.Models
         public ICollection<Expense> Expenses { get; set; }
 
         public virtual ICollection<CurrentSalary> CurrentSalaries { get; set; }
+        public virtual EmployeeUser User { get; set; }
         //Version 3.0
         [DefaultValue(1)]
         public int? StoreId { get; set; }
@@ -47,6 +48,15 @@ namespace AprajitaRetails.Models
 
         public string UserName { get; set; }
 
+    }
+
+    public class EmployeeUser {
+        [Key]
+        public int Id { get; set; }
+        public int EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
+        public string UserName { get; set; }
+        public bool IsWorking { get; set; }
     }
 
 }
