@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -45,9 +46,27 @@ namespace AprajitaRetails
             services.AddDbContext<AprajitaRetailsContext> (options =>
                 options.UseSqlServer (
                     Configuration.GetConnectionString ("AprajitaRetailsConnection")));
+
             services.AddDefaultIdentity<IdentityUser> (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole> ()
                 .AddEntityFrameworkStores<ApplicationDbContext> ();
+
+            services.AddMvc ().SetCompatibilityVersion (CompatibilityVersion.Latest)
+                .AddRazorPagesOptions (options =>
+                {
+                    //options.AllowAreas = true;
+                    options.Conventions.AuthorizeAreaFolder ("Identity", "/Account/Manage");
+                    options.Conventions.AuthorizeAreaPage ("Identity", "/Account/Logout");
+                });
+
+            services.ConfigureApplicationCookie (options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
+
             services.AddDistributedMemoryCache ();
             services.AddSession (options =>
             {
