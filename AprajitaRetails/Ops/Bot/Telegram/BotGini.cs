@@ -32,7 +32,7 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             {
                 botClient = new TelegramBotClient (BotConfig.AccessToken);
                 var me = botClient.GetMeAsync ().Result;
-                Console.WriteLine ($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
+                Console.WriteLine ($"Hello, I am user {me.Id} and my name is {me.FirstName}.");
                 if ( OnMessageHandler == null )
                 {
                     handler = new GiniHandler ();

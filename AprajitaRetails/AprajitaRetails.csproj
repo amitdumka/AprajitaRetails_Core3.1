@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>aspnet-AprajitaRetails-F93500E7-2BD5-4D60-BD3E-33D8F8342F26</UserSecretsId>
     <ApplicationInsightsResourceId>/subscriptions/0f8366b7-5786-420b-a174-2f0057b0d6f1/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/AprajitaRetails</ApplicationInsightsResourceId>
+    <Version>3.0.0</Version>
+    <Description>Aprajita Retails Day to Day Operation Mangement sysem, based on The Arvind Store SOP.</Description>
+    <Copyright>Amit Kumar</Copyright>
+    <PackageProjectUrl>www.aprajitaretails.in</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
