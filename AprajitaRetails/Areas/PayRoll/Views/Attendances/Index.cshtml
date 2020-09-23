@@ -1,12 +1,12 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.Attendance>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData ["Title"] = "Index";
 }
 
 <h1 class="text-danger">Attendances</h1>
 
-<p>
+<p class="btn-group btn-group-sm">
     <a class="btn btn-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
     <a class="btn btn-orange btn-sm" asp-action="Index" asp-route-id="">Today</a>
     <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
@@ -14,31 +14,38 @@
     <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
 </p>
 
+<div class="text-success">
+    <form method="get" asp-action="Index">
+        Date <input class="form-control-sm" type="date" name="OnDate" id="OnDate" /><button class="btn btn-amber btn-sm" type="submit" value="Get"><span data-feather="search"></span>Get</button>
+    </form> 
+</div>
 <div class="btn-group btn-group-sm">
-    @foreach (var item in ViewBag.YearList)
+   
+    @foreach ( var item in ViewBag.YearList )
     {
 
-        <a class="btn btn-outline-dark-green"  asp-action="Index" asp-route-id=@item>@item</a>
+        <a class="btn btn-outline-dark-green" asp-action="Index" asp-route-id=@item>@item</a>
 
     }
 </div>
-@if (ViewBag.YearName != null)
+@if ( ViewBag.YearName != null )
 {
-    <div class="btn-group btn-group-sm">
-        @*<select name="MonthName" id="mnt" asp-items="@new SelectList(ViewBag.MonthList,12)" class="select-dropdown" >
-            </select>*@
-        @foreach (var item in ViewBag.MonthList)
-        {
-            if (item == "")
+   
+        <div class="btn-group btn-group-sm">
+            @*<select name="MonthName" id="mnt" asp-items="@new SelectList(ViewBag.MonthList,12)" class="select-dropdown" >
+                </select>*@
+            @foreach ( var item in ViewBag.MonthList )
             {
-                <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">All</a>
+                if ( item == "" )
+                {
+                    <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">All</a>
+                }
+                else
+                {
+                    <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">@item</a>}
             }
-            else
-            {
-                <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">@item</a>}
-        }
-    </div>
-
+        </div>
+   
 
 }
 
@@ -66,7 +73,7 @@
         </tr>
     </thead>
     <tbody class="bg-white">
-        @foreach (var item in Model)
+        @foreach ( var item in Model )
         {
             <tr>
                 <td>
@@ -85,13 +92,13 @@
                     @Html.DisplayFor(modelItem => item.Remarks)
                 </td>
                 <td class="btn-group btn-group-sm">
-                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
+                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
                     {
                         <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
                     }
 
                     <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
-                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
+                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
                     {
                         <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
                     }

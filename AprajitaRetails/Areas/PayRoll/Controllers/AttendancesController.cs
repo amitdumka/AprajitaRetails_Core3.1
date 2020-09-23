@@ -29,7 +29,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         }
 
         // GET: Attendances
-        public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, int? pageNumber, string MonthName)
+        public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, int? pageNumber, string MonthName, DateTime? OnDate)
         {
             // TODO: implement StoreID on this
             //string mName = "Jan";
@@ -52,7 +52,11 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewBag.MonthList = MonthList;
 
-            if (id == 101)
+            if ( OnDate != null )
+            {
+                aprajitaRetailsContext   = _context.Attendances.Include (a => a.Employee).Where (c => c.StoreId == StoreId && c.AttDate.Date==OnDate.Value.Date).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
+            }
+            else if (id == 101)
             {
                 aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.StoreId == StoreId).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
                 //return View(await aprajitaRetailsContext_all.ToListAsync());
