@@ -31,6 +31,16 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
     /// </summary>
     public class PaySlipGenerator
     {
+
+        public void ProcessPaySlip(AprajitaRetailsContext db)
+        {
+            DateTime forDate = DateTime.Today.AddMonths(-1).Date;
+
+
+        }
+
+
+
         /// <summary>
         /// Generate Last Month PaySlip for All Employees
         /// </summary>
