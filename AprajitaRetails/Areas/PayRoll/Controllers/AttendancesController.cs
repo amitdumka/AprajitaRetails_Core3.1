@@ -172,39 +172,35 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: Attendances/Create
         public IActionResult Create()
         {
+            //TODO: fetch StoreId
             ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName");
             return PartialView();
         }
 
         // POST: Attendances/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from over posting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
         {
+            //TODO: Fetch StoreID from session. 
             if (ModelState.IsValid)
             {
-                var eType = _context.Employees.Find(attendance.EmployeeId).Category;
                 attendance.StoreId = StoreId;
-
+                attendance.UserName = User.Identity.Name;
+                var eType = _context.Employees.Find(attendance.EmployeeId).Category;
                 if (eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster)
                 {
                     attendance.IsTailoring = true;
-
                 }
                 else
                 {
                     attendance.IsTailoring = false;
                 }
-                
-                attendance.UserName = User.Identity.Name;
-                
                 _context.Add(attendance);
-                
                 await _context.SaveChangesAsync();
                 new PayRollManager().ONInsertOrUpdate(_context, attendance, false, false);
-
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
@@ -219,8 +215,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-
-            var attendance = await _context.Attendances.FindAsync(id);
+             var attendance = await _context.Attendances.FindAsync(id);
             if (attendance == null)
             {
                 return NotFound();
@@ -242,14 +237,13 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
                 try
                 {
-                    new PayRollManager().ONInsertOrUpdate(_context, attendance, false, true);
                     attendance.UserName = User.Identity.Name;
                     attendance.StoreId = StoreId;
+                    new PayRollManager().ONInsertOrUpdate(_context, attendance, false, true);
                     _context.Update(attendance);
                     await _context.SaveChangesAsync();
                 }
@@ -267,7 +261,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.StoreId==StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
-            return PartialView(attendance);
+              return PartialView(attendance);
         }
 
         // GET: Attendances/Delete/5
@@ -278,19 +272,16 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-
-            var attendance = await _context.Attendances
+             var attendance = await _context.Attendances
                 .Include(a => a.Employee)
                 .FirstOrDefaultAsync(m => m.AttendanceId == id);
             if (attendance == null)
             {
                 return NotFound();
             }
-
-            return PartialView(attendance);
+             return PartialView(attendance);
         }
-
-        // POST: Attendances/Delete/5
+         // POST: Attendances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,PowerUser")]
