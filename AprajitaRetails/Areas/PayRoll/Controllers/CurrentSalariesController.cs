@@ -73,12 +73,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             if ( ModelState.IsValid )
             {
-                if ( currentSalary.IsSundayBillable )
-                {
-                    var sunsal = currentSalary.BasicSalary / 30;
-                    if ( currentSalary.SundaySalary != sunsal )
-                        currentSalary.SundaySalary = sunsal;
-                }
+                //if ( currentSalary.IsSundayBillable )
+                //{
+                //    var sunsal = currentSalary.BasicSalary / 30;
+                //    if ( currentSalary.SundaySalary != sunsal )
+                //        currentSalary.SundaySalary = sunsal;
+                //}
                 _context.Add (currentSalary);
                 await _context.SaveChangesAsync ();
                 return RedirectToAction (nameof (Index));
@@ -122,12 +122,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 try
                 {
-                    if ( currentSalary.IsSundayBillable )
-                    {
-                        var sunsal = currentSalary.BasicSalary / 30;
-                        if ( currentSalary.SundaySalary != sunsal )
-                            currentSalary.SundaySalary = sunsal;
-                    }
+                    //if ( currentSalary.IsSundayBillable )
+                    //{
+                    //    var sunsal = currentSalary.BasicSalary / 30;
+                    //    if ( currentSalary.SundaySalary != sunsal )
+                    //        currentSalary.SundaySalary = sunsal;
+                    //}
                     _context.Update (currentSalary);
                     await _context.SaveChangesAsync ();
                 }

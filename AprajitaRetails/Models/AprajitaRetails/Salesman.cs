@@ -22,7 +22,10 @@ namespace AprajitaRetails.Models
         [DefaultValue(1)]
         public int? StoreId { get; set; }
         public virtual Store Store { get; set; }
-        public int StoreLocationId { get; internal set; }
+       // public int StoreLocationId { get; internal set; }
+
+        public int? EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 
     

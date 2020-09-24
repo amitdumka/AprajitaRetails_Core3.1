@@ -39,6 +39,8 @@ namespace AprajitaRetails.Models
         public ICollection<PettyCashExpense> CashExpenses { get; set; }
         public ICollection<Expense> Expenses { get; set; }
 
+        public ICollection<Salesman> Salesmen { get; set; }
+
         public virtual ICollection<CurrentSalary> CurrentSalaries { get; set; }
         public virtual EmployeeUser User { get; set; }
         //Version 3.0
