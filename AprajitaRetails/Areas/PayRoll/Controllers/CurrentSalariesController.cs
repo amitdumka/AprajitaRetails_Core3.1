@@ -33,11 +33,9 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 searchString = currentFilter;
             }
-
-
             ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.CurrentSalaries.Include (c => c.Employee);
+            var aprajitaRetailsContext = _context.CurrentSalaries.Include (c => c.Employee).OrderBy(c=>c.IsEffective);
 
             return View (await PaginatedList<CurrentSalary>.CreateAsync (aprajitaRetailsContext.AsNoTracking (), pageNumber ?? 1, pageSize));
         }
@@ -49,7 +47,6 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound ();
             }
-
             var currentSalary = await _context.CurrentSalaries
                 .Include (c => c.Employee)
                 .FirstOrDefaultAsync (m => m.CurrentSalaryId == id);
@@ -57,7 +54,6 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound ();
             }
-
             return PartialView (currentSalary);
         }
 
