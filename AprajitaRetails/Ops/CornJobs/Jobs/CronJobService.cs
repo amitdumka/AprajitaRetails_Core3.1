@@ -55,58 +55,68 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
             _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence(DateTime.Now);
             _nextRunForPaySlip = _scheduleForPaySlip.GetNextOccurrence(DateTime.Now);
-            MyMail.SendEmail("CronJob Service Creation", $" Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
+          //  MyMail.SendEmail($"CronJob Service Creation. {DateTime.Now.ToString()}", $" Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            do
+
+            try
             {
-                var now = DateTime.Now;
-                var nextrun = _schedule.GetNextOccurrence(now);
-                if (now > _nextRun)//_nextRun
+
+                do
                 {
-                    using (var scope = _scopeFactory.CreateScope())
+                    var now = DateTime.Now;
+                    var nextrun = _schedule.GetNextOccurrence(now);
+                    if (now > _nextRun)//_nextRun
                     {
-                        var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
-                        await JobHelper.CheckTodayAttendanceAsync(Cdb, StoreId);
+                        using (var scope = _scopeFactory.CreateScope())
+                        {
+                            var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
+                            await JobHelper.CheckTodayAttendanceAsync(Cdb, StoreId);
+                        }
+
+                        _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
+                        MyMail.SendEmail("CronJob Service Execution of AttandenceChecker ", $"Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
                     }
+                    await Task.Delay(50000, stoppingToken); //5 seconds delay
 
-                    _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
-                    MyMail.SendEmail("CronJob Service Execution of AttandenceChecker ", $"Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
-                }
-                await Task.Delay(50000, stoppingToken); //5 seconds delay
-
-                var nextrunforcash = _scheduleForCashCorrection.GetNextOccurrence (now);
-                if ( now > _nextRunForCashCorrection )//_nextRun
-                {
-                    using ( var scope = _scopeFactory.CreateScope () )
+                    var nextrunforcash = _scheduleForCashCorrection.GetNextOccurrence(now);
+                    if (now > _nextRunForCashCorrection)//_nextRun
                     {
-                        var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext> ();
-                        JobHelper.CorrectCashInHand (Cdb, StoreId);
+                        using (var scope = _scopeFactory.CreateScope())
+                        {
+                            var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
+                            JobHelper.CorrectCashInHand(Cdb, StoreId);
+                        }
+
+                        _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence(DateTime.Now);
+                        MyMail.SendEmail("CronJob Service Execution of Cash Correction ", $"Cash Correction  on {_nextRunForCashCorrection.ToString()}.", "amitnarayansah@gmail.com");
                     }
-
-                    _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence (DateTime.Now);
-                    MyMail.SendEmail ("CronJob Service Execution of Cash Correction ", $"Cash Correction  on {_nextRunForCashCorrection.ToString ()}.", "amitnarayansah@gmail.com");
-                }
-                await Task.Delay (50000, stoppingToken); //5 seconds delay
+                    await Task.Delay(50000, stoppingToken); //5 seconds delay
 
 
-                var nextrunforPaySlip = _scheduleForPaySlip .GetNextOccurrence(now);
-                if (now > nextrunforPaySlip)//_nextRun
-                {
-                    using (var scope = _scopeFactory.CreateScope())
+                    var nextrunforPaySlip = _scheduleForPaySlip.GetNextOccurrence(now);
+                    if (now > nextrunforPaySlip)//_nextRun
                     {
-                        var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
-                        JobHelper.GeneratePaySlip(Cdb);
-                    }
+                        using (var scope = _scopeFactory.CreateScope())
+                        {
+                            var Cdb = scope.ServiceProvider.GetRequiredService<AprajitaRetailsContext>();
+                            JobHelper.GeneratePaySlip(Cdb);
+                        }
 
-                    _nextRunForPaySlip = _scheduleForPaySlip.GetNextOccurrence(DateTime.Now);
-                    MyMail.SendEmail("CronJob Service Execution of PaySlip  ", $"PaySlip   on {_nextRunForPaySlip.ToString()}.", "amitnarayansah@gmail.com");
+                        _nextRunForPaySlip = _scheduleForPaySlip.GetNextOccurrence(DateTime.Now);
+                        MyMail.SendEmail("CronJob Service Execution of PaySlip  ", $"PaySlip   on {_nextRunForPaySlip.ToString()}.", "amitnarayansah@gmail.com");
+                    }
+                    await Task.Delay(50000, stoppingToken); //5 seconds delay
                 }
-                await Task.Delay(50000, stoppingToken); //5 seconds delay
+                while (!stoppingToken.IsCancellationRequested);
             }
-            while (!stoppingToken.IsCancellationRequested);
+            catch (Exception ex)
+            {
+                MyMail.SendEmail($"Error On Cron Serive Ex . {DateTime.Now.ToString()}", $"Error Occured!.Msg= {ex.Message}\n Inner Exp= {ex.InnerException}\n Stack Tracce= {ex.StackTrace} ", "amitnarayansah@gmail.com");
+              
+            }
         }
     }
 }

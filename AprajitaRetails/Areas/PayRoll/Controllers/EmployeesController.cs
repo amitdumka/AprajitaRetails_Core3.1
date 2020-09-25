@@ -40,8 +40,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View (await PaginatedList<Employee>.CreateAsync (_context.Employees.AsNoTracking (), pageNumber ?? 1, pageSize));
-            //return View(await _context.Employees.ToListAsync());
+            return View (await PaginatedList<Employee>.CreateAsync (_context.Employees.OrderByDescending(c=>c.IsWorking).AsNoTracking (), pageNumber ?? 1, pageSize));
+            
         }
 
         // GET: PayRoll/Employees/Details/5
@@ -74,18 +74,20 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category")] Employee employee)
+        public async Task<IActionResult> Create([Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category,EMail,IsTailors")] Employee employee)
         {
             if ( ModelState.IsValid )
             {
                 employee.UserName = User.Identity.Name;
                 _context.Add (employee);
                 await _context.SaveChangesAsync ();
+               //TODO: here it should be used to take care of Email id if entered to it.
                 if ( employee.Category == EmpType.StoreManager )
                     await UserAdmin.AddUserAsync (_userManager, employee.StaffName, true, employee.EmployeeId);
                 else
                     await UserAdmin.AddUserAsync (_userManager, employee.StaffName, false, employee.EmployeeId);
                 //TODO: Implement add employee level security and permissions 
+                
                 if (employee.IsWorking)
                 {
                     await UserAdmin.AddEmployeeUserAsync(_context, employee.StaffName, employee.EmployeeId);
@@ -118,7 +120,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize (Roles = "Admin,PowerUser")]
-        public async Task<IActionResult> Edit(int id, [Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category,EMail,IsTailors")] Employee employee)
         {
             if ( id != employee.EmployeeId )
             {

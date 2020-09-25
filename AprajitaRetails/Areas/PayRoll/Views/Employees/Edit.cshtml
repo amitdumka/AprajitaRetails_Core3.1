@@ -22,6 +22,11 @@
                 <span asp-validation-for="MobileNo" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="EMail" class="control-label col-form-label"></label>
+                <input asp-for="EMail" class="form-control" />
+                <span asp-validation-for="EMail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="JoiningDate" class="control-label"></label>
                 <input asp-for="JoiningDate" class="form-control" />
                 <span asp-validation-for="JoiningDate" class="text-danger"></span>
@@ -41,8 +46,13 @@
                     <input class="form-check-input" asp-for="IsWorking" /> @Html.DisplayNameFor(model => model.IsWorking)
                 </label>
             </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsTailors" /> @Html.DisplayNameFor(model => model.IsTailors)
+                </label>
+            </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-outline-amber" />
+                <input type="submit" value="Save" class="btn btn-sm btn-outline-amber" />
             </div>
         </form>
     </div>

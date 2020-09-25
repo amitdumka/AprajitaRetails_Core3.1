@@ -11,7 +11,7 @@ namespace AprajitaRetails.Models
     {
         public int EmployeeId { get; set; }
 
-        [Display(Name = "Staff Name")]
+        [Display(Name = "Employee Name")]
         public string StaffName { get; set; }
 
         [Display(Name = "Mobile No"), Phone]
@@ -24,14 +24,17 @@ namespace AprajitaRetails.Models
         [Display(Name = "Leaving Date")]
         public DateTime? LeavingDate { get; set; }
 
-        [Display(Name = "Is Working")]
+        [Display(Name = "Working")]
         public bool IsWorking { get; set; }
         [Display (Name ="Job Category")]
         [DefaultValue(0)]
         public EmpType Category { get; set; }
         [DefaultValue(false)]
         [Display(Name ="Tailoring Division")]
-        public bool? IsTailors { get; set; }
+        public bool IsTailors { get; set; }
+        [Display(Name = "eMail"), EmailAddress]
+        public string? EMail { get; set; }
+
         public ICollection<Attendance> Attendances { get; set; }
         public ICollection<SalaryPayment> SalaryPayments { get; set; }
         public ICollection<StaffAdvancePayment> AdvancePayments { get; set; }

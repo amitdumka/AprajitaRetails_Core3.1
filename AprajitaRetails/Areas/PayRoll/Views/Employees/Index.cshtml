@@ -4,10 +4,10 @@
     ViewData["Title"] = "Employees";
 }
 
-<h1 class="text-dark">Employees</h1>
+<h2 class="deep-purple-text">Employees</h2>
 
 <p>
-    <a class="btn btn-outline-brown btn-sm" id="create" data_modal="" asp-action="Create">Create New</a>
+    <a class="btn btn-outline-brown btn-sm" id="create" data_modal="" asp-action="Create"><span class="text-danger" data-feather="plus-square"></span>  Add</a>
 </p>
 <table class="table  table-bordered table-striped table-sm table-hover w-auto ">
     <thead class="bg-success">
@@ -28,10 +28,10 @@
                @Html.DisplayNameFor(model => model.FirstOrDefault().IsWorking)
             </th>
             <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Category)</th>
-            <th></th>
+            <th><a class="btn btn-outline-brown btn-sm" id="create" data_modal="" asp-action="Create"><span class="text-danger" data-feather="plus-square"></span>  Add</a></th>
         </tr>
     </thead>
-    <tbody class="table-danger">
+    <tbody class="bg-white">
         @foreach (var item in Model)
         {
         <tr>
@@ -54,9 +54,9 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td class="btn-group ">
-                <a class="btn btn-outline-secondary btn-sm" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
-                <a class="btn btn-outline-deep-orange btn-sm" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId">Details</a>
-                <a class="btn btn-outline-danger btn-sm" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                <a class="btn btn-outline-secondary btn-sm" id="edit" data_modal="" asp-action="Edit" asp-route-id="@item.EmployeeId"><span class="orange-text" data-feather="edit"></span> Edit</a>
+                <a class="btn btn-outline-deep-orange btn-sm" id="detail" data_modal="" asp-action="Details" asp-route-id="@item.EmployeeId"><span class="orange-text" data-feather="list"></span> Details</a>
+                <a class="btn btn-outline-danger btn-sm" id="delete" data_modal="" asp-action="Delete" asp-route-id="@item.EmployeeId"><span class="orange-text" data-feather="trash-2"></span> Delete</a>
             </td>
         </tr>
         }
