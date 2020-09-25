@@ -1,6 +1,8 @@
 ﻿using AprajitaRetails.Data;
+using AprajitaRetails.Ops.CornJobs.Jobs.Payroll;
 using AprajitaRetails.Ops.TAS.Mails;
 using AprajitaRetails.Ops.Triggers;
+
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -38,7 +40,7 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
         {
             //TODO: if count of emp or att is below 1 then heading should be removed of that head.
 
-            string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com";
+            string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com, thearvnindstoredumka@gmail.com, aprajitaretails.backoffice@gmail.com ";
             try
             {
                 var todayPresent = await db.Attendances.Include(c => c.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == DateTime.Today.Date).OrderBy(c => c.IsTailoring).OrderBy(c=>c.Status).ToListAsync();
@@ -114,5 +116,12 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
                 return "";
             }
         }
+    
+        public static void GeneratePaySlip(AprajitaRetailsContext db)
+        {
+            new PaySlipGenerator().ProcessPaySlip(db);
+        }
+    
+    
     }
 }
