@@ -1,6 +1,6 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.DailySale>
 @{
-    ViewData ["Title"] = "Daily Sales";
+    ViewData["Title"] = "Daily Sales";
 }
 
 <h1 class="text-danger">Daily Sales</h1>
@@ -34,8 +34,8 @@
                 <td class=""><strong> Salesman : @Html.DropDownList("salesmanId", "All")</strong></td>
                 <td>
                     <strong>
-                        By Date : @Html.EditorFor(model => model.FirstOrDefault ().SaleDate, new { htmlAttributes = new { @value = DateTime.Today.ToString("yyyy-MM-dd") } })
-                        @Html.ValidationMessageFor(model => model.FirstOrDefault ().SaleDate, "", new { @class = "text-danger" })
+                        By Date : @Html.EditorFor(model => model.FirstOrDefault().SaleDate, new { htmlAttributes = new { @value = DateTime.Today.ToString("yyyy-MM-dd") } })
+                        @Html.ValidationMessageFor(model => model.FirstOrDefault().SaleDate, "", new { @class = "text-danger" })
                     </strong>
                 </td>
                 <td>
@@ -44,7 +44,7 @@
                         <span class="glyphicon glyphicon-search text-primary" data-feather="search"> </span>  By InvoiceNo :  @*@Html.TextBox("SearchString")*@
                         <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
                         @*<input type="submit" value="Filter" class=" btn btn-outline-warning btn-sm glyphicon glyphicon-asterisk" />*@
-                        <button  type="submit" value="Filter" class=" text-danger btn btn-outline-warning btn-sm glyphicon glyphicon-asterisk" ><span class="purple-text" data-feather="filter"></span>Filter</button>
+                        <button type="submit" value="Filter" class=" text-danger btn btn-outline-warning btn-sm glyphicon glyphicon-asterisk"><i class="fa fa-search"></i></button>
                     </strong>
                 </td>
 
@@ -53,11 +53,11 @@
             <tr>
                 <th><a class="btn  btn-sm btn-default btn-rounded" asp-action="Create" id="create" data_modal=""><span class="text-danger" data-feather="plus-square"></span> Add </a></th>
                 <th></th>
-                <th class="btn-group btn-group-sm">
-                    <a class="btn btn-outline-info " asp-action="Index" asp-route-id="101">All</a>
-                    <a class="btn btn-outline-amber " asp-action="Index" asp-route-id="0">Today</a>
-                    <a class="btn btn-outline-deep-orange" asp-action="Index" asp-route-id="102">Month</a>
-                    <a class="btn btn-outline-dark-green" asp-action="Index" asp-route-id="103">Last Month</a>
+                <th class="btn-group btn-group-sm" role="group">
+                    <a class="btn btn-sm btn-outline-info mr-1" asp-action="Index" asp-route-id="101">All</a>
+                    <a class="btn btn-sm btn-outline-amber mr-1" asp-action="Index" asp-route-id="0">Today</a>
+                    <a class="btn btn-sm btn-outline-deep-orange mr-1" asp-action="Index" asp-route-id="102">Month</a>
+                    <a class="btn btn-sm btn-outline-dark-green mr-1" asp-action="Index" asp-route-id="103">Last Month</a>
                 </th>
             </tr>
 
@@ -66,10 +66,7 @@
 
 </div>
 
-@*<p>
-        <a class="btn btn-teal btn-sm" asp-action="Create" id="create" data_modal="">Create New</a>
-    </p>*@
-<table class="table table-sm   table-hover table-striped table-bordered">
+<table class="table table-sm table-responsive-sm table-hover table-striped table-bordered text-center">
     <thead class="bg-success">
         <tr>
             <th><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">  @*@Html.DisplayNameFor(model => model.SaleDate)*@ Sale Date</a></th>
@@ -106,7 +103,7 @@
         </tr>
     </thead>
     <tbody class="bg-white">
-        @foreach ( var item in Model )
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -134,18 +131,18 @@
                     @Html.DisplayFor(modelItem => item.IsSaleReturn)
                 </td>
                 @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
-            <td class="btn-group btn-group-sm ">
-                @if ( Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser")|| Context.User.IsInRole("StoreManager"))
-                {
-                    <a class="btn btn-outline-secondary " asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
-                }
+                <td class="btn-group btn-group-sm ">
+                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
+                    {
+                        <a class="btn btn-outline-secondary btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                    }
 
-                <a class="btn btn-outline-deep-orange" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
-               @if ( Context.User.IsInRole("Admin") )
-                {
-                    <a class="btn btn-outline-danger " asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
-                }
-            </td>
+                    <a class="btn btn-outline-deep-orange btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                    @if (Context.User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-outline-danger btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                    }
+                </td>
             </tr>
         }
     </tbody>
