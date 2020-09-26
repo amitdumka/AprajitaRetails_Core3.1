@@ -35,6 +35,17 @@ namespace AprajitaRetails.Models
         [Display(Name = "eMail"), EmailAddress]
         public string? EMail { get; set; }
 
+        public DateTime? DateOfBirth { get; set; }
+        public string? AdharNumber { get; set; }
+        public string? PanNo { get; set; }
+        public string? OtherIdDetails { get; set; }
+        public string? Address { get; set; }
+        public string? City { get; set; }
+        public string? State { get; set; }
+        public string? FatherName { get; set; }
+
+        public string HighestQualification { get; set; }
+
         public ICollection<Attendance> Attendances { get; set; }
         public ICollection<SalaryPayment> SalaryPayments { get; set; }
         public ICollection<StaffAdvancePayment> AdvancePayments { get; set; }

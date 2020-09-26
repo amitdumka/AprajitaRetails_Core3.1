@@ -19,15 +19,13 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
     {
         private readonly AprajitaRetailsContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-
-        public EmployeesController(AprajitaRetailsContext context, UserManager<IdentityUser> userManager)
+         public EmployeesController(AprajitaRetailsContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _userManager = userManager;
 
         }
-
-        // GET: PayRoll/Employees
+         // GET: PayRoll/Employees
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
             if ( searchString != null )
@@ -40,11 +38,10 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData ["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View (await PaginatedList<Employee>.CreateAsync (_context.Employees.OrderByDescending(c=>c.IsWorking).AsNoTracking (), pageNumber ?? 1, pageSize));
-            
-        }
+            return View (await PaginatedList<Employee>.CreateAsync (_context.Employees.OrderByDescending (c => c.IsWorking).AsNoTracking (), pageNumber ?? 1, pageSize));
 
-        // GET: PayRoll/Employees/Details/5
+        }
+         // GET: PayRoll/Employees/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if ( id == null )
@@ -61,12 +58,10 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             return PartialView (employee);
         }
-
-        // GET: PayRoll/Employees/Create
+         // GET: PayRoll/Employees/Create
         public IActionResult Create()
         {
-
-            return PartialView ();
+             return PartialView ();
         }
 
         // POST: PayRoll/Employees/Create
@@ -74,23 +69,22 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category,EMail,IsTailors")] Employee employee)
+        public async Task<IActionResult> Create([Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category,EMail,IsTailors,Address,City,State,PanNo,DateOfBirth,AdharNumber,OtherIdDetails,FatherName")] Employee employee)
         {
             if ( ModelState.IsValid )
             {
                 employee.UserName = User.Identity.Name;
                 _context.Add (employee);
                 await _context.SaveChangesAsync ();
-               //TODO: here it should be used to take care of Email id if entered to it.
+                //TODO: here it should be used to take care of Email id if entered to it.
                 if ( employee.Category == EmpType.StoreManager )
                     await UserAdmin.AddUserAsync (_userManager, employee.StaffName, true, employee.EmployeeId);
                 else
                     await UserAdmin.AddUserAsync (_userManager, employee.StaffName, false, employee.EmployeeId);
                 //TODO: Implement add employee level security and permissions 
-                
-                if (employee.IsWorking)
+                 if ( employee.IsWorking )
                 {
-                    await UserAdmin.AddEmployeeUserAsync(_context, employee.StaffName, employee.EmployeeId);
+                    await UserAdmin.AddEmployeeUserAsync (_context, employee.StaffName, employee.EmployeeId);
                 }
                 return RedirectToAction (nameof (Index));
             }
@@ -105,8 +99,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound ();
             }
-
-            var employee = await _context.Employees.FindAsync (id);
+             var employee = await _context.Employees.FindAsync (id);
             if ( employee == null )
             {
                 return NotFound ();
@@ -120,7 +113,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize (Roles = "Admin,PowerUser")]
-        public async Task<IActionResult> Edit(int id, [Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category,EMail,IsTailors")] Employee employee)
+        public async Task<IActionResult> Edit(int id, [Bind ("EmployeeId,StaffName,MobileNo,JoiningDate,LeavingDate,IsWorking,Category,EMail,IsTailors,Address,City,State,PanNo,DateOfBirth,AdharNumber,OtherIdDetails,FatherName")] Employee employee)
         {
             if ( id != employee.EmployeeId )
             {
