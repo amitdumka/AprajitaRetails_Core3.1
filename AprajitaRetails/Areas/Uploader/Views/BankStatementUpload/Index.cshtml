@@ -6,7 +6,7 @@
 <div class="">
     <h3 class="text-warning">Bank Statment Data(Excel)</h3>
     <hr />
-    @using (Html.BeginForm("Uploader", "BankStatementUpload", FormMethod.Post, new {id="UploadDataForm", enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    @using (Html.BeginForm("Uploader", "BankStatementUpload", FormMethod.Post, new { id = "UploadDataForm", enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
     {
 
         <div class="form form-check">
@@ -21,12 +21,12 @@
             <div class="form-group form-row ">
                 <div class="control-label col-md-2 text-danger ">Start Row/Col</div>
                 <div class="col-sd-3  ">
-                    <input name="StartRow" id="StartRow" type="number" class="form-control" placeholder="Start Row" />
-                   
+                    <input name="StartRow" id="StartRow" type="number" class="form-control" placeholder="Start Row" value="0" />
+
                 </div>
                 <div class="col-sd-3  ">
-                   
-                    <input name="StartCol" id="StartCol" type="number" class="form-control" placeholder="Start Col" />
+
+                    <input name="StartCol" id="StartCol" type="number" class="form-control" placeholder="Start Col" value="0" />
                 </div>
             </div>
 
@@ -34,56 +34,54 @@
                 <div class="control-label col-md-2 text-danger ">End Row/Col</div>
 
                 <div class="col-sd-3  ">
-                    <input name="EndRow" id="EndRow" type="number" class="form-control" placeholder="End Row" />
-                    
+                    <input name="EndRow" id="EndRow" type="number" class="form-control" placeholder="End Row" value="0" />
+
                 </div>
                 <div class="col-sd-3  ">
-                    
-                    <input name="EndCol" id="EndCol" type="number" class="form-control"  placeholder="End Col"/>
+
+                    <input name="EndCol" id="EndCol" type="number" class="form-control" placeholder="End Col" value="0" />
                 </div>
             </div>
 
             <div class="form-group form-row ">
-
-                <div class="control-label col-md-2 text-danger ">Col</div>
+                <div class="control-label col-md-2 text-danger ">Column</div>
                 <div class="col-md-5  ">
-                    @Html.RadioButton("ColDefined", "Defined", false) <b class="text-primary">Define Col </b>
-                    @Html.RadioButton("ColDefined", "UnDefined", true)  <b class="text-success">Default</b>
-
+                    @Html.RadioButton("ColDefined", "Saved", true)  <b class="text-success">Saved</b>
+                    @Html.RadioButton("ColDefined", "Define", false) <b class="text-primary">Define Column </b>
                 </div>
             </div>
-            
-            
+
+
             <div class="form-group form-row" id="colDefineRow" name="colDefineRow">
 
                 <div class="control-label col-md-2 text-danger ">Define Col(s)</div>
                 <div class="col-md-1">
-                    <input name="TransDate" id="TransDate" type="number" class="form-control" placeholder="TranDate" />
+                    <input name="TransDate" id="TransDate" type="number" class="form-control" placeholder="TranDate" value="0" />
                 </div>
                 <div class="col-md-1  ">
-                    <input name="ValueDate" id="ValueDate" type="number" class="form-control" placeholder="ValueDate" />
+                    <input name="ValueDate" id="ValueDate" type="number" class="form-control" placeholder="ValueDate" value="0" />
                 </div>
                 <div class="col-md-1  ">
-                    <input name="ChequeNumber" id="ChequeNumber" type="number" class="form-control" placeholder="Cheque" />
+                    <input name="ChequeNumber" id="ChequeNumber" type="number" class="form-control" placeholder="Cheque" value="0" />
                 </div>
                 <div class="col-md-1  ">
-                    <input name="Trans" id="Trans" type="number" class="form-control" placeholder="Transaction" />
+                    <input name="Trans" id="Trans" type="number" class="form-control" placeholder="Transaction" value="0" />
                 </div>
                 <div class="col-md-1  ">
-                    <input name="InAmount" id="InAmount" type="number" class="form-control" placeholder="Deposit" />
+                    <input name="InAmount" id="InAmount" type="number" class="form-control" placeholder="Deposit" value="0" />
                 </div>
                 <div class="col-md-1  ">
-                    <input name="OutAmount" id="OutAmount" type="number" class="form-control" placeholder="Withdrawal" />
+                    <input name="OutAmount" id="OutAmount" type="number" class="form-control" placeholder="Withdrawal" value="0" />
                 </div>
                 <div class="col-md-1">
-                    <input name="BalAmount" id="BalAmount" type="number" class="form-control" placeholder="Balance" />
+                    <input name="BalAmount" id="BalAmount" type="number" class="form-control" placeholder="Balance" value="0" />
                 </div>
             </div>
 
             <div class="form-group form-row" id="colDefineRowSave" name="colDefineRowSave">
                 <div class="control-label col-md-2 text-danger ">Want To Save?</div>
                 <div class="col-md-4">
-                    <input  type="checkbox" name="WantToSave" id="WantToSave"/>
+                    <input type="checkbox" name="WantToSave" id="WantToSave" />
                 </div>
             </div>
 
@@ -115,6 +113,10 @@
 @section scripts{
     <script type="text/javascript">
         $(function () {
+
+            $("#colDefineRow").fadeOut();
+            $("#colDefineRowSave").fadeOut();
+
             $('#btnSubmit').on('click', function () {
                 var fileExtension = ['xls', 'xlsx'];
                 var filename = $('#FileUpload').val();
@@ -129,7 +131,7 @@
                         return false;
                     }
                 }
-               
+
                 var fdata = new FormData();
                 var fileUpload = $("#FileUpload").get(0);
                 var files = fileUpload.files[0];
@@ -148,7 +150,7 @@
                     contentType: false,
                     processData: false,
                     success: function (response) {
-                       
+
                         if (response.isSuccess) {
 
                             alert(response.successMessage);
@@ -172,10 +174,14 @@
 
             $('input[name=ColDefined]').change(function () {
                 var selval = $('input[name=ColDefined]:checked').val();
-                if (selval == 'UnDefined')
+                if (selval == 'Saved') {
                     $("#colDefineRow").fadeOut();
-                else
+                    $("#colDefineRowSave").fadeOut();
+                }
+                else {
                     $('#colDefineRow').fadeIn();
+                    $("#colDefineRowSave").fadeIn();
+                }
             })
         });
     </script>

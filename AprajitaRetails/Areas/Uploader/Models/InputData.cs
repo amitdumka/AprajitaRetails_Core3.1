@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AprajitaRetails.Data.Json;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
