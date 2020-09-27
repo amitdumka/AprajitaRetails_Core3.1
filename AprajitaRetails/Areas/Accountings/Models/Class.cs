@@ -1,4 +1,5 @@
-﻿using AprajitaRetails.Data;
+﻿using AprajitaRetails.Areas.Uploader.Models;
+using AprajitaRetails.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -266,6 +267,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
 
         public ICollection<AccountNumber> Accounts { get; set; }
         public ICollection<BankAccountInfo> BankAccounts { get; set; }
+        public ICollection<BankSetting> BankSettings { get; set; }
     }
     public class AccountNumber
     {
@@ -280,6 +282,9 @@ namespace AprajitaRetails.Areas.Accountings.Models
 
         public ICollection<BankDeposit> Deposits { get; set; }
         public ICollection<BankWithdrawal> Withdrawals { get; set; }
+
+       // public ICollection<AccSetting> AccSettings { get; set; }
+       
     }
     public class BankDeposit
     {

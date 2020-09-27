@@ -285,6 +285,10 @@ namespace AprajitaRetails.Data
         //Admin
         public DbSet<RegisteredUser> RegisteredUsers { get; set; }
 
+
+        public DbSet<BankSetting> BankSettings { get; set; }
+        public DbSet<AccSetting> AccSettings { get; set; }
+
     }
 
 }
