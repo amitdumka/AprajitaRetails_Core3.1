@@ -13,12 +13,14 @@ namespace AprajitaRetails.Models
         [Display(Name = "Bank Name")]
         public int BankId { get; set; }
         public Bank Bank { get; set; }
-
         [Display(Name = "Account Number")]
         public string Account { get; set; }
+        [Display (Name ="Account Type")]
+        public AccountType? AccountType { get; set; }
 
         public ICollection<BankDeposit> Deposits { get; set; }
         public ICollection<BankWithdrawal> Withdrawals { get; set; }
+        public ICollection<BankStatement> BankStatements { get; set; }
     }
     
 }

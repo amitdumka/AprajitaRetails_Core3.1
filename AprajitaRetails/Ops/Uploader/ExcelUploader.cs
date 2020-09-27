@@ -9,6 +9,7 @@ using AprajitaRetails.Areas.Uploader.Models;
 
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using iText.Kernel.Colors.Gradients;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
@@ -667,8 +668,112 @@ namespace AprajitaRetails.Ops.Uploader
                 return UploadReturns.FileNotFound;
             }
         }
+
+        public UploadReturns UploadBankStatment(AprajitaRetailsContext db, IFormFile FileUpload, int AccountNumberId, UploadSetting settings, string SheetName = "Sheet1")
+        {
+            if (FileUpload != null)
+            {
+                if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                {
+                    string filename = FileUpload.FileName;
+
+                    string pathToExcelFile = Path.GetTempPath() + filename;
+                    using (var stream = new FileStream(pathToExcelFile, FileMode.Create))
+                    {
+                        FileUpload.CopyTo(stream);
+                    }
+
+                    try
+                    {
+                        FileInfo file = new FileInfo(pathToExcelFile);
+
+                        using ExcelPackage package = new ExcelPackage(file);
+                        ExcelWorksheet workSheet = package.Workbook.Worksheets[SheetName];
+                        int totalRows = workSheet.Dimension.Rows;
+
+                        if (totalRows > settings.EndRow) totalRows = settings.EndRow;
+
+                        List<BankStatement> addList = new List<BankStatement>();
+
+                        int xo = 0;
+                        string tempstr = "";
+                        for (int i = settings.StartRow; i <= totalRows; i++)
+                        {
+                            BankStatement c = new BankStatement
+                            {
+                                OnDateValue=(DateTime)workSheet.Cells[i, settings.ColSetting.ValueDateCol].GetValue<DateTime>(),
+                                OnDateTranscation = (DateTime)workSheet.Cells[i, settings.ColSetting.ValueDateCol].GetValue<DateTime>(),
+                                WithdrawalAmount = (decimal)workSheet.Cells[i, settings.ColSetting.OutCol].GetValue<decimal>(),
+                                DepositAmount = (decimal)workSheet.Cells[i, settings.ColSetting.InCol].GetValue<decimal>(),
+                                AccountNumberId=AccountNumberId, 
+                                Balance = (decimal)workSheet.Cells[i, settings.ColSetting.BalCol].GetValue<decimal>(),
+                                ChequeNumber=(workSheet.Cells[i, settings.ColSetting.ChequeNumberCol].Value ?? string.Empty).ToString(),
+                                TransactionRemarks = (workSheet.Cells[i, settings.ColSetting.TransCol].Value ?? string.Empty).ToString(),
+                                Remark=Remark.Uploaded
+                            };
+                            addList.Add(c);
+                            xo++;
+                        }
+                        db.BankStatements.AddRange(addList);
+                        db.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        return UploadReturns.Error;
+                    }
+
+                    if ((System.IO.File.Exists(pathToExcelFile)))
+                    {
+                        System.IO.File.Delete(pathToExcelFile);
+                    }
+                    return UploadReturns.Success;
+                }
+                else
+                {
+                    return UploadReturns.NotExcelType;
+                }
+            }
+            else
+            {
+                return UploadReturns.FileNotFound;
+            }
+
+        }
+
+
+
     }
 
+    public class UploadSetting
+    {
+        public int StartRow { get; set; }
+        public int StartCol { get; set; }
+
+        public int EndRow { get; set; }
+        public int EndCol { get; set; }
+
+        public int TotalNoOfRow { get; set; }
+        public int TotalNoOfCol { get; set; }
+
+        public int TotalRowNumber { get; set; }
+        public int TotalColNumber { get; set; }
+
+        public ColSetting ColSetting { get; set; }
+
+
+    }
+    public class ColSetting
+    {
+        public int ValueDateCol { get; set; }
+        public int TransDateCol { get; set; }
+        public int ChequeNumberCol { get; set; }
+        public int TransCol { get; set; }
+        public int OutCol { get; set; }
+        public int InCol { get; set; }
+        public int BalCol { get; set; }
+
+    }
     public class PostUpload
     {
         public void ProcessBookEntry(AprajitaRetailsContext db, VoucherType voucherType, int StoreId)
