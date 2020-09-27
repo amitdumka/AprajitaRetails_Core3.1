@@ -25,4 +25,5 @@ namespace AprajitaRetails.Areas.Uploader.Models
         [Display(Name = "Processed")]
         public bool IsConsumed { get; set; }
     }
+
 }

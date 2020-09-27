@@ -1,17 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using AprajitaRetails.Data;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using AprajitaRetails.Data.Json;
+using AprajitaRetails.Areas.Uploader.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
+    [Area("Uploader")]
+    [Authorize]
     public class BankStatementUploadController : Controller
     {
+
+        private readonly AprajitaRetailsContext db;
+        private readonly ILogger<BankStatementUploadController> _logger;
+        public BankStatementUploadController(AprajitaRetailsContext context, ILogger<BankStatementUploadController> logs)
+        {
+            db = context;
+            _logger = logs;
+        }
+
         // GET: BankStatementUploadController
         public ActionResult Index()
         {
+
+            ViewData["AccountNumber"] = new SelectList(db.AccountNumbers, "AccountNumberId", "Account");
             return View();
         }
 
@@ -21,22 +39,33 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View();
         }
 
-       
-
-        // POST: BankStatementUploadController/Uploader
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Uploader(IFormFile FileUpload)
+        // [ValidateAntiForgeryToken]
+        public JsonResult Uploader(IFormFile file)
         {
-            try
+            // IFormFile file = Request.Form.Files[0];
+
+            string data = Request.Form["item"];
+
+            InputData input = new InputData();
+            InputData.CopyObjects(data, out input);
+
+            ReturnInfo Info = new ReturnInfo
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+                IsSuccess = true,
+                LinkAdress = "",
+                SuccessMessage = "Successfuly Uploaded!",
+                ErrorMessage = data
+
+            };
+            if (file.FileName.Length > 0) Info.LinkAdress = "FileName:" + file.FileName;
+            else
             {
-                return View();
+                Info.ErrorMessage = "File not found"; Info.IsSuccess = false;
             }
+            return new JsonResult(Info);
+
         }
-        
+       
     }
 }

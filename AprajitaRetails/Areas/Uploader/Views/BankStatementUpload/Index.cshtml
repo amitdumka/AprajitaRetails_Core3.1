@@ -6,39 +6,84 @@
 <div class="">
     <h3 class="text-warning">Bank Statment Data(Excel)</h3>
     <hr />
-    @using (Html.BeginForm("BankStatement", "Uploader", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+    @using (Html.BeginForm("Uploader", "BankStatementUpload", FormMethod.Post, new {id="UploadDataForm", enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
     {
+
         <div class="form form-check">
-            <div class="form-group form-row ">
 
-                <div class="control-label col-md-2 text-danger ">Store:</div>
-                <div class="col-md-10  ">
-                    @*@Html.DropDownList("UploadType", EnumHelper.GetSelectList(typeof(UploadTypes)), "Select Upload Type", new { @class = "form-control" })*@
-
-                    @Html.RadioButton("StoreCode", "JH0006", true) <b class="text-primary">Dumka </b>
-                    @Html.RadioButton("StoreCode", "JH0014", false)<b class="text-success"> Jharkhand</b>
-
-                </div>
-            </div>
-
-            <div class="form-group form-row ">
-
-                <div class="control-label col-md-2 text-danger ">Bill Type:</div>
-                <div class="col-md-10  ">
-                    @*@Html.DropDownList("UploadType", EnumHelper.GetSelectList(typeof(UploadTypes)), "Select Upload Type", new { @class = "form-control" })*@
-
-                    @Html.RadioButton("BillType", "GST", true) <b class="text-primary">GST </b>
-                    @Html.RadioButton("BillType", "VAT", false)<b class="text-success"> VAT</b>
-
-                </div>
-            </div>
             <div class="form-group form-row">
+                <div class="control-label col-md-2 text-danger ">Account Number</div>
+                <div class="col-md-5  ">
+                    <select name="AccountNumber" class="form-control" asp-items="ViewBag.AccountNumber"></select>
+                </div>
+            </div>
 
-                <div class="control-label col-md-2 text-danger ">InterSate:</div>
-                <div class="col-md-10 ">
-                    @*@Html.DropDownList("UploadType", EnumHelper.GetSelectList(typeof(UploadTypes)), "Select Upload Type", new { @class = "form-control" })*@
-                    @Html.RadioButton("InterState", "InterState", true) <b class="text-primary"> InterState</b>
-                    @Html.RadioButton("InterState", "WithInState", false) <b class="text-success"> With In State</b>
+            <div class="form-group form-row ">
+                <div class="control-label col-md-2 text-danger ">Start Row/Col</div>
+                <div class="col-sd-3  ">
+                    <input name="StartRow" id="StartRow" type="number" class="form-control" placeholder="Start Row" />
+                   
+                </div>
+                <div class="col-sd-3  ">
+                   
+                    <input name="StartCol" id="StartCol" type="number" class="form-control" placeholder="Start Col" />
+                </div>
+            </div>
+
+            <div class="form-group form-row ">
+                <div class="control-label col-md-2 text-danger ">End Row/Col</div>
+
+                <div class="col-sd-3  ">
+                    <input name="EndRow" id="EndRow" type="number" class="form-control" placeholder="End Row" />
+                    
+                </div>
+                <div class="col-sd-3  ">
+                    
+                    <input name="EndCol" id="EndCol" type="number" class="form-control"  placeholder="End Col"/>
+                </div>
+            </div>
+
+            <div class="form-group form-row ">
+
+                <div class="control-label col-md-2 text-danger ">Col</div>
+                <div class="col-md-5  ">
+                    @Html.RadioButton("ColDefined", "Defined", false) <b class="text-primary">Define Col </b>
+                    @Html.RadioButton("ColDefined", "UnDefined", true)  <b class="text-success">Default</b>
+
+                </div>
+            </div>
+            
+            
+            <div class="form-group form-row" id="colDefineRow" name="colDefineRow">
+
+                <div class="control-label col-md-2 text-danger ">Define Col(s)</div>
+                <div class="col-md-1">
+                    <input name="TransDate" id="TransDate" type="number" class="form-control" placeholder="TranDate" />
+                </div>
+                <div class="col-md-1  ">
+                    <input name="ValueDate" id="ValueDate" type="number" class="form-control" placeholder="ValueDate" />
+                </div>
+                <div class="col-md-1  ">
+                    <input name="ChequeNumber" id="ChequeNumber" type="number" class="form-control" placeholder="Cheque" />
+                </div>
+                <div class="col-md-1  ">
+                    <input name="Trans" id="Trans" type="number" class="form-control" placeholder="Transaction" />
+                </div>
+                <div class="col-md-1  ">
+                    <input name="InAmount" id="InAmount" type="number" class="form-control" placeholder="Deposit" />
+                </div>
+                <div class="col-md-1  ">
+                    <input name="OutAmount" id="OutAmount" type="number" class="form-control" placeholder="Withdrawal" />
+                </div>
+                <div class="col-md-1">
+                    <input name="BalAmount" id="BalAmount" type="number" class="form-control" placeholder="Balance" />
+                </div>
+            </div>
+
+            <div class="form-group form-row" id="colDefineRowSave" name="colDefineRowSave">
+                <div class="control-label col-md-2 text-danger ">Want To Save?</div>
+                <div class="col-md-4">
+                    <input  type="checkbox" name="WantToSave" id="WantToSave"/>
                 </div>
             </div>
 
@@ -53,12 +98,86 @@
             <div class="form-group form-row">
 
                 <div class="col-md-offset-10">
-                    <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary form-control-sm" @*onclick="onSubmit()"*@ />
+                    <input type="button" value="Upload" id="btnSubmit" class="btn btn-primary form-control-sm" @*onclick="onSubmit()"*@ />
 
                 </div>
             </div>
         </div>
     }
+    <div class="clearfix">&nbsp;</div>
+    <div class="row">
+        <div id="divPrint"></div>
+    </div>
+
 </div>
 
 
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#btnSubmit').on('click', function () {
+                var fileExtension = ['xls', 'xlsx'];
+                var filename = $('#FileUpload').val();
+                if (filename.length == 0) {
+                    alert("Please select a file.");
+                    return false;
+                }
+                else {
+                    var extension = filename.replace(/^.*\./, '');
+                    if ($.inArray(extension, fileExtension) == -1) {
+                        alert("Please select only excel files.");
+                        return false;
+                    }
+                }
+               
+                var fdata = new FormData();
+                var fileUpload = $("#FileUpload").get(0);
+                var files = fileUpload.files[0];
+                fdata.append("file", files);
+                var myForm = $("#UploadDataForm");
+                fdata.append("item", JSON.stringify(myForm.serializeArray()));
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Uploader/BankStatementUpload/Uploader",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: fdata,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                       
+                        if (response.isSuccess) {
+
+                            alert(response.successMessage);
+                            $('#divPrint').html("Message:\n " + response.successMessage + "<a class='btn btn-sm btn-outline-success'  asp-action='" + response.linkAddress + "' > UploadedData</a><br/>" + response.errorMessage);
+
+                        } else {
+                            $('#divPrint').html("Error:\n " + response.errorMessage);
+                        }
+
+                        //if (response.length == 0)
+                        //    alert('Some error occured while uploading');
+                        //else {
+                        //    $('#divPrint').html("res:\n "+response);
+                        //}
+                    },
+                    error: function (e) {
+                        $('#divPrint').html("Error:\n " + e.responseText);
+                    }
+                });
+            })
+
+            $('input[name=ColDefined]').change(function () {
+                var selval = $('input[name=ColDefined]:checked').val();
+                if (selval == 'UnDefined')
+                    $("#colDefineRow").fadeOut();
+                else
+                    $('#colDefineRow').fadeIn();
+            })
+        });
+    </script>
+
+}
