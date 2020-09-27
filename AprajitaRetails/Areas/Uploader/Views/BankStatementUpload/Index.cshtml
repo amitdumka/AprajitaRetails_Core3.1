@@ -16,18 +16,20 @@
                 <div class="col-md-5  ">
                     <select name="AccountNumber" class="form-control" asp-items="ViewBag.AccountNumber"></select>
                 </div>
+
             </div>
 
             <div class="form-group form-row ">
                 <div class="control-label col-md-2 text-danger ">Start Row/Col</div>
                 <div class="col-sd-3  ">
                     <input name="StartRow" id="StartRow" type="number" class="form-control" placeholder="Start Row" value="0" />
-
                 </div>
+
                 <div class="col-sd-3  ">
 
                     <input name="StartCol" id="StartCol" type="number" class="form-control" placeholder="Start Col" value="0" />
                 </div>
+
             </div>
 
             <div class="form-group form-row ">
@@ -35,12 +37,13 @@
 
                 <div class="col-sd-3  ">
                     <input name="EndRow" id="EndRow" type="number" class="form-control" placeholder="End Row" value="0" />
-
                 </div>
+
                 <div class="col-sd-3  ">
 
                     <input name="EndCol" id="EndCol" type="number" class="form-control" placeholder="End Col" value="0" />
                 </div>
+
             </div>
 
             <div class="form-group form-row ">
@@ -58,24 +61,31 @@
                 <div class="col-md-1">
                     <input name="TransDate" id="TransDate" type="number" class="form-control" placeholder="TranDate" value="0" />
                 </div>
+
                 <div class="col-md-1  ">
                     <input name="ValueDate" id="ValueDate" type="number" class="form-control" placeholder="ValueDate" value="0" />
                 </div>
+
                 <div class="col-md-1  ">
                     <input name="ChequeNumber" id="ChequeNumber" type="number" class="form-control" placeholder="Cheque" value="0" />
                 </div>
+
                 <div class="col-md-1  ">
                     <input name="Trans" id="Trans" type="number" class="form-control" placeholder="Transaction" value="0" />
                 </div>
+
                 <div class="col-md-1  ">
                     <input name="InAmount" id="InAmount" type="number" class="form-control" placeholder="Deposit" value="0" />
                 </div>
+
                 <div class="col-md-1  ">
                     <input name="OutAmount" id="OutAmount" type="number" class="form-control" placeholder="Withdrawal" value="0" />
                 </div>
+
                 <div class="col-md-1">
                     <input name="BalAmount" id="BalAmount" type="number" class="form-control" placeholder="Balance" value="0" />
                 </div>
+
             </div>
 
             <div class="form-group form-row" id="colDefineRowSave" name="colDefineRowSave">
@@ -101,6 +111,7 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-4 messages" id="messages"></div>
     }
     <div class="clearfix">&nbsp;</div>
     <div class="row">
@@ -111,6 +122,7 @@
 
 
 @section scripts{
+    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -131,45 +143,52 @@
                         return false;
                     }
                 }
+                var form = document.querySelector("form#UploadDataForm");
+                if (handleForClick(form)) {
+                    var fdata = new FormData();
+                    var fileUpload = $("#FileUpload").get(0);
+                    var files = fileUpload.files[0];
+                    fdata.append("file", files);
+                    var myForm = $("#UploadDataForm");
+                    fdata.append("item", JSON.stringify(myForm.serializeArray()));
+                    $.ajax({
+                        type: "POST",
+                        url: "/Uploader/BankStatementUpload/Uploader",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN",
+                                $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        data: fdata,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
 
-                var fdata = new FormData();
-                var fileUpload = $("#FileUpload").get(0);
-                var files = fileUpload.files[0];
-                fdata.append("file", files);
-                var myForm = $("#UploadDataForm");
-                fdata.append("item", JSON.stringify(myForm.serializeArray()));
+                            if (response.isSuccess) {
 
-                $.ajax({
-                    type: "POST",
-                    url: "/Uploader/BankStatementUpload/Uploader",
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("XSRF-TOKEN",
-                            $('input:hidden[name="__RequestVerificationToken"]').val());
-                    },
-                    data: fdata,
-                    contentType: false,
-                    processData: false,
-                    success: function (response) {
+                                alert(response.successMessage);
+                                $('#divPrint').html("Message:\n " + response.successMessage + "<a class='btn btn-sm btn-outline-success'  asp-action='" + response.linkAddress + "' > UploadedData</a><br/>" + response.errorMessage);
 
-                        if (response.isSuccess) {
+                            } else {
+                                $('#divPrint').html("Error:\n " + response.errorMessage);
+                            }
 
-                            alert(response.successMessage);
-                            $('#divPrint').html("Message:\n " + response.successMessage + "<a class='btn btn-sm btn-outline-success'  asp-action='" + response.linkAddress + "' > UploadedData</a><br/>" + response.errorMessage);
-
-                        } else {
-                            $('#divPrint').html("Error:\n " + response.errorMessage);
+                            //if (response.length == 0)
+                            //    alert('Some error occured while uploading');
+                            //else {
+                            //    $('#divPrint').html("res:\n "+response);
+                            //}
+                        },
+                        error: function (e) {
+                            $('#divPrint').html("Error:\n " + e.responseText);
                         }
+                    });
+                }
+                else {
+                    alert("Check for error(s)..");
+                }
 
-                        //if (response.length == 0)
-                        //    alert('Some error occured while uploading');
-                        //else {
-                        //    $('#divPrint').html("res:\n "+response);
-                        //}
-                    },
-                    error: function (e) {
-                        $('#divPrint').html("Error:\n " + e.responseText);
-                    }
-                });
+
+
             })
 
             $('input[name=ColDefined]').change(function () {
@@ -183,7 +202,268 @@
                     $("#colDefineRowSave").fadeIn();
                 }
             })
+
+            validate.extend(validate.validators.datetime, {
+                parse: function (value, options) {
+                    return +moment.utc(value);
+                },
+                format: function (value, options) {
+                    var format = options.dateOnly ? "YYYY-MM-DD" : "YYYY-MM-DD hh:mm:ss";
+                    return moment.utc(value).format(format);
+                }
+            });
+
+            var constraints = {
+                StartRow: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+                StartCol: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+
+                EndCol: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+
+                EndRow: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+
+            }
+
+            var constraint2 = {
+
+                BalAmount: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+                Trans: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+                ChequeNumber: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+                InAmount: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+
+                OutAmount: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+
+                ValueDate: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+                TransDate: {
+                    presence: true,
+                    // Number of children has to be an integer >= 0
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThanOrEqualTo: 1
+                    }
+                },
+
+            }
+
+            //var form = document.querySelector("form#UploadDataForm");
+            //form.addEventListener("submit", function (ev) {
+            //    ev.preventDefault();
+            //    handleFormSubmit(form);
+            //});
+
+            //var inputs = document.querySelectorAll("input, textarea, select")
+            //for (var i = 0; i < inputs.length; ++i) {
+            //    inputs.item(i).addEventListener("change", function (ev) {
+            //        var errors = validate(form, constraints) || {};
+            //        showErrorsForInput(this, errors[this.name])
+            //    });
+            //}
+
+            //function handleFormSubmit(form, input) {
+            //    var errors = validate(form, constraints);
+            //    showErrors(form, errors || {});
+            //    if (!errors) {
+            //        showSuccess();
+            //    }
+            //}
+
+            function handleForClick(form) {
+
+                messages = $("#messages");
+                var errors = validate(form, constraints);
+                //showErrors(form, errors || {});
+                console.log(errors);
+                if (errors) {
+                    addError(messages, errors);
+                    return
+                }
+                else {
+                    var selval = $('input[name=ColDefined]:checked').val();
+                    if (selval != 'Saved') {
+                        var errors = validate(form, constraint2);
+                        console.log(errors);
+                        //showErrors(form, errors || {});
+                        if (!errors) {
+                            return true;
+                        } else {
+                            addError(messages, errors);
+                            return false;
+                        }
+                    } else {
+                        return true;
+                    }
+
+                }
+
+
+
+            }
+
+            function showSuccess() {
+                // Action to execute if the form is valid.
+                alert("Success!");
+            }
+
+            //function showErrors(form, errors) {
+            //    // We loop through all the inputs and show the errors for that input
+            //    _.each(form.querySelectorAll("input[name], select[name]"), function (input) {
+            //        // Since the errors can be null if no errors were found we need to handle that
+            //        showErrorsForInput(input, errors && errors[input.name]);
+            //    });
+            //}
+            // Function that shows the errors for a specific input
+            //function showErrorsForInput(input, errors) {
+            //    // This is the root of the input
+            //    var formGroup = closestParent(input.parentNode, "form-group")
+            //        // Find where the error messages will be insert into
+            //        , messages = formGroup.querySelector(".messages");
+            //    // First we remove any old messages and resets the classes
+            //    resetFormGroup(formGroup);
+            //    // If we have errors
+            //    if (errors) {
+            //        // we first mark the group has having errors
+            //        formGroup.classList.add("has-error");
+            //        // then we append all the errors
+            //        _.each(errors, function (error) {
+            //            addError(messages, error);
+            //        });
+            //    } else {
+            //        // otherwise we simply mark it as success
+            //        formGroup.classList.add("has-success");
+            //    }
+            //}
+
+            //// Hook up the inputs to validate on the fly
+            //var inputs = document.querySelectorAll("input, textarea, select")
+            //for (var i = 0; i < inputs.length; ++i) {
+            //    inputs.item(i).addEventListener("change", function (ev) {
+            //        var errors = validate(form, constraints) || {};
+            //        showErrorsForInput(this, errors[this.name])
+            //    });
+            //}
+
+            // Recusively finds the closest parent that has the specified class
+            //function closestParent(child, className) {
+            //    if (!child || child == document) {
+            //        return null;
+            //    }
+            //    if (child.classList.contains(className)) {
+            //        return child;
+            //    } else {
+            //        return closestParent(child.parentNode, className);
+            //    }
+            //}
+
+            //function resetFormGroup(formGroup) {
+            //    // Remove the success and error classes
+            //    formGroup.classList.remove("has-error");
+            //    formGroup.classList.remove("has-success");
+            //    // and remove any old messages
+            //    _.each(formGroup.querySelectorAll(".help-block.error"), function (el) {
+            //        el.parentNode.removeChild(el);
+            //    });
+            //}
+
+            // Adds the specified error with the planned markup
+            // [message]
+            function addError(messages, error) {
+                // Create error message container
+                var block = document.createElement("p");
+                block.classList.add("help-block");
+                block.classList.add("error");
+                // You can add what ever styling classes you want to your errors
+                block.classList.add("text-danger");
+                // Assign error message
+                //for (var i = 0; i < error.count; i++) {
+                //    block.innerText = error[i] + "<br/>";
+                //}
+                $.each(error, function (key, value) {
+                    block.innerText += key + ": " + value+"<br/>";
+                });
+                // Adds our ready error block to the desired location
+                messages.html(block);
+            }
         });
     </script>
-
 }
+
+@*/*
+https://mdbootstrap.com/docs/jquery/tables/responsive/
+https://mdbootstrap.com/docs/jquery/tables/datatables/
+https://mdbootstrap.com/docs/jquery/tables/pagination/
+https://mdbootstrap.com/docs/jquery/tables/search/
+https://mdbootstrap.com/docs/jquery/tables/sort/
+https://mdbootstrap.com/docs/jquery/modals/basic/
+https://mdbootstrap.com/snippets/jquery/mdbootstrap/111688#js-tab-view
+https://mdbootstrap.com/snippets/jquery/pjoter-2-0/1175846#html-tab-view
+https://mdbootstrap.com/articles/jquery/validate-forms-with-validate-js/
+*/*@
