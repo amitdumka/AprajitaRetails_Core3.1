@@ -106,6 +106,8 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public bool IsVatBill { get; set; }
         [DefaultValue(false)]
         public bool IsLocal { get; set; }
+
+        public bool LP { get; set; }
         
         //Store Based Started
         public int StoreId { get; set; }
