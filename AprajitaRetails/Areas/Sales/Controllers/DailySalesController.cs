@@ -1,19 +1,20 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
-using System.Globalization;
-using AprajitaRetails;
 using AprajitaRetails.Ops.Utility;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Sales.Expenses.Controllers
 {
@@ -21,27 +22,18 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
     [Authorize]
     public class DailySalesController : Controller
     {
-        //Version 3.0 
-        private  int StoreCodeId = 1;   //TODO:Default Value. For Now.
+        //Version 3.0
+        private int StoreCodeId = 1;   //TODO:Default Value. For Now.
 
         private readonly AprajitaRetailsContext db;
-        private SortedList<string,string> SessionData;
-        private readonly CultureInfo c = CultureInfo.GetCultureInfo ("In");
+        private SortedList<string, string> SessionData;
+        private readonly CultureInfo c = CultureInfo.GetCultureInfo("In");
         private readonly ILogger<DailySalesController> logger;
-
 
         public DailySalesController(AprajitaRetailsContext context, ILogger<DailySalesController> logger)
         {
             this.logger = logger;
             db = context;
-            //if (SessionCookies.IsSessionSet(HttpContext))
-            //{
-            //    SessionData = SessionCookies.GetLoginSessionInfo(HttpContext);
-            //    StoreCodeId = Int32.Parse(SessionData[Constants.STOREID]);
-            //}
-
-            
-          
         }
 
         // GET: DailySales
@@ -51,15 +43,11 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 SessionData = SessionCookies.GetLoginSessionInfo(HttpContext);
                 StoreCodeId = Int32.Parse(SessionData[Constants.STOREID]);
-
             }
             else
             {
                 //TODO: Redirect to login Page
             }
-
-
-
             ViewData["InvoiceSortParm"] = String.IsNullOrEmpty(sortOrder) ? "inv_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
             ViewData["ManualSortParm"] = sortOrder == "Manual" ? "notManual_desc" : "Manual";
@@ -71,12 +59,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 searchString = currentFilter;
             }
-
-
             ViewData["CurrentFilter"] = searchString;
-
-
-
             //For Current Day
             var dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate == DateTime.Today && c.StoreId == this.StoreCodeId);
 
@@ -89,13 +72,11 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 //Current Month
                 dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate.Month == DateTime.Today.Month && c.SaleDate.Year == DateTime.Today.Year && c.StoreId == this.StoreCodeId).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
-
             }
             else if (id != null && id == 103)
             {
                 //Last Month
                 dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate.Month == DateTime.Today.Month - 1 && c.SaleDate.Year == DateTime.Today.Year && c.StoreId == this.StoreCodeId).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
-
             }
             else
             {
@@ -106,7 +87,6 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             {
                 dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.InvNo == searchString && c.StoreId == this.StoreCodeId);
                 //return View(await dls.ToListAsync());
-
             }
             else if (!String.IsNullOrEmpty(salesmanId) || SaleDate != null)
             {
@@ -125,14 +105,13 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 {
                     dailySales = dailySales.Where(c => c.Salesman.SalesmanName == salesmanId);
                 }
-
-
-
             }
 
             // For All Invoice
             //TODO: Make a Static class and function to fetch details
-            #region FixedUI 
+
+            #region FixedUI
+
             //Fixed Query
             var totalSale = db.DailySales.Where(c => c.IsManualBill == false && c.SaleDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).Sum(c => (decimal?)c.Amount) ?? 0;
             var totalManualSale = db.DailySales.Where(c => c.IsManualBill == true && c.SaleDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).Sum(c => (decimal?)c.Amount) ?? 0;
@@ -159,13 +138,10 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             ViewBag.CashInHand = cashinhand;
             ViewBag.LastMonthSale = totalLastMonthlySale;
 
-            #endregion
-
-
-
-
+            #endregion FixedUI
 
             #region bySalesman
+
             // By Salesman
             var salesmanList = new List<string>();
             var smQry = from d in db.Salesmen
@@ -174,8 +150,10 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             salesmanList.AddRange(smQry.Distinct());
             ViewBag.salesmanId = new SelectList(salesmanList);
 
-            #endregion
+            #endregion bySalesman
+
             #region ByDate
+
             //var dateList = new List<DateTime>();
             //var opdQry = from d in db.DailySales
             //             orderby d.SaleDate
@@ -183,30 +161,32 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             //dateList.AddRange(opdQry.Distinct());
             //ViewBag.dateID = new SelectList(dateList);
 
-            #endregion
-
+            #endregion ByDate
 
             //By Invoice No Search
-
-
 
             switch (sortOrder)
             {
                 case "Manual":
                     dailySales = dailySales.OrderBy(c => c.IsManualBill);
                     break;
+
                 case "notManual_desc":
                     dailySales = dailySales.OrderByDescending(c => c.IsManualBill);
                     break;
+
                 case "inv_desc":
                     dailySales = dailySales.OrderByDescending(s => s.InvNo);
                     break;
+
                 case "Date":
                     dailySales = dailySales.OrderBy(s => s.SaleDate);
                     break;
+
                 case "date_desc":
                     dailySales = dailySales.OrderByDescending(s => s.SaleDate);
                     break;
+
                 default:
                     dailySales = dailySales.OrderBy(s => s.InvNo);
                     break;
@@ -216,7 +196,6 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
             int pageSize = 10;
             return View(await PaginatedList<DailySale>.CreateAsync(dailySales.AsNoTracking(), pageNumber ?? 1, pageSize));
-
 
             //OrignalCode
             // var aprajitaRetailsContext = db.DailySales.Include(d => d.Salesman);
@@ -251,8 +230,66 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             return PartialView();
         }
 
+        public async Task<IActionResult> _AddEditPaymentDetailsAsync( string invNumber="add")
+        {
+            ViewData["EDCId"] = new SelectList(db.CardMachine, "EDCId", "EDCName");
+            if (invNumber == "add")
+            {
+                
+                return View(new EDCTranscation { OnDate=DateTime.Today.Date});
+            }
+            else
+            {
+                var paydetails = await db.CardTranscations.Where(c => c.InvoiceNumber == invNumber).FirstOrDefaultAsync();
+
+                if (paydetails == null)
+                {
+                    return NotFound();
+                }
+                return View(paydetails);
+
+                //return PartialView();
+            }
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> _AddEditPaymentDetailsAsync(int id, [Bind("TransactionId,AccountNumber,BeneficiaryName,BankName,SWIFTCode,Amount,Date")] EDCTranscation eDC)
+        {
+            if (ModelState.IsValid)
+            {
+                //Insert
+                if (id == 0)
+                {
+                    
+                    db.Add(eDC);
+                    await db.SaveChangesAsync();
+
+                }
+                //Update
+                else
+                {
+                    try
+                    {
+                        db.Update(eDC);
+                        await db.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!CardTranscationExists(eDC.EDCTranscationId))
+                        { return NotFound(); }
+                        else
+                        { throw; }
+                    }
+                }
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", db.CardTranscations.ToList()) });
+            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", eDC) });
+        }
+
         // POST: DailySales/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -297,7 +334,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         }
 
         // POST: DailySales/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -370,9 +407,54 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmedPayment(int id)
+        {
+            var transactionModel = await db.CardTranscations.FindAsync(id);
+            db.CardTranscations.Remove(transactionModel);
+            await db.SaveChangesAsync();
+            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", db.CardTranscations.ToList()) });
+        }
+
         private bool DailySaleExists(int id)
         {
             return db.DailySales.Any(e => e.DailySaleId == id);
         }
+        private bool CardTranscationExists(int id)
+        {
+            return db.CardTranscations.Any(e => e.EDCTranscationId == id);
+        }
+    }
+
+    public class Helper
+    {
+
+        public static string RenderRazorViewToString(Controller controller, string viewName, object model = null)
+        {
+            controller.ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                IViewEngine viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+                ViewEngineResult viewResult = viewEngine.FindView(controller.ControllerContext, viewName, false);
+
+                ViewContext viewContext = new ViewContext(
+                    controller.ControllerContext,
+                    viewResult.View,
+                    controller.ViewData,
+                    controller.TempData,
+                    sw,
+                    new HtmlHelperOptions()
+                );
+                viewResult.View.RenderAsync(viewContext);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
     }
 }
+
+//https://www.codaffection.com/asp-net-core-article/how-to-use-jquery-ajax-in-asp-net-core-mvc-for-crud-operations-with-modal-popup/#Let%E2%80%99s_Start_Designing_the_App
+
+//https://morioh.com/p/cac7badbf881

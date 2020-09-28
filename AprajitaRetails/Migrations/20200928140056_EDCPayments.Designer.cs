@@ -4,14 +4,16 @@ using AprajitaRetails.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AprajitaRetails.Migrations
 {
     [DbContext(typeof(AprajitaRetailsContext))]
-    partial class AprajitaRetailsContextModelSnapshot : ModelSnapshot
+    [Migration("20200928140056_EDCPayments")]
+    partial class EDCPayments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2274,7 +2276,7 @@ namespace AprajitaRetails.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CouponNumber")
                         .HasColumnType("nvarchar(max)");
@@ -2546,7 +2548,7 @@ namespace AprajitaRetails.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CardEndingNumber")
                         .HasColumnType("nvarchar(max)");
@@ -2563,14 +2565,9 @@ namespace AprajitaRetails.Migrations
                     b.Property<DateTime>("OnDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
-
                     b.HasKey("EDCTranscationId");
 
                     b.HasIndex("EDCId");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("CardTranscations");
                 });
@@ -2771,7 +2768,7 @@ namespace AprajitaRetails.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
@@ -2788,14 +2785,9 @@ namespace AprajitaRetails.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
-
                     b.HasKey("MixAndCouponPaymentId");
 
                     b.HasIndex("ModeMixAndCouponPaymentId");
-
-                    b.HasIndex("StoreId");
 
                     b.ToTable("MixPayments");
                 });
@@ -3218,7 +3210,7 @@ namespace AprajitaRetails.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("money");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CustomerMobileNumber")
                         .HasColumnType("nvarchar(max)");
@@ -4301,12 +4293,6 @@ namespace AprajitaRetails.Migrations
                         .HasForeignKey("EDCId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("AprajitaRetails.Models.Employee", b =>
@@ -4350,12 +4336,6 @@ namespace AprajitaRetails.Migrations
                     b.HasOne("AprajitaRetails.Models.MixAndCouponPayment", "Mode")
                         .WithMany()
                         .HasForeignKey("ModeMixAndCouponPaymentId");
-
-                    b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("AprajitaRetails.Models.MonthEnd", b =>

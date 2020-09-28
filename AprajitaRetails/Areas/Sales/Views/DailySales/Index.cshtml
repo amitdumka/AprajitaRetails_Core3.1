@@ -134,13 +134,18 @@
                 <td class="btn-group btn-group-sm ">
                     @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
                     {
-                        <a class="btn btn-outline-secondary btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                        <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
                     }
 
-                    <a class="btn btn-outline-deep-orange btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                    <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
                     @if (Context.User.IsInRole("Admin"))
                     {
-                        <a class="btn btn-outline-danger btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                        <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                    }
+
+                    @if (item.PayMode != PayModes.Cash)
+                    {
+                        <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("_AddEditPaymentDetails","DailySales",null,Context.Request.Scheme)','Add Payment Details')" id="paymentInfo">Payment Details</a>
                     }
                 </td>
             </tr>
@@ -149,3 +154,182 @@
 </table>
 
 <partial name="_ModalPop" />
+
+
+<style>
+        body{
+ font-family: 'Roboto', sans-serif;
+}
+
+/* Change input control border color */
+.form-control, .input-group-text {
+    border: 1px solid #0080ff;
+}
+
+a.btn:hover{
+    cursor: pointer !important;
+}
+
+/*loader*/
+.loaderbody {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    background-color: rgba(128,128,128,0.2);
+    z-index: 2147483647;
+}
+
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    top: 45%;
+    left: 40%;
+}
+
+@*@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}*@
+
+.hide{
+    display:none;
+}
+</style>
+
+
+<div class="modal fade in" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog modal-notify modal-warning" role="document">
+        <div class="modal-content card">
+            <div class="modal-header card-header ">
+                <h5 class="modal-title w-100 text-white"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <label class="text-warning text-muted text-monospace">This is for testing purpose. Do not enter any data!</label>
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="loaderbody" id="loaderbody">
+    <div class="loader"></div>
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            $("#loaderbody").addClass('hide');
+
+            $(document).bind('ajaxStart', function () {
+                $("#loaderbody").removeClass('hide');
+            }).bind('ajaxStop', function () {
+                $("#loaderbody").addClass('hide');
+            });
+        });
+        showInPopup = (url, title) => {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                success: function (res) {
+                    $('#form-modal .modal-body').html(res);
+                    $('#form-modal .modal-title').html(title);
+                    $('#form-modal').modal('show');
+                }
+            })
+        }
+
+        jQueryAjaxPost = form => {
+            try {
+                $.ajax({
+                    type: 'POST',
+                    url: form.action,
+                    data: new FormData(form),
+                    contentType: false,
+                    processData: false,
+                    success: function (res) {
+                        if (res.isValid) {
+                            $('#view-all').html(res.html)
+                            $('#form-modal .modal-body').html('');
+                            $('#form-modal .modal-title').html('');
+                            $('#form-modal').modal('hide');
+                        }
+                        else
+                            $('#form-modal .modal-body').html(res.html);
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+                //to prevent default form submit event
+                return false;
+            } catch (ex) {
+                console.log(ex)
+            }
+        }
+
+        jQueryAjaxDelete = form => {
+            if (confirm('Are you sure to delete this record ?')) {
+                try {
+                    $.ajax({
+                        type: 'POST',
+                        url: form.action,
+                        data: new FormData(form),
+                        contentType: false,
+                        processData: false,
+                        success: function (res) {
+                            $('#view-all').html(res.html);
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                } catch (ex) {
+                    console.log(ex)
+                }
+            }
+
+            //prevent default form submit event
+            return false;
+        }
+
+        function GetPaymentInfo(saleid) {
+            console.log(saleid);
+            $.notify(saleid, { globalPosition: 'top center', className: "success" });
+            return false;
+        }
+
+                        //function ProcessPaymentMode(data) {
+                        //    console.log(data);
+
+                        //    if (data == "Card")
+                        //        $.notify(data, { globalPosition: 'top center', className: "success" });
+                        //    else if (data == "MixPayments") {
+                        //        $.notify(data, { globalPosition: 'top center', className: "error" });
+                        //    }
+                        //    else {
+                        //        $.notify(data, { globalPosition: 'top center', className: "warn" });
+                        //    }
+                        //}
+    </script>
+}

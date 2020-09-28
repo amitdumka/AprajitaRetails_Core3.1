@@ -76,18 +76,10 @@ namespace AprajitaRetails.Data
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 7, Transcation = "CashOut" });
             modelBuilder.Entity<TranscationMode>().HasData(new TranscationMode { TranscationModeId = 8, Transcation = "Regular" });
 
-           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 1, SalesmanName = "Sanjeev Mishra" });
-           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 2, SalesmanName = "Mukesh Mandal" });
-           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 3, SalesmanName = "Manager" });
-           // modelBuilder.Entity<SalesPerson>().HasData(new SalesPerson { SalesPersonId = 4, SalesmanName = "Bikash Kumar Sah" });
-
-
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 1, CompositeRate = 5, TaxName = "Local Output GST@ 5%  ", TaxType = TaxType.GST });
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 2, CompositeRate = 12, TaxName = "Local Output GST@ 12%  ", TaxType = TaxType.GST });
-
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 3, CompositeRate = 5, TaxName = "Output IGST@ 5%  ", TaxType = TaxType.IGST });
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 4, CompositeRate = 12, TaxName = "Output IGST@ 12%  ", TaxType = TaxType.IGST });
-
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 5, CompositeRate = 5, TaxName = "Output Vat@ 12%  ", TaxType = TaxType.VAT });
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 6, CompositeRate = 12, TaxName = "Output VAT@ 5%  ", TaxType = TaxType.VAT });
             modelBuilder.Entity<SaleTaxType>().HasData(new SaleTaxType { SaleTaxTypeId = 7, CompositeRate = 5, TaxName = "Output Vat Free  ", TaxType = TaxType.VAT });
@@ -99,13 +91,13 @@ namespace AprajitaRetails.Data
                 LastName = "Sale",
                 Age = 0,
                 City = "Dumka",
-                CreatedDate = DateTime.Now.Date,
+                CreatedDate = new DateTime(2016, 2, 17).Date,
                 Gender = Genders.Male,
                 NoOfBills = 0,
                 TotalAmount = 0,
                 MobileNo = "1234567890",
-                DateOfBirth = DateTime.Now.Date
-            });
+                DateOfBirth = new DateTime(2016, 2, 17).Date
+            }) ;
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
                 CustomerId = 2,
@@ -113,12 +105,12 @@ namespace AprajitaRetails.Data
                 LastName = "Sale",
                 Age = 0,
                 City = "Dumka",
-                CreatedDate = DateTime.Now.Date,
+                CreatedDate = new DateTime(2016, 2, 17).Date,
                 Gender = Genders.Male,
                 NoOfBills = 0,
                 TotalAmount = 0,
                 MobileNo = "1234567890",
-                DateOfBirth = DateTime.Now.Date
+                DateOfBirth = new DateTime(2016, 2, 17).Date
             });
 
 
@@ -164,18 +156,9 @@ namespace AprajitaRetails.Data
         //Suspense
         public DbSet<SuspenseAccount> Suspenses { get; set; }
 
-
         //Tailoring
-
-        //public DbSet<TailorAttendance> TailorAttendances { get; set; }
-        //public DbSet<TailoringEmployee> TailoringEmployees { get; set; }
-       // public DbSet<TailoringSalaryPayment> TailoringSalaryPayments { get; set; }
-       // public DbSet<TailoringStaffAdvancePayment> TailoringStaffAdvancePayments { get; set; }
-       // public DbSet<TailoringStaffAdvanceReceipt> TailoringStaffAdvanceReceipts { get; set; }
-
         public DbSet<TalioringBooking> TalioringBookings { get; set; }
         public DbSet<TalioringDelivery> TailoringDeliveries { get; set; }
-
 
         //End of Day
         public DbSet<EndOfDay> EndOfDays { get; set; }
@@ -200,7 +183,6 @@ namespace AprajitaRetails.Data
 
 
         //BankAccount Info
-
         public DbSet<BankAccountInfo> BankAccountInfos { get; set; }
         public DbSet<BankAccountSecurityInfo> AccountSecurityInfos { get; set; }
 
@@ -255,13 +237,6 @@ namespace AprajitaRetails.Data
 
         public DbSet<HSN> HSNList { get; set; }
 
-        // New Invoice System  Manual
-
-        //public DbSet<ManualInvoice> ManualInvoices { get; set; }
-        //public DbSet<ManualSaleItem> ManualSaleItems { get; set; }
-        //public DbSet<ManualPaymentDetail> ManualPaymentDetails { get; set; }
-        //public DbSet<ManualCardDetail> ManualCardDetails { get; set; }
-
         //Import Table
         public DbSet<ImportInWard> ImportInWards { get; set; }
         public DbSet<ImportPurchase> ImportPurchases { get; set; }
@@ -274,7 +249,6 @@ namespace AprajitaRetails.Data
         //Accounts
         public DbSet<LedgerMaster> Masters { get; set; }
         public DbSet<Party> Parties { get; set; }
-        // public DbSet<LedgerEntry> LedgerEntries { get; set; }
         public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
         // public DbSet<LedgerEntry> LedgerEntries { get; set; }
         // public DbSet<AprajitaRetails.Areas.Reports.Models.EmpAttReport> EmpAttReport { get; set; }
@@ -288,6 +262,13 @@ namespace AprajitaRetails.Data
 
         public DbSet<BankSetting> BankSettings { get; set; }
         public DbSet<AccSetting> AccSettings { get; set; }
+
+        public DbSet<EDC> CardMachine { get; set; }
+        public DbSet<EDCTranscation> CardTranscations { get; set; }
+        public DbSet<MixAndCouponPayment>MixPayments { get; set; }
+        public DbSet<CouponPayment> CouponPayments { get; set; }
+        public DbSet<PointRedeemed> PointRedeemeds { get; set; }
+
 
     }
 
