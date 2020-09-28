@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LinqToExcel.Attributes;
+//using LinqToExcel.Attributes;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
@@ -9,7 +9,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
     {
         public int BookEntryId { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [ExcelColumn("Inward Date")]
+       // [ExcelColumn("Inward Date")]
         [Column(TypeName = "DateTime2")]
         [Display(Name = "On Date")]
         public DateTime OnDate { get; set; }

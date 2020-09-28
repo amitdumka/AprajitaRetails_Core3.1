@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LinqToExcel.Attributes;
+//using LinqToExcel.Attributes;
 using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
@@ -11,48 +11,48 @@ namespace AprajitaRetails.Areas.Uploader.Models
     {
         public int ImportSaleRegisterId { get; set; }
 
-        [ExcelColumn("Invoice No")]
+       // [ExcelColumn("Invoice No")]
         [Display(Name = "Invoice No")]
         public string InvoiceNo { get; set; }
 
-        [ExcelColumn("Invoice Type")]
+       // [ExcelColumn("Invoice Type")]
         [Display(Name = "Invoice Type")]
         public string InvoiceType { get; set; }
 
-        [ExcelColumn("Invoice Date")]
+       // [ExcelColumn("Invoice Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]
         public string InvoiceDate { get; set; }
 
-        [ExcelColumn("Quantity")]
+       // [ExcelColumn("Quantity")]
         public double Quantity { get; set; }
 
-        [ExcelColumn("MRP")]
+       // [ExcelColumn("MRP")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
 
-        [ExcelColumn("Discount")]
+       // [ExcelColumn("Discount")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Discount { get; set; }
-        [ExcelColumn("Basic Amt")]
+       // [ExcelColumn("Basic Amt")]
         [Display(Name = "Basic Rate")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal BasicRate { get; set; }
 
-        [ExcelColumn("Tax Amt")]
+       // [ExcelColumn("Tax Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Tax { get; set; }
 
-        [ExcelColumn("Round Off")]
+       // [ExcelColumn("Round Off")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal RoundOff { get; set; }
 
-        [ExcelColumn("Bill Amt")]
+       // [ExcelColumn("Bill Amt")]
         [Display(Name = "Bill Amount")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal BillAmnt { get; set; }
 
-        [ExcelColumn("Payment Mode")]
+       // [ExcelColumn("Payment Mode")]
         [Display(Name = "Payment Type")]
         public string PaymentType { get; set; }
 

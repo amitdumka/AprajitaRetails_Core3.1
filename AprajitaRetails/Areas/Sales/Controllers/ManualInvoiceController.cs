@@ -75,7 +75,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         [HttpGet]
         public JsonResult GetInvoiceDetails(int? id)
         {
-            string errMsg = "Error!";
+            string errMsg;// = "Error!";
             InvoiceDetails retunDetails;
             if (id == null)
             {
@@ -128,7 +128,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs) };

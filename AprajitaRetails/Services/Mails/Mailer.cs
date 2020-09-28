@@ -26,7 +26,7 @@ namespace AprajitaRetails.Services.Mails
     }
     public class Mailer : IMailer
     {
-        private SMTPSetting _smtpSetting;
+        private readonly SMTPSetting _smtpSetting;
         public Mailer(SMTPSetting SMTP)
         {
             _smtpSetting = SMTP;

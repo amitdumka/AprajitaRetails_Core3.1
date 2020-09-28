@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.ComponentModel;
-using LinqToExcel.Attributes;
+//using LinqToExcel.Attributes;
 using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
@@ -50,85 +50,85 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         public int ImportSaleItemWiseId { get; set; }
 
-        [ExcelColumn("Invoice Date")]
+       // [ExcelColumn("Invoice Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string InvoiceDate { get; set; }
 
-        [ExcelColumn("Invoice No")]
+       // [ExcelColumn("Invoice No")]
         [Display(Name = "Invoice No")]
         public string InvoiceNo { get; set; }
 
-        [ExcelColumn("Invoice Type")]
+       // [ExcelColumn("Invoice Type")]
         [Display(Name = "Invoice Type")]
         public string InvoiceType { get; set; }
 
-        [ExcelColumn("Brand Name")]
+       // [ExcelColumn("Brand Name")]
         [Display(Name = "Brand Name")]
         public string BrandName { get; set; }
 
-        [ExcelColumn("Product Name")]
+       // [ExcelColumn("Product Name")]
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
 
-        [ExcelColumn("Item Desc")]
+       // [ExcelColumn("Item Desc")]
         [Display(Name = "Item Desc")]
         public string ItemDesc { get; set; }
 
-        [ExcelColumn("HSN Code")]
+       // [ExcelColumn("HSN Code")]
         [Display(Name = "HSN Code")]
         public string HSNCode { get; set; }
 
-        [ExcelColumn("BAR CODE")]
+       // [ExcelColumn("BAR CODE")]
         public string Barcode { get; set; }
 
-        [ExcelColumn("Style Code")]
+       // [ExcelColumn("Style Code")]
         [Display(Name = "Style Code")]
         public string StyleCode { get; set; }
 
-        [ExcelColumn("Quantity")]
+       // [ExcelColumn("Quantity")]
         public double Quantity { get; set; }
 
-        [ExcelColumn("MRP")]
+       // [ExcelColumn("MRP")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
 
-        [ExcelColumn("Discount Amt")]
+       // [ExcelColumn("Discount Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Discount { get; set; }
 
-        [ExcelColumn("Basic Amt")]
+       // [ExcelColumn("Basic Amt")]
         [Display(Name = "Basic Rate")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal BasicRate { get; set; }
 
-        [ExcelColumn("Tax Amt")]
+       // [ExcelColumn("Tax Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Tax { get; set; } // Can be use for IGST
 
-        [ExcelColumn("SGST Amt")]
+       // [ExcelColumn("SGST Amt")]
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal SGST { get; set; }
 
-        [ExcelColumn("CGST Amt")]
+       // [ExcelColumn("CGST Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CGST { get; set; }
-        [ExcelColumn("Line Total")]
+       // [ExcelColumn("Line Total")]
         [Display(Name = "Line Total")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal LineTotal { get; set; }
 
-        [ExcelColumn("Round Off")]
+       // [ExcelColumn("Round Off")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal RoundOff { get; set; }
-        [ExcelColumn("Bill Amt")]
+       // [ExcelColumn("Bill Amt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "Bill Amount")]
         public decimal BillAmnt { get; set; }
-        [ExcelColumn("Payment Mode")]
+       // [ExcelColumn("Payment Mode")]
         [Display(Name = "Payment Type")]
         public string PaymentType { get; set; }
-        [ExcelColumn("SalesMan Name")]
+       // [ExcelColumn("SalesMan Name")]
         public string Saleman { get; set; }
         [DefaultValue(false)]
         public bool IsDataConsumed { get; set; } = false;

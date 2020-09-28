@@ -133,7 +133,7 @@ namespace AprajitaRetails.Ops.Exporter
                 }
             }
 
-            row = row + 2;
+            row += 2;
             worksheet2.Cells [row, 2].Value = "Total Absent";
             worksheet2.Cells [row, 3].Value = totalAbsent;
             row++;
@@ -209,7 +209,7 @@ namespace AprajitaRetails.Ops.Exporter
                 }
             }
 
-            row = row + 2;
+            row += 2;
             worksheet2.Cells [row, 2].Value = "Total Absent";
             worksheet2.Cells [row,3].Value = totalAbsent;
             row++;

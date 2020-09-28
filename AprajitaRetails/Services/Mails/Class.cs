@@ -57,6 +57,10 @@ namespace AprajitaRetails.Services.Mails
             : base(String.Format(CultureInfo.CurrentCulture, message, args))
         {
         }
+
+        public AppException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
     public interface IEmailService
     {
@@ -75,11 +79,15 @@ namespace AprajitaRetails.Services.Mails
         public void Send(string from, string to, string subject, string html)
         {
             // create message
-            var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(from);
+            var email = new MimeMessage
+            {
+                Sender = MailboxAddress.Parse(from),
+                Subject = subject,
+                Body = new TextPart(TextFormat.Html) { Text = html }
+            };
             email.To.Add(MailboxAddress.Parse(to));
-            email.Subject = subject;
-            email.Body = new TextPart(TextFormat.Html) { Text = html };
+            //email.Subject = subject;
+            //email.Body = new TextPart(TextFormat.Html) { Text = html };
 
             // send email
             using var smtp = new SmtpClient();
