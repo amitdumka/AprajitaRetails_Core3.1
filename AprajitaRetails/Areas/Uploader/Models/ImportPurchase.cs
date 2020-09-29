@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel;
-//using LinqToExcel.Attributes;
+using LinqToExcel.Attributes;
 using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
@@ -13,55 +13,55 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         public int ImportPurchaseId { get; set; }
 
-       // [ExcelColumn("GRNNo")]
+        [ExcelColumn("GRNNo")]
         public string GRNNo { get; set; }
 
-       // [ExcelColumn("GRNDate")]
+        [ExcelColumn("GRNDate")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime GRNDate { get; set; }
 
-       // [ExcelColumn("Invoice No")]
+        [ExcelColumn("Invoice No")]
         public string InvoiceNo { get; set; }
 
-       // [ExcelColumn("Invoice Date")]
+        [ExcelColumn("Invoice Date")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime InvoiceDate { get; set; }
 
-       // [ExcelColumn("Supplier Name")]
+        [ExcelColumn("Supplier Name")]
         public string SupplierName { get; set; }
 
-       // [ExcelColumn("Bar code")]
+        [ExcelColumn("Bar code")]
         public string Barcode { get; set; }
 
-       // [ExcelColumn("Product Name")]
+        [ExcelColumn("Product Name")]
         public string ProductName { get; set; }
 
-       // [ExcelColumn("Style Code")]
+        [ExcelColumn("Style Code")]
         public string StyleCode { get; set; }
 
-       // [ExcelColumn("Item Desc")]
+        [ExcelColumn("Item Desc")]
         public string ItemDesc { get; set; }
 
-       // [ExcelColumn("Quantity")]
+        [ExcelColumn("Quantity")]
         public double Quantity { get; set; }
 
-       // [ExcelColumn("MRP")]
+        [ExcelColumn("MRP")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
 
-       // [ExcelColumn("MRP Value")]
+        [ExcelColumn("MRP Value")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRPValue { get; set; }
 
-       // [ExcelColumn("Cost")]
+        [ExcelColumn("Cost")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Cost { get; set; }
 
-       // [ExcelColumn("Cost Value")]
+        [ExcelColumn("Cost Value")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CostValue { get; set; }
 
-       // [ExcelColumn("TaxAmt")]
+        [ExcelColumn("TaxAmt")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TaxAmt { get; set; }
 

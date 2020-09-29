@@ -30,42 +30,39 @@ namespace AprajitaRetails.Areas.Sales.Data
     }
    public class InvoiceDetails
     {
-        public SaleInvoiceView Invoice{get; set;}
-        public bool IsCardPayment{get; set;}
-        public string Msg{get; set;}
-        public string Error{get; set;}
+        public SaleInvoiceView Invoice;
+        public bool IsCardPayment;
+        public string Msg;
+        public string Error;
     }
 
     public class SaleItemView
     {
-        public string BarCode{get; set;}
-        public string SmCode{get; set;}
-        public string ProductName{get; set;}
-        public decimal MRP{get; set;}
-        public decimal BillAmount{get; set;}
-        public double Qty{get; set;}
-        public string Units{get; set;}
+        public string BarCode;
+        public string SmCode;
+        public string ProductName;
+        public decimal MRP;
+        public decimal BillAmount;
+        public double Qty;
+        public string Units;
     }
 
     public class SaleInvoiceView
     {
-        public string InvoiceNo{get; set;}
-        public string CustomerName{get; set;}
+        public string InvoiceNo;
+        public string CustomerName;
 
-        public DateTime OnDate{get; set;}
+        public DateTime OnDate;
 
-        public string TotalAmount { get; set; }
-        public string Discount { get; set;}
-        public string TotalQty { get; set;}
-        public string NoofItem { get; set;}
+        public string TotalAmount, Discount, TotalQty, NoofItem;
 
-        public List<SaleItemView> SaleItems{get; set;}
-        public string PaymentMode{get; set;}
-        public string CashAmount{get; set;}
-        public string CardAmount{get; set;}
-        public string CardNumber{get; set;}
-        public string CardType{get; set;}
-        public string AuthCode{get; set;}
+        public List<SaleItemView> SaleItems;
+        public string PaymentMode;
+        public string CashAmount;
+        public string CardAmount;
+        public string CardNumber;
+        public string CardType;
+        public string AuthCode;
 
         public static SaleInvoiceView CopyTo(RegularInvoice inv , List<RegularSaleItem> sItems)
         {

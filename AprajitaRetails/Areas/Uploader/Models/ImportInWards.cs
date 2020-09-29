@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-//using LinqToExcel.Attributes;
+using LinqToExcel.Attributes;
 using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
@@ -15,36 +15,36 @@ namespace AprajitaRetails.Areas.Uploader.Models
 
         public int ImportInWardId { get; set; }
 
-       // [ExcelColumn("Inward No")]
+        [ExcelColumn("Inward No")]
         public string InWardNo { get; set; }
 
         // 4/4/2018  5:34:56 PM
         // [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{dd/MM/yyyy HH:mm:ss tt}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-       // [ExcelColumn("Inward Date")]
+        [ExcelColumn("Inward Date")]
         [Column(TypeName = "DateTime2")]
         public DateTime InWardDate { get; set; }
 
-       // [ExcelColumn("Invoice No")]
+        [ExcelColumn("Invoice No")]
         public string InvoiceNo { get; set; }
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-       // [ExcelColumn("Invoice Date")]
+        [ExcelColumn("Invoice Date")]
         [Column(TypeName = "DateTime2")]
         public DateTime InvoiceDate { get; set; }
 
-       // [ExcelColumn("Party Name")]
+        [ExcelColumn("Party Name")]
         public string PartyName { get; set; }
 
-       // [ExcelColumn("Total Qty")]
+        [ExcelColumn("Total Qty")]
         [DataType(DataType.Currency), Column(TypeName = "decimal(18,2)")]
         public decimal TotalQty { get; set; }
 
-       // [ExcelColumn("Total MRP Value")]
+        [ExcelColumn("Total MRP Value")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TotalMRPValue { get; set; }
 
-       // [ExcelColumn("Total Cost")]
+        [ExcelColumn("Total Cost")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TotalCost { get; set; }
 

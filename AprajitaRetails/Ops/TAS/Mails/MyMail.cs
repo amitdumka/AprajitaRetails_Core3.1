@@ -1,10 +1,11 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
+using System.Collections.Generic;
 
 namespace AprajitaRetails.Ops.TAS.Mails
 {
-    public static class MailConfig
+     public static class MailConfig
     {
         public  const string UserName = "kumar_amit_dumka@yahoo.co.uk";
         public  const string Password = "sjipkhwnjnztjmmk";
