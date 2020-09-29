@@ -52,6 +52,10 @@ namespace AprajitaRetails.Data
               .HasIndex(b => b.Transcation)
               .IsUnique();
 
+
+
+
+
             modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 1, SalesmanName = "Sanjeev Mishra", StoreId = 1 });
             modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 2, SalesmanName = "Mukesh Mandal", StoreId = 1 });
             modelBuilder.Entity<Salesman>().HasData(new Salesman { SalesmanId = 3, SalesmanName = "Manager", StoreId = 1 });
@@ -112,6 +116,8 @@ namespace AprajitaRetails.Data
                 MobileNo = "1234567890",
                 DateOfBirth = new DateTime(2016, 2, 17).Date
             });
+
+            modelBuilder.Entity<EDC>().HasData(new EDC { StoreId=1, AccountNumberId=1, EDCId=1, EDCName="SBI_EDC_CC",IsWorking=true, MID="NEEDTOENTER", Remark="AUTOADDED FOR Testing Purpose", TID=101, StartDate= new DateTime(2016,2,17).Date});
 
 
         }

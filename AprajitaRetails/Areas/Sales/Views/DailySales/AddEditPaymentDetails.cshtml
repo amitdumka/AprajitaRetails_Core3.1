@@ -3,9 +3,12 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="AddOrEdit" asp-route-InvoiceNumber="@Model.InvoiceNumber" onsubmit="return jQueryAjaxPost(this);">
+        <form asp-action="AddEditPaymentDetails" asp-route-InvoiceNumber="@Model.InvoiceNumber" onsubmit="return jQueryAjaxPost(this);">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="InvoiceNumber" />
+            <input type="hidden" asp-for="StoreId" />
+            <input type="hidden" asp-for="EDCTranscationId" />
+            <label class="text-danger text-monospace font-italic text-capitalize">InvoiceNo: @Model.InvoiceNumber</label>
             @*<input type="hidden" asp-for="OnDateDate" />*@
             <div class="form-group">
                 <label asp-for="OnDate" class="control-label"></label>
@@ -20,14 +23,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label asp-for="CardMachine" class="control-label"></label>
+                        <label asp-for="EDCId" class="control-label"></label>
                         <div class="input-group-prepend">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fab fa-cc-amex  text-success"></i></div>
                             </div>
-                            <select asp-for="CardMachine" class="form-control" asp-items="ViewBag.EDCId"></select>
+                            <select asp-for="EDCId" class="form-control" asp-items="ViewBag.EDCId"></select>
                         </div>
-                        <span asp-validation-for="CardMachine" class="text-danger"></span>
+                        <span asp-validation-for="EDCId" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -54,7 +57,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                   <i class="fab fa-cc-visa text-success"></i>
+                                    <i class="fab fa-cc-visa text-success"></i>
                                 </div>
                             </div>
                             <select asp-for="CardTypes" class="form-control" asp-items="Html.GetEnumSelectList<CardModes>()"></select>
@@ -79,9 +82,28 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
-                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                    @if (Model.EDCTranscationId > 0)
+                    {
+                        <input type="submit" value="Update" class="btn btn-outline-warning btn-sm waves-effect" />
+                        @*<input type="submit" value="Delete" class="btn btn-outline-danger btn-sm d-inline btn-block" onclick="return jQueryAjaxDeleteFunction(@Model.EDCTranscationId)"  />*@
+                    }
+                    else
+                    {
+                        <input type="submit" value="Add" class="btn btn-outline-primary btn-sm waves-effect" />}
                 </div>
             </div>
         </form>
+
     </div>
+    @if (Model.EDCTranscationId > 0)
+    {
+        <div class="col-md-12 text-center">
+            <form asp-action="DeletePayment" asp-route-id="@Model.EDCTranscationId" onsubmit="return jQueryAjaxDelete(this)" class="d-inline">
+             <label class="text-danger font-italic font-weight-bold">Are you sure to Delete payment details? </label>   <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" />
+            </form>
+
+        </div>
+    }
 </div>
+
+

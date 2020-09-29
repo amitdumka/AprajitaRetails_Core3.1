@@ -231,37 +231,35 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             return PartialView();
         }
 
-        public async Task<IActionResult> _AddEditPaymentDetailsAsync( string invNumber="add")
+        public async Task<IActionResult> AddEditPaymentDetails( string InvNo)
         {
             ViewData["EDCId"] = new SelectList(db.CardMachine, "EDCId", "EDCName");
-            if (invNumber == "add")
+            if (String.IsNullOrEmpty(InvNo))
             {
-                
-                return View(new EDCTranscation { OnDate=DateTime.Today.Date});
+                return NotFound();
             }
             else
             {
-                var paydetails = await db.CardTranscations.Where(c => c.InvoiceNumber == invNumber).FirstOrDefaultAsync();
-
+                var paydetails = await db.CardTranscations.Where(c => c.InvoiceNumber == InvNo).FirstOrDefaultAsync();
+               
                 if (paydetails == null)
                 {
-                    return NotFound();
+                    return View(new EDCTranscation { OnDate = DateTime.Today.Date, InvoiceNumber=InvNo, StoreId = this.StoreCodeId });
                 }
                 return View(paydetails);
-
-                //return PartialView();
             }
             
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> _AddEditPaymentDetailsAsync(int id, [Bind("TransactionId,AccountNumber,BeneficiaryName,BankName,SWIFTCode,Amount,Date")] EDCTranscation eDC)
+        public async Task<IActionResult> AddEditPaymentDetails(int id, [Bind("Amount, InvoiceNumber, CardEndingNumber,  CardTypes, EDCId, EDCTranscationId, OnDate, StoreId")] EDCTranscation eDC)
         {
+           
             if (ModelState.IsValid)
             {
                 //Insert
-                if (id == 0)
+                if (eDC.EDCTranscationId == 0)
                 {
                     
                     db.Add(eDC);
@@ -284,9 +282,10 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                         { throw; }
                     }
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", db.CardTranscations.ToList()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "Index", db.CardTranscations.ToList()) });
             }
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", eDC) });
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddEditPaymentDetails", eDC) });
+            //TODO: here we need to refresh index page update/add opertation if required other wise no need call this function just pass is valid or not. 
         }
 
         // POST: DailySales/Create
@@ -409,14 +408,15 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
         }
 
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeletePayment")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmedPayment(int id)
+        public async Task<IActionResult> DeletePaymentConfirmed(int id)
         {
+            //TODO: here we need to refresh index page delete opertation if required
             var transactionModel = await db.CardTranscations.FindAsync(id);
             db.CardTranscations.Remove(transactionModel);
             await db.SaveChangesAsync();
-            return Json(new { html = Helper.RenderRazorViewToString(this, "_ViewAll", db.CardTranscations.ToList()) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Index", db.CardTranscations.ToList()) });
         }
 
         private bool DailySaleExists(int id)

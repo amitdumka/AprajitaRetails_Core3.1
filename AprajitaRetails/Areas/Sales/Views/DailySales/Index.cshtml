@@ -66,89 +66,266 @@
 
 </div>
 
-<table class="table table-sm table-responsive-sm table-hover table-striped table-bordered text-center">
+<table class="table table-sm table-responsive-sm table-hover table-striped table-bordered">
     <thead class="bg-success">
         <tr>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">  @*@Html.DisplayNameFor(model => model.SaleDate)*@ Sale Date</a></th>
-            <th><a asp-action="Index" asp-route-sortOrder="@ViewData["InvoiceSortParm"]">    @*@Html.DisplayNameFor(model => model.InvNo)*@  Invoice No</a>     </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Amount)*@ Amount
+            <th class="text-center"><a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">  @Html.DisplayNameFor(model => model.FirstOrDefault().SaleDate)</a></th>
+            <th class="text-center"><a asp-action="Index" asp-route-sortOrder="@ViewData["InvoiceSortParm"]">    @Html.DisplayNameFor(model => model.FirstOrDefault().InvNo)  </a>     </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Amount)
             </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.PayMode)*@ Payment Mode
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.FirstOrDefault().PayMode)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.CashAmount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Salesman)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IsDue)
-                </th>*@
-            <th>Salesman</th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["ManualSortParm"]"> @*@Html.DisplayNameFor(model => model.IsManualBill)*@ Manual Bill</a>
+            <th class="text-center">Salesman</th>
+            <th class="text-center">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ManualSortParm"]"> @Html.DisplayNameFor(model => model.FirstOrDefault().IsManualBill)</a>
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.IsTailoringBill)
-                </th>*@
-            <th>
-                @*@Html.DisplayNameFor(model => model.IsSaleReturn)*@ Sales Return
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.FirstOrDefault().IsSaleReturn)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Remarks)
-                </th>*@
-            <th></th>
+            <th class="text-center"></th>
         </tr>
     </thead>
     <tbody class="bg-white">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SaleDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InvNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PayMode)
-                </td>
-                @*<td>            @Html.DisplayFor(modelItem => item.CashAmount)        </td>            *@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
-                </td>
-                @*<td>            @Html.DisplayFor(modelItem => item.IsDue)        </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsManualBill)
-                </td>
-                @*<td>            @Html.DisplayFor(modelItem => item.IsTailoringBill)        </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsSaleReturn)
-                </td>
-                @*<td>            @Html.DisplayFor(modelItem => item.Remarks)        </td>*@
-                <td class="btn-group btn-group-sm ">
-                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
-                    {
-                        <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
-                    }
+            if (item.IsDue)
+            {
+                <tr class="text-danger bg-light">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayMode)
+                    </td>
 
-                    <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
-                    @if (Context.User.IsInRole("Admin"))
-                    {
-                        <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
-                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+                    </td>
 
-                    @if (item.PayMode != PayModes.Cash)
-                    {
-                        <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("_AddEditPaymentDetails","DailySales",null,Context.Request.Scheme)','Add Payment Details')" id="paymentInfo">Payment Details</a>
-                    }
-                </td>
-            </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsManualBill)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSaleReturn)
+                    </td>
+
+                    <td class="btn-group btn-group-sm ">
+                        @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
+                        {
+                            <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                        }
+
+                        <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                        @if (Context.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                        }
+
+                        @if (item.PayMode != PayModes.Cash)
+                        {
+                            <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
+                        }
+                    </td>
+                </tr>
+            }
+            else if (item.IsTailoringBill)
+            {
+                <tr class=" light-blue">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayMode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+                    </td>
+
+                    <td >
+                        @Html.DisplayFor(modelItem => item.IsManualBill)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSaleReturn)
+                    </td>
+
+                    <td class="btn-group btn-group-sm ">
+                        @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
+                        {
+                            <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                        }
+
+                        <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                        @if (Context.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                        }
+
+                        @if (item.PayMode != PayModes.Cash)
+                        {
+                             <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
+                        }
+                    </td>
+                </tr>
+            }
+            else if (item.IsManualBill)
+            {
+                <tr class="light-green">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayMode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsManualBill)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSaleReturn)
+                    </td>
+
+                    <td class="btn-group btn-group-sm ">
+                        @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
+                        {
+                            <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                        }
+
+                        <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                        @if (Context.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                        }
+
+                        @if (item.PayMode != PayModes.Cash)
+                        {
+                             <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
+                        }
+                    </td>
+                </tr>
+            }
+            else if (item.IsSaleReturn)
+            {
+                <tr class="rgba-pink-light">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayMode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsManualBill)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSaleReturn)
+                    </td>
+
+                    <td class="btn-group btn-group-sm ">
+                        @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
+                        {
+                            <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                        }
+
+                        <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                        @if (Context.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                        }
+
+                        @if (item.PayMode != PayModes.Cash)
+                        {
+                             <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
+                        }
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InvNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PayMode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salesman.SalesmanName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsManualBill)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSaleReturn)
+                    </td>
+
+                    <td class="btn-group btn-group-sm ">
+                        @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser") || Context.User.IsInRole("StoreManager"))
+                        {
+                            <a class="btn btn-outline-secondary  waves-effect btn-sm mr-1" asp-action="Edit" asp-route-id="@item.DailySaleId" id="edit" data_modal="">Edit</a>
+                        }
+
+                        <a class="btn btn-outline-deep-orange  waves-effect btn-sm mr-1" asp-action="Details" asp-route-id="@item.DailySaleId" id="detail" data_modal="">Details</a>
+                        @if (Context.User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
+                        }
+
+                        @if (item.PayMode != PayModes.Cash)
+                        {
+                             <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
+                        }
+                    </td>
+                </tr>
+            }
+           
         }
     </tbody>
 </table>
@@ -221,8 +398,7 @@ a.btn:hover{
             <div class="modal-body">
 
             </div>
-            <div class="modal-footer">
-                <label class="text-warning text-muted text-monospace">This is for testing purpose. Do not enter any data!</label>
+            <div class="modal-footer" id="ModelFooter">
                 <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -255,6 +431,7 @@ a.btn:hover{
                     $('#form-modal .modal-body').html(res);
                     $('#form-modal .modal-title').html(title);
                     $('#form-modal').modal('show');
+
                 }
             })
         }
@@ -273,20 +450,60 @@ a.btn:hover{
                             $('#form-modal .modal-body').html('');
                             $('#form-modal .modal-title').html('');
                             $('#form-modal').modal('hide');
+                            $.notify("Payment details saved successfuly!!", { globalPosition: 'top center', className: "success" });
                         }
-                        else
+                        else {
                             $('#form-modal .modal-body').html(res.html);
+                            $.notify("An error occured while saving payment details!!", { globalPosition: 'top center', className: "error" });
+                        }
                     },
                     error: function (err) {
                         console.log(err)
+                        $.notify("An error occured while saving payment details!!, Kindly contact admin for details!", { globalPosition: 'top center', className: "error" });
                     }
                 })
                 //to prevent default form submit event
                 return false;
             } catch (ex) {
                 console.log(ex)
+                $.notify("An error occured while saving payment details!!", { globalPosition: 'top center', className: "error" });
             }
         }
+
+        function jQueryAjaxDeleteFunction(id) {
+            console.log(id);
+            if (confirm('Are you sure to delete this payment details ?')) {
+                try {
+                    var fd= new FormData();
+
+                    fd.append('id', id);
+                    console.log("id" + fd);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("DeletePayment", "DailySales")',
+                        data: fd,
+                        contentType: false,
+                        processData: false,
+                        success: function (res) {
+                            $('#view-all').html(res.html);
+                            $('#form-modal .modal-body').html('');
+                            $('#form-modal .modal-title').html('');
+                            $('#form-modal').modal('hide');
+                            $.notify("Payment details delete successfuly!!, Ok", { globalPosition: 'top center', className: "success" });
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                } catch (ex) {
+                    console.log(ex)
+                }
+            }
+
+            //prevent default form submit event
+            return false;
+        }
+
 
         jQueryAjaxDelete = form => {
             if (confirm('Are you sure to delete this record ?')) {
@@ -299,6 +516,10 @@ a.btn:hover{
                         processData: false,
                         success: function (res) {
                             $('#view-all').html(res.html);
+                            $('#form-modal .modal-body').html('');
+                            $('#form-modal .modal-title').html('');
+                            $('#form-modal').modal('hide');
+                            $.notify("Payment details delete successfuly!!", { globalPosition: 'top center', className: "success" });
                         },
                         error: function (err) {
                             console.log(err)
@@ -319,17 +540,17 @@ a.btn:hover{
             return false;
         }
 
-                        //function ProcessPaymentMode(data) {
-                        //    console.log(data);
+                                        //function ProcessPaymentMode(data) {
+                                        //    console.log(data);
 
-                        //    if (data == "Card")
-                        //        $.notify(data, { globalPosition: 'top center', className: "success" });
-                        //    else if (data == "MixPayments") {
-                        //        $.notify(data, { globalPosition: 'top center', className: "error" });
-                        //    }
-                        //    else {
-                        //        $.notify(data, { globalPosition: 'top center', className: "warn" });
-                        //    }
-                        //}
+                                        //    if (data == "Card")
+                                        //        $.notify(data, { globalPosition: 'top center', className: "success" });
+                                        //    else if (data == "MixPayments") {
+                                        //        $.notify(data, { globalPosition: 'top center', className: "error" });
+                                        //    }
+                                        //    else {
+                                        //        $.notify(data, { globalPosition: 'top center', className: "warn" });
+                                        //    }
+                                        //}
     </script>
 }
