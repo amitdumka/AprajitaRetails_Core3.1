@@ -13,20 +13,20 @@ namespace AprajitaRetails.Ops.Triggers
         {
 
             CashInHand today;
-            today = db.CashInHands.Where(c => c.CIHDate.Date == date.Date).FirstOrDefault();
+            today = db.CashInHands.Where(c => c.CIHDate.Date == date.Date && c.StoreId==StoreId).FirstOrDefault();
 
             DateTime yDate = date.AddDays(-1);
-            CashInHand yesterday = db.CashInHands.Where(c => (c.CIHDate.Date) == (yDate.Date)).FirstOrDefault();
+            CashInHand yesterday = db.CashInHands.Where(c => c.CIHDate.Date.Date == yDate.Date.Date && c.StoreId == StoreId).FirstOrDefault();
             bool isNew = false;
             if (today == null)
             {
-                today = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = date, ClosingBalance = 0, OpenningBalance = 0 };
+                today = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = date, ClosingBalance = 0, OpenningBalance = 0, StoreId=StoreId };
                 isNew = true;
             }
 
             if (yesterday == null)
             {
-                yesterday = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = yDate, ClosingBalance = 0, OpenningBalance = 0 };
+                yesterday = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = yDate, ClosingBalance = 0, OpenningBalance = 0, StoreId=StoreId };
                 today.OpenningBalance = 0;
                 today.ClosingBalance = today.OpenningBalance + today.CashIn - today.CashOut;
                 db.CashInHands.Add(yesterday);

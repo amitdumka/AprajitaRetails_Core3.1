@@ -121,7 +121,8 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             var cashinhand = (decimal)0.00;
             try
             {
-                cashinhand = db.CashInHands.Where(c => c.CIHDate == DateTime.Today && c.StoreId == this.StoreCodeId).FirstOrDefault().InHand;
+                var chin = db.CashInHands.Where(c => c.CIHDate.Date == DateTime.Today.Date && c.StoreId == this.StoreCodeId).FirstOrDefault();
+                cashinhand = chin.InHand;
             }
             catch (Exception)
             {
