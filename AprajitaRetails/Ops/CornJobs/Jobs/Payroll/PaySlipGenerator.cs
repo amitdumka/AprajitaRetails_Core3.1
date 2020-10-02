@@ -52,11 +52,13 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
 
         
 
-        public void ProcessPaySlip(AprajitaRetailsContext db)
+        public string ProcessPaySlip(AprajitaRetailsContext db)
         {
             DateTime forDate = DateTime.Today.AddMonths(-1).Date;
 
             List<SalaryHead> salaryHeads = GeneratePaySlip(db);
+            string errMsg = $"PaySlip AutoGeneration Report:\n On {DateTime.Now}\n Total Count: {salaryHeads.Count}\n";
+
             foreach (var item in salaryHeads)
             {
                 if(!item.IsError)
@@ -94,13 +96,19 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
                 }
                 else
                 {
+                    errMsg = $"\nError Occured On {DateTime.Now}\n Error Details Below.\n {item.ErrMsg}\n. Hash {item.ToString()}";
+                    
+                   
                     //TODO: Error Handling and Reporting need to be done here
                 }
 
             }
 
             db.SaveChanges();
+            MyMail.SendEmail("Error Occured in Payslip Generation", errMsg, "amitnarayansah@gmail.com");
             EmailPaySlip(db, salaryHeads);
+
+            return errMsg;
 
 
         }

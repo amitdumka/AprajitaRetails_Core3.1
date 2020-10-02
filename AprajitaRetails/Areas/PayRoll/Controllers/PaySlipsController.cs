@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using AprajitaRetails.Ops.CornJobs.JobHelpers;
+using AprajitaRetails.Ops.CornJobs.Jobs.Payroll;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -20,6 +22,15 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             _context = context;
         }
+
+        public JsonResult GeneratePaySlip()
+        {
+           
+            
+            string msg=new PaySlipGenerator().ProcessPaySlip (_context);
+            return new JsonResult(msg);
+        }
+
 
         // GET: PaySlips
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)

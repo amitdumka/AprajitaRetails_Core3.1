@@ -24,7 +24,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
 {
     public class CronJobService : BackgroundService
     {
-        private CrontabSchedule _scheduleForPaySlip;
+        private readonly CrontabSchedule _scheduleForPaySlip;
         private DateTime _nextRunForPaySlip;
         private string ScheduleForPaySlip => "0 00 00 2 * *"; //Runs every day on 10:15 IST and 4:45 GMT
 
