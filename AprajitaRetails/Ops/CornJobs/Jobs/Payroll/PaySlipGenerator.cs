@@ -270,7 +270,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
                     if(IsNewEmployee(db,EmpID, Month, Year))
                     {
                         double netdayPresent = present + (halfday / 2);
-
+                        head.NoOfDaysPresent = netdayPresent;
                         var salary = GetCurrentSalary(db, Year, Month, EmpID);
 
                         if (salary != null)
