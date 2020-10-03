@@ -49,16 +49,12 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
     /// </summary>
     public class PaySlipGenerator
     {
-
-        
-
+    
         public string ProcessPaySlip(AprajitaRetailsContext db)
         {
-            DateTime forDate = DateTime.Today.AddMonths(-1).Date;
-
+           // DateTime forDate = DateTime.Today.AddMonths(-1).Date;
             List<SalaryHead> salaryHeads = GeneratePaySlip(db);
             string errMsg = $"PaySlip AutoGeneration Report:\n On {DateTime.Now}\n Total Count: {salaryHeads.Count}\n";
-
             foreach (var item in salaryHeads)
             {
                 if(!item.IsError)
@@ -87,7 +83,6 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
                         UserName = "AutoAdded",
                         StandardDeductions = 0,
                         SaleIncentive = item.Incentive
-
                     };
                     slip.GrossSalary = slip.SaleIncentive + slip.BasicSalary + slip.WOWBillIncentive + slip.LastPCsIncentive + slip.OthersIncentive;
                     slip.GrossSalary -= (slip.TDSDeductions - slip.StandardDeductions - slip.PFDeductions - slip.OtherDeductions - slip.AdvanceDeducations);
@@ -96,39 +91,32 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
                 }
                 else
                 {
-                    errMsg = $"\nError Occured On {DateTime.Now}\n Error Details Below.\n {item.ErrMsg}\n. Hash {item.ToString()}";
-                    
-                   
+                    errMsg += $"\nError Occured On {DateTime.Now}\n Error Details Below.\n {item.ErrMsg}\n. Hash {item.ToString()}";
                     //TODO: Error Handling and Reporting need to be done here
                 }
-
             }
-
             db.SaveChanges();
             MyMail.SendEmail("Error Occured in Payslip Generation", errMsg, "amitnarayansah@gmail.com");
             EmailPaySlip(db, salaryHeads);
-
             return errMsg;
-
-
         }
 
         public void EmailPaySlip(AprajitaRetailsContext db, List<SalaryHead> salaryHeads)
         {
             //TODO: here deduction need to be handled. 
-            string MonthOf = "" + salaryHeads.First().Month + "/" + salaryHeads.First().Year;
+            string MonthOf = salaryHeads.First().Month + "/" + salaryHeads.First().Year;
             string toAddress = "amitnarayansah@gmail.com,thearvindstoredumka@gmail.com";
-            string msg = $"PaySlip Autogenrate for Month of{MonthOf}. \n\n";
-
+            string msg = $"Payslip autogenrated for Month of {MonthOf}. \n\n";
+            int count = 1;
             foreach (var item in salaryHeads)
             {
-                msg += $"PaySlip of EmpName: {item.StaffName} for the Month of {MonthOf}.\n ";
+                msg += $"#{count++}.\nPayslip of  {item.StaffName} for the Month of {MonthOf}.\n";
                 msg += $"No of Days Present: {item.NoOfDaysPresent} \t Gross Salary: {item.GrossSalary}\n";
                 if (item.EmpType == EmpType.Salesman)
                 {
-                    msg += $"Total Sale:          {item.TotalSale} \t Incentive: {item.Incentive}\n";
+                    msg += $"Total Sale         : {item.TotalSale} \t Incentive: {item.Incentive}\n";
                     msg += $"Total WOWBill Value: {item.TotalWOWBillSaleAmount} \t WOWBill Incentive: {item.WowBill}\n";
-                    msg += $"Total LastPcs value: {item.TotalLastPcsValue} \t Last Pcs Incentive: {item.LastPcs}\n";
+                    msg += $"Total LastPcs   Value: {item.TotalLastPcsValue} \t Last Pcs Incentive: {item.LastPcs}\n";
                 }
                 if (item.EmpType == EmpType.StoreManager)
                 {
@@ -190,6 +178,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
         {
             SalaryHead head = new SalaryHead() { EmpId = EmpID, Month = Month, Year = Year, IsError = false, ErrMsg = "" };
             var att = db.Attendances.Include(c=>c.Employee).Where(c => c.EmployeeId == EmpID && c.AttDate.Year == Year && c.AttDate.Month == Month).ToList();
+           
             if (att != null && att.Count > 0)
             {
                 int present = att.Where(c => c.Status == AttUnits.Present || c.Status == AttUnits.Sunday).Count();
@@ -199,18 +188,20 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
                 int totaldays = present + absent + halfday + holiday;
                 int noofdays = DateTime.DaysInMonth(Year, Month);
                 int sunday = 0;
-
+                head.StaffName = att.First().Employee.StaffName;
                 head.NoOfDaysPresent = noofdays;
 
                 if (totaldays == noofdays)
                 {
                     double netdayPresent = present + (halfday / 2);
+
                     var salary = GetCurrentSalary(db, Year, Month, EmpID);
-                    head.SalaryId = salary.CurrentSalaryId;
+                   
                     if (salary != null)
                     {
+                        head.SalaryId = salary.CurrentSalaryId;
                         var empType = att.First().Employee.Category;
-                        head.StaffName = att.First().Employee.StaffName;
+                       
                         switch (empType)
                         {
                             case EmpType.Salesman:
@@ -260,6 +251,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
             }
             else
             {
+                head.StaffName = db.Employees.Find(EmpID).StaffName;
                 head.IsError = true;
                 head.ErrMsg = ErrorMessage.AttendanceRecordNotFound;
             }
@@ -270,7 +262,8 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
 
         private CurrentSalary GetCurrentSalary(AprajitaRetailsContext db, int Year, int Month, int EmpId)
         {
-            var sal = db.CurrentSalaries.Where(c => c.EmployeeId == EmpId && c.EffectiveDate.Year >= Year && c.EffectiveDate.Month >= Month).ToList();
+            //TODO: Bug there is bug in calculation of salary  head
+            var sal = db.CurrentSalaries.Where(c => c.EmployeeId == EmpId && c.EffectiveDate.Year <= Year && c.EffectiveDate.Month <= Month).OrderByDescending(c=>c.CurrentSalaryId).ToList();
 
             if (sal.Count > 1)
             {

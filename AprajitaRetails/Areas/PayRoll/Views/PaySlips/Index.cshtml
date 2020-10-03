@@ -3,12 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1 class="text-danger">Index</h1>
-
 <p>
     <a class="btn btn-outline-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
-    <a class="btn btn-outline-light-blue btn-sm" asp-action="GeneratePaySlip" id="paySlip" data_modal="">Generate PaySlip</a>
+    <a class="btn btn-outline-light-blue btn-sm"  id="PaySlip" >Generate PaySlip</a>
 </p>
 <table class="table table-sm table-bordered table-hover table-striped">
     <thead class="bg-success">
@@ -163,22 +161,30 @@
         $("#PaySlip").click(function (e) {
             e.preventDefault();
 
-            return $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                type: 'GET',
-                url: "/PayRoll/PaySlipsController/PaySlipGenerator",
-                success: function (result) {
-                    console.log(result);
-                    $.notify(result, { globalPosition: 'top center', className: "success" });
-                    location.reload();
-                },
-                error: function (res) {
-                    console.log(res);
-                    $.notify(res, { globalPosition: 'top center', className: "success" });
-                    alert("Error!!!");
-                }
-            });
+            try {
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: "/PayRoll/PaySlips/GeneratePaySlip",
+                    success: function (result) {
+                        location.reload();
+                        console.log(result);
+                        $.notify(result, { globalPosition: 'top center', className: "success" });
+                        alert("AutoGeneration of Payslip is completed!");
+                        
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        $.notify("error occured\n"+res, { globalPosition: 'top center', className: "success" });
+                        alert("Error!!!");
+                    }
+                });
+            } catch (e) {
+                console.log(e);
+
+            }
+           
         });
     </script>
 }

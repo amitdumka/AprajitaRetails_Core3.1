@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Areas.Sales.Data;
+﻿using AprajitaRetails.Areas.Sales.Data;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using System;
+using System.IO;
+using System.Linq;
 
-//TODO: Negative or zero stock waring. 
-//      Only admin can zero or neg stock 
-//      Manual Stock Ajustment record . 
+//TODO: Negative or zero stock waring.
+//      Only admin can zero or neg stock
+//      Manual Stock Ajustment record .
 //      Implement Delete Invoice and Edit. or Marked Deleted /Canceled Invoice
-//      must have option to provide Manul Invice no entry of Phsycaial Invoice. 
+//      must have option to provide Manul Invice no entry of Phsycaial Invoice.
 //      http://abctutorial.com/Post/35/mvc-5-master-details-using-jquery-ajax
 //      http://www.dotnetawesome.com/2016/07/advance-master-details-entry-form-in-mvc.html
 
-
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
-  
     [Area("Sales")]
     [Authorize]
     public class ManualInvoiceController : Controller
@@ -39,8 +33,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         public ManualInvoiceController(AprajitaRetailsContext aCtx, UserManager<IdentityUser> userManager, ILogger<ManualInvoiceController> logger)
         {
             aprajitaContext = aCtx; UserManager = userManager;
-
         }
+
         public IActionResult Index()
         {
             var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c => c.SaleItems).Include(c => c.PaymentDetail)
@@ -51,13 +45,11 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
         public IActionResult MainView()
         {
-
             return View();
         }
 
         public IActionResult ReprintInvoice(int? id, int? Download)
         {
-
             var vm = aprajitaContext.RegularInvoices.Include(c => c.Customer).Include(c => c.SaleItems).Include(c => c.PaymentDetail).
                 ThenInclude(c => c.CardDetail).Where(c => c.RegularInvoiceId == id).FirstOrDefault();
 
@@ -69,7 +61,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             }
 
             return File(fileName, "application/pdf");
-
         }
 
         [HttpGet]
@@ -92,9 +83,8 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             }
             retunDetails.Msg = "Data is loaded successfuly";
             retunDetails.Error = "OK";
-            return Json(retunDetails);          
+            return Json(retunDetails);
         }
-
 
         public JsonResult GetBarCode(string barcode)
         {
@@ -122,26 +112,22 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 JsonResult result = new JsonResult(pItem)
                 {
                     Value = pItem
-
                 };
                 return result;
-
-
             }
             catch (Exception ex)
             {
-
                 var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs) };
                 JsonResult result = new JsonResult(pItem)
                 {
                     Value = pItem
-
                 };
 
                 return result;
             }
             //return Json ( Data=pItem, JsonRequestBehavior = JsonRequestBehavior.AllowGet );
         }
+
         [HttpGet]
         public JsonResult GetSalesmanList()
         {
@@ -155,7 +141,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             string result = "Error! Order Is Not Complete!";
             if (dTO.Name != null && dTO.Address != null && dTO.SaleItems != null)
             {
-                InvoiceSaveReturn x = new RegularSaleManager().OnInsert(aprajitaContext, dTO, User.Identity.Name, StoreId );
+                InvoiceSaveReturn x = new RegularSaleManager().OnInsert(aprajitaContext, dTO, User.Identity.Name, StoreId);
                 if (x.NoOfRecord <= 0)
                     result = "Error while saving bill, Kindly try again!";
                 else
@@ -169,7 +155,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
         public ActionResult SaveEditedInvoice([FromBody] SaveOrderDTO dTO)
         {
-
             string result = "Error! Order Is Not Complete!";
 
             return Json(new { FileName = new String("Error"), result });
@@ -183,7 +168,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         [HttpGet]
         public ActionResult DeleteBillNo(int? id)
         {
-
             string errMsg = "Error!";
             int ret = 0;
             if (id == null)
@@ -204,9 +188,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 }
                 else
                     errMsg = "It fails to delete Invoice!";
-
             }
-
 
             return Json(new { Count = ret, Msg = errMsg });
         }
@@ -219,7 +201,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         //[HttpGet]
         //public ActionResult DeleteBillNo(string InvoiceNo)
         //{
-
         //    string errMsg = "Error!";
         //    int ret = 0;
         //    if (String.IsNullOrEmpty(InvoiceNo))
@@ -242,7 +223,6 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         //            errMsg = "It fails to delete Invoice!";
 
         //    }
-
 
         //    return Json(new { Count = ret, Msg = errMsg });
         //}
@@ -270,20 +250,20 @@ Sn, BarCode Qty Des MRP Dis% DisAmt Addl Dis Value Scheme
 Bin, SM BarCode Dept Qty Des	 MRP Disc% Disc Amt	Value
 
 T Qty
-T MRP 
+T MRP
 T Dis
 T Tax
 ===========
 NEt Bill Amt
 Round Off
 Reciving Amt
-Refund 
+Refund
 
-Payment 
+Payment
 Cash Paid    Card Amt
 Card Type 	Auth Code
 Card Bank	Vocuher Am
-Card Code  Other Col	
+Card Code  Other Col
 Card Number
 
  */

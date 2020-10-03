@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using AprajitaRetails.Ops.CornJobs.Jobs.Payroll;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Ops.CornJobs.JobHelpers;
-using AprajitaRetails.Ops.CornJobs.Jobs.Payroll;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -23,14 +21,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public JsonResult GeneratePaySlip()
         {
-           
-            
-            string msg=new PaySlipGenerator().ProcessPaySlip (_context);
+            string msg = new PaySlipGenerator().ProcessPaySlip(_context);
             return new JsonResult(msg);
         }
-
 
         // GET: PaySlips
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
@@ -44,11 +40,10 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 searchString = currentFilter;
             }
 
-
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.PaySlips.Include(p => p.CurrentSalary).Include(p => p.Employee).OrderByDescending (c => c.OnDate);
-           return View(await PaginatedList<PaySlip>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprajitaRetailsContext = _context.PaySlips.Include(p => p.CurrentSalary).Include(p => p.Employee).OrderByDescending(c => c.OnDate);
+            return View(await PaginatedList<PaySlip>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
 
@@ -69,7 +64,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-           return PartialView(paySlip);
+            return PartialView(paySlip);
         }
 
         // GET: PaySlips/Create
@@ -77,11 +72,11 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         {
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId");
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
-           return PartialView();
+            return PartialView();
         }
 
         // POST: PaySlips/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,11 +90,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId", paySlip.CurrentSalaryId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", paySlip.EmployeeId);
-           return PartialView(paySlip);
+            return PartialView(paySlip);
         }
 
         // GET: PaySlips/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -113,15 +109,16 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId", paySlip.CurrentSalaryId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", paySlip.EmployeeId);
-           return PartialView(paySlip);
+            return PartialView(paySlip);
         }
 
         // POST: PaySlips/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("PaySlipId,OnDate,Month,Year,EmployeeId,CurrentSalaryId,BasicSalary,NoOfDaysPresent,TotalSale,SaleIncentive,WOWBillAmount,WOWBillIncentive,LastPcsAmount,LastPCsIncentive,OthersIncentive,GrossSalary,StandardDeductions,TDSDeductions,PFDeductions,AdvanceDeducations,OtherDeductions,Remarks")] PaySlip paySlip)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("PaySlipId,OnDate,Month,Year,EmployeeId,CurrentSalaryId,BasicSalary,NoOfDaysPresent,TotalSale,SaleIncentive,WOWBillAmount,WOWBillIncentive,LastPcsAmount,LastPCsIncentive,OthersIncentive,GrossSalary,StandardDeductions,TDSDeductions,PFDeductions,AdvanceDeducations,OtherDeductions,Remarks")] PaySlip paySlip)
         {
             if (id != paySlip.PaySlipId)
             {
@@ -150,11 +147,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData["CurrentSalaryId"] = new SelectList(_context.CurrentSalaries, "CurrentSalaryId", "CurrentSalaryId", paySlip.CurrentSalaryId);
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", paySlip.EmployeeId);
-           return PartialView(paySlip);
+            return PartialView(paySlip);
         }
 
         // GET: PaySlips/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -170,13 +168,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 return NotFound();
             }
 
-           return PartialView(paySlip);
+            return PartialView(paySlip);
         }
 
         // POST: PaySlips/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var paySlip = await _context.PaySlips.FindAsync(id);
             _context.PaySlips.Remove(paySlip);
