@@ -11,7 +11,7 @@ namespace AprajitaRetails.Ops.Exporter
 {
     public static class ExcelExporter
     {
-        public static void CashInHandExporter(string fileName, List<CashInHand> inHandList, string name)
+        public static void CashInHandExporter(string fileName, List<CashInHand> inHandList, string name, int StoreId)
         {
             FileInfo file = new FileInfo(fileName);
             
@@ -40,7 +40,7 @@ namespace AprajitaRetails.Ops.Exporter
             package.Save();
         }
 
-        public static void CashBookExporter(string fileName, List<CashBook> cashBooks, string name)
+        public static void CashBookExporter(string fileName, List<CashBook> cashBooks, string name, int StoreId)
         {
             FileInfo file = new FileInfo(fileName);
            // if (!file.Directory.Exists) Directory.CreateDirectory(fileName);

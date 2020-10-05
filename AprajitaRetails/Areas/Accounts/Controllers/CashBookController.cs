@@ -18,6 +18,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
     public class CashBookController : Controller
     {
         private readonly AprajitaRetailsContext db;
+        private readonly int StoreId = 1; //TODO: default for testing
         public CashBookController(AprajitaRetailsContext context)
         {
             db = context;
@@ -33,8 +34,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 file.Directory.Create();
             ViewBag.FileName = "";
 
-            CashBookManagerExporter managerexporter = new CashBookManagerExporter();
-            CashBookManager manager = new CashBookManager();
+            CashBookManagerExporter managerexporter = new CashBookManagerExporter(StoreId);
+            CashBookManager manager = new CashBookManager(StoreId);
             List<CashBook> cashList;
             if (!String.IsNullOrEmpty(OpsType))
             {
@@ -44,9 +45,9 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                     ViewBag.Message = "Cash Book Correction  ";
 
                     if (ModeType == "MonthWise")
-                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, false);
+                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, StoreId,false);
                     else
-                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, true);
+                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, StoreId, true);
 
                     ViewBag.FileName = "/" + fileName;
                 }
@@ -58,17 +59,17 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             if (EDate != null)
             {
                 if (ModeType == "MonthWise")
-                    cashList = manager.GetMontlyCashBook(db, EDate.Value.Date);
+                    cashList = manager.GetMontlyCashBook(db, EDate.Value.Date,StoreId);
                 else
-                    cashList = manager.GetDailyCashBook(db, EDate.Value.Date);
+                    cashList = manager.GetDailyCashBook(db, EDate.Value.Date, StoreId);
             }
             else if (id == 101)
             {
-                cashList = manager.GetDailyCashBook(db, DateTime.Now);
+                cashList = manager.GetDailyCashBook(db, DateTime.Now, StoreId);
             }
             else
             {
-                cashList = manager.GetMontlyCashBook(db, DateTime.Now);
+                cashList = manager.GetMontlyCashBook(db, DateTime.Now, StoreId);
             }
             if (cashList != null)
             {
@@ -80,7 +81,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 else if (!String.IsNullOrEmpty(OutputType) && OutputType == "XLS")
                 {
                     if (OpsType == "List")
-                        ExcelExporter.CashBookExporter(path, cashList, "CashBook");
+                        ExcelExporter.CashBookExporter(path, cashList, "CashBook", StoreId);
 
                     return File(fileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                 }
