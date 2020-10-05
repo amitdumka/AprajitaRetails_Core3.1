@@ -58,6 +58,20 @@ namespace AprajitaRetails.Ops.Uploader
                             return UploadReturns.Error;
                         }
                     }
+                    else if ( UploadType == UploadTypes.Search )
+                    {
+
+                        try
+                        {
+                            ImportPurchaseSearch (db,  pathToExcelFile);
+                            return UploadReturns.OKGen;
+                        }
+                        catch ( Exception ex )
+                        {
+                            Console.WriteLine ("Error: " + ex.Message);
+                            return UploadReturns.Error;
+                        }
+                    }
                     else if ( UploadType == UploadTypes.SaleRegister )
                     {
                         try
@@ -291,6 +305,40 @@ namespace AprajitaRetails.Ops.Uploader
             db.ImportInWards.AddRange (purchaseList);
             return db.SaveChanges ();
         }
+
+        
+
+        private int ImportPurchaseSearch(AprajitaRetailsContext db, string fileName)
+        {
+            FileInfo file = new FileInfo (fileName);
+
+            using ExcelPackage package = new ExcelPackage (file);
+            ExcelWorksheet workSheet = package.Workbook.Worksheets ["Sheet1"];
+            int totalRows = workSheet.Dimension.Rows;
+            List<ImportSearchList> saleList = new List<ImportSearchList> ();
+            int xo = 0;
+            for ( int i = 2 ; i <= totalRows ; i++ )
+            {
+               
+                ImportSearchList p = new ImportSearchList
+                {
+                    Barcode = workSheet.Cells [i, 8].Value.ToString (),
+                };
+                var d = db.ImportPurchases.Where (c => c.Barcode == p.Barcode).FirstOrDefault ();
+                if ( d != null )
+                {
+                    p.InvoiceNo = d.InvoiceNo;
+                    p.OnDate = d.InvoiceDate;
+                }
+               
+                saleList.Add (p);
+                xo++;
+            }
+            db.ImportSearches.AddRange (saleList);
+            return db.SaveChanges ();
+
+        }
+
 
         private int ImportSaleRegister(AprajitaRetailsContext db, string StoreCode, string fileName)
         {

@@ -25,5 +25,13 @@ namespace AprajitaRetails.Areas.Uploader.Models
         [Display(Name = "Processed")]
         public bool IsConsumed { get; set; }
     }
+    public class ImportSearchList
+    {
+        public int Id { get; set; }
+        public string Barcode { get; set; }
+        public string InvoiceNo { get; set; }
+        [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? OnDate { get; set; }
+    }
 
 }

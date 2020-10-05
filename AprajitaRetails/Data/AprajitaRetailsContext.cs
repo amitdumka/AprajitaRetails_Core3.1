@@ -15,6 +15,7 @@ using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Accounts.Models;
 using AprajitaRetails.Areas.Reports.Models;
 using AprajitaRetails.Areas.Admin.Models;
+using static AprajitaRetails.Ops.Uploader.ExcelUploaders;
 //using AprajitaRetails.Areas.Chat.Models;
 
 namespace AprajitaRetails.Data
@@ -121,6 +122,8 @@ namespace AprajitaRetails.Data
 
 
         }
+
+        public DbSet<ImportSearchList> ImportSearches { get; set; }
         ////Version 2
         public DbSet<DailySale> DailySales { get; set; }   //Version 3.0
         public DbSet<CashInHand> CashInHands { get; set; } //Version 3.0

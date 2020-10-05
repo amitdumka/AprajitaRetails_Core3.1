@@ -31,8 +31,8 @@ public enum PaymentModes { Cash, Card, RTGS, NEFT, IMPS, Wallets, Cheques, Deman
 public enum AttUnits { Present, Absent, HalfDay, Sunday, Holiday, StoreClosed, SundayHoliday, SickLeave, PaidLeave, CasualLeave, OnLeave };
 public enum SalaryComponet { NetSalary, LastPcs, WOWBill, SundaySalary, Incentive, Others, Advance, PaidLeave, SickLeave }
 public enum BankPayModes { Cash, Card, Cheques, RTGS, NEFT, IMPS, Wallets, Others }
-public enum UploadTypes { Purchase, SaleRegister, SaleItemWise, InWard, Customer, Attendance }
-public enum UploadReturns { Success, Error, FileNotFound, NotExcelType, ImportNotSupported }
+public enum UploadTypes { Purchase, SaleRegister, SaleItemWise, InWard, Customer, Attendance,Search }
+public enum UploadReturns { Success, Error, FileNotFound, NotExcelType, ImportNotSupported ,OKGen}
 public enum LoginRole { Admin, StoreManager, Salesman, Accountant, RemoteAccountant, Member, PowerUser };
 public enum LedgerEntryType { Expenses, Payment, Reciept, Salary, AdvacePayment, AdvaceReciept, ArvindLimited, Others }
 public enum AccountType { Saving, Current, CashCredit, OverDraft, Others }

@@ -32,6 +32,13 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return View();
         }
 
+
+        public IActionResult ViewList()
+        {
+            var list = db.ImportSearches.ToList ();
+            return View (list);
+        }
+
         [HttpPost]
         public IActionResult UploadPurchase(string BillType, string InterState, string StoreCode, IFormFile FileUpload)
         {
@@ -40,6 +47,14 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             bool IsVat = false;
             bool IsLocal = false;
 
+            if(StoreCode== "JH00100" )
+            {
+                UploadReturns response1 = uploader.UploadExcel (db, UploadTypes.Search, FileUpload, StoreCode, IsVat, IsLocal);
+                if ( response1 == UploadReturns.OKGen )
+                {
+                    return RedirectToAction ("ViewList");
+                }
+            }
             if (BillType == "VAT")
             {
                 IsVat = true;
