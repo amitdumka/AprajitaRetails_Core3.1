@@ -2,115 +2,114 @@
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Bot;
 using AprajitaRetails.Ops.TAS.Mails;
-using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.Triggers
 {
     public class PayRollManager
     {
-        public void ONInsertOrUpdate(AprajitaRetailsContext db, Attendance attendance, bool isDeleted,bool isUpdated)
+        public void ONInsertOrUpdate(AprajitaRetailsContext db, Attendance attendance, bool isDeleted, bool isUpdated)
         {
-
             try
             {
-                
-
-                if ( !isDeleted && !isUpdated )
+                if (!isDeleted && !isUpdated)
                 {
-                    var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                    if ( attendance.Status != AttUnits.Present )
+                    var sName = db.Employees.Find(attendance.EmployeeId).StaffName;
+                    if (attendance.Status != AttUnits.Present)
                     {
-                       
-                        MyMail.SendEmail (sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                        MyMail.SendEmail(sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
                     }
-                    else if ( attendance.Status == AttUnits.Sunday )
+                    else if (attendance.Status == AttUnits.Sunday)
                     {
                         //TODO: do Some  things
                     }
-                    HRMBot.NotifyStaffAttandance (db,sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);
+                    HRMBot.NotifyStaffAttandance(db, sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);
                 }
-                else if ( isDeleted )
+                else if (isDeleted)
                 {
-                    var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                    MyMail.SendEmail (sName + " Attendance Report status for delete.", sName + " is deleted and current status was " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
-
+                    var sName = db.Employees.Find(attendance.EmployeeId).StaffName;
+                    MyMail.SendEmail(sName + " Attendance Report status for delete.", sName + " is deleted and current status was " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
                 }
-                else if ( isUpdated )
+                else if (isUpdated)
                 {
-                    var sName = db.Employees.Find (attendance.EmployeeId).StaffName;
-                    var before = db.Attendances.Where (c => c.AttendanceId == attendance.AttendanceId).Select (c => c.Status).FirstOrDefault ();
-                    MyMail.SendEmail (sName + " Attendance Report  status for Updated Record. It was " + before, sName + " is updated and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
-                    HRMBot.NotifyStaffAttandance (db, sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);
+                    var sName = db.Employees.Find(attendance.EmployeeId).StaffName;
+                    var before = db.Attendances.Where(c => c.AttendanceId == attendance.AttendanceId).Select(c => c.Status).FirstOrDefault();
+                    MyMail.SendEmail(sName + " Attendance Report  status for Updated Record. It was " + before, sName + " is updated and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                    HRMBot.NotifyStaffAttandance(db, sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);
                 }
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
-
-                Console.WriteLine ("Error :" + ex.Message);
+                Console.WriteLine("Error :" + ex.Message);
             }
-
         }
+
         public void OnInsert(AprajitaRetailsContext db, StaffAdvanceReceipt salPayment)
         {
-            UpdateInAmount(db, salPayment.Amount, salPayment.PayMode,salPayment.ReceiptDate, false);
-            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Receipt: "+salPayment.Details,true);
-            
+            UpdateInAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.ReceiptDate, false);
+            HRMBot.NotifyStaffPayment(db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Receipt: " + salPayment.Details, true);
         }
+
         public void OnInsert(AprajitaRetailsContext db, StaffAdvancePayment salPayment)
         {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
-            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Payment: " + salPayment.Details);
+            HRMBot.NotifyStaffPayment(db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Payment: " + salPayment.Details);
         }
-        public void OnInsert(AprajitaRetailsContext db, SalaryPayment salPayment) {
+
+        public void OnInsert(AprajitaRetailsContext db, SalaryPayment salPayment)
+        {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
-            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Salary payment for month of " + salPayment.SalaryMonth+"  details: " + salPayment.Details);
+            HRMBot.NotifyStaffPayment(db, "", salPayment.EmployeeId, salPayment.Amount, "Salary payment for month of " + salPayment.SalaryMonth + "  details: " + salPayment.Details);
             ;
         }
-                
-        public void OnDelete(AprajitaRetailsContext db, SalaryPayment salPayment) {
+
+        public void OnDelete(AprajitaRetailsContext db, SalaryPayment salPayment)
+        {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, true);
         }
+
         public void OnDelete(AprajitaRetailsContext db, StaffAdvanceReceipt salPayment)
         {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.ReceiptDate, true);
         }
+
         public void OnDelete(AprajitaRetailsContext db, StaffAdvancePayment salPayment)
         {
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, true);
         }
 
-        public void OnUpdate(AprajitaRetailsContext db, SalaryPayment salPayment) {
-
+        public void OnUpdate(AprajitaRetailsContext db, SalaryPayment salPayment)
+        {
             var old = db.SalaryPayments.Where(c => c.SalaryPaymentId == salPayment.SalaryPaymentId).Select(d => new { d.Amount, d.PaymentDate, d.PayMode }).FirstOrDefault();
             if (old != null)
             {
                 UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
             }
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
-            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Salary payment for month of " + salPayment.SalaryMonth + "  details: " + salPayment.Details);
+            HRMBot.NotifyStaffPayment(db, "", salPayment.EmployeeId, salPayment.Amount, "Salary payment for month of " + salPayment.SalaryMonth + "  details: " + salPayment.Details);
         }
-       
-        public void OnUpdate(AprajitaRetailsContext db, StaffAdvancePayment salPayment) {
-            var old = db.StaffAdvancePayments.Where(c => c.StaffAdvancePaymentId == salPayment.StaffAdvancePaymentId).Select(d => new { d.Amount, d.PaymentDate , d.PayMode}).FirstOrDefault();
+
+        public void OnUpdate(AprajitaRetailsContext db, StaffAdvancePayment salPayment)
+        {
+            var old = db.StaffAdvancePayments.Where(c => c.StaffAdvancePaymentId == salPayment.StaffAdvancePaymentId).Select(d => new { d.Amount, d.PaymentDate, d.PayMode }).FirstOrDefault();
             if (old != null)
             {
                 UpdateOutAmount(db, old.Amount, old.PayMode, old.PaymentDate, true);
             }
             UpdateOutAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.PaymentDate, false);
-            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Payment: " + salPayment.Details);
+            HRMBot.NotifyStaffPayment(db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Payment: " + salPayment.Details);
         }
-        public void OnUpdate(AprajitaRetailsContext db, StaffAdvanceReceipt salPayment) {
 
+        public void OnUpdate(AprajitaRetailsContext db, StaffAdvanceReceipt salPayment)
+        {
             var old = db.StaffAdvanceReceipts.Where(c => c.StaffAdvanceReceiptId == salPayment.StaffAdvanceReceiptId).Select(d => new { d.Amount, d.ReceiptDate, d.PayMode }).FirstOrDefault();
             if (old != null)
             {
                 UpdateInAmount(db, old.Amount, old.PayMode, old.ReceiptDate, true);
             }
             UpdateInAmount(db, salPayment.Amount, salPayment.PayMode, salPayment.ReceiptDate, false);
-            HRMBot.NotifyStaffPayment (db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Receipt: " + salPayment.Details, true);
+            HRMBot.NotifyStaffPayment(db, "", salPayment.EmployeeId, salPayment.Amount, "Advance Receipt: " + salPayment.Details, true);
         }
 
         //private void UpDateSalaryAmount(AprajitaRetailsContext db, SalaryPayment salPayment, bool IsEdit)
@@ -211,7 +210,6 @@ namespace AprajitaRetails.Ops.Triggers
                 if (PayMode == PayModes.Cash)
                 {
                     CashTrigger.UpDateCashOutHand(db, PaymentDate, 0 - Amount);
-
                 }
                 //TODO: in future make it more robust
                 if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
@@ -224,7 +222,6 @@ namespace AprajitaRetails.Ops.Triggers
                 if (PayMode == PayModes.Cash)
                 {
                     CashTrigger.UpDateCashOutHand(db, PaymentDate, Amount);
-
                 }
                 //TODO: in future make it more robust
                 if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
@@ -233,6 +230,7 @@ namespace AprajitaRetails.Ops.Triggers
                 }
             }
         }
+
         private void UpdateInAmount(AprajitaRetailsContext db, decimal Amount, PayModes PayMode, DateTime PaymentDate, bool IsEdit)
         {
             if (IsEdit)
@@ -240,7 +238,6 @@ namespace AprajitaRetails.Ops.Triggers
                 if (PayMode == PayModes.Cash)
                 {
                     CashTrigger.UpdateCashInHand(db, PaymentDate, 0 - Amount);
-
                 }
                 //TODO: in future make it more robust
                 if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
@@ -253,7 +250,6 @@ namespace AprajitaRetails.Ops.Triggers
                 if (PayMode == PayModes.Cash)
                 {
                     CashTrigger.UpdateCashInHand(db, PaymentDate, Amount);
-
                 }
                 //TODO: in future make it more robust
                 if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
@@ -262,6 +258,5 @@ namespace AprajitaRetails.Ops.Triggers
                 }
             }
         }
-
     }
 }
