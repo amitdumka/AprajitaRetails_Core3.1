@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.Accountings.Models.LedgerEntry>
+
+@{
+    ViewData["Title"] = "LedgerEntries";
+}
+
+<h1>LedgerEntries</h1>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Party)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReferanceId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VoucherType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Particulars)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountOut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LedgerEntryRefId)
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Party.PartyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReferanceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VoucherType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Particulars)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountOut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LedgerEntryRefId)
+            </td>
+            @*<td>
+                <a asp-action="Edit" asp-route-id="@item.LedgerEntryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.LedgerEntryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.LedgerEntryId">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>

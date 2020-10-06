@@ -66,7 +66,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<DateTime>("CreatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LedgerType")
+                    b.Property<int>("LedgerCategory")
                         .HasColumnType("int");
 
                     b.Property<int>("PartyId")
@@ -93,7 +93,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<string>("GSTNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LedgerType")
+                    b.Property<int>("LedgerCategory")
                         .HasColumnType("int");
 
                     b.Property<decimal>("OpenningBalance")

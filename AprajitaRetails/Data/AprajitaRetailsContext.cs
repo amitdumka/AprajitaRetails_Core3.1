@@ -8,15 +8,8 @@ using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Areas.Uploader.Models;
-//using ManualSaleItem = AprajitaRetails.Areas.Sales.Models.ManualSaleItem;
-//using ManualInvoice = AprajitaRetails.Areas.Sales.Models.ManualInvoice;
-//using SaleItem = AprajitaRetails.Areas.Sales.Models.SaleItem;
-//using SaleInvoice = AprajitaRetails.Areas.Sales.Models.SaleInvoice;
-using AprajitaRetails.Areas.Accounts.Models;
-using AprajitaRetails.Areas.Reports.Models;
 using AprajitaRetails.Areas.Admin.Models;
-using static AprajitaRetails.Ops.Uploader.ExcelUploaders;
-//using AprajitaRetails.Areas.Chat.Models;
+
 
 namespace AprajitaRetails.Data
 {
@@ -256,9 +249,9 @@ namespace AprajitaRetails.Data
         public DbSet<BankStatement> BankStatements { get; set; }
 
         //Accounts
-        public DbSet<LedgerMaster> Masters { get; set; }
-        public DbSet<Party> Parties { get; set; }
-        public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
+        //public DbSet<LedgerMaster> Masters { get; set; }
+        //public DbSet<Party> Parties { get; set; }
+        //public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
         // public DbSet<LedgerEntry> LedgerEntries { get; set; }
         // public DbSet<AprajitaRetails.Areas.Reports.Models.EmpAttReport> EmpAttReport { get; set; }
         // public DbSet<LedgerEntry> LedgerEntries { get; set; }
@@ -277,6 +270,15 @@ namespace AprajitaRetails.Data
         public DbSet<MixAndCouponPayment>MixPayments { get; set; }
         public DbSet<CouponPayment> CouponPayments { get; set; }
         public DbSet<PointRedeemed> PointRedeemeds { get; set; }
+
+        
+        // New Accounting section 
+        public DbSet<Areas.Accountings.Models.LedgerType> LedgerTypes { get; set; }
+        public DbSet<Areas.Accountings.Models.Party> Parties { get; set; }
+        public DbSet<Areas.Accountings.Models.LedgerMaster> LedgerMasters { get; set; }
+        public DbSet<Areas.Accountings.Models.LedgerEntry> LedgerEntries { get; set; }
+        public DbSet<Areas.Accountings.Models.AppInfo> Apps { get; set; }
+
 
 
     }

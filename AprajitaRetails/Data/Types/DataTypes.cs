@@ -23,7 +23,7 @@ public enum Sizes { S, M, L, XL, XXL, XXXL, T28, T30, T32, T34, T36, T38, T40, T
 public enum ProductCategorys { Fabric, ReadyMade, Accessiories, Tailoring, Trims, PromoItems, Coupons, GiftVouchers, Others }
 public enum CardModes { DebitCard, CreditCard, AmexCard }
 public enum CardTypes { Visa, MasterCard, Mastro, Amex, Dinners, Rupay, }
-public enum LedgerType { Credit, Debit, Income, Expenses, Assests, Bank, Loan, Purchase, Sale, Vendor, Customer }
+public enum LedgerCategory { Credit, Debit, Income, Expenses, Assests, Bank, Loan, Purchase, Sale, Vendor, Customer }
 public enum VPayModes { CA, DC, CC, Mix, Wal, CRD, OTH }
 // Aprajita Retails Context
 public enum PayModes { Cash, Card, RTGS, NEFT, IMPS, Wallets, Cheques, DemandDraft, Points, Others, Coupons, MixPayments };

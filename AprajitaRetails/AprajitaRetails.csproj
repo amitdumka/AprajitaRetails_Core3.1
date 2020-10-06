@@ -412,9 +412,7 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Accountings\Controllers\" />
     <Folder Include="Areas\Accountings\Data\" />
-    <Folder Include="Areas\Accountings\Views\" />
     <Folder Include="Areas\Accounts\Data\" />
     <Folder Include="Areas\AddressBook\Data\" />
     <Folder Include="Areas\Admin\Data\" />

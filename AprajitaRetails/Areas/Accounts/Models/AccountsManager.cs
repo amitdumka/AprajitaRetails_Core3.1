@@ -11,20 +11,20 @@ namespace AprajitaRetails.Areas.Accounts.Models
 {
     public class LedgerManager
     {
-        public int CreateParty(AprajitaRetailsContext db, string PartyName, LedgerType ledgerType)
+        public int CreateParty(AprajitaRetailsContext db, string PartyName, LedgerCategory ledgerType)
         {
-            Party newParty = new Party
-            {
-                Address = "",
-                GSTNo = "",
-                OpenningBalance = 0,
-                OpenningDate = DateTime.Today,
-                PANNo = "",
-                PartyName = PartyName,
-                LedgerType = ledgerType,
-                LedgerMaster = new LedgerMaster { CreatingDate = DateTime.Today, LedgerType = ledgerType }
-            };
-            db.Parties.Add(newParty);
+            //Party newParty = new Party
+            //{
+            //    Address = "",
+            //    GSTNo = "",
+            //    OpenningBalance = 0,
+            //    OpenningDate = DateTime.Today,
+            //    PANNo = "",
+            //    PartyName = PartyName,
+            //    LedgerType = ledgerType,
+            //    LedgerMaster = new LedgerMaster { CreatingDate = DateTime.Today, LedgerType = ledgerType }
+            //};
+            //db.Parties.Add(newParty);
             return db.SaveChanges();
         }
 
@@ -38,20 +38,20 @@ namespace AprajitaRetails.Areas.Accounts.Models
 
         public int OnInsert(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refId, string Ref)
         {
-            BasicLedgerEntry entry = new BasicLedgerEntry
-            {
-                EntryDate = date,
-                EntryType = entryType,
-                Particulars = Ref,
-                Party = party,
-                PartyId = party.PartyId,
-                AmountOut = 0,
-                AmountIn = 0,
-                ReferanceId = refId
-            };
-            if (amount > 0) entry.AmountIn = amount; else entry.AmountOut = Math.Abs(amount);
+            //BasicLedgerEntry entry = new BasicLedgerEntry
+            //{
+            //    EntryDate = date,
+            //    EntryType = entryType,
+            //    Particulars = Ref,
+            //    Party = party,
+            //    PartyId = party.PartyId,
+            //    AmountOut = 0,
+            //    AmountIn = 0,
+            //    ReferanceId = refId
+            //};
+            //if (amount > 0) entry.AmountIn = amount; else entry.AmountOut = Math.Abs(amount);
 
-            db.BasicLedgerEntries.Add(entry);
+            //db.BasicLedgerEntries.Add(entry);
             return db.SaveChanges();
         }
 
@@ -61,8 +61,8 @@ namespace AprajitaRetails.Areas.Accounts.Models
 
         public int OnDelete(AprajitaRetailsContext db, DateTime date, Party party, decimal amount, LedgerEntryType entryType, int refid)
         {
-            BasicLedgerEntry entry = db.BasicLedgerEntries.Where(c => c.ReferanceId == refid && c.PartyId == party.PartyId && c.EntryType == entryType).FirstOrDefault();
-            db.Remove(entryType);
+            //BasicLedgerEntry entry = db.BasicLedgerEntries.Where(c => c.ReferanceId == refid && c.PartyId == party.PartyId && c.EntryType == entryType).FirstOrDefault();
+            //db.Remove(entryType);
             return db.SaveChanges();
         }
     }

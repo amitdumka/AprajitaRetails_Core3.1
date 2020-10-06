@@ -21,7 +21,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public DateTime CreatingDate { get; set; }
 
         [Display(Name = "Ledger Type")]
-        public LedgerType LedgerType { get; set; }
+        public LedgerCategory LedgerType { get; set; }
 
 
     }
@@ -44,7 +44,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public string GSTNo { get; set; }
 
         [Display(Name = "Ledger Type")]
-        public LedgerType LedgerType { get; set; }
+        public LedgerCategory LedgerType { get; set; }
 
         public LedgerMaster LedgerMaster { get; set; }
       //  public virtual ICollection<LedgerEntry> Ledgers { get; set; }
