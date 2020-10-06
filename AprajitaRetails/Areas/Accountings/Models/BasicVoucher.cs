@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 /// <summary>
-/// Version 3.1
+/// Version 4.0
 /// </summary>
 namespace AprajitaRetails.Areas.Accountings.Models
 {

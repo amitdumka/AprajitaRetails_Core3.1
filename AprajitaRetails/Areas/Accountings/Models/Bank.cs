@@ -1,6 +1,7 @@
 ﻿using AprajitaRetails.Areas.Accountings.Models;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 /// <summary>
-/// Version 3.0
+/// Version 4.0
 /// </summary>
 namespace AprajitaRetails.Areas.Accountings.Models
 {
@@ -32,7 +33,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
 
         [Display(Name = "Bank Name")]
         public int BankId { get; set; }
-        public Bank Bank { get; set; }
+        public virtual Bank Bank { get; set; }
 
         [Display(Name = "Account Number")]
         public string Account { get; set; }

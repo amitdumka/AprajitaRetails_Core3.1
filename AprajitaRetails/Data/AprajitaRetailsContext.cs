@@ -271,7 +271,7 @@ namespace AprajitaRetails.Data
         public DbSet<CouponPayment> CouponPayments { get; set; }
         public DbSet<PointRedeemed> PointRedeemeds { get; set; }
 
-        
+
         // New Accounting section 
         public DbSet<Areas.Accountings.Models.LedgerType> LedgerTypes { get; set; }
         public DbSet<Areas.Accountings.Models.Party> Parties { get; set; }
@@ -279,10 +279,13 @@ namespace AprajitaRetails.Data
         public DbSet<Areas.Accountings.Models.LedgerEntry> LedgerEntries { get; set; }
         public DbSet<Areas.Accountings.Models.AppInfo> Apps { get; set; }
 
-        // new Expenses/Reciept System with Party Support
-        public DbSet<Areas.Accountings.Models.Expense> ExpenseVochers { get; set; }
-        public DbSet<Areas.Accountings.Models.Payment> PaymentVochers { get; set; }
-        public DbSet<Areas.Accountings.Models.Receipt> ReceiptVochers { get; set; }
+        //// new Expenses/Reciept System with Party Support
+        //public DbSet<Areas.Accountings.Models.Expense> ExpenseVochers { get; set; }
+        //public DbSet<Areas.Accountings.Models.Payment> PaymentVochers { get; set; }
+        //public DbSet<Areas.Accountings.Models.Receipt> ReceiptVochers { get; set; }
+
+        //public DbSet<Areas.Accountings.Models.BankAccount> BankAccounts { get; set; }
+        //public DbSet<Areas.Accountings.Models.BankTranscation> BankTranscations { get; set; }
 
 
     }
