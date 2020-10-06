@@ -13,6 +13,10 @@ using AprajitaRetails.Areas.Admin.Models;
 
 namespace AprajitaRetails.Data
 {
+    /// <summary>
+    /// @version 4.0
+    /// @Author Amit Kumar
+    /// </summary>
     public class AprajitaRetailsContext : DbContext
     {
         public AprajitaRetailsContext(DbContextOptions<AprajitaRetailsContext> options) : base(options)
@@ -279,13 +283,13 @@ namespace AprajitaRetails.Data
         public DbSet<Areas.Accountings.Models.LedgerEntry> LedgerEntries { get; set; }
         public DbSet<Areas.Accountings.Models.AppInfo> Apps { get; set; }
 
-        //// new Expenses/Reciept System with Party Support
-        //public DbSet<Areas.Accountings.Models.Expense> ExpenseVochers { get; set; }
-        //public DbSet<Areas.Accountings.Models.Payment> PaymentVochers { get; set; }
-        //public DbSet<Areas.Accountings.Models.Receipt> ReceiptVochers { get; set; }
+        // new Expenses/Reciept System with Party Support
+        public DbSet<Areas.Accountings.Models.Expense> ExpenseVochers { get; set; }
+        public DbSet<Areas.Accountings.Models.Payment> PaymentVochers { get; set; }
+        public DbSet<Areas.Accountings.Models.Receipt> ReceiptVochers { get; set; }
 
-        //public DbSet<Areas.Accountings.Models.BankAccount> BankAccounts { get; set; }
-        //public DbSet<Areas.Accountings.Models.BankTranscation> BankTranscations { get; set; }
+        public DbSet<Areas.Accountings.Models.BankAccount> BankAccounts { get; set; }
+        public DbSet<Areas.Accountings.Models.BankTranscation> BankTranscations { get; set; }
 
 
     }
