@@ -18,7 +18,7 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public double SaleQty { get; set; }
         [Display(Name = "Purchase Qty")]
         public double PurchaseQty { get; set; }
-        public Units Units { get; set; }
+        public Unit Units { get; set; }
 
         
 

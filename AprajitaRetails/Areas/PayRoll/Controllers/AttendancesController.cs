@@ -127,12 +127,12 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
 
 
-            var p = attList.Where(c => c.Status == AttUnits.Present).Count();
-            var a = attList.Where(c => c.Status == AttUnits.Absent).Count();
+            var p = attList.Where(c => c.Status == AttUnit.Present).Count();
+            var a = attList.Where(c => c.Status == AttUnit.Absent).Count();
             int noofdays = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month);
             int noofsunday = DateHelper.CountDays(DayOfWeek.Sunday, DateTime.Today);
-            int sunPresent = attList.Where(c => c.Status == AttUnits.Sunday).Count();
-            int halfDays = attList.Where(c => c.Status == AttUnits.HalfDay).Count();
+            int sunPresent = attList.Where(c => c.Status == AttUnit.Sunday).Count();
+            int halfDays = attList.Where(c => c.Status == AttUnit.HalfDay).Count();
             int totalAtt = p + sunPresent + (halfDays / 2);
 
             ViewBag.Present = p;

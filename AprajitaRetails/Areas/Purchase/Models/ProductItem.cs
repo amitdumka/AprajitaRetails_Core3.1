@@ -24,7 +24,7 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public string ItemDesc { get; set; }
 
         [Display(Name = "Category")]
-        public ProductCategorys Categorys { get; set; }
+        public ProductCategory Categorys { get; set; }
         [Display(Name = "Product Type")]
         public Category MainCategory { get; set; }
         [Display(Name = "Product Series")]
@@ -41,8 +41,8 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public decimal Cost { get; set; }
 
         public string? HSNCode { get; set; }
-        public Sizes Size { get; set; }
-        public Units Units { get; set; }
+        public Size Size { get; set; }
+        public Unit Units { get; set; }
 
 
         public virtual ICollection<PurchaseItem> PurchaseItems { get; set; }

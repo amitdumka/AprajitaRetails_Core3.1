@@ -81,7 +81,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StockID,ProductItemId,Quantity,SaleQty,PurchaseQty,Units")] Stock stock)
+        public async Task<IActionResult> Create([Bind("StockID,ProductItemId,Quantity,SaleQty,PurchaseQty,Unit")] Stock stock)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("StockID,ProductItemId,Quantity,SaleQty,PurchaseQty,Units")] Stock stock)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("StockID,ProductItemId,Quantity,SaleQty,PurchaseQty,Unit")] Stock stock)
         {
             if (id != stock.StockID)
             {

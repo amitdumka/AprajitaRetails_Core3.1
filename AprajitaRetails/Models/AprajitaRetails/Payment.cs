@@ -19,7 +19,7 @@ namespace AprajitaRetails.Models
         [Display(Name = "Payment Party")]
         public string PaymentPartry { get; set; }
         [Display(Name = "Payment Mode")]
-        public PaymentModes PayMode { get; set; }
+        public PaymentMode PayMode { get; set; }
         [Display(Name = "Payment Details")]
         public string PaymentDetails { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]

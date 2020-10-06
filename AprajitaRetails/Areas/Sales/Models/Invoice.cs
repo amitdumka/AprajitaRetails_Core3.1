@@ -59,7 +59,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         [Display(Name = "Quantity")]
         public double Qty { get; set; }
         [Display(Name = "Unit")]
-        public Units Units { get; set; }
+        public Unit Units { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]
@@ -116,8 +116,8 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public int CardDetailId { get; set; }
         [Display(Name = "Card Type")]
-        public CardModes CardType { get; set; }
-        public CardTypes CardCode { get; set; }
+        public CardMode CardType { get; set; }
+        public CardType CardCode { get; set; }
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
@@ -214,7 +214,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public decimal Price { get; set; }
         public decimal Amount { get; set; }
         public int Salesman { get; set; }
-        public Units Units { get; set; }
+        public Unit Units { get; set; }
     }
     public class PaymentInfo
     {

@@ -99,13 +99,13 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                         MRP = (decimal)0.0,
                         ProductName = "Not Found",
                         TaxRate = (decimal)0,
-                        Units = Enum.GetName(typeof(Units), Units.Pcs)
+                        Units = Enum.GetName(typeof(Unit), Unit.Pcs)
                     };
                 }
                 else
                 {
-                    var pItem2 = new { MRP = pItem.MRP, ProductName = pItem.ProductName, TaxRate = pItem.TaxRate, Units = Enum.GetName(typeof(Units), Int32.Parse(pItem.Units)) };
-                    // pItem.Units = Enum.GetName(typeof(Units), Int32.Parse( pItem.Units));
+                    var pItem2 = new { MRP = pItem.MRP, ProductName = pItem.ProductName, TaxRate = pItem.TaxRate, Units = Enum.GetName(typeof(Unit), Int32.Parse(pItem.Units)) };
+                    // pItem.Unit = Enum.GetName(typeof(Unit), Int32.Parse( pItem.Unit));
                     return new JsonResult(pItem2);
                 }
 
@@ -117,7 +117,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             }
             catch (Exception ex)
             {
-                var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Units), Units.Pcs) };
+                var pItem = new { MRP = (decimal)0.0, ProductName = "Not Found!", TaxRate = (decimal)0, Units = Enum.GetName(typeof(Unit), Unit.Pcs) };
                 JsonResult result = new JsonResult(pItem)
                 {
                     Value = pItem

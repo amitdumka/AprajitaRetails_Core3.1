@@ -32,10 +32,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult UploadData(IFormFile FileUpload)
         {
             ExcelUploaders uploader = new ExcelUploaders();
-            UploadReturns response = uploader.UploadBookEntry(db, FileUpload);
+            UploadReturn response = uploader.UploadBookEntry(db, FileUpload);
 
             ViewBag.Status = response.ToString();
-            if (response == UploadReturns.Success)
+            if (response == UploadReturn.Success)
             {
                 return RedirectToAction("ListUpload");
             }

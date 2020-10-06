@@ -14,36 +14,36 @@ namespace AprajitaRetails.Models
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Expense Date")]
-        public DateTime ExpDate { get; set; }
+        public DateTime ExpDate { get; set; }//Ok
 
-        public string Particulars { get; set; }
+        public string Particulars { get; set; }//Ok
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal Amount { get; set; }
+        public decimal Amount { get; set; }//Ok
 
         [Display(Name = "Payment Mode")]
-        public PaymentModes PayMode { get; set; }
+        public PaymentMode PayMode { get; set; }//Ok
 
         [Display(Name = "Payment Details")]
-        public string PaymentDetails { get; set; }
+        public string PaymentDetails { get; set; }//Ok
 
         [Display(Name = "Paid By")]
-        public int EmployeeId { get; set; }
-        public virtual Employee PaidBy { get; set; }
+        public int EmployeeId { get; set; }//Ok
+        public virtual Employee PaidBy { get; set; }//Ok
 
         [Display(Name = "Paid To")]
-        public string PaidTo { get; set; }
+        public string PaidTo { get; set; }//Ok
 
-        public string Remarks { get; set; }
+        public string Remarks { get; set; }//Ok
 
         [Display(Name = "Party")]
-        public int? PartyId { get; set; }
+        public int? PartyId { get; set; }//Ok
         //Version 3.0
         [DefaultValue(1)]
-        public int? StoreId { get; set; }
-        public virtual Store Store { get; set; }
+        public int? StoreId { get; set; } //Ok
+        public virtual Store Store { get; set; }//Ok
 
-        public string UserName { get; set; }
+        public string UserName { get; set; }//Ok
 
     }
 

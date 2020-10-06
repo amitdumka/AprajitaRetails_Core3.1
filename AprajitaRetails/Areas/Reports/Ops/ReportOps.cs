@@ -47,15 +47,15 @@ namespace AprajitaRetails.Areas.Reports.Ops
             };
             if (AttList.Count > 0)
             {
-                empAtt.TotalDaysAbsent = AttList.Where(c => c.Status == AttUnits.Absent).Count();
-                empAtt.TotalDaysHalfDay = AttList.Where(c => c.Status == AttUnits.HalfDay).Count();
-                empAtt.TotalDaysPresent = AttList.Where(c => c.Status == AttUnits.Present).Count();
-                empAtt.TotalSundayPresent = AttList.Where(c => c.Status == AttUnits.Sunday).Count();
+                empAtt.TotalDaysAbsent = AttList.Where(c => c.Status == AttUnit.Absent).Count();
+                empAtt.TotalDaysHalfDay = AttList.Where(c => c.Status == AttUnit.HalfDay).Count();
+                empAtt.TotalDaysPresent = AttList.Where(c => c.Status == AttUnit.Present).Count();
+                empAtt.TotalSundayPresent = AttList.Where(c => c.Status == AttUnit.Sunday).Count();
                 empAtt.TotalFinalPresent = empAtt.TotalDaysPresent + empAtt.TotalSundayPresent + (empAtt.TotalDaysHalfDay / 2);
                 empAtt.EmpAttReportId = EmpId;
             }
 
-            int NoOfNonWorkingDay = AttList.Where(c => c.Status == AttUnits.Holiday || c.Status == AttUnits.StoreClosed).Count();
+            int NoOfNonWorkingDay = AttList.Where(c => c.Status == AttUnit.Holiday || c.Status == AttUnit.StoreClosed).Count();
             TimeSpan ts = (eDate - sDate);
             int NoofWorkingDay = ts.Days + 1 - NoOfNonWorkingDay;
             empAtt.NoOfWorkingDays = NoofWorkingDay;

@@ -20,26 +20,26 @@ namespace AprajitaRetails.Ops.Triggers
         {
             if (IsEdit)
             {
-                if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                if (dailySale.PayMode == PayMode.Cash && dailySale.CashAmount > 0)
                 {
                     CashTrigger.UpdateCashInHand(db, dailySale.SaleDate, 0 - dailySale.CashAmount);
 
                 }
                 //TODO: in future make it more robust
-                if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                if (dailySale.PayMode != PayMode.Cash && dailySale.PayMode != PayMode.Coupons && dailySale.PayMode != PayMode.Points)
                 {
                     CashTrigger.UpdateCashInBank(db, dailySale.SaleDate, 0 - (dailySale.Amount - dailySale.CashAmount));
                 }
             }
             else
             {
-                if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                if (dailySale.PayMode == PayMode.Cash && dailySale.CashAmount > 0)
                 {
                     CashTrigger.UpdateCashInHand(db, dailySale.SaleDate, dailySale.CashAmount);
 
                 }
                 //TODO: in future make it more robust
-                if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                if (dailySale.PayMode != PayMode.Cash && dailySale.PayMode != PayMode.Coupons && dailySale.PayMode != PayMode.Points)
                 {
                     CashTrigger.UpdateCashInBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
                 }
@@ -82,13 +82,13 @@ namespace AprajitaRetails.Ops.Triggers
 
             if (IsEdit)
             {
-                if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                if (dailySale.PayMode == PayMode.Cash && dailySale.CashAmount > 0)
                 {
                     CashTrigger.UpDateCashOutHand(db, dailySale.SaleDate, 0 - dailySale.CashAmount);
 
                 }
                 //TODO: in future make it more robust
-                if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                if (dailySale.PayMode != PayMode.Cash && dailySale.PayMode != PayMode.Coupons && dailySale.PayMode != PayMode.Points)
                 {
                     CashTrigger.UpDateCashOutBank(db, dailySale.SaleDate, 0 - (dailySale.Amount - dailySale.CashAmount));
                 }
@@ -96,13 +96,13 @@ namespace AprajitaRetails.Ops.Triggers
             }
             else
             {
-                if (dailySale.PayMode == PayModes.Cash && dailySale.CashAmount > 0)
+                if (dailySale.PayMode == PayMode.Cash && dailySale.CashAmount > 0)
                 {
                     CashTrigger.UpDateCashOutHand(db, dailySale.SaleDate, dailySale.CashAmount);
 
                 }
                 //TODO: in future make it more robust
-                if (dailySale.PayMode != PayModes.Cash && dailySale.PayMode != PayModes.Coupons && dailySale.PayMode != PayModes.Points)
+                if (dailySale.PayMode != PayMode.Cash && dailySale.PayMode != PayMode.Coupons && dailySale.PayMode != PayMode.Points)
                 {
                     CashTrigger.UpDateCashOutBank(db, dailySale.SaleDate, dailySale.Amount - dailySale.CashAmount);
                 }
@@ -365,7 +365,7 @@ namespace AprajitaRetails.Ops.Triggers
                     City = sales.Address,
                     Age = 30,
                     FirstName = FName,
-                    Gender = Genders.Male,
+                    Gender = Gender.Male,
                     LastName = LName,
                     MobileNo = sales.MobileNo,
                     NoOfBills = 0,
@@ -447,28 +447,28 @@ namespace AprajitaRetails.Ops.Triggers
 
                 CardDetail cd = new CardDetail
                 {
-                    CardCode = CardTypes.Visa,//TODO: default
+                    CardCode = CardType.Visa,//TODO: default
                     Amount = sales.PaymentInfo.CardAmount,
                     AuthCode = (int)Int64.Parse(sales.PaymentInfo.AuthCode),
                     InvoiceNo = InvNo,
                     LastDigit = (int)Int64.Parse(sales.PaymentInfo.CardNo),
-                    CardType = CardModes.DebitCard//TODO: default 
+                    CardType = CardMode.DebitCard//TODO: default 
 
                 };
 
                 if (sales.PaymentInfo.CardType.Contains("Debit") || sales.PaymentInfo.CardType.Contains("debit") || sales.PaymentInfo.CardType.Contains("DEBIT"))
-                { cd.CardType = CardModes.DebitCard; }
+                { cd.CardType = CardMode.DebitCard; }
                 else if (sales.PaymentInfo.CardType.Contains("Credit") || sales.PaymentInfo.CardType.Contains("credit") || sales.PaymentInfo.CardType.Contains("CREDIT"))
-                { cd.CardType = CardModes.CreditCard; }
+                { cd.CardType = CardMode.CreditCard; }
 
                 if (sales.PaymentInfo.CardType.Contains("visa") || sales.PaymentInfo.CardType.Contains("Visa") || sales.PaymentInfo.CardType.Contains("VISA"))
-                { cd.CardCode = CardTypes.Visa; }
+                { cd.CardCode = CardType.Visa; }
                 else if (sales.PaymentInfo.CardType.Contains("MasterCard") || sales.PaymentInfo.CardType.Contains("mastercard") || sales.PaymentInfo.CardType.Contains("MASTERCARD"))
-                { cd.CardCode = CardTypes.MasterCard; }
+                { cd.CardCode = CardType.MasterCard; }
                 else if (sales.PaymentInfo.CardType.Contains("Rupay") || sales.PaymentInfo.CardType.Contains("rupay") || sales.PaymentInfo.CardType.Contains("RUPAY"))
-                { cd.CardCode = CardTypes.Rupay; }
+                { cd.CardCode = CardType.Rupay; }
                 else if (sales.PaymentInfo.CardType.Contains("MASTRO") || sales.PaymentInfo.CardType.Contains("mastro") || sales.PaymentInfo.CardType.Contains("Mastro"))
-                { cd.CardCode = CardTypes.Rupay; }
+                { cd.CardCode = CardType.Rupay; }
 
                 pd.CardDetail = cd;
             }
@@ -522,7 +522,7 @@ namespace AprajitaRetails.Ops.Triggers
                     City = "",
                     Age = 30,
                     FirstName = FName,
-                    Gender = Genders.Male,
+                    Gender = Gender.Male,
                     LastName = LName,
                     MobileNo = sales.MobileNo,
                     NoOfBills = 0,

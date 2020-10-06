@@ -22,7 +22,7 @@ namespace AprajitaRetails.Areas.Voyager.Models
         public string City { set; get; }
         [Display(Name = "Contact No")]
         public string MobileNo { set; get; }
-        public Genders Gender { set; get; }
+        public Gender Gender { set; get; }
         [Display(Name = "Bill Count")]
         public int NoOfBills { set; get; }
         [Display(Name = "Purchase Amount")]

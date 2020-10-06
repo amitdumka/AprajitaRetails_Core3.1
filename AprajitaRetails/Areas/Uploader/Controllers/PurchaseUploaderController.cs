@@ -49,8 +49,8 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
             if(StoreCode== "JH00100" )
             {
-                UploadReturns response1 = uploader.UploadExcel (db, UploadTypes.Search, FileUpload, StoreCode, IsVat, IsLocal);
-                if ( response1 == UploadReturns.OKGen )
+                UploadReturn response1 = uploader.UploadExcel (db, UploadType.Search, FileUpload, StoreCode, IsVat, IsLocal);
+                if ( response1 == UploadReturn.OKGen )
                 {
                     return RedirectToAction ("ViewList");
                 }
@@ -65,10 +65,10 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 IsLocal = true;
             }
 
-            UploadReturns response = uploader.UploadExcel(db, UploadTypes.Purchase, FileUpload, StoreCode, IsVat, IsLocal);
+            UploadReturn response = uploader.UploadExcel(db, UploadType.Purchase, FileUpload, StoreCode, IsVat, IsLocal);
 
             ViewBag.Status = response.ToString();
-            if (response == UploadReturns.Success)
+            if (response == UploadReturn.Success)
             {
                 return RedirectToAction("ListUpload");
             }

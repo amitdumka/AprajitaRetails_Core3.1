@@ -1,5 +1,4 @@
-﻿using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,136 +9,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 /// </summary>
 namespace AprajitaRetails.Areas.Accountings.Models
 {
-    public class AppInfo
-    {
-        public int AppInfoId { get; set; }
-        public string Version { get; set; }
-        public DateTime PublishDate { get; set; }
-        public DateTime UpdateOn { get; set; }
-        public string DatabaseVersion { get; set; }
-        public bool IsEffective { get; set; }
-    }
-    //Ledger System
-   
-    public class LedgerType
-    {
-        public int LedgerTypeId { get; set; }
-        [Display(Name ="Name")]
-        public string LedgerNameType { get;  set; }
-        public LedgerCategory Category { get; set; }
-        public  string Remark { get; set; }
 
-    }
-    
-    public class LedgerMaster
-    {
-        public int LedgerMasterId { get; set; }
+    public enum VoucherType { Sale, Purchase, Expenses, Reciepts, Payment, BankDeposit, BankWidthral, Others }
 
-        [ForeignKey("Parties")]
-        public int PartyId { get; set; }
-        public Party Party { get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Date")]
-        public DateTime CreatingDate { get; set; }
-
-        [Display(Name = "Ledger Type")]
-        public int LedgerTypeId { get; set; }
-        public virtual LedgerType LedgerType { get; set; }
-
-
-    }
-
-    public class Party
-    {
-        public int PartyId { get; set; }
-        public string PartyName { get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "On Date")]
-        public DateTime OpenningDate { get; set; }
-
-        [Display(Name = "Opening Balance")]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal OpenningBalance { get; set; }
-
-        public string Address { get; set; }
-        public string PANNo { get; set; }
-        public string GSTNo { get; set; }
-
-        [Display(Name = "Ledger Type")]
-        // public LedgerCategory LedgerType { get; set; }
-        public int LedgerTypeId { get; set; }
-        public virtual LedgerType LedgerType { get; set; }
-
-        public LedgerMaster LedgerMaster { get; set; }
-        public virtual ICollection<LedgerEntry> Ledgers { get; set; }
-    }
-
-    //TODO : There will no direct entry for Ledger Entry , just listing  and editing purpose. 
-    //       Editing will be in advance stage, Delete should be there
-    //public class LedgerEntry
-    //{
-    //    public int LedgerEntryId { get; set; }
-
-    //    [Display(Name = "Party Name")]
-    //    public int PartyId { get; set; }
-    //    public virtual Party Party { get; set; }
-
-    //    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    //    [Display(Name = "Date")]
-    //    public DateTime EntryDate { get; set; }
-
-    //    public string Particulars { get; set; }
-
-    //    [Display(Name = "Amount In")]
-    //    [DataType(DataType.Currency), Column(TypeName = "money")]
-    //    public decimal AmountIn { get; set; }
-
-    //    [ForeignKey("Parties"), Display(Name = "On Account")]
-    //    public int OwnPartyId { get; set; }
-    //    public virtual Party OnParty { get; set; }
-    //    //TODO: Debit /Credit on Own on Ledger like , Cash, Bank account etc.
-
-    //    [Display(Name = "Amount Out")]
-    //    [DataType(DataType.Currency), Column(TypeName = "money")]
-    //    public decimal AmountOut { get; set; }
-
-    //    [Display(Name = "Balance")]
-    //    [DataType(DataType.Currency), Column(TypeName = "money")]
-    //    public decimal Balance { get; set; }
-    //}
-    public class LedgerEntry
-    {
-        public int LedgerEntryId { get; set; }
-
-        [Display(Name = "Party Name")]
-        public int PartyId { get; set; }
-        public virtual Party Party { get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Date")]
-        public DateTime EntryDate { get; set; }
-        [Display(Name = "On Account Off")]
-        public LedgerEntryType EntryType { get; set; }
-        public int ReferanceId { get; set; }
-        public VoucherType VoucherType { get; set; }
-        public string Particulars { get; set; }
-        [Display(Name = "Amount In")]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal AmountIn { get; set; }
-        [Display(Name = "Amount Out")]
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal AmountOut { get; set; }
-        //Ref of itself for double entry system.
-        public int LedgerEntryRefId { get; set; }
-    }
-    
-    
-    public enum VoucherType { Sale, Purchase, Expenses, Reciepts, Payment, BankDeposit, BankWidthral, Others}
-    
-    
-    
     //Expenses system
     public class ExpenseVM : BaseVM { }
     public class PaymentVM : BaseVM { }
@@ -154,76 +26,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
         public string Narations { get; set; }
     }
 
-    public class BasicVoucher
-    {
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "On Date")]
-        public DateTime OnDate { get; set; }
-
-        [Display(Name = "Party Name")]
-        public string PartryName { get; set; }
-
-        [Display(Name = "Payment Mode")]
-        public PaymentModes PayMode { get; set; }
-
-        [Display(Name = "Payment Details")]
-        public string PaymentDetails { get; set; }
-
-        [DataType(DataType.Currency), Column(TypeName = "money"), Display(Name = "Amount")]
-        public decimal Amount { get; set; }
-
-        public string Remarks { get; set; }
-
-        [Display(Name = "Party")]
-        public int? PartyId { get; set; }
-
-        [Display(Name = "Leger")]
-        public int? LedgerEnteryId { get; set; }
-
-        public virtual Party Party { get; set; }
-        public virtual LedgerEntry LedgerEntry { get; set; }
-
-    }
-
-    public class Payment : BasicVoucher
-    {
-        public int PaymentId { get; set; }
-
-        [Display(Name = "Payment Party")]
-        public string PartyName { get; set; }
-
-
-        [Display(Name = "Payment Slip No")]
-        public string PaymentSlipNo { get; set; }
-
-    }
-
-    public class Receipt : BasicVoucher
-    {
-        public int ReceiptId { get; set; }
-
-        [Display(Name = "Receipt From ")]
-        public string PartName { get; set; }
-
-        [Display(Name = "Receipt Slip No ")]
-        public string RecieptSlipNo { get; set; }
-    }
-
-    public class Expense : BasicVoucher
-    {
-        public int ExpenseId { get; set; }
-        public string Particulars { get; set; }
-       
-        [Display(Name = "Paid By")]
-        public int EmployeeId { get; set; }
-        public virtual AprajitaRetails.Models.Employee PaidBy { get; set; }
-
-        [Display(Name = "Paid To")]
-        public string PartyName { get; set; }
-
-
-    }
-
+ 
     //Payroll
 
     public class BasicPayrollVocher
@@ -239,7 +42,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
 
 
         [Display(Name = "Payment Mode")]
-        public PaymentModes PayMode { get; set; }
+        public PaymentMode PayMode { get; set; }
 
         [Display(Name = "Payment Details")]
         public string PaymentDetails { get; set; }
@@ -282,79 +85,51 @@ namespace AprajitaRetails.Areas.Accountings.Models
     {
         public int AdvancePaymentId { get; set; }
     }
+    
+    //public class BankDeposit
+    //{
+    //    public int BankDepositId { get; set; }
 
-    //Banking 
-    public class Bank
-    {
-        public int BankId { get; set; }
-        [Display(Name = "Bank Name")]
-        public string BankName { get; set; }
+    //    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+    //    [Display(Name = "Deposit Date")]
+    //    public DateTime DepoDate { get; set; }
 
-        public ICollection<AccountNumber> Accounts { get; set; }
-        public ICollection<BankAccountInfo> BankAccounts { get; set; }
-        public ICollection<BankSetting> BankSettings { get; set; }
-    }
-    public class AccountNumber
-    {
-        public int AccountNumberId { get; set; }
+    //    public int AccountNumberId { get; set; }
+    //    public AccountNumber Account { get; set; }
 
-        [Display(Name = "Bank Name")]
-        public int BankId { get; set; }
-        public Bank Bank { get; set; }
+    //    [DataType(DataType.Currency), Column(TypeName = "money")]
+    //    public decimal Amount { get; set; }
 
-        [Display(Name = "Account Number")]
-        public string Account { get; set; }
+    //    [Display(Name = "Payment Mode")]
+    //    public BankPayMode PayMode { get; set; }
 
-        public ICollection<BankDeposit> Deposits { get; set; }
-        public ICollection<BankWithdrawal> Withdrawals { get; set; }
+    //    [Display(Name = "Transaction Details")]
+    //    public string Details { get; set; }
+    //    public string Remarks { get; set; }
+    //}
+    //public class BankWithdrawal
+    //{
+    //    public int BankWithdrawalId { get; set; }
 
-       // public ICollection<AccSetting> AccSettings { get; set; }
-       
-    }
-    public class BankDeposit
-    {
-        public int BankDepositId { get; set; }
+    //    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+    //    [Display(Name = "Withdrawal Date")]
+    //    public DateTime DepoDate { get; set; }
 
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Deposit Date")]
-        public DateTime DepoDate { get; set; }
+    //    public int AccountNumberId { get; set; }
+    //    public AccountNumber Account { get; set; }
 
-        public int AccountNumberId { get; set; }
-        public AccountNumber Account { get; set; }
+    //    [DataType(DataType.Currency), Column(TypeName = "money")]
+    //    public decimal Amount { get; set; }
 
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal Amount { get; set; }
-
-        [Display(Name = "Payment Mode")]
-        public BankPayModes PayMode { get; set; }
-
-        [Display(Name = "Transaction Details")]
-        public string Details { get; set; }
-        public string Remarks { get; set; }
-    }
-    public class BankWithdrawal
-    {
-        public int BankWithdrawalId { get; set; }
-
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Withdrawal Date")]
-        public DateTime DepoDate { get; set; }
-
-        public int AccountNumberId { get; set; }
-        public AccountNumber Account { get; set; }
-
-        [DataType(DataType.Currency), Column(TypeName = "money")]
-        public decimal Amount { get; set; }
-
-        [Display(Name = "Cheques Details")]
-        public string ChequeNo { get; set; }
-        [Display(Name = "Signed By")]
-        public string SignedBy { get; set; }
-        [Display(Name = "Approved By")]
-        public string ApprovedBy { get; set; }
-        [Display(Name = "Self/Named")]
-        public string InNameOf { get; set; }
-    }
+    //    [Display(Name = "Cheques Details")]
+    //    public string ChequeNo { get; set; }
+    //    [Display(Name = "Signed By")]
+    //    public string SignedBy { get; set; }
+    //    [Display(Name = "Approved By")]
+    //    public string ApprovedBy { get; set; }
+    //    [Display(Name = "Self/Named")]
+    //    public string InNameOf { get; set; }
+    //}
 
     public class BankAccountInfo
     {
@@ -472,48 +247,48 @@ namespace AprajitaRetails.Areas.Accountings.Operations
 {
     public class TranscationOperation
     {
-        public void OnInsert(AprajitaRetailsContext db, PayModes modes)
+        public void OnInsert(AprajitaRetailsContext db, PayMode modes)
         {
 
-            if (modes == PayModes.Cash) { }
+            if (modes == PayMode.Cash) { }
             else
             {
-                if (modes == PayModes.Coupons || modes == PayModes.Points || modes == PayModes.Others) { }
-                else if (modes == PayModes.MixPayments)
+                if (modes == PayMode.Coupons || modes == PayMode.Points || modes == PayMode.Others) { }
+                else if (modes == PayMode.MixPayments)
                 {
 
                 }
                 else { }
             }
         }
-        public void OnUpdate(AprajitaRetailsContext db, PayModes modes)
+        public void OnUpdate(AprajitaRetailsContext db, PayMode modes)
         {
-            if (modes == PayModes.Cash) { }
+            if (modes == PayMode.Cash) { }
             else
             {
-                if (modes == PayModes.Coupons || modes == PayModes.Points || modes == PayModes.Others) { }
-                else if (modes == PayModes.MixPayments)
+                if (modes == PayMode.Coupons || modes == PayMode.Points || modes == PayMode.Others) { }
+                else if (modes == PayMode.MixPayments)
                 {
 
                 }
                 else { }
             }
         }
-        public void OnDelete(AprajitaRetailsContext db, PayModes modes)
+        public void OnDelete(AprajitaRetailsContext db, PayMode modes)
         {
-            if (modes == PayModes.Cash) { }
+            if (modes == PayMode.Cash) { }
             else
             {
-                if (modes == PayModes.Coupons || modes == PayModes.Points || modes == PayModes.Others) { }
-                else if (modes == PayModes.MixPayments)
+                if (modes == PayMode.Coupons || modes == PayMode.Points || modes == PayMode.Others) { }
+                else if (modes == PayMode.MixPayments)
                 {
 
                 }
                 else { }
             }
         }
-       
-        
+
+
         public void CashOperations(AprajitaRetailsContext db)
         {
 
@@ -536,7 +311,7 @@ namespace AprajitaRetails.Areas.Accountings.Operations
 //    [Display(Name = "Payment Party")]
 //    public string PaymentPartry { get; set; }
 //    [Display(Name = "Payment Mode")]
-//    public PaymentModes PayMode { get; set; }
+//    public PaymentMode PayMode { get; set; }
 //    [Display(Name = "Payment Details")]
 //    public string PaymentDetails { get; set; }
 //    [DataType(DataType.Currency), Column(TypeName = "money")]
@@ -564,7 +339,7 @@ namespace AprajitaRetails.Areas.Accountings.Operations
 //    public decimal Amount { get; set; }
 
 //    [Display(Name = "Payment Mode")]
-//    public PaymentModes PayMode { get; set; }
+//    public PaymentMode PayMode { get; set; }
 
 //    [Display(Name = "Payment Details")]
 //    public string PaymentDetails { get; set; }
@@ -596,7 +371,7 @@ namespace AprajitaRetails.Areas.Accountings.Operations
 
 
 //    [Display(Name = "Payment Mode")]
-//    public PaymentModes PayMode { get; set; }
+//    public PaymentMode PayMode { get; set; }
 //    [Display(Name = "Receipt Details ")]
 //    public string ReceiptDetails { get; set; }
 

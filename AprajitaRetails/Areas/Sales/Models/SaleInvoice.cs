@@ -106,7 +106,7 @@ namespace AprajitaRetails.Areas.Sales.Models
         public string BarCode { get; set; }
 
         public double Qty { get; set; }
-        public Units Units { get; set; }
+        public Unit Units { get; set; }
 
         [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal MRP { get; set; }
@@ -169,7 +169,7 @@ namespace AprajitaRetails.Areas.Sales.Models
         public string BarCode { get; set; }
 
         public double Qty { get; set; }
-        public Units Units { get; set; }
+        public Unit Units { get; set; }
 
         [DataType (DataType.Currency), Column (TypeName = "money")]
         public decimal MRP { get; set; }

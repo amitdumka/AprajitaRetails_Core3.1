@@ -34,9 +34,9 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult UploadData(string StoreCode, IFormFile FileUpload)
         {
             ExcelUploaders uploader = new ExcelUploaders();
-            UploadReturns response = uploader.UploadAttendance(db, StoreCode, FileUpload);
+            UploadReturn response = uploader.UploadAttendance(db, StoreCode, FileUpload);
             ViewBag.Status = response.ToString();
-            if (response == UploadReturns.Success)
+            if (response == UploadReturn.Success)
             {
                 return RedirectToAction("ListUpload");
             }
@@ -59,9 +59,9 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         {
             ExcelUploaders uploader = new ExcelUploaders();
                      
-            UploadReturns response = uploader.UploadAttendanceForEmp(db,FileUpload, EmployeeId);
+            UploadReturn response = uploader.UploadAttendanceForEmp(db,FileUpload, EmployeeId);
             ViewBag.Status = response.ToString();
-            if (response == UploadReturns.Success)
+            if (response == UploadReturn.Success)
             {
                 return RedirectToAction("ListUploadEmpWise", new { empId = EmployeeId } );
             }

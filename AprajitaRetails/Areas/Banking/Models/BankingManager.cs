@@ -36,13 +36,13 @@ namespace AprajitaRetails.Areas.Banking.Models
         public void OnInsert(AprajitaRetailsContext db, BankDeposit objectName)
         {
             
-            if (objectName.PayMode == BankPayModes.Cash)
+            if (objectName.PayMode == BankPayMode.Cash)
             {
                 CashTrigger.UpDateCashOutHand(db, objectName.DepoDate, objectName.Amount);
                 CashTrigger.UpdateCashInBank(db, objectName.DepoDate, objectName.Amount);
             }
             //TODO: in future make it more robust
-            if (objectName.PayMode != BankPayModes.Cash)
+            if (objectName.PayMode != BankPayMode.Cash)
             {
                 
                 CashTrigger.UpdateCashInBank(db, objectName.DepoDate, objectName.Amount);
@@ -52,14 +52,14 @@ namespace AprajitaRetails.Areas.Banking.Models
         }
         public void OnDelete(AprajitaRetailsContext db, BankDeposit objectName)
         {
-            if (objectName.PayMode == BankPayModes.Cash)
+            if (objectName.PayMode == BankPayMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, objectName.DepoDate, 0-objectName.Amount);
                 CashTrigger.UpdateCashInBank(db, objectName.DepoDate, 0-objectName.Amount);
             }
             //TODO: in future make it more robust
-            if (objectName.PayMode != BankPayModes.Cash)
+            if (objectName.PayMode != BankPayMode.Cash)
             {
                 CashTrigger.UpdateCashInBank(db, objectName.DepoDate, 0-objectName.Amount);
             }
@@ -71,27 +71,27 @@ namespace AprajitaRetails.Areas.Banking.Models
 
             if (old != null)
             {
-                if (old.PayMode == BankPayModes.Cash)
+                if (old.PayMode == BankPayMode.Cash)
                 {
 
                     CashTrigger.UpDateCashOutHand(db, old.DepoDate, 0 - old.Amount);
                     CashTrigger.UpdateCashInBank(db, old.DepoDate, 0 - old.Amount);
                 }
                 
-                if (old.PayMode != BankPayModes.Cash)
+                if (old.PayMode != BankPayMode.Cash)
                 {
                     CashTrigger.UpdateCashInBank(db, old.DepoDate, 0 - old.Amount);
                 }
             }
 
-            if (objectName.PayMode == BankPayModes.Cash)
+            if (objectName.PayMode == BankPayMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, objectName.DepoDate, objectName.Amount);
                 CashTrigger.UpdateCashInBank(db, objectName.DepoDate, objectName.Amount);
             }
             //TODO: in future make it more robust
-            if (objectName.PayMode != BankPayModes.Cash)
+            if (objectName.PayMode != BankPayMode.Cash)
             {
                 CashTrigger.UpdateCashInBank(db, objectName.DepoDate, objectName.Amount);
             }

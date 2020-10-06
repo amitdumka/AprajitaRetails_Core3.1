@@ -66,7 +66,7 @@ namespace AprajitaRetails.Ops.Bot
 
     public static class HRMBot
     {
-        public static async void NotifyStaffAttandance(AprajitaRetailsContext db, string StaffName, int empId, AttUnits status, string time)
+        public static async void NotifyStaffAttandance(AprajitaRetailsContext db, string StaffName, int empId, AttUnit status, string time)
         {
             return;
             var emp = BotUser.GetEmp (db, empId);
@@ -74,13 +74,13 @@ namespace AprajitaRetails.Ops.Bot
             if ( emp != null )
             {
                 string msg = "StaffName: " + StaffName + " is ";
-                if ( status == AttUnits.Present )
+                if ( status == AttUnit.Present )
                     msg += "present and entry time  is " + time + ".";
-                else if ( status == AttUnits.Absent )
+                else if ( status == AttUnit.Absent )
                     msg += "absent.";
-                else if ( status == AttUnits.HalfDay )
+                else if ( status == AttUnit.HalfDay )
                     msg += "present and entry time is " + time + " and marked as Half day ";
-                else if ( status == AttUnits.Sunday )
+                else if ( status == AttUnit.Sunday )
                     msg += "present and entry time is " + time + ", and Sunday is marked.";
                 msg += "    (Date:" + DateTime.Now + ").";
                 await BotGini.SendMessage (emp.ChatId, msg);
@@ -89,13 +89,13 @@ namespace AprajitaRetails.Ops.Bot
             else
             {
                 string msg = "StaffName: " + StaffName + " is ";
-                if ( status == AttUnits.Present )
+                if ( status == AttUnit.Present )
                     msg += "present and entry time is " + time + ".";
-                else if ( status == AttUnits.Absent )
+                else if ( status == AttUnit.Absent )
                     msg += "absent.";
-                else if ( status == AttUnits.HalfDay )
+                else if ( status == AttUnit.HalfDay )
                     msg += "present and entry time is " + time + " and marked as Half day ";
-                else if ( status == AttUnits.Sunday )
+                else if ( status == AttUnit.Sunday )
                     msg += "present and entry time is " + time + ", and Sunday is marked.";
                 msg += "    (Date:" + DateTime.Now + ").";
                 await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);

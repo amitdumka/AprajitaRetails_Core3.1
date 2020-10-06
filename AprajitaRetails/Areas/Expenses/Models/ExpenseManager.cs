@@ -57,13 +57,13 @@ namespace AprajitaRetails.Areas.Expenses.Models
 
         public void OnInsert(AprajitaRetailsContext db, Payment payment)
         {
-            if (payment.PayMode == PaymentModes.Cash)
+            if (payment.PayMode == PaymentMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, payment.PayDate, payment.Amount);
             }
             //TODO: in future make it more robust
-            if (payment.PayMode != PaymentModes.Cash)
+            if (payment.PayMode != PaymentMode.Cash)
             {
                 CashTrigger.UpDateCashOutBank(db, payment.PayDate, payment.Amount);
             }
@@ -72,13 +72,13 @@ namespace AprajitaRetails.Areas.Expenses.Models
         }
         public void OnDelete(AprajitaRetailsContext db, Payment payment)
         {
-            if (payment.PayMode == PaymentModes.Cash)
+            if (payment.PayMode == PaymentMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, payment.PayDate, 0 - payment.Amount);
             }
             //TODO: in future make it more robust
-            if (payment.PayMode != PaymentModes.Cash)
+            if (payment.PayMode != PaymentMode.Cash)
             {
                 CashTrigger.UpDateCashOutBank(db, payment.PayDate, 0 - payment.Amount);
             }
@@ -90,26 +90,26 @@ namespace AprajitaRetails.Areas.Expenses.Models
 
             if (oldPay != null)
             {
-                if (oldPay.PayMode == PaymentModes.Cash)
+                if (oldPay.PayMode == PaymentMode.Cash)
                 {
 
                     CashTrigger.UpDateCashOutHand(db, oldPay.PayDate, 0 - oldPay.Amount);
                 }
                 //TODO: in future make it more robust
-                if (oldPay.PayMode != PaymentModes.Cash)
+                if (oldPay.PayMode != PaymentMode.Cash)
                 {
                     CashTrigger.UpDateCashOutBank(db, oldPay.PayDate, 0 - oldPay.Amount);
                 }
             }
 
 
-            if (payment.PayMode == PaymentModes.Cash)
+            if (payment.PayMode == PaymentMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, payment.PayDate, payment.Amount);
             }
             //TODO: in future make it more robust
-            if (payment.PayMode != PaymentModes.Cash)
+            if (payment.PayMode != PaymentMode.Cash)
             {
                 CashTrigger.UpDateCashOutBank(db, payment.PayDate, payment.Amount);
             }
@@ -118,17 +118,17 @@ namespace AprajitaRetails.Areas.Expenses.Models
 
         public void OnInsert(AprajitaRetailsContext db, Expense payment)
         {
-            if (payment.PayMode == PaymentModes.Cash)
+            if (payment.PayMode == PaymentMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, payment.ExpDate, payment.Amount);
             }
             //TODO: in future make it more robust
-            if (payment.PayMode != PaymentModes.Cash && payment.PayMode != PaymentModes.Others)
+            if (payment.PayMode != PaymentMode.Cash && payment.PayMode != PaymentMode.Others)
             {
                 CashTrigger.UpDateCashOutBank(db, payment.ExpDate, payment.Amount);
             }
-            if (payment.PayMode == PaymentModes.Others)
+            if (payment.PayMode == PaymentMode.Others)
             {
                 CashTrigger.UpdateSuspenseAccount(db, payment.ExpDate, payment.Amount, true, "ExpensesId:" + payment.ExpenseId, false, true);
             }
@@ -137,17 +137,17 @@ namespace AprajitaRetails.Areas.Expenses.Models
         }
         public void OnDelete(AprajitaRetailsContext db, Expense payment)
         {
-            if (payment.PayMode == PaymentModes.Cash)
+            if (payment.PayMode == PaymentMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, payment.ExpDate, 0 - payment.Amount);
             }
             //TODO: in future make it more robust
-            if (payment.PayMode != PaymentModes.Cash && payment.PayMode != PaymentModes.Others)
+            if (payment.PayMode != PaymentMode.Cash && payment.PayMode != PaymentMode.Others)
             {
                 CashTrigger.UpDateCashOutBank(db, payment.ExpDate, 0 - payment.Amount);
             }
-            if (payment.PayMode == PaymentModes.Others)
+            if (payment.PayMode == PaymentMode.Others)
             {
                 CashTrigger.UpdateSuspenseAccount(db, payment.ExpDate, payment.Amount, true, "ExpensesId:" + payment.ExpenseId, true, true);
             }
@@ -159,33 +159,33 @@ namespace AprajitaRetails.Areas.Expenses.Models
 
             if (oldPay != null)
             {
-                if (oldPay.PayMode == PaymentModes.Cash)
+                if (oldPay.PayMode == PaymentMode.Cash)
                 {
 
                     CashTrigger.UpDateCashOutHand(db, payment.ExpDate, 0 - payment.Amount);
                 }
                 //TODO: in future make it more robust
-                if (oldPay.PayMode != PaymentModes.Cash && payment.PayMode != PaymentModes.Others)
+                if (oldPay.PayMode != PaymentMode.Cash && payment.PayMode != PaymentMode.Others)
                 {
                     CashTrigger.UpDateCashOutBank(db, payment.ExpDate, 0 - payment.Amount);
                 }
-                if (oldPay.PayMode == PaymentModes.Others)
+                if (oldPay.PayMode == PaymentMode.Others)
                 {
                     CashTrigger.UpdateSuspenseAccount(db, payment.ExpDate, payment.Amount, true, "ExpensesId:" + payment.ExpenseId, true, true);
                 }
             }
 
-            if (payment.PayMode == PaymentModes.Cash)
+            if (payment.PayMode == PaymentMode.Cash)
             {
 
                 CashTrigger.UpDateCashOutHand(db, payment.ExpDate,  payment.Amount);
             }
             //TODO: in future make it more robust
-            if (payment.PayMode != PaymentModes.Cash && payment.PayMode != PaymentModes.Others)
+            if (payment.PayMode != PaymentMode.Cash && payment.PayMode != PaymentMode.Others)
             {
                 CashTrigger.UpDateCashOutBank(db, payment.ExpDate,  payment.Amount);
             }
-            if (payment.PayMode == PaymentModes.Others)
+            if (payment.PayMode == PaymentMode.Others)
             {
                 CashTrigger.UpdateSuspenseAccount(db, payment.ExpDate, payment.Amount, true, "ExpensesId:" + payment.ExpenseId, false, true);
             }

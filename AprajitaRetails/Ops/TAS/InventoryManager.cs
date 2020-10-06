@@ -286,14 +286,14 @@ namespace AprajitaRetails.Ops.TAS
             if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
-                Units UnitName;
+                Unit UnitName;
                 foreach (var item in data)
                 {
                     int pid = CreateProductItem(db, item);
                     if (pid != -999)
                         UnitName = CreateStockItem(db, item, pid);
                     else
-                        UnitName = Units.NoUnit;
+                        UnitName = Unit.NoUnit;
                     //TODO: else : What to do.
 
                     PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
@@ -320,14 +320,14 @@ namespace AprajitaRetails.Ops.TAS
             if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
-                Units UnitName;
+                Unit UnitName;
                 foreach (var item in data)
                 {
                     int pid = CreateProductItem(db, item);
                     if (pid != -999)
                         UnitName = CreateStockItem(db, item, pid);
                     else
-                        UnitName = Units.NoUnit;
+                        UnitName = Unit.NoUnit;
                     //TODO: else : What to do.
 
                     PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
@@ -355,14 +355,14 @@ namespace AprajitaRetails.Ops.TAS
             if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
-                Units UnitName;
+                Unit UnitName;
                 foreach (var item in data)
                 {
                     int pid = CreateProductItem(db, item);
                     if (pid != -999)
                         UnitName = CreateStockItem(db, item, pid);
                     else
-                        UnitName = Units.NoUnit;
+                        UnitName = Unit.NoUnit;
                     //TODO: else : What to do.
 
                     PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
@@ -388,14 +388,14 @@ namespace AprajitaRetails.Ops.TAS
             if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
-                Units UnitName;
+                Unit UnitName;
                 foreach (var item in data)
                 {
                     int pid = CreateProductItem(db, item);
                     if (pid != -999)
                         UnitName = CreateStockItem(db, item, pid);
                     else
-                        UnitName = Units.NoUnit;
+                        UnitName = Unit.NoUnit;
                     //TODO: else : What to do.
 
                     PurchasedProduct = CreatePurchaseInWard(db, item, PurchasedProduct, UnitName);
@@ -454,24 +454,24 @@ namespace AprajitaRetails.Ops.TAS
                 // Apparel / Work / Blazers
                 if (PN[0] == "Apparel")
                 {
-                    item.Units = Units.Pcs;
-                    item.Categorys = ProductCategorys.ReadyMade;
+                    item.Units = Unit.Pcs;
+                    item.Categorys = ProductCategory.ReadyMade;
                 }
                 else if (PN[0] == "Suiting" || PN[0] == "Shirting")
                 {
-                    item.Units = Units.Meters;
-                    item.Categorys = ProductCategorys.Fabric;
+                    item.Units = Unit.Meters;
+                    item.Categorys = ProductCategory.Fabric;
                 }
                 else if (PN[0] == "Tailoring")
                 {
-                    item.Units = Units.Nos;
-                    item.Categorys = ProductCategorys.Tailoring;
+                    item.Units = Unit.Nos;
+                    item.Categorys = ProductCategory.Tailoring;
                 }
                 //TODO: include promo items and suit cover
                 else
                 {
-                    item.Units = Units.Nos;
-                    item.Categorys = ProductCategorys.Others; //TODO: For time being
+                    item.Units = Unit.Nos;
+                    item.Categorys = ProductCategory.Others; //TODO: For time being
                 }
 
                 List<Category> catIds = GetCategory(db, PN[0], PN[1], PN[2]);
@@ -498,7 +498,7 @@ namespace AprajitaRetails.Ops.TAS
             }
         }
 
-        private Units CreateStockItem(AprajitaRetailsContext db, ImportPurchase purchase, int pItemId)
+        private Unit CreateStockItem(AprajitaRetailsContext db, ImportPurchase purchase, int pItemId)
         {
             Stock stcks = db.Stocks.Where(c => c.ProductItemId == pItemId).FirstOrDefault();
             if (stcks != null)
@@ -525,10 +525,10 @@ namespace AprajitaRetails.Ops.TAS
 
         }
 
-        private ProductPurchase CreatePurchaseInWard(AprajitaRetailsContext db, ImportPurchase purchase, ProductPurchase product, Units unitName)
+        private ProductPurchase CreatePurchaseInWard(AprajitaRetailsContext db, ImportPurchase purchase, ProductPurchase product, Unit unitName)
         {
             decimal sCost = 0;
-            if (unitName == Units.Meters) sCost = 3;
+            if (unitName == Unit.Meters) sCost = 3;
             if (product != null)
             {
                 if (purchase.InvoiceNo == product.InvoiceNo)
@@ -769,7 +769,7 @@ namespace AprajitaRetails.Ops.TAS
         }
 
         //Invoice No	Invoice Date	Invoice Type Brand Name	Product Name	Item Desc HSN Code	BAR CODE	Style Code	Quantity MRP	Discount Amt	Basic Amt	Tax Amt	SGST Amt	CGST Amt	Line Total	Round Off Bill Amt	Payment Mode	SalesMan Name
-        private int StockItem(AprajitaRetailsContext db, ImportSaleItemWise item, out Units unit)
+        private int StockItem(AprajitaRetailsContext db, ImportSaleItemWise item, out Unit unit)
         {
             ProductItem pItem = new ProductItem
             {
@@ -788,23 +788,23 @@ namespace AprajitaRetails.Ops.TAS
             // Apparel / Work / Blazers
             if (PN[0] == "Apparel")
             {
-                pItem.Units = Units.Pcs;
-                pItem.Categorys = ProductCategorys.ReadyMade;
+                pItem.Units = Unit.Pcs;
+                pItem.Categorys = ProductCategory.ReadyMade;
             }
             else if (PN[0] == "Suiting" || PN[0] == "Shirting")
             {
-                pItem.Units = Units.Meters;
-                pItem.Categorys = ProductCategorys.Fabric;
+                pItem.Units = Unit.Meters;
+                pItem.Categorys = ProductCategory.Fabric;
             }
             else if (PN[0] == "Tailoring")
             {
-                pItem.Units = Units.Nos;
-                pItem.Categorys = ProductCategorys.Tailoring;
+                pItem.Units = Unit.Nos;
+                pItem.Categorys = ProductCategory.Tailoring;
             }
             else
             {
-                pItem.Units = Units.Nos;
-                pItem.Categorys = ProductCategorys.Others; //TODO: For time being
+                pItem.Units = Unit.Nos;
+                pItem.Categorys = ProductCategory.Others; //TODO: For time being
             }
 
             List<Category> catIds = GetCategory(db, PN[0], PN[1], PN[2]);
@@ -949,7 +949,7 @@ namespace AprajitaRetails.Ops.TAS
             {
                 //TODO: Handle for ProductItem Doesn't Exists.
                 //create item and stock
-                int id = StockItem(db, item, out Units UNTS);
+                int id = StockItem(db, item, out Unit UNTS);
                 pi = new { ProductItemId = id, Units = UNTS };
             }
 
@@ -984,8 +984,8 @@ namespace AprajitaRetails.Ops.TAS
         /// <param name="db">Database Context</param>
         /// <param name="qty"> Sale Qty</param>
         /// <param name="pItemId">Item Code</param>
-        /// <param name="unts">Units</param>
-        private void CreateStockItem(AprajitaRetailsContext db, double qty, int pItemId, Units unts)
+        /// <param name="unts">Unit</param>
+        private void CreateStockItem(AprajitaRetailsContext db, double qty, int pItemId, Unit unts)
         {
             Stock stock = new Stock
             {
@@ -1048,7 +1048,7 @@ namespace AprajitaRetails.Ops.TAS
                     db.Entry(dSale).State = EntityState.Modified;
                 }
 
-                if (dSale.PayMode == PayModes.Cash)
+                if (dSale.PayMode == PayMode.Cash)
                 {
                     if (inv.PaymentDetail.PayMode != SalePayMode.Cash)
                     {
@@ -1064,7 +1064,7 @@ namespace AprajitaRetails.Ops.TAS
                         db.Entry(dSale).State = EntityState.Modified;
                     }
                 }
-                else if (dSale.PayMode == PayModes.Card)
+                else if (dSale.PayMode == PayMode.Card)
                 {
                     if (inv.PaymentDetail.PayMode != SalePayMode.Card)
                     {
@@ -1104,32 +1104,32 @@ namespace AprajitaRetails.Ops.TAS
                 // Payment Mode.
                 if (inv.PaymentDetail.PayMode == SalePayMode.Cash)
                 {
-                    dailySale.PayMode = PayModes.Cash;
+                    dailySale.PayMode = PayMode.Cash;
                     dailySale.CashAmount = inv.TotalBillAmount;
                 }
                 else if (inv.PaymentDetail.PayMode == SalePayMode.Card)
                 {
-                    dailySale.PayMode = PayModes.Card;
+                    dailySale.PayMode = PayMode.Card;
                 }
                 else if (inv.PaymentDetail.PayMode == SalePayMode.Mix)
                 {
-                    dailySale.PayMode = PayModes.MixPayments;
+                    dailySale.PayMode = PayMode.MixPayments;
                     dailySale.Remarks += " Mix Payments. Update based on real Data";
                 }
                 else if (inv.PaymentDetail.PayMode == SalePayMode.SR)
                 { // Sale Return flag is marked
-                    dailySale.PayMode = PayModes.Cash;
+                    dailySale.PayMode = PayMode.Cash;
                     dailySale.CashAmount = inv.TotalBillAmount;
                     dailySale.IsSaleReturn = true;
                 }
                 //IsTailoring
-                if (inv.SaleItems.First().ProductItem != null && inv.SaleItems.First().ProductItem.Categorys == ProductCategorys.Tailoring)
+                if (inv.SaleItems.First().ProductItem != null && inv.SaleItems.First().ProductItem.Categorys == ProductCategory.Tailoring)
                 {
                     dailySale.IsTailoringBill = true;
                 }
                 else if (inv.SaleItems.First().ProductItem == null)
                 {
-                    if (db.ProductItems.Find(inv.SaleItems.First().ProductItemId).Categorys == ProductCategorys.Tailoring)
+                    if (db.ProductItems.Find(inv.SaleItems.First().ProductItemId).Categorys == ProductCategory.Tailoring)
                     {
                         dailySale.IsTailoringBill = true;
                     }

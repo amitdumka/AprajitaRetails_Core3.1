@@ -110,22 +110,22 @@ namespace AprajitaRetails.Ops.Exporter
                 row++;
                 switch ( item.Status )
                 {
-                    case AttUnits.Present:
+                    case AttUnit.Present:
                         totalPresent++;
                         break;
-                    case AttUnits.Absent:
+                    case AttUnit.Absent:
                         totalAbsent++;
                         break;
-                    case AttUnits.HalfDay:
+                    case AttUnit.HalfDay:
                         totalHalfday++;
                         break;
-                    case AttUnits.Sunday:
+                    case AttUnit.Sunday:
                         totalSunday++;
                         break;
-                    case AttUnits.Holiday:
+                    case AttUnit.Holiday:
 
                         break;
-                    case AttUnits.StoreClosed:
+                    case AttUnit.StoreClosed:
 
                         break;
                     default:
@@ -187,21 +187,21 @@ namespace AprajitaRetails.Ops.Exporter
                 row++;
                 switch ( item.Status )
                 {
-                    case AttUnits.Present: totalPresent++;
+                    case AttUnit.Present: totalPresent++;
                         break;
-                    case AttUnits.Absent:
+                    case AttUnit.Absent:
                         totalAbsent++;
                         break;
-                    case AttUnits.HalfDay:
+                    case AttUnit.HalfDay:
                         totalHalfday++;
                         break;
-                    case AttUnits.Sunday:
+                    case AttUnit.Sunday:
                         totalSunday++;
                         break;
-                    case AttUnits.Holiday:
+                    case AttUnit.Holiday:
                        
                         break;
-                    case AttUnits.StoreClosed:
+                    case AttUnit.StoreClosed:
                        
                         break;
                     default:

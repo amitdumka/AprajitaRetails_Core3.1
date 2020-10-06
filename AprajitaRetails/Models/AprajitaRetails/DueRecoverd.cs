@@ -23,7 +23,7 @@ namespace AprajitaRetails.Models
         public decimal AmountPaid { get; set; }
         [Display(Name ="Is Partial Payment")]
         public bool IsPartialPayment { get; set; }
-        public PaymentModes Modes { get; set; }
+        public PaymentMode Modes { get; set; }
         public string Remarks { get; set; }
 
         //Version 3.0

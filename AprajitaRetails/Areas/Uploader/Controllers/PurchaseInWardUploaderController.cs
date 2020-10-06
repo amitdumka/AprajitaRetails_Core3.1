@@ -30,9 +30,9 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult UploadPurchase(string StoreCode, IFormFile FileUpload)
         {
             ExcelUploaders uploader = new ExcelUploaders();
-            UploadReturns response = uploader.UploadExcel(db, UploadTypes.InWard, FileUpload, StoreCode, false, false);
+            UploadReturn response = uploader.UploadExcel(db, UploadType.InWard, FileUpload, StoreCode, false, false);
             ViewBag.Status = response.ToString();
-            if (response == UploadReturns.Success)
+            if (response == UploadReturn.Success)
                 return RedirectToAction("ListUpload");
             return View();
         }

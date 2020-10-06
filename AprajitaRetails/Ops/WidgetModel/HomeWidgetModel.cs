@@ -52,11 +52,11 @@ namespace AprajitaRetails.Ops.WidgetModel
                 Where(c => c.AttDate == DateTime.Today && c.IsTailoring == false).OrderByDescending(c => c.Employee.StaffName);
 
             var empPresent = db.Attendances.Include(c => c.Employee)
-                .Where(c => c.Status == AttUnits.Present && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month && c.IsTailoring == false)
+                .Where(c => c.Status == AttUnit.Present && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month && c.IsTailoring == false)
                 .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
             var empAbsent = db.Attendances.Include(c => c.Employee)
-                .Where(c => c.Status == AttUnits.Absent && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month && c.IsTailoring == false)
+                .Where(c => c.Status == AttUnit.Absent && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month && c.IsTailoring == false)
                  .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
             var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
@@ -67,11 +67,11 @@ namespace AprajitaRetails.Ops.WidgetModel
                    Where(c => c.AttDate == DateTime.Today).OrderByDescending(c => c.Employee.StaffName);
 
                 empPresent = db.Attendances.Include(c => c.Employee)
-                   .Where(c => c.Status == AttUnits.Present && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month)
+                   .Where(c => c.Status == AttUnit.Present && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month)
                    .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
                 empAbsent = db.Attendances.Include(c => c.Employee)
-                   .Where(c => c.Status == AttUnits.Absent && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month)
+                   .Where(c => c.Status == AttUnit.Absent && c.AttDate.Year == DateTime.Today.Year && c.AttDate.Month == DateTime.Today.Month)
                     .GroupBy(c => c.Employee.StaffName).OrderBy(c => c.Key).Select(g => new { StaffName = g.Key, Days = g.Count() }).ToList();
 
                 totalSale = db.DailySales.Include(c => c.Salesman).Where(c => c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
@@ -95,7 +95,7 @@ namespace AprajitaRetails.Ops.WidgetModel
                         TotalSale = 0
                     };
 
-                    if (item.Status == AttUnits.Present)
+                    if (item.Status == AttUnit.Present)
                         info.Present = "Present";
                     else
                         info.Present = "Absent";

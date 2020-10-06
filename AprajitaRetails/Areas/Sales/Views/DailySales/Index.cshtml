@@ -130,7 +130,7 @@
                             <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                         }
 
-                        @if (item.PayMode != PayModes.Cash)
+                        @if (item.PayMode != PayMode.Cash)
                         {
                             <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
                         }
@@ -177,7 +177,7 @@
                             <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                         }
 
-                        @if (item.PayMode != PayModes.Cash)
+                        @if (item.PayMode != PayMode.Cash)
                         {
                              <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
                         }
@@ -224,7 +224,7 @@
                             <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                         }
 
-                        @if (item.PayMode != PayModes.Cash)
+                        @if (item.PayMode != PayMode.Cash)
                         {
                              <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
                         }
@@ -271,7 +271,7 @@
                             <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                         }
 
-                        @if (item.PayMode != PayModes.Cash)
+                        @if (item.PayMode != PayMode.Cash)
                         {
                              <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
                         }
@@ -318,7 +318,7 @@
                             <a class="btn btn-outline-danger  waves-effect btn-sm mr-1" asp-action="Delete" asp-route-id="@item.DailySaleId" id="delete" data_modal="">Delete</a>
                         }
 
-                        @if (item.PayMode != PayModes.Cash)
+                        @if (item.PayMode != PayMode.Cash)
                         {
                              <a class="btn btn-outline-brown btn-sm mr-1  waves-effect" onclick="showInPopup('@Url.Action("AddEditPaymentDetails", "DailySales", new { InvNo =@item.InvNo},Context.Request.Scheme)',' Payment Details')" id="paymentInfo">Payment Details</a>
                         }

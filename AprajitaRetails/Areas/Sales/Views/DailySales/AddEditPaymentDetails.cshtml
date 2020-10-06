@@ -60,7 +60,7 @@
                                     <i class="fab fa-cc-visa text-success"></i>
                                 </div>
                             </div>
-                            <select asp-for="CardTypes" class="form-control" asp-items="Html.GetEnumSelectList<CardModes>()"></select>
+                            <select asp-for="CardTypes" class="form-control" asp-items="Html.GetEnumSelectList<CardMode>()"></select>
                         </div>
                         <span asp-validation-for="CardTypes" class="text-danger"></span>
                     </div>

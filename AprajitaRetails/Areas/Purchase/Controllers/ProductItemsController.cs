@@ -72,7 +72,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Units")] ProductItem productItem)
+        public async Task<IActionResult> Create([Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Unit")] ProductItem productItem)
         {
             if (ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Units")] ProductItem productItem)
+       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Unit")] ProductItem productItem)
         {
             if (id != productItem.ProductItemId)
             {

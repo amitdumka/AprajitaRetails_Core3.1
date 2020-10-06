@@ -22,7 +22,7 @@ namespace AprajitaRetails.Models
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
         [Display(Name = "Payment Mode")]
-        public PayModes PayMode { get; set; }
+        public PayMode PayMode { get; set; }
         [Display(Name = "Cash Amount")]
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CashAmount { get; set; }
@@ -122,7 +122,7 @@ namespace AprajitaRetails.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OnDate { get; set; }
         public string CardEndingNumber { get; set; }
-        public CardModes CardTypes { get; set; }
+        public CardMode CardTypes { get; set; }
         public string InvoiceNumber { get; set; }
 
         public int StoreId { get; set; }

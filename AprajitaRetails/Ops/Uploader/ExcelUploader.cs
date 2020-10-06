@@ -18,7 +18,7 @@ namespace AprajitaRetails.Ops.Uploader
     //Store Based Changes is made in this class , All function support Store
     public class ExcelUploaders
     {
-        public UploadReturns UploadExcel(AprajitaRetailsContext db, UploadTypes UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
+        public UploadReturn UploadExcel(AprajitaRetailsContext db, UploadType UploadType, IFormFile FileUpload, string StoreCode, bool IsVat, bool IsLocal)
         {
 
             if ( FileUpload != null )
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Ops.Uploader
                         FileUpload.CopyTo (stream);
                     }
 
-                    if ( UploadType == UploadTypes.Purchase )
+                    if ( UploadType == UploadType.Purchase )
                     {
                         try
                         {
@@ -43,10 +43,10 @@ namespace AprajitaRetails.Ops.Uploader
                         catch ( Exception ex )
                         {
                             Console.WriteLine ("Error: " + ex.Message);
-                            return UploadReturns.Error;
+                            return UploadReturn.Error;
                         }
                     }
-                    else if ( UploadType == UploadTypes.SaleItemWise )
+                    else if ( UploadType == UploadType.SaleItemWise )
                     {
                         try
                         {
@@ -55,24 +55,24 @@ namespace AprajitaRetails.Ops.Uploader
                         catch ( Exception ex )
                         {
                             Console.WriteLine ("Error: " + ex.Message);
-                            return UploadReturns.Error;
+                            return UploadReturn.Error;
                         }
                     }
-                    else if ( UploadType == UploadTypes.Search )
+                    else if ( UploadType == UploadType.Search )
                     {
 
                         try
                         {
                             ImportPurchaseSearch (db,  pathToExcelFile);
-                            return UploadReturns.OKGen;
+                            return UploadReturn.OKGen;
                         }
                         catch ( Exception ex )
                         {
                             Console.WriteLine ("Error: " + ex.Message);
-                            return UploadReturns.Error;
+                            return UploadReturn.Error;
                         }
                     }
-                    else if ( UploadType == UploadTypes.SaleRegister )
+                    else if ( UploadType == UploadType.SaleRegister )
                     {
                         try
                         {
@@ -81,10 +81,10 @@ namespace AprajitaRetails.Ops.Uploader
                         catch ( Exception ex )
                         {
                             Console.WriteLine ("Error: " + ex.Message);
-                            return UploadReturns.Error;
+                            return UploadReturn.Error;
                         }
                     }
-                    else if ( UploadType == UploadTypes.InWard )
+                    else if ( UploadType == UploadType.InWard )
                     {
                         try
                         {
@@ -93,10 +93,10 @@ namespace AprajitaRetails.Ops.Uploader
                         catch ( Exception ex )
                         {
                             Console.WriteLine ("Error: " + ex.Message);
-                            return UploadReturns.Error;
+                            return UploadReturn.Error;
                         }
                     }
-                    //else if (UploadType == UploadTypes.Attendance)
+                    //else if (UploadTypeString == UploadType.Attendance)
                     //{
                     //    try
                     //    {
@@ -105,28 +105,28 @@ namespace AprajitaRetails.Ops.Uploader
                     //    catch (Exception ex)
                     //    {
                     //        Console.WriteLine("Error: " + ex.Message);
-                    //        return UploadReturns.Error;
+                    //        return UploadReturn.Error;
                     //    }
                     //}
                     else
                     {
-                        return UploadReturns.ImportNotSupported;
+                        return UploadReturn.ImportNotSupported;
                     }
 
                     if ( ( System.IO.File.Exists (pathToExcelFile) ) )
                     {
                         System.IO.File.Delete (pathToExcelFile);
                     }
-                    return UploadReturns.Success;
+                    return UploadReturn.Success;
                 }//end of if context type
                 else
                 {
-                    return UploadReturns.NotExcelType;
+                    return UploadReturn.NotExcelType;
                 }
             }//end of if file upload
             else
             {
-                return UploadReturns.FileNotFound;
+                return UploadReturn.FileNotFound;
             }
         }//end of function
 
@@ -215,7 +215,7 @@ namespace AprajitaRetails.Ops.Uploader
                 catch ( Exception ex )
                 {
                     Console.WriteLine ("Error: " + ex.Message);
-                    // return UploadReturns.Error;
+                    // return UploadReturn.Error;
                     throw;
                 }
             }
@@ -383,7 +383,7 @@ namespace AprajitaRetails.Ops.Uploader
             return db.SaveChanges ();
         }
 
-        public UploadReturns UploadAddressBook(AprajitaRetailsContext db, IFormFile FileUpload)
+        public UploadReturn UploadAddressBook(AprajitaRetailsContext db, IFormFile FileUpload)
         {
             if ( FileUpload != null )
             {
@@ -423,26 +423,26 @@ namespace AprajitaRetails.Ops.Uploader
                     catch ( Exception ex )
                     {
                         Console.WriteLine ("Error: " + ex.Message);
-                        return UploadReturns.Error;
+                        return UploadReturn.Error;
                     }
                     if ( ( System.IO.File.Exists (pathToExcelFile) ) )
                     {
                         System.IO.File.Delete (pathToExcelFile);
                     }
-                    return UploadReturns.Success;
+                    return UploadReturn.Success;
                 }
                 else
                 {
-                    return UploadReturns.NotExcelType;
+                    return UploadReturn.NotExcelType;
                 }
             }
             else
             {
-                return UploadReturns.FileNotFound;
+                return UploadReturn.FileNotFound;
             }
         }
 
-        public UploadReturns UploadAttendance(AprajitaRetailsContext db, string StoreCode, IFormFile FileUpload)
+        public UploadReturn UploadAttendance(AprajitaRetailsContext db, string StoreCode, IFormFile FileUpload)
         {
 
             if ( FileUpload != null )
@@ -495,27 +495,27 @@ namespace AprajitaRetails.Ops.Uploader
                     catch ( Exception ex )
                     {
                         Console.WriteLine ("Error: " + ex.Message);
-                        return UploadReturns.Error;
+                        return UploadReturn.Error;
                     }
 
                     if ( ( System.IO.File.Exists (pathToExcelFile) ) )
                     {
                         System.IO.File.Delete (pathToExcelFile);
                     }
-                    return UploadReturns.Success;
+                    return UploadReturn.Success;
                 }
                 else
                 {
-                    return UploadReturns.NotExcelType;
+                    return UploadReturn.NotExcelType;
                 }
             }
             else
             {
-                return UploadReturns.FileNotFound;
+                return UploadReturn.FileNotFound;
             }
         }
 
-        public UploadReturns UploadAttendanceForEmp(AprajitaRetailsContext db, IFormFile FileUpload, int EmpId)
+        public UploadReturn UploadAttendanceForEmp(AprajitaRetailsContext db, IFormFile FileUpload, int EmpId)
         {
 
             if ( FileUpload != null )
@@ -557,7 +557,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = EmpId,
                                     AttDate = (DateTime) workSheet.Cells [i, 2].GetValue<DateTime> (),
                                     EntryTime = ( workSheet.Cells [i, 3].Value ?? string.Empty ).ToString (),
-                                    Status = AttUnits.Absent,
+                                    Status = AttUnit.Absent,
                                     Remarks = ( workSheet.Cells [i, 5].Value ?? string.Empty ).ToString (),
                                     IsTailoring = (bool) workSheet.Cells [i, 6].GetValue<bool> (),
                                     StoreId = StoreID,
@@ -567,19 +567,19 @@ namespace AprajitaRetails.Ops.Uploader
                                 switch ( att )
                                 {
                                     case 0:
-                                        c.Status = AttUnits.Absent;
+                                        c.Status = AttUnit.Absent;
                                         break;
                                     case 1:
-                                        c.Status = AttUnits.Present;
+                                        c.Status = AttUnit.Present;
                                         break;
                                     case 0.5M:
-                                        c.Status = AttUnits.HalfDay;
+                                        c.Status = AttUnit.HalfDay;
                                         break; //Halfday;
                                     case 3:
-                                        c.Status = AttUnits.Holiday;
+                                        c.Status = AttUnit.Holiday;
                                         break; // holiday
                                     case 4:
-                                        c.Status = AttUnits.StoreClosed;
+                                        c.Status = AttUnit.StoreClosed;
                                         break; //closed
                                 }
                                 addList.Add (c);
@@ -593,26 +593,26 @@ namespace AprajitaRetails.Ops.Uploader
                     catch ( Exception ex )
                     {
                         Console.WriteLine ("Error: " + ex.Message);
-                        return UploadReturns.Error;
+                        return UploadReturn.Error;
                     }
 
                     if ( ( System.IO.File.Exists (pathToExcelFile) ) )
                     {
                         System.IO.File.Delete (pathToExcelFile);
                     }
-                    return UploadReturns.Success;
+                    return UploadReturn.Success;
                 }
                 else
                 {
-                    return UploadReturns.NotExcelType;
+                    return UploadReturn.NotExcelType;
                 }
             }
             else
             {
-                return UploadReturns.FileNotFound;
+                return UploadReturn.FileNotFound;
             }
         }
-        public UploadReturns UploadBookEntry(AprajitaRetailsContext db, IFormFile FileUpload)
+        public UploadReturn UploadBookEntry(AprajitaRetailsContext db, IFormFile FileUpload)
         {
             if ( FileUpload != null )
             {
@@ -781,27 +781,27 @@ namespace AprajitaRetails.Ops.Uploader
                     catch ( Exception ex )
                     {
                         Console.WriteLine ("Error: " + ex.Message);
-                        return UploadReturns.Error;
+                        return UploadReturn.Error;
                     }
 
                     if ( ( System.IO.File.Exists (pathToExcelFile) ) )
                     {
                         System.IO.File.Delete (pathToExcelFile);
                     }
-                    return UploadReturns.Success;
+                    return UploadReturn.Success;
                 }
                 else
                 {
-                    return UploadReturns.NotExcelType;
+                    return UploadReturn.NotExcelType;
                 }
             }
             else
             {
-                return UploadReturns.FileNotFound;
+                return UploadReturn.FileNotFound;
             }
         }
 
-        public UploadReturns UploadBankStatment(AprajitaRetailsContext db, IFormFile FileUpload, int AccountNumberId, UploadSetting settings, string SheetName = "Sheet1")
+        public UploadReturn UploadBankStatment(AprajitaRetailsContext db, IFormFile FileUpload, int AccountNumberId, UploadSetting settings, string SheetName = "Sheet1")
         {
             if ( FileUpload != null )
             {
@@ -853,23 +853,23 @@ namespace AprajitaRetails.Ops.Uploader
                     catch ( Exception ex )
                     {
                         Console.WriteLine ("Error: " + ex.Message);
-                        return UploadReturns.Error;
+                        return UploadReturn.Error;
                     }
 
                     if ( ( System.IO.File.Exists (pathToExcelFile) ) )
                     {
                         System.IO.File.Delete (pathToExcelFile);
                     }
-                    return UploadReturns.Success;
+                    return UploadReturn.Success;
                 }
                 else
                 {
-                    return UploadReturns.NotExcelType;
+                    return UploadReturn.NotExcelType;
                 }
             }
             else
             {
-                return UploadReturns.FileNotFound;
+                return UploadReturn.FileNotFound;
             }
 
         }
@@ -1011,7 +1011,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "BHUTU MISTRY",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1029,7 +1029,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "WORKSHOP RENT",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1047,7 +1047,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "ADVERTISMENT RM: MIKEING",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1065,7 +1065,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "ADVERTISMENT",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1083,7 +1083,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "BIKASH PATWARI",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1097,7 +1097,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = 0,
                                     Amount = item.Amount,
                                     PaymentDate = item.OnDate,
-                                    PayMode = PayModes.Cash,
+                                    PayMode = PayMode.Cash,
                                     SalaryComponet = SalaryComponet.Others,
                                     StoreId = StoreId,
                                     Details = "AutoUpload #" + item.Naration,
@@ -1135,7 +1135,7 @@ namespace AprajitaRetails.Ops.Uploader
                                         EmployeeId = 10,//TODO: For ramrek
                                         Amount = item.Amount,
                                         PaymentDate = item.OnDate,
-                                        PayMode = PayModes.Cash,
+                                        PayMode = PayMode.Cash,
                                         SalaryComponet = SalaryComponet.Others,
                                         StoreId = StoreId,
                                         Details = "AutoUpload #" + item.Naration,
@@ -1205,7 +1205,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = 3,//TODO: For Mukesh
                                     Amount = item.Amount,
                                     PaymentDate = item.OnDate,
-                                    PayMode = PayModes.Cash,
+                                    PayMode = PayMode.Cash,
                                     SalaryComponet = SalaryComponet.Others,
                                     StoreId = StoreId,
                                     Details = "AutoUpload #" + item.Naration,
@@ -1222,7 +1222,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = 1,//TODO: For Mukesh
                                     Amount = item.Amount,
                                     PaymentDate = item.OnDate,
-                                    PayMode = PayModes.Cash,
+                                    PayMode = PayMode.Cash,
                                     SalaryComponet = SalaryComponet.Others,
                                     StoreId = StoreId,
                                     Details = "AutoUpload #" + item.Naration,
@@ -1239,7 +1239,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = 2,//TODO: For Sanjeev
                                     Amount = item.Amount,
                                     PaymentDate = item.OnDate,
-                                    PayMode = PayModes.Cash,
+                                    PayMode = PayMode.Cash,
                                     SalaryComponet = SalaryComponet.Others,
                                     StoreId = StoreId,
                                     Details = "AutoUpload #" + item.Naration,
@@ -1256,7 +1256,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = 6,//TODO: For SOURAV(STAFF)
                                     Amount = item.Amount,
                                     PaymentDate = item.OnDate,
-                                    PayMode = PayModes.Cash,
+                                    PayMode = PayMode.Cash,
                                     SalaryComponet = SalaryComponet.Others,
                                     StoreId = StoreId,
                                     Details = "AutoUpload #" + item.Naration,
@@ -1292,7 +1292,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "TV INSTALMENT RM:Mukesh",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1310,7 +1310,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "GOPI",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1328,7 +1328,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "ELECTRIC BILL",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1346,7 +1346,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "TELEPHONE BILL",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1364,7 +1364,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "UpdatePartyName",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1382,7 +1382,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "FLOWER",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1396,7 +1396,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     EmployeeId = 0,//TODO: For Zafar
                                     Amount = item.Amount,
                                     PaymentDate = item.OnDate,
-                                    PayMode = PayModes.Cash,
+                                    PayMode = PayMode.Cash,
                                     SalaryComponet = SalaryComponet.Others,
                                     StoreId = StoreId,
                                     Details = "AutoUpload #" + item.Naration,
@@ -1417,7 +1417,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaidTo = "Zafar",
                                     Particulars = item.Naration,
                                     PaymentDetails = "Cash",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUpload"
                                 };
                                 item.IsConsumed = true;
@@ -1433,7 +1433,7 @@ namespace AprajitaRetails.Ops.Uploader
                                     PaymentDetails = item.Naration,
                                     PaymentPartry = "BULLET SHOWROOM Dumka",
                                     PaymentSlipNo = "AUTOUPLOAD",
-                                    PayMode = PaymentModes.Cash,
+                                    PayMode = PaymentMode.Cash,
                                     Remarks = "AutoUPLOAD",
                                     StoreId = StoreId
                                 };
@@ -1449,7 +1449,7 @@ namespace AprajitaRetails.Ops.Uploader
                                 EmployeeId = 0,//TODO: For Zafar
                                 Amount = item.Amount,
                                 PaymentDate = item.OnDate,
-                                PayMode = PayModes.Cash,
+                                PayMode = PayMode.Cash,
                                 SalaryComponet = SalaryComponet.Others,
                                 StoreId = StoreId,
                                 Details = "AutoUpload #" + item.Naration,
@@ -1481,7 +1481,7 @@ namespace AprajitaRetails.Ops.Uploader
                             Amount = item.Amount,
                             Details = item.Naration,
                             DepoDate = item.OnDate,
-                            PayMode = BankPayModes.Cash,
+                            PayMode = BankPayMode.Cash,
                             StoreId = StoreId,
                             Remarks = "AutoAdded"
                         };

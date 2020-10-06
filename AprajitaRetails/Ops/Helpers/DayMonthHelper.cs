@@ -105,9 +105,9 @@ namespace AprajitaRetails.Models.Helpers
         //    {
 
         //        TodaySale = (decimal?)todaySale.Sum(c => (decimal?)c.Amount) ?? 0,
-        //        TodayCardSale = (decimal?)todaySale.Where(c => c.PayMode == PayModes.Card).Sum(c => (decimal?)c.Amount) ?? 0,
+        //        TodayCardSale = (decimal?)todaySale.Where(c => c.PayMode == PayMode.Card).Sum(c => (decimal?)c.Amount) ?? 0,
         //        TodayManualSale = (decimal?)todaySale.Where(c => c.IsManualBill == true).Sum(c => (decimal?)c.Amount) ?? 0,
-        //        TodayOtherSale = (decimal?)todaySale.Where(c => c.PayMode != PayModes.Card && c.PayMode != PayModes.Cash).Sum(c => (decimal?)c.Amount) ?? 0,
+        //        TodayOtherSale = (decimal?)todaySale.Where(c => c.PayMode != PayMode.Card && c.PayMode != PayMode.Cash).Sum(c => (decimal?)c.Amount) ?? 0,
         //        TodayTailoringSale = (decimal?)todaySale.Where(c => c.IsTailoringBill == true).Sum(c => (decimal?)c.Amount) ?? 0,
         //        TodayCashInHand = (decimal?)db.CashInHands.Where(c =>(c.CIHDate) ==(day.EOD_Date)).FirstOrDefault().InHand ?? 0,
         //        TodayTailoringBooking = (int?)db.Bookings.Where(c =>(c.BookingDate) ==(day.EOD_Date)).Count() ?? 0,

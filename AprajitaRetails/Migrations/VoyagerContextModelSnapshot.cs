@@ -103,7 +103,7 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<decimal>("TaxRate")
                         .HasColumnType("money");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("ProductItemId");
@@ -262,7 +262,7 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<int>("StoreId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("StockID");
@@ -396,7 +396,7 @@ namespace AprajitaRetails.Migrations.Voyager
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("money");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("SaleItemId");
@@ -631,7 +631,7 @@ namespace AprajitaRetails.Migrations.Voyager
             //        b.Property<decimal>("TaxAmount")
             //            .HasColumnType("money");
 
-            //        b.Property<int>("Units")
+            //        b.Property<int>("Unit")
             //            .HasColumnType("int");
 
             //        b.HasKey("ManualSaleItemId");
@@ -791,7 +791,7 @@ namespace AprajitaRetails.Migrations.Voyager
             //        b.Property<decimal>("TaxAmount")
             //            .HasColumnType("money");
 
-            //        b.Property<int>("Units")
+            //        b.Property<int>("Unit")
             //            .HasColumnType("int");
 
             //        b.HasKey("RegularSaleItemId");

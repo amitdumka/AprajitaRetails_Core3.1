@@ -90,7 +90,7 @@ namespace AprajitaRetails.Data
                 Age = 0,
                 City = "Dumka",
                 CreatedDate = new DateTime(2016, 2, 17).Date,
-                Gender = Genders.Male,
+                Gender = Gender.Male,
                 NoOfBills = 0,
                 TotalAmount = 0,
                 MobileNo = "1234567890",
@@ -104,7 +104,7 @@ namespace AprajitaRetails.Data
                 Age = 0,
                 City = "Dumka",
                 CreatedDate = new DateTime(2016, 2, 17).Date,
-                Gender = Genders.Male,
+                Gender = Gender.Male,
                 NoOfBills = 0,
                 TotalAmount = 0,
                 MobileNo = "1234567890",
@@ -279,6 +279,10 @@ namespace AprajitaRetails.Data
         public DbSet<Areas.Accountings.Models.LedgerEntry> LedgerEntries { get; set; }
         public DbSet<Areas.Accountings.Models.AppInfo> Apps { get; set; }
 
+        // new Expenses/Reciept System with Party Support
+        public DbSet<Areas.Accountings.Models.Expense> ExpenseVochers { get; set; }
+        public DbSet<Areas.Accountings.Models.Payment> PaymentVochers { get; set; }
+        public DbSet<Areas.Accountings.Models.Receipt> ReceiptVochers { get; set; }
 
 
     }

@@ -108,10 +108,10 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs.Payroll
             }
             else if ( att != null && att.Count > 0 )
             {
-                int present = att.Where (c => c.Status == AttUnits.Present || c.Status == AttUnits.Sunday || c.Status == AttUnits.SundayHoliday).Count ();
-                int absent = att.Where (c => c.Status == AttUnits.Absent).Count ();
-                int halfday = att.Where (c => c.Status == AttUnits.HalfDay).Count ();
-                int holiday = att.Where (c => c.Status == AttUnits.Holiday || c.Status == AttUnits.StoreClosed).Count ();
+                int present = att.Where (c => c.Status == AttUnit.Present || c.Status == AttUnit.Sunday || c.Status == AttUnit.SundayHoliday).Count ();
+                int absent = att.Where (c => c.Status == AttUnit.Absent).Count ();
+                int halfday = att.Where (c => c.Status == AttUnit.HalfDay).Count ();
+                int holiday = att.Where (c => c.Status == AttUnit.Holiday || c.Status == AttUnit.StoreClosed).Count ();
 
                 int totaldays = present + absent + halfday + holiday;
                 int noofdays = DateTime.DaysInMonth (Year, Month);

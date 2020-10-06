@@ -253,7 +253,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddEditPaymentDetails(int id, [Bind("Amount, InvoiceNumber, CardEndingNumber,  CardTypes, EDCId, EDCTranscationId, OnDate, StoreId")] EDCTranscation eDC)
+        public async Task<IActionResult> AddEditPaymentDetails(int id, [Bind("Amount, InvoiceNumber, CardEndingNumber,  CardType, EDCId, EDCTranscationId, OnDate, StoreId")] EDCTranscation eDC)
         {
            
             if (ModelState.IsValid)

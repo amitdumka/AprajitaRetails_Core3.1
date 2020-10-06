@@ -15,7 +15,7 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public virtual ProductItem ProductItem { get; set; }
         public string Barcode { get; set; }// TODO: if not working then link with productitemid
         public double Qty { get; set; }
-        public Units Unit { get; set; }
+        public Unit Unit { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Cost { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]

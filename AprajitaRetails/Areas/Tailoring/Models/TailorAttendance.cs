@@ -19,7 +19,7 @@ namespace AprajitaRetails.Models
         [Display(Name = "Entry Time")]
         public string EntryTime { get; set; }
 
-        public AttUnits Status { get; set; }
+        public AttUnit Status { get; set; }
         public string Remarks { get; set; }
     }
 }

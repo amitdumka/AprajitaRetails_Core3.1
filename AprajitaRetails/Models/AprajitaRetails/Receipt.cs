@@ -21,7 +21,7 @@ namespace AprajitaRetails.Models
 
 
         [Display(Name = "Payment Mode")]
-        public PaymentModes PayMode { get; set; }
+        public PaymentMode PayMode { get; set; }
         [Display(Name = "Receipt Details ")]
         public string ReceiptDetails { get; set; }
 

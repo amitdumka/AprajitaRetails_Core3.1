@@ -21,7 +21,7 @@ namespace AprajitaRetails.Models
         public decimal Amount { get; set; }
 
         [Display(Name = "Payment Mode")]
-        public PayModes PayMode { get; set; }
+        public PayMode PayMode { get; set; }
 
         public string Details { get; set; }
     }

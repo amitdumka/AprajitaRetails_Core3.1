@@ -16,11 +16,11 @@ namespace AprajitaRetails.Ops.Triggers
                 if (!isDeleted && !isUpdated)
                 {
                     var sName = db.Employees.Find(attendance.EmployeeId).StaffName;
-                    if (attendance.Status != AttUnits.Present)
+                    if (attendance.Status != AttUnit.Present)
                     {
                         MyMail.SendEmail(sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
                     }
-                    else if (attendance.Status == AttUnits.Sunday)
+                    else if (attendance.Status == AttUnit.Sunday)
                     {
                         //TODO: do Some  things
                     }
@@ -116,26 +116,26 @@ namespace AprajitaRetails.Ops.Triggers
         //{
         //    if (IsEdit)
         //    {
-        //        if (salPayment.PayMode == PayModes.Cash)
+        //        if (salPayment.PayMode == PayMode.Cash)
         //        {
         //            CashTrigger.UpDateCashOutHand(db, salPayment.PaymentDate, 0 - salPayment.Amount);
 
         //        }
         //        //TODO: in future make it more robust
-        //        if (salPayment.PayMode != PayModes.Cash && salPayment.PayMode != PayModes.Coupons && salPayment.PayMode != PayModes.Points)
+        //        if (salPayment.PayMode != PayMode.Cash && salPayment.PayMode != PayMode.Coupons && salPayment.PayMode != PayMode.Points)
         //        {
         //            CashTrigger.UpDateCashOutBank(db, salPayment.PaymentDate, 0 - (salPayment.Amount - salPayment.Amount));
         //        }
         //    }
         //    else
         //    {
-        //        if (salPayment.PayMode == PayModes.Cash )
+        //        if (salPayment.PayMode == PayMode.Cash )
         //        {
         //            CashTrigger.UpDateCashOutHand(db, salPayment.PaymentDate, salPayment.Amount);
 
         //        }
         //        //TODO: in future make it more robust
-        //        if (salPayment.PayMode != PayModes.Cash && salPayment.PayMode != PayModes.Coupons && salPayment.PayMode != PayModes.Points)
+        //        if (salPayment.PayMode != PayMode.Cash && salPayment.PayMode != PayMode.Coupons && salPayment.PayMode != PayMode.Points)
         //        {
         //            CashTrigger.UpDateCashOutBank(db, salPayment.PaymentDate, salPayment.Amount - salPayment.Amount);
         //        }
@@ -146,26 +146,26 @@ namespace AprajitaRetails.Ops.Triggers
         //{
         //    if (IsEdit)
         //    {
-        //        if (salPayment.PayMode == PayModes.Cash)
+        //        if (salPayment.PayMode == PayMode.Cash)
         //        {
         //            CashTrigger.UpDateCashOutHand(db, salPayment.PaymentDate, 0 - salPayment.Amount);
 
         //        }
         //        //TODO: in future make it more robust
-        //        if (salPayment.PayMode != PayModes.Cash && salPayment.PayMode != PayModes.Coupons && salPayment.PayMode != PayModes.Points)
+        //        if (salPayment.PayMode != PayMode.Cash && salPayment.PayMode != PayMode.Coupons && salPayment.PayMode != PayMode.Points)
         //        {
         //            CashTrigger.UpDateCashOutBank(db, salPayment.PaymentDate, 0 - (salPayment.Amount - salPayment.Amount));
         //        }
         //    }
         //    else
         //    {
-        //        if (salPayment.PayMode == PayModes.Cash)
+        //        if (salPayment.PayMode == PayMode.Cash)
         //        {
         //            CashTrigger.UpDateCashOutHand(db, salPayment.PaymentDate, salPayment.Amount);
 
         //        }
         //        //TODO: in future make it more robust
-        //        if (salPayment.PayMode != PayModes.Cash && salPayment.PayMode != PayModes.Coupons && salPayment.PayMode != PayModes.Points)
+        //        if (salPayment.PayMode != PayMode.Cash && salPayment.PayMode != PayMode.Coupons && salPayment.PayMode != PayMode.Points)
         //        {
         //            CashTrigger.UpDateCashOutBank(db, salPayment.PaymentDate, salPayment.Amount - salPayment.Amount);
         //        }
@@ -176,26 +176,26 @@ namespace AprajitaRetails.Ops.Triggers
         //{
         //    if (IsEdit)
         //    {
-        //        if (salPayment.PayMode == PayModes.Cash)
+        //        if (salPayment.PayMode == PayMode.Cash)
         //        {
         //            CashTrigger.UpdateCashInHand(db, salPayment.ReceiptDate, 0 - salPayment.Amount);
 
         //        }
         //        //TODO: in future make it more robust
-        //        if (salPayment.PayMode != PayModes.Cash && salPayment.PayMode != PayModes.Coupons && salPayment.PayMode != PayModes.Points)
+        //        if (salPayment.PayMode != PayMode.Cash && salPayment.PayMode != PayMode.Coupons && salPayment.PayMode != PayMode.Points)
         //        {
         //            CashTrigger.UpdateCashInBank(db, salPayment.ReceiptDate, 0 - (salPayment.Amount - salPayment.Amount));
         //        }
         //    }
         //    else
         //    {
-        //        if (salPayment.PayMode == PayModes.Cash)
+        //        if (salPayment.PayMode == PayMode.Cash)
         //        {
         //            CashTrigger.UpdateCashInHand(db, salPayment.ReceiptDate, salPayment.Amount);
 
         //        }
         //        //TODO: in future make it more robust
-        //        if (salPayment.PayMode != PayModes.Cash && salPayment.PayMode != PayModes.Coupons && salPayment.PayMode != PayModes.Points)
+        //        if (salPayment.PayMode != PayMode.Cash && salPayment.PayMode != PayMode.Coupons && salPayment.PayMode != PayMode.Points)
         //        {
         //            CashTrigger.UpdateCashInBank(db, salPayment.ReceiptDate, salPayment.Amount - salPayment.Amount);
         //        }
@@ -203,56 +203,56 @@ namespace AprajitaRetails.Ops.Triggers
 
         //}
 
-        private void UpdateOutAmount(AprajitaRetailsContext db, decimal Amount, PayModes PayMode, DateTime PaymentDate, bool IsEdit)
+        private void UpdateOutAmount(AprajitaRetailsContext db, decimal Amount, PayMode PayMode, DateTime PaymentDate, bool IsEdit)
         {
             if (IsEdit)
             {
-                if (PayMode == PayModes.Cash)
+                if (PayMode == PayMode.Cash)
                 {
                     CashTrigger.UpDateCashOutHand(db, PaymentDate, 0 - Amount);
                 }
                 //TODO: in future make it more robust
-                if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
+                if (PayMode != PayMode.Cash && PayMode != PayMode.Coupons && PayMode != PayMode.Points)
                 {
                     CashTrigger.UpDateCashOutBank(db, PaymentDate, 0 - (Amount - Amount));
                 }
             }
             else
             {
-                if (PayMode == PayModes.Cash)
+                if (PayMode == PayMode.Cash)
                 {
                     CashTrigger.UpDateCashOutHand(db, PaymentDate, Amount);
                 }
                 //TODO: in future make it more robust
-                if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
+                if (PayMode != PayMode.Cash && PayMode != PayMode.Coupons && PayMode != PayMode.Points)
                 {
                     CashTrigger.UpDateCashOutBank(db, PaymentDate, Amount - Amount);
                 }
             }
         }
 
-        private void UpdateInAmount(AprajitaRetailsContext db, decimal Amount, PayModes PayMode, DateTime PaymentDate, bool IsEdit)
+        private void UpdateInAmount(AprajitaRetailsContext db, decimal Amount, PayMode PayMode, DateTime PaymentDate, bool IsEdit)
         {
             if (IsEdit)
             {
-                if (PayMode == PayModes.Cash)
+                if (PayMode == PayMode.Cash)
                 {
                     CashTrigger.UpdateCashInHand(db, PaymentDate, 0 - Amount);
                 }
                 //TODO: in future make it more robust
-                if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
+                if (PayMode != PayMode.Cash && PayMode != PayMode.Coupons && PayMode != PayMode.Points)
                 {
                     CashTrigger.UpdateCashInBank(db, PaymentDate, 0 - (Amount - Amount));
                 }
             }
             else
             {
-                if (PayMode == PayModes.Cash)
+                if (PayMode == PayMode.Cash)
                 {
                     CashTrigger.UpdateCashInHand(db, PaymentDate, Amount);
                 }
                 //TODO: in future make it more robust
-                if (PayMode != PayModes.Cash && PayMode != PayModes.Coupons && PayMode != PayModes.Points)
+                if (PayMode != PayMode.Cash && PayMode != PayMode.Coupons && PayMode != PayMode.Points)
                 {
                     CashTrigger.UpdateCashInBank(db, PaymentDate, Amount - Amount);
                 }

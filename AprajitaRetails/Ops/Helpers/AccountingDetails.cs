@@ -233,7 +233,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.SaleDate,
                     Particulars = item.InvNo,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -257,7 +257,7 @@ namespace AprajitaRetails.Models.Helpers
             //        Amount = item.Amount,
             //        OnDate = item.ReceiptDate,
             //        Particulars = item.Employee.StaffName,
-            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //        IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
             //    };
             //    IncomeDetails.Add (vmdata);
             //}
@@ -269,7 +269,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ReceiptDate,
                     Particulars = item.Employee.StaffName,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -280,7 +280,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.RecieptDate,
                     Particulars = $"Slip No:{item.RecieptSlipNo}\t From: {item.ReceiptFrom}",
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -291,7 +291,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.AmountPaid,
                     OnDate = item.PaidDate,
                     Particulars = "Dues Recovered :" + item.DuesList.DailySale.InvNo,
-                    IsNonCash = ( item.Modes == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.Modes == PaymentMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -319,7 +319,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.PayDate,
                     Particulars = item.PaymentPartry,
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -341,7 +341,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ExpDate,
                     Particulars = item.Particulars,
-                    IsNonCash = false// ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = false// ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -352,7 +352,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ExpDate,
                     Particulars = item.Particulars,
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -363,7 +363,7 @@ namespace AprajitaRetails.Models.Helpers
             //        Amount = item.Amount,
             //        OnDate = item.PaymentDate,
             //        Particulars = item.Employee.StaffName + "\t " + item.SalaryMonth,
-            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //        IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
             //    };
             //    ExpensesDetails.Add (vmdata);
             //}
@@ -375,7 +375,7 @@ namespace AprajitaRetails.Models.Helpers
             //        Amount = item.Amount,
             //        OnDate = item.PaymentDate,
             //        Particulars = item.Employee.StaffName + "\t " + item.Details,
-            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //        IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
             //    };
             //    ExpensesDetails.Add (vmdata);
             //}
@@ -386,7 +386,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ExpDate,
                     Particulars = item.Particulars,
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -398,7 +398,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.PaymentDate,
                     Particulars = item.Employee.StaffName + "\t " + item.Details,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -438,7 +438,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.SaleDate,
                     Particulars = item.InvNo,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -462,7 +462,7 @@ namespace AprajitaRetails.Models.Helpers
             //        Amount = item.Amount,
             //        OnDate = item.ReceiptDate,
             //        Particulars = item.Employee.StaffName,
-            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //        IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
             //    };
             //    IncomeDetails.Add (vmdata);
             //}
@@ -474,7 +474,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ReceiptDate,
                     Particulars = item.Employee.StaffName,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -485,7 +485,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.RecieptDate,
                     Particulars = $"Slip No:{item.RecieptSlipNo}\t From: {item.ReceiptFrom}",
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -496,7 +496,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.AmountPaid,
                     OnDate = item.PaidDate,
                     Particulars = "Dues Recovered :" + item.DuesList.DailySale.InvNo,
-                    IsNonCash = ( item.Modes == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.Modes == PaymentMode.Cash ? false : true )
                 };
                 IncomeDetails.Add (vmdata);
             }
@@ -529,7 +529,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.PayDate,
                     Particulars = item.PaymentPartry,
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -551,7 +551,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ExpDate,
                     Particulars = item.Particulars,
-                    IsNonCash = false// ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = false// ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -562,7 +562,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ExpDate,
                     Particulars = item.Particulars,
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -574,7 +574,7 @@ namespace AprajitaRetails.Models.Helpers
             //        Amount = item.Amount,
             //        OnDate = item.PaymentDate,
             //        Particulars = item.Employee.StaffName + "\t " + item.SalaryMonth,
-            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //        IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
             //    };
             //    ExpensesDetails.Add (vmdata);
             //}
@@ -586,7 +586,7 @@ namespace AprajitaRetails.Models.Helpers
             //        Amount = item.Amount,
             //        OnDate = item.PaymentDate,
             //        Particulars = item.Employee.StaffName + "\t " + item.Details,
-            //        IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+            //        IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
             //    };
             //    ExpensesDetails.Add (vmdata);
             //}
@@ -597,7 +597,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.ExpDate,
                     Particulars = item.Particulars,
-                    IsNonCash = ( item.PayMode == PaymentModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PaymentMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }
@@ -609,7 +609,7 @@ namespace AprajitaRetails.Models.Helpers
                     Amount = item.Amount,
                     OnDate = item.PaymentDate,
                     Particulars = item.Employee.StaffName + "\t " + item.Details,
-                    IsNonCash = ( item.PayMode == PayModes.Cash ? false : true )
+                    IsNonCash = ( item.PayMode == PayMode.Cash ? false : true )
                 };
                 ExpensesDetails.Add (vmdata);
             }

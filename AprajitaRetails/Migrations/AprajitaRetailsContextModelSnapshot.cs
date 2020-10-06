@@ -39,33 +39,6 @@ namespace AprajitaRetails.Migrations
                     b.ToTable("AccountNumber");
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.AppInfo", b =>
-                {
-                    b.Property<int>("AppInfoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("DatabaseVersion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsEffective")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Version")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AppInfoId");
-
-                    b.ToTable("Apps");
-                });
-
             modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.Bank", b =>
                 {
                     b.Property<int>("BankId")
@@ -223,9 +196,9 @@ namespace AprajitaRetails.Migrations
                     b.ToTable("BankWithdrawal");
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.LedgerEntry", b =>
+            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.BasicLedgerEntry", b =>
                 {
-                    b.Property<int>("LedgerEntryId")
+                    b.Property<int>("BasicLedgerEntryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -242,9 +215,6 @@ namespace AprajitaRetails.Migrations
                     b.Property<int>("EntryType")
                         .HasColumnType("int");
 
-                    b.Property<int>("LedgerEntryRefId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Particulars")
                         .HasColumnType("nvarchar(max)");
 
@@ -254,17 +224,14 @@ namespace AprajitaRetails.Migrations
                     b.Property<int>("ReferanceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VoucherType")
-                        .HasColumnType("int");
-
-                    b.HasKey("LedgerEntryId");
+                    b.HasKey("BasicLedgerEntryId");
 
                     b.HasIndex("PartyId");
 
-                    b.ToTable("LedgerEntries");
+                    b.ToTable("BasicLedgerEntries");
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.LedgerMaster", b =>
+            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.LedgerMaster", b =>
                 {
                     b.Property<int>("LedgerMasterId")
                         .ValueGeneratedOnAdd()
@@ -274,7 +241,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<DateTime>("CreatingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LedgerTypeId")
+                    b.Property<int>("LedgerType")
                         .HasColumnType("int");
 
                     b.Property<int>("PartyId")
@@ -282,36 +249,13 @@ namespace AprajitaRetails.Migrations
 
                     b.HasKey("LedgerMasterId");
 
-                    b.HasIndex("LedgerTypeId");
-
                     b.HasIndex("PartyId")
                         .IsUnique();
 
-                    b.ToTable("LedgerMasters");
+                    b.ToTable("Masters");
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.LedgerType", b =>
-                {
-                    b.Property<int>("LedgerTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LedgerNameType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("LedgerTypeId");
-
-                    b.ToTable("LedgerTypes");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.Party", b =>
+            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.Party", b =>
                 {
                     b.Property<int>("PartyId")
                         .ValueGeneratedOnAdd()
@@ -324,7 +268,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<string>("GSTNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LedgerTypeId")
+                    b.Property<int>("LedgerType")
                         .HasColumnType("int");
 
                     b.Property<decimal>("OpenningBalance")
@@ -340,8 +284,6 @@ namespace AprajitaRetails.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PartyId");
-
-                    b.HasIndex("LedgerTypeId");
 
                     b.ToTable("Parties");
                 });
@@ -497,7 +439,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<decimal>("TaxRate")
                         .HasColumnType("money");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("ProductItemId");
@@ -659,7 +601,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<int>("StoreId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("StockID");
@@ -793,7 +735,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("money");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("SaleItemId");
@@ -1107,7 +1049,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("money");
 
-                    b.Property<int>("Units")
+                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("RegularSaleItemId");
@@ -2644,7 +2586,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<string>("CardEndingNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CardTypes")
+                    b.Property<int>("CardType")
                         .HasColumnType("int");
 
                     b.Property<int>("EDCId")
@@ -3941,35 +3883,20 @@ namespace AprajitaRetails.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.LedgerEntry", b =>
+            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.BasicLedgerEntry", b =>
                 {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.Party", "Party")
-                        .WithMany("Ledgers")
+                    b.HasOne("AprajitaRetails.Areas.Accounts.Models.Party", "Party")
+                        .WithMany("BasicLedgers")
                         .HasForeignKey("PartyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.LedgerMaster", b =>
+            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.LedgerMaster", b =>
                 {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.LedgerType", "LedgerType")
-                        .WithMany()
-                        .HasForeignKey("LedgerTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.Party", "Party")
+                    b.HasOne("AprajitaRetails.Areas.Accounts.Models.Party", "Party")
                         .WithOne("LedgerMaster")
-                        .HasForeignKey("AprajitaRetails.Areas.Accountings.Models.LedgerMaster", "PartyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.Party", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.LedgerType", "LedgerType")
-                        .WithMany()
-                        .HasForeignKey("LedgerTypeId")
+                        .HasForeignKey("AprajitaRetails.Areas.Accounts.Models.LedgerMaster", "PartyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

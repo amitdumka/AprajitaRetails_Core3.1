@@ -88,15 +88,15 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
                 IsLocal = false;
             }
 
-            UploadTypes uType = UploadTypes.SaleItemWise;
+            UploadType uType = global::UploadType.SaleItemWise;
             if ( UploadType == "Register" )
             {
-                uType = UploadTypes.SaleRegister;
+                uType = global::UploadType.SaleRegister;
             }
-            UploadReturns response = uploader.UploadExcel (db, uType, FileUpload, StoreCode, IsVat, IsLocal);
+            UploadReturn response = uploader.UploadExcel (db, uType, FileUpload, StoreCode, IsVat, IsLocal);
 
             ViewBag.Status = response.ToString ();
-            if ( response == UploadReturns.Success )
+            if ( response == UploadReturn.Success )
             {
                 return RedirectToAction ("SaleList");
             }

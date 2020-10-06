@@ -57,10 +57,10 @@ namespace AprajitaRetails.Ops.Utility
             }
 
             //income
-            var dSale = db.DailySales.Where(c => c.PayMode == PayModes.Cash && (c.SaleDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.SaleDate);//ok
-            var dRec = db.Receipts.Where(c => c.PayMode == PaymentModes.Cash && (c.RecieptDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.RecieptDate);//ok
+            var dSale = db.DailySales.Where(c => c.PayMode == PayMode.Cash && (c.SaleDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.SaleDate);//ok
+            var dRec = db.Receipts.Where(c => c.PayMode == PaymentMode.Cash && (c.RecieptDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.RecieptDate);//ok
             var dCashRec = db.CashReceipts.Where(c => (c.InwardDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.InwardDate);//ok
-            var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.ReceiptDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.ReceiptDate);//ok
+            var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && (c.ReceiptDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.ReceiptDate);//ok
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => (c.DepoDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.DepoDate);
            
             foreach (var item in dSale)
@@ -95,10 +95,10 @@ namespace AprajitaRetails.Ops.Utility
             //Expenses
 
             var eCPay = db.CashPayments.Where(c => (c.PaymentDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PaymentDate);//ok
-            var ePay = db.Payments.Where(c => c.PayMode == PaymentModes.Cash && (c.PayDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PayDate.Date);
-            //var eStPay = db.StaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PaymentDate);
-            var eSal = db.SalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && (c.PaymentDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PaymentDate);
-            var eexp = db.Expenses.Where(c => c.PayMode == PaymentModes.Cash && (c.ExpDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.ExpDate);
+            var ePay = db.Payments.Where(c => c.PayMode == PaymentMode.Cash && (c.PayDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PayDate.Date);
+            //var eStPay = db.StaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && (c.PaymentDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PaymentDate);
+            var eSal = db.SalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && (c.PaymentDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PaymentDate);
+            var eexp = db.Expenses.Where(c => c.PayMode == PaymentMode.Cash && (c.ExpDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.ExpDate);
             var eDepo = db.BankDeposits.Include(C => C.Account).Where(c => (c.DepoDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.DepoDate);
             var eDue = db.DuesLists.Include(c => c.DailySale).Where(c => c.IsRecovered == false && (c.DailySale.SaleDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => (c.ExpDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.ExpDate);
@@ -174,10 +174,10 @@ namespace AprajitaRetails.Ops.Utility
             }
 
             //income
-            var dSale = db.DailySales.Where(c => c.PayMode == PayModes.Cash && c.SaleDate.Month == date.Month && c.SaleDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.SaleDate);
-            var dRec = db.Receipts.Where(c => c.PayMode == PaymentModes.Cash && c.RecieptDate.Month == date.Month && c.RecieptDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.RecieptDate);
+            var dSale = db.DailySales.Where(c => c.PayMode == PayMode.Cash && c.SaleDate.Month == date.Month && c.SaleDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.SaleDate);
+            var dRec = db.Receipts.Where(c => c.PayMode == PaymentMode.Cash && c.RecieptDate.Month == date.Month && c.RecieptDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.RecieptDate);
             var dCashRec = db.CashReceipts.Where(c => c.InwardDate.Month == date.Month && c.InwardDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.InwardDate);
-            var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.StoreId == Store && c.ReceiptDate.Year == date.Year && c.ReceiptDate.Month == date.Month).OrderBy(c => c.ReceiptDate);
+            var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.StoreId == Store && c.ReceiptDate.Year == date.Year && c.ReceiptDate.Month == date.Month).OrderBy(c => c.ReceiptDate);
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.DepoDate);
             
             foreach (var item in dSale)
@@ -210,10 +210,10 @@ namespace AprajitaRetails.Ops.Utility
             //Expenses
 
             var eCPay = db.CashPayments.Where(c => c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.PaymentDate);//ok
-            var ePay = db.Payments.Where(c => c.PayMode == PaymentModes.Cash && c.PayDate.Month == date.Month && c.PayDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.PayDate);
-           // var eStPay = db.StaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
-            var eSal = db.SalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayModes.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.PaymentDate);
-            var eexp = db.Expenses.Where(c => c.PayMode == PaymentModes.Cash && c.ExpDate.Month == date.Month && c.ExpDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.ExpDate);
+            var ePay = db.Payments.Where(c => c.PayMode == PaymentMode.Cash && c.PayDate.Month == date.Month && c.PayDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.PayDate);
+           // var eStPay = db.StaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year).OrderBy(c => c.PaymentDate);
+            var eSal = db.SalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.PaymentDate.Month == date.Month && c.PaymentDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.PaymentDate);
+            var eexp = db.Expenses.Where(c => c.PayMode == PaymentMode.Cash && c.ExpDate.Month == date.Month && c.ExpDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.ExpDate);
             var eDepo = db.BankDeposits.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.DepoDate);
             var eDue = db.DuesLists.Include(e => e.DailySale).Where(c => c.IsRecovered == false && c.DailySale.SaleDate.Month == date.Month && c.DailySale.SaleDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => c.ExpDate.Month == date.Month && c.ExpDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.ExpDate);

@@ -50,7 +50,7 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
                 foreach (var item in todayPresent)
                 {
                     count++;
-                    if(item.Status==AttUnits.Present || item.Status==AttUnits.HalfDay)
+                    if(item.Status==AttUnit.Present || item.Status==AttUnit.HalfDay)
                     EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)} and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
                     else
                         EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)}.\n and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
@@ -76,16 +76,16 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
             }
         }
 
-        private static string GetAttUnitName(AttUnits att)
+        private static string GetAttUnitName(AttUnit att)
         {
             return att switch
             {
-                AttUnits.Present => "Present",
-                AttUnits.Absent => "Absent",
-                AttUnits.HalfDay => "Half Day",
-                AttUnits.Sunday => "Sunday Present",
-                AttUnits.Holiday => "Holiday",
-                AttUnits.StoreClosed => "Store Closed",
+                AttUnit.Present => "Present",
+                AttUnit.Absent => "Absent",
+                AttUnit.HalfDay => "Half Day",
+                AttUnit.Sunday => "Sunday Present",
+                AttUnit.Holiday => "Holiday",
+                AttUnit.StoreClosed => "Store Closed",
                 _ => "Error",
             };
         }
