@@ -68,6 +68,10 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 //All
                 dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.StoreId == this.StoreCodeId).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
             }
+            else if ( id != null && id == 104 )
+            {
+                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate == DateTime.Today.AddDays(-1) && c.StoreId == this.StoreCodeId);
+            }
             else if (id != null && id == 102)
             {
                 //Current Month
