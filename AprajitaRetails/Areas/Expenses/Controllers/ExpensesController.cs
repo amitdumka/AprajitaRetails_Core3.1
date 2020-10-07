@@ -17,6 +17,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
     public class ExpensesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreId = 1;
 
         public ExpensesController(AprajitaRetailsContext context)
         {
@@ -79,6 +80,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         {
             if (ModelState.IsValid)
             {
+                expense.StoreId = StoreId;
                 expense.UserName = User.Identity.Name;
                 _context.Add(expense);
                 new ExpenseManager().OnInsert(_context, expense);
@@ -124,6 +126,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 try
                 {
+                    expense.StoreId = StoreId;
                     expense.UserName = User.Identity.Name;
                     new ExpenseManager().OnUpdate(_context, expense);
                     _context.Update(expense);

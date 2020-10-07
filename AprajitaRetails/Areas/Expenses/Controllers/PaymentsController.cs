@@ -17,6 +17,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
     public class PaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreId = 1;
 
         public PaymentsController(AprajitaRetailsContext context)
         {
@@ -77,6 +78,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 payment.UserName = User.Identity.Name;
+                payment.StoreId = StoreId;
                 _context.Add(payment);
                 new ExpenseManager().OnInsert(_context, payment);
                 await _context.SaveChangesAsync();
@@ -120,6 +122,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 try
                 {
                     payment.UserName = User.Identity.Name;
+                    payment.StoreId = StoreId;
                     new ExpenseManager().OnUpdate(_context, payment);
                     _context.Update(payment);
                     await _context.SaveChangesAsync();

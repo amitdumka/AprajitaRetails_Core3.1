@@ -16,6 +16,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
     public class CashPaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreId = 1;
 
         public CashPaymentsController(AprajitaRetailsContext context)
         {
@@ -114,6 +115,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 cashPayment.UserName = User.Identity.Name;
+                cashPayment.StoreId = StoreId;
                 _context.Add(cashPayment);
                 new ExpenseManager().OnInsert(_context, cashPayment);
                 await _context.SaveChangesAsync();
@@ -159,6 +161,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 try
                 {
                     cashPayment.UserName = User.Identity.Name;
+                    cashPayment.StoreId = StoreId;
                     new ExpenseManager().OnUpdate(_context, cashPayment);
                     _context.Update(cashPayment);
                     await _context.SaveChangesAsync();

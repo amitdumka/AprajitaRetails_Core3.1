@@ -243,6 +243,15 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 {
                     attendance.UserName = User.Identity.Name;
                     attendance.StoreId = StoreId;
+                    var eType = _context.Employees.Find (attendance.EmployeeId).Category;
+                    if ( eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster )
+                    {
+                        attendance.IsTailoring = true;
+                    }
+                    else
+                    {
+                        attendance.IsTailoring = false;
+                    }
                     new PayRollManager().ONInsertOrUpdate(_context, attendance, false, true);
                     _context.Update(attendance);
                     await _context.SaveChangesAsync();

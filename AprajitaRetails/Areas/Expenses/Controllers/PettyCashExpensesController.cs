@@ -16,6 +16,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
     public class PettyCashExpensesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreId = 1;
 
         public PettyCashExpensesController(AprajitaRetailsContext context)
         {
@@ -80,6 +81,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             if (ModelState.IsValid)
             {
                 pettyCashExpense.UserName = User.Identity.Name;
+                pettyCashExpense.StoreId = StoreId;
                 _context.Add(pettyCashExpense);
                 new ExpenseManager().OnInsert(_context, pettyCashExpense);
                 await _context.SaveChangesAsync();
@@ -123,6 +125,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 try
                 {
                     pettyCashExpense.UserName = User.Identity.Name;
+                    pettyCashExpense.StoreId = StoreId;
                     new ExpenseManager().OnUpdate(_context, pettyCashExpense);
                     _context.Update(pettyCashExpense);
                     await _context.SaveChangesAsync();
