@@ -16,6 +16,9 @@ namespace AprajitaRetails.Models
 
         public ICollection<AccountNumber> Accounts { get; set; }
         public ICollection<BankAccountInfo> BankAccounts { get; set; }
+        public ICollection<Areas.Uploader.Models.BankSetting> BankSettings { get; set; }
+        public ICollection<Areas.Accountings.Models.BankAccount> BankAcc { get; set; }
+
     }
 
 }

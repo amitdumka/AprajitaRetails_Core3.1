@@ -1,5 +1,6 @@
 ﻿using AprajitaRetails.Areas.Accountings.Models;
 using AprajitaRetails.Data.Json;
+using AprajitaRetails.Models;
 using Castle.Components.DictionaryAdapter;
 using Newtonsoft.Json;
 using Remotion.Mixins.Definitions;

@@ -252,13 +252,7 @@ namespace AprajitaRetails.Data
         public DbSet<BookEntry> ImportBookEntries { get; set; }
         public DbSet<BankStatement> BankStatements { get; set; }
 
-        //Accounts
-        //public DbSet<LedgerMaster> Masters { get; set; }
-        //public DbSet<Party> Parties { get; set; }
-        //public DbSet<BasicLedgerEntry> BasicLedgerEntries { get; set; }
-        // public DbSet<LedgerEntry> LedgerEntries { get; set; }
         // public DbSet<AprajitaRetails.Areas.Reports.Models.EmpAttReport> EmpAttReport { get; set; }
-        // public DbSet<LedgerEntry> LedgerEntries { get; set; }
         //public DbSet<AprajitaRetails.Areas.Reports.Models.EmpFinReport> EmpFinReport { get; set; }
 
 

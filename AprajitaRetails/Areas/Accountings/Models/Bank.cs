@@ -16,16 +16,16 @@ namespace AprajitaRetails.Areas.Accountings.Models
     //Banking 
 
     
-    public class Bank
-    {
-        public int BankId { get; set; }
-        [Display(Name = "Bank Name")]
-        public string BankName { get; set; }
+    //public class Bank
+    //{
+    //    public int BankId { get; set; }
+    //    [Display(Name = "Bank Name")]
+    //    public string BankName { get; set; }
 
-        public ICollection<BankAccount> Accounts { get; set; }
-        public ICollection<BankAccountInfo> BankAccounts { get; set; }
-        public ICollection<BankSetting> BankSettings { get; set; }
-    }
+    //    public ICollection<BankAccount> Accounts { get; set; }
+    //    public ICollection<BankAccountInfo> BankAccounts { get; set; }
+    //    public ICollection<BankSetting> BankSettings { get; set; }
+    //}
 
     public class BankAccount
     {
@@ -33,7 +33,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
 
         [Display(Name = "Bank Name")]
         public int BankId { get; set; }
-        public virtual Bank Bank { get; set; }
+        public virtual AprajitaRetails.Models.Bank Bank { get; set; }
 
         [Display(Name = "Account Number")]
         public string Account { get; set; }
