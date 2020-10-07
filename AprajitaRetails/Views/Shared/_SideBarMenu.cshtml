@@ -254,6 +254,23 @@
                     Year-end Sale
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="#NewAcc" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="users"></span>Accountings</a>
+                <ul class="collapse list-unstyled" id="NewAcc">
+                   
+                    <li class="nav-item">
+                        <a asp-area="Accountings" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Accountings" asp-controller="Payments" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="Accountings" asp-controller="Expenses" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Expenses</a>
+                    </li>
+                    
+                </ul>
+            </li>
+
         </ul>
     </div>
 </nav>
