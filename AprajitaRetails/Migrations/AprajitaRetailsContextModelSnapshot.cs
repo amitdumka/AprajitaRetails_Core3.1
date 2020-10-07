@@ -19,275 +19,7 @@ namespace AprajitaRetails.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.AccountNumber", b =>
-                {
-                    b.Property<int>("AccountNumberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Account")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BankId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AccountNumberId");
-
-                    b.HasIndex("BankId");
-
-                    b.ToTable("AccountNumber");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.Bank", b =>
-                {
-                    b.Property<int>("BankId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BankName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BankId");
-
-                    b.ToTable("Bank");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankAccountInfo", b =>
-                {
-                    b.Property<int>("BankAccountInfoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountHolder")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AccountNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AccountType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BankId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BranchName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IFSCCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsClientAccount")
-                        .HasColumnType("bit");
-
-                    b.HasKey("BankAccountInfoId");
-
-                    b.HasIndex("BankId");
-
-                    b.ToTable("BankAccountInfo");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankAccountSecurityInfo", b =>
-                {
-                    b.Property<int>("BankAccountSecurityInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ATMCardNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ATMPin")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CVVNo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExpiryDate")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExtraPassword")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TPIN")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TaxPassword")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BankAccountSecurityInfoId");
-
-                    b.ToTable("BankAccountSecurityInfo");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankDeposit", b =>
-                {
-                    b.Property<int>("BankDepositId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AccountNumberId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<DateTime>("DepoDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Details")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PayMode")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BankDepositId");
-
-                    b.HasIndex("AccountNumberId");
-
-                    b.ToTable("BankDeposit");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankWithdrawal", b =>
-                {
-                    b.Property<int>("BankWithdrawalId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AccountNumberId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("money");
-
-                    b.Property<string>("ApprovedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ChequeNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DepoDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("InNameOf")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SignedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BankWithdrawalId");
-
-                    b.HasIndex("AccountNumberId");
-
-                    b.ToTable("BankWithdrawal");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.BasicLedgerEntry", b =>
-                {
-                    b.Property<int>("BasicLedgerEntryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("AmountIn")
-                        .HasColumnType("money");
-
-                    b.Property<decimal>("AmountOut")
-                        .HasColumnType("money");
-
-                    b.Property<DateTime>("EntryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EntryType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Particulars")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PartyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReferanceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BasicLedgerEntryId");
-
-                    b.HasIndex("PartyId");
-
-                    b.ToTable("BasicLedgerEntries");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.LedgerMaster", b =>
-                {
-                    b.Property<int>("LedgerMasterId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("LedgerType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PartyId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LedgerMasterId");
-
-                    b.HasIndex("PartyId")
-                        .IsUnique();
-
-                    b.ToTable("Masters");
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.Party", b =>
-                {
-                    b.Property<int>("PartyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GSTNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LedgerType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("OpenningBalance")
-                        .HasColumnType("money");
-
-                    b.Property<DateTime>("OpenningDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PANNo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PartyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PartyId");
-
-                    b.ToTable("Parties");
-                });
-
+          
             modelBuilder.Entity("AprajitaRetails.Areas.AddressBook.Models.Contact", b =>
                 {
                     b.Property<int>("ContactId")
@@ -439,7 +171,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<decimal>("TaxRate")
                         .HasColumnType("money");
 
-                    b.Property<int>("Unit")
+                    b.Property<int>("Units")
                         .HasColumnType("int");
 
                     b.HasKey("ProductItemId");
@@ -601,7 +333,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<int>("StoreId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Unit")
+                    b.Property<int>("Units")
                         .HasColumnType("int");
 
                     b.HasKey("StockID");
@@ -735,7 +467,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("money");
 
-                    b.Property<int>("Unit")
+                    b.Property<int>("Units")
                         .HasColumnType("int");
 
                     b.HasKey("SaleItemId");
@@ -1049,7 +781,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("money");
 
-                    b.Property<int>("Unit")
+                    b.Property<int>("Units")
                         .HasColumnType("int");
 
                     b.HasKey("RegularSaleItemId");
@@ -2586,7 +2318,7 @@ namespace AprajitaRetails.Migrations
                     b.Property<string>("CardEndingNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CardType")
+                    b.Property<int>("CardTypes")
                         .HasColumnType("int");
 
                     b.Property<int>("EDCId")
@@ -3837,70 +3569,6 @@ namespace AprajitaRetails.Migrations
 
                     b.ToTable("IncomeExpensesReport");
                 });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.AccountNumber", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.Bank", "Bank")
-                        .WithMany("Accounts")
-                        .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankAccountInfo", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.Bank", "Bank")
-                        .WithMany("BankAccounts")
-                        .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankAccountSecurityInfo", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.BankAccountInfo", "BankAccountInfo")
-                        .WithOne("AccountSecurityInfo")
-                        .HasForeignKey("AprajitaRetails.Areas.Accountings.Models.BankAccountSecurityInfo", "BankAccountSecurityInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankDeposit", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.AccountNumber", "Account")
-                        .WithMany("Deposits")
-                        .HasForeignKey("AccountNumberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accountings.Models.BankWithdrawal", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.AccountNumber", "Account")
-                        .WithMany("Withdrawals")
-                        .HasForeignKey("AccountNumberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.BasicLedgerEntry", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accounts.Models.Party", "Party")
-                        .WithMany("BasicLedgers")
-                        .HasForeignKey("PartyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AprajitaRetails.Areas.Accounts.Models.LedgerMaster", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accounts.Models.Party", "Party")
-                        .WithOne("LedgerMaster")
-                        .HasForeignKey("AprajitaRetails.Areas.Accounts.Models.LedgerMaster", "PartyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AprajitaRetails.Areas.Purchase.Models.ProductItem", b =>
                 {
                     b.HasOne("AprajitaRetails.Areas.Purchase.Models.Brand", "BrandName")
@@ -4088,15 +3756,7 @@ namespace AprajitaRetails.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AprajitaRetails.Areas.Uploader.Models.BankSetting", b =>
-                {
-                    b.HasOne("AprajitaRetails.Areas.Accountings.Models.Bank", "Bank")
-                        .WithMany("BankSettings")
-                        .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
+            
             modelBuilder.Entity("AprajitaRetails.Areas.Uploader.Models.ImportInWard", b =>
                 {
                     b.HasOne("AprajitaRetails.Areas.Voyager.Models.Store", "Store")
