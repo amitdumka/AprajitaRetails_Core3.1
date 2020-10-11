@@ -1,4 +1,5 @@
-﻿using AprajitaRetailsWatcher.Ops;
+﻿using AprajitaRetailsWatcher.Model;
+using AprajitaRetailsWatcher.Ops;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,9 +37,13 @@ namespace AprajitaRetailsXMLUploader
 
                 if (BasicOps.CheckFileExistance(filename))
                 {
-                    string jsonData = BasicOps.XmlToJson(filename);
-                    txtAreaData.Text = jsonData;
-                    BasicOps.GenerateJsonFile(jsonData);
+                    // string jsonData = BasicOps.XmlToJson(filename);
+                    // txtAreaData.Text = jsonData;
+                    //ss BasicOps.GenerateJsonFile(jsonData);
+
+                    //root rootData = BasicOps.XmltoObject(filename);
+                    //BasicOps.ObjectToXml(rootData);
+                    txtAreaData.Text = BasicOps.JsontoJson(filename);
                 }
                 else
                 {

@@ -9,6 +9,7 @@ using System.Xml;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using AprajitaRetailsWatcher.Model;
 
 namespace AprajitaRetailsWatcher.Ops
 {
@@ -250,7 +251,37 @@ namespace AprajitaRetailsWatcher.Ops
             string jsonString;
             jsonString = JsonSerializer.Serialize(v);
         }
-    
+
+        public static Model.XMLDATA.root XmltoObject(string filename)
+        {
+            // Now we can read the serialized book ...  
+            System.Xml.Serialization.XmlSerializer reader =
+                new System.Xml.Serialization.XmlSerializer(typeof(Model.XMLDATA.root));
+            System.IO.StreamReader file = new System.IO.StreamReader(
+                filename);
+            Model.XMLDATA.root data = (Model.XMLDATA.root)reader.Deserialize(file);
+            file.Close();
+            return data;
+        }
+
+        public static void ObjectToXml(Model.XMLDATA.root data)
+        {
+            //var b = new Book { title = "Serialization Overview" };
+            var writer = new System.Xml.Serialization.XmlSerializer(typeof(Model.XMLDATA.root));
+            var wfile = new System.IO.StreamWriter(Path.Combine(FileInfos.LogFolder,"xmlfile_"+DateTime.Now.ToShortDateString()+".xml"));
+            writer.Serialize(wfile, data);
+            wfile.Close();
+        }
+
+
+        public static string JsontoJson(string filename)
+        {
+            string data = XmlToJson(filename);
+            Model.JSONData.Rootobject objectName = JsonConvert.DeserializeObject<Model.JSONData.Rootobject>(data);
+           return JsonConvert.SerializeObject(objectName);
+
+        }
+
     }
 
     public class VoyBill

@@ -1,1 +1,91 @@
-<?xml version="1.0"?><root><bill><type>REGULAR</type><bill_number>C33IN1800922</bill_number><billing_time>23/10/2018 12:25:17 PM</billing_time><WalletPaymentId></WalletPaymentId><WalletPaymentWalletId></WalletPaymentWalletId><bill_client_id>_GUID_</bill_client_id><bill_store_id>JHC0006</bill_store_id><bill_amount>1600</bill_amount><bill_gross_amount>1600</bill_gross_amount><balancepoints_add>0</balancepoints_add><bill_discount>0</bill_discount><line_items><line_item><line_item_type>REGULAR</line_item_type><serial>1</serial><item_code>SATU001RF34</item_code><qty>1</qty><rate>400</rate><value>400</value><discount_value>0</discount_value><amount>390.47</amount><description>Flat Frt Low Rise-Regular Fit</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>2</serial><item_code>SATU001RF34</item_code><qty>1</qty><rate>400</rate><value>400</value><discount_value>0</discount_value><amount>390.47</amount><description>Flat Frt Low Rise-Regular Fit</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>3</serial><item_code>SATU001RF34</item_code><qty>1</qty><rate>400</rate><value>400</value><discount_value>0</discount_value><amount>390.47</amount><description>Flat Frt Low Rise-Regular Fit</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>4</serial><item_code>SATU001RF34</item_code><qty>1</qty><rate>400</rate><value>400</value><discount_value>0</discount_value><amount>390.47</amount><description>Flat Frt Low Rise-Regular Fit</description></line_item></line_items><customer><name>MUKUL KUMAR MUKUL KUMAR</name><mobile>917992407534 </mobile></customer><Custom_fields><field_details><field_name>Tailoring</field_name><tailoring_req>N</tailoring_req></field_details></Custom_fields><Payment_Mode><Payment_detail><payment><mode>CA</mode><value>1600</value><notes></notes><attributes><attribute><name></name><value></value></attribute></attributes></payment><payment><mode>mw</mode><value>0.0</value></payment></Payment_detail></Payment_Mode></bill></root>
+<?xml version="1.0"?>
+<root>
+  <bill>
+    <type>REGULAR</type>
+    <bill_number>C33IN1800922</bill_number>
+    <billing_time>23/10/2018 12:25:17 PM</billing_time>
+    <WalletPaymentId></WalletPaymentId>
+    <WalletPaymentWalletId></WalletPaymentWalletId>
+    <bill_client_id>_GUID_</bill_client_id>
+    <bill_store_id>JHC0006</bill_store_id>
+    <bill_amount>1600</bill_amount>
+    <bill_gross_amount>1600</bill_gross_amount>
+    <balancepoints_add>0</balancepoints_add>
+    <bill_discount>0</bill_discount>
+    <line_items>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>1</serial>
+        <item_code>SATU001RF34</item_code>
+        <qty>1</qty>
+        <rate>400</rate>
+        <value>400</value>
+        <discount_value>0</discount_value>
+        <amount>390.47</amount>
+        <description>Flat Frt Low Rise-Regular Fit</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>2</serial>
+        <item_code>SATU001RF34</item_code>
+        <qty>1</qty>
+        <rate>400</rate>
+        <value>400</value>
+        <discount_value>0</discount_value>
+        <amount>390.47</amount>
+        <description>Flat Frt Low Rise-Regular Fit</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>3</serial>
+        <item_code>SATU001RF34</item_code>
+        <qty>1</qty>
+        <rate>400</rate>
+        <value>400</value>
+        <discount_value>0</discount_value>
+        <amount>390.47</amount>
+        <description>Flat Frt Low Rise-Regular Fit</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>4</serial>
+        <item_code>SATU001RF34</item_code>
+        <qty>1</qty>
+        <rate>400</rate>
+        <value>400</value>
+        <discount_value>0</discount_value>
+        <amount>390.47</amount>
+        <description>Flat Frt Low Rise-Regular Fit</description>
+      </line_item>
+    </line_items>
+    <customer>
+      <name>MUKUL KUMAR MUKUL KUMAR</name>
+      <mobile>917992407534 </mobile>
+    </customer>
+    <Custom_fields>
+      <field_details>
+        <field_name>Tailoring</field_name>
+        <tailoring_req>N</tailoring_req>
+      </field_details>
+    </Custom_fields>
+    <Payment_Mode>
+      <Payment_detail>
+        <payment>
+          <mode>CA</mode>
+          <value>1600</value>
+          <notes></notes>
+          <attributes>
+            <attribute>
+              <name></name>
+              <value></value>
+            </attribute>
+          </attributes>
+        </payment>
+        <payment>
+          <mode>mw</mode>
+          <value>0.0</value>
+        </payment>
+      </Payment_detail>
+    </Payment_Mode>
+  </bill>
+</root>

@@ -1,1 +1,91 @@
-<?xml version="1.0"?><root><bill><type>REGULAR</type><bill_number>C33IN1800920</bill_number><billing_time>22/10/2018 4:00:26 PM</billing_time><WalletPaymentId></WalletPaymentId><WalletPaymentWalletId></WalletPaymentWalletId><bill_client_id>_GUID_</bill_client_id><bill_store_id>JHC0006</bill_store_id><bill_amount>4568</bill_amount><bill_gross_amount>4568</bill_gross_amount><balancepoints_add>0</balancepoints_add><bill_discount>0</bill_discount><line_items><line_item><line_item_type>REGULAR</line_item_type><serial>1</serial><item_code>M32137801025</item_code><qty>1.2</qty><rate>894</rate><value>1072.8</value><discount_value>0</discount_value><amount>1047.26</amount><description>Suiting Syndicate</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>2</serial><item_code>M45653001059</item_code><qty>1.2</qty><rate>974</rate><value>1168.8</value><discount_value>0</discount_value><amount>1140.97</amount><description>Tresca DTR Syn</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>3</serial><item_code>M43585501048</item_code><qty>1.6</qty><rate>916</rate><value>1465.6</value><discount_value>0</discount_value><amount>1430.7</amount><description>Tresca DTR Syn</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>4</serial><item_code>M40759201044</item_code><qty>1.6</qty><rate>538</rate><value>860.8</value><discount_value>0</discount_value><amount>840.3</amount><description>Cotton Shirting</description></line_item></line_items><customer><name>RAJU RAJU</name><mobile>919697716930 </mobile></customer><Custom_fields><field_details><field_name>Tailoring</field_name><tailoring_req>N</tailoring_req></field_details></Custom_fields><Payment_Mode><Payment_detail><payment><mode>CA</mode><value>4568</value><notes></notes><attributes><attribute><name></name><value></value></attribute></attributes></payment><payment><mode>mw</mode><value>0.0</value></payment></Payment_detail></Payment_Mode></bill></root>
+<?xml version="1.0"?>
+<root>
+  <bill>
+    <type>REGULAR</type>
+    <bill_number>C33IN1800920</bill_number>
+    <billing_time>22/10/2018 4:00:26 PM</billing_time>
+    <WalletPaymentId></WalletPaymentId>
+    <WalletPaymentWalletId></WalletPaymentWalletId>
+    <bill_client_id>_GUID_</bill_client_id>
+    <bill_store_id>JHC0006</bill_store_id>
+    <bill_amount>4568</bill_amount>
+    <bill_gross_amount>4568</bill_gross_amount>
+    <balancepoints_add>0</balancepoints_add>
+    <bill_discount>0</bill_discount>
+    <line_items>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>1</serial>
+        <item_code>M32137801025</item_code>
+        <qty>1.2</qty>
+        <rate>894</rate>
+        <value>1072.8</value>
+        <discount_value>0</discount_value>
+        <amount>1047.26</amount>
+        <description>Suiting Syndicate</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>2</serial>
+        <item_code>M45653001059</item_code>
+        <qty>1.2</qty>
+        <rate>974</rate>
+        <value>1168.8</value>
+        <discount_value>0</discount_value>
+        <amount>1140.97</amount>
+        <description>Tresca DTR Syn</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>3</serial>
+        <item_code>M43585501048</item_code>
+        <qty>1.6</qty>
+        <rate>916</rate>
+        <value>1465.6</value>
+        <discount_value>0</discount_value>
+        <amount>1430.7</amount>
+        <description>Tresca DTR Syn</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>4</serial>
+        <item_code>M40759201044</item_code>
+        <qty>1.6</qty>
+        <rate>538</rate>
+        <value>860.8</value>
+        <discount_value>0</discount_value>
+        <amount>840.3</amount>
+        <description>Cotton Shirting</description>
+      </line_item>
+    </line_items>
+    <customer>
+      <name>RAJU RAJU</name>
+      <mobile>919697716930 </mobile>
+    </customer>
+    <Custom_fields>
+      <field_details>
+        <field_name>Tailoring</field_name>
+        <tailoring_req>N</tailoring_req>
+      </field_details>
+    </Custom_fields>
+    <Payment_Mode>
+      <Payment_detail>
+        <payment>
+          <mode>CA</mode>
+          <value>4568</value>
+          <notes></notes>
+          <attributes>
+            <attribute>
+              <name></name>
+              <value></value>
+            </attribute>
+          </attributes>
+        </payment>
+        <payment>
+          <mode>mw</mode>
+          <value>0.0</value>
+        </payment>
+      </Payment_detail>
+    </Payment_Mode>
+  </bill>
+</root>

@@ -1,1 +1,69 @@
-<?xml version="1.0"?><root><bill><type>REGULAR</type><bill_number>C33IN1800929</bill_number><billing_time>24/10/2018 7:03:10 PM</billing_time><WalletPaymentId></WalletPaymentId><WalletPaymentWalletId></WalletPaymentWalletId><bill_client_id>_GUID_</bill_client_id><bill_store_id>JHC0006</bill_store_id><bill_amount>2453</bill_amount><bill_gross_amount>2453</bill_gross_amount><balancepoints_add>0</balancepoints_add><bill_discount>0</bill_discount><line_items><line_item><line_item_type>REGULAR</line_item_type><serial>1</serial><item_code>M42222301008</item_code><qty>2.25</qty><rate>952</rate><value>2142</value><discount_value>0</discount_value><amount>2091</amount><description>Maurizio</description></line_item><line_item><line_item_type>REGULAR</line_item_type><serial>2</serial><item_code>MTS000000010H</item_code><qty>2.25</qty><rate>138</rate><value>310.5</value><discount_value>0</discount_value><amount>303.11</amount><description>Dictator</description></line_item></line_items><customer><name>ABHILASHA ABHILASHA</name><mobile>919334459529 </mobile></customer><Custom_fields><field_details><field_name>Tailoring</field_name><tailoring_req>N</tailoring_req></field_details></Custom_fields><Payment_Mode><Payment_detail><payment><mode>CA</mode><value>2453</value><notes></notes><attributes><attribute><name></name><value></value></attribute></attributes></payment><payment><mode>mw</mode><value>0.0</value></payment></Payment_detail></Payment_Mode></bill></root>
+<?xml version="1.0"?>
+<root>
+  <bill>
+    <type>REGULAR</type>
+    <bill_number>C33IN1800929</bill_number>
+    <billing_time>24/10/2018 7:03:10 PM</billing_time>
+    <WalletPaymentId></WalletPaymentId>
+    <WalletPaymentWalletId></WalletPaymentWalletId>
+    <bill_client_id>_GUID_</bill_client_id>
+    <bill_store_id>JHC0006</bill_store_id>
+    <bill_amount>2453</bill_amount>
+    <bill_gross_amount>2453</bill_gross_amount>
+    <balancepoints_add>0</balancepoints_add>
+    <bill_discount>0</bill_discount>
+    <line_items>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>1</serial>
+        <item_code>M42222301008</item_code>
+        <qty>2.25</qty>
+        <rate>952</rate>
+        <value>2142</value>
+        <discount_value>0</discount_value>
+        <amount>2091</amount>
+        <description>Maurizio</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>2</serial>
+        <item_code>MTS000000010H</item_code>
+        <qty>2.25</qty>
+        <rate>138</rate>
+        <value>310.5</value>
+        <discount_value>0</discount_value>
+        <amount>303.11</amount>
+        <description>Dictator</description>
+      </line_item>
+    </line_items>
+    <customer>
+      <name>ABHILASHA ABHILASHA</name>
+      <mobile>919334459529 </mobile>
+    </customer>
+    <Custom_fields>
+      <field_details>
+        <field_name>Tailoring</field_name>
+        <tailoring_req>N</tailoring_req>
+      </field_details>
+    </Custom_fields>
+    <Payment_Mode>
+      <Payment_detail>
+        <payment>
+          <mode>CA</mode>
+          <value>2453</value>
+          <notes></notes>
+          <attributes>
+            <attribute>
+              <name></name>
+              <value></value>
+            </attribute>
+          </attributes>
+        </payment>
+        <payment>
+          <mode>mw</mode>
+          <value>0.0</value>
+        </payment>
+      </Payment_detail>
+    </Payment_Mode>
+  </bill>
+</root>

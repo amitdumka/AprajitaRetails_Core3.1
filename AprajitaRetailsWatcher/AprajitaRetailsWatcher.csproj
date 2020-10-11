@@ -51,8 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Class1.cs" />
+    <Compile Include="Model\VoyInvoice.cs" />
     <Compile Include="Model\CustomFolderSettings.cs" />
+    <Compile Include="Model\VoyBillElement.cs" />
     <Compile Include="Ops\BasicOps.cs" />
     <Compile Include="Ops\LogEvent.cs" />
     <Compile Include="Service1.cs">

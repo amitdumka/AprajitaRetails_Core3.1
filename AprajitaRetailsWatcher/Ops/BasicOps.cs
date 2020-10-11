@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using AprajitaRetailsWatcher.Model.XMLData;
 
 namespace AprajitaRetailsWatcher.Ops
 {
@@ -27,8 +28,19 @@ namespace AprajitaRetailsWatcher.Ops
         public const string AppUri = "https://aprajitaretails.in/api/UploadInvoice";
         public const string JsonFileName = "JsonData_";
 
-    }
+        public const string ActionName = "UploadInvoice";
 
+    }
+    public class PathList
+    {
+        public const string InvoiceXMLPath = "C:\\Capillary";
+        public const string TabletSaleXMLPath = "D:\\VoyagerRetail\\TabletSale";
+        public const string InvoiceXMLFile = "invoice.xml";
+        public const string VoyBillXMLFile = "VoyBill.XML";
+        public const string TabletSaleXMLFile = "TabletBill.XML";
+        public const string TailoringHubXMLPath = "D:\\VoyagerRetail\\TailoringHub";
+        public const string DataBasePath = @"D:\AprajitaRetails\Databases";
+    }
     public class BasicOps
     {
         /// </summary>
@@ -56,7 +68,7 @@ namespace AprajitaRetailsWatcher.Ops
             }
             catch (Exception ex)
             {
-                Create_ErrorFile(ex);
+                ErrorLog(ex);
             }
 
         }
@@ -64,7 +76,7 @@ namespace AprajitaRetailsWatcher.Ops
         /// purpose of this method is to maintain error log in text file.  
         /// </summary>  
         /// <param name="exx"></param>  
-        public static void Create_ErrorFile(Exception exx)
+        public static void ErrorLog(Exception exx)
         {
             StreamWriter SW;
             if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
@@ -113,6 +125,26 @@ namespace AprajitaRetailsWatcher.Ops
             }
         }
 
+        public static void LogInfo(string msg)
+        {
+            string fileName = string.Empty;
+            StreamWriter SW;
+            if (Directory.Exists(FileInfos.LogFolder))
+            {
+                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+                if (!File.Exists(fileName))
+                {
+                    SW = File.CreateText(fileName);
+                    SW.Close();
+                }
+            }
+            using (SW = File.AppendText(fileName))
+            {
+                SW.Write("\r\n");
+                SW.WriteLine(DateTime.Now.ToString("dd-MM-yyyy H:mm:ss") + $" : {msg}");
+                SW.Close();
+            }
+        }
         /// </summary>
         /// The purpose of this method is maintain service stop information in text file.  
         /// </summary>  
@@ -167,57 +199,72 @@ namespace AprajitaRetailsWatcher.Ops
         }
 
 
-        public static string XmlToJson(string fileName)
+
+
+
+
+    }
+
+    public class ServerReturn
+    {
+        public bool IsError { get; set; }
+        public string ErrorMessage { get; set; }
+        public string SuccessMessage { get; set; }
+    }
+
+
+    public class InvoiceUploader
+    {
+        public static root XmltoObject(string filename)
         {
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(fileName);
-                string json = JsonConvert.SerializeXmlNode(doc);
-                
-                return json;
-
-            }
-            catch (Exception ex)
-            {
-
-                Create_ErrorFile(ex);
-                return "Error";
-            }
+            // Now we can read the serialized book ...  
+            System.Xml.Serialization.XmlSerializer reader =
+                new System.Xml.Serialization.XmlSerializer(typeof(root));
+            System.IO.StreamReader file = new System.IO.StreamReader(
+                filename);
+            root data = (root)reader.Deserialize(file);
+            file.Close();
+            return data;
         }
-
-
-        public static void SendDataToServer(string jsonData)
+        public static void ObjectToXml(root data, string fileName)
         {
-            VoyBill bill = JsonConvert.DeserializeObject<VoyBill>(jsonData);
-
+            var writer = new System.Xml.Serialization.XmlSerializer(typeof(root));
+            var wfile = new System.IO.StreamWriter(Path.Combine(FileInfos.LogFolder, fileName));
+            writer.Serialize(wfile, data);
+            wfile.Close();
+        }
+        public static void SyncData(root data)
+        {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(FileInfos.LocalURi);
 
-                var postTask = client.PostAsJsonAsync<VoyBill>("UploadInvoice", bill);
-                
+                var postTask = client.PostAsXmlAsync<root>(FileInfos.ActionName, data);
+
                 postTask.Wait();
 
                 var result = postTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
 
-                    var readTask = result.Content.ReadAsAsync<VoyBill>();
+                    var readTask = result.Content.ReadAsAsync<ServerReturn>();
                     readTask.Wait();
 
                     var insertedStudent = readTask.Result;
 
-                    Console.WriteLine("Student {0} inserted with id: {1}", insertedStudent.InvNo, insertedStudent.Id);
+                    // Write to LogFile
                 }
                 else
                 {
-                    Console.WriteLine(result.StatusCode);
+                    // Write to LogFile
                 }
             }
-
         }
 
+    }
+
+    public class JsonUploader
+    {
         public static void GenerateJsonFile(string jsonData)
         {
             string fileName = string.Empty;
@@ -240,11 +287,57 @@ namespace AprajitaRetailsWatcher.Ops
                 SW.Close();
             }
         }
-    }
-    public class VoyBill
-    {
-        public int Id { get; set; }
-       public  string InvNo { get; set; }
+        public static string XmlToJson(string fileName)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(fileName);
+
+
+                string json = JsonConvert.SerializeXmlNode(doc);
+
+                return json;
+
+            }
+            catch (Exception ex)
+            {
+
+                BasicOps.ErrorLog(ex);
+                return "Error";
+            }
+        }
+
+        public static void SendDataToServer(root data)
+        {
+
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(FileInfos.LocalURi);
+
+                var postTask = client.PostAsJsonAsync<root>("UploadInvoice", data);
+
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    var readTask = result.Content.ReadAsAsync<ServerReturn>();
+                    readTask.Wait();
+
+                    var insertedStudent = readTask.Result;
+
+                    // Write to log
+                }
+                else
+                {
+                    // Write to log
+                }
+            }
+
+        }
 
     }
 }
