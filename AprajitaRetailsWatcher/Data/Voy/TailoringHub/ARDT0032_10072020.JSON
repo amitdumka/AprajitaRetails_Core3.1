@@ -1,0 +1,31 @@
+[{ "objOrderMaster": {
+   "orderNoId": "ARDT0032",
+   "posOrderNo": "C33TS2000036",
+   "orderDate": "07/10/2020",
+   "storeId": "JHC0006",
+   "createdDate": "07/10/2020",
+   "customerName": "GOUR MANDAL",
+   "customerContact": "916203966478",
+   "objOrderDetail":
+[ 
+{
+   "orderNoId": "ARDT0032",
+   "actualOrderNo": "ARDT0032/1/SH/1",
+   "serialNo": 1,
+   "subCategoryId": "SH",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "14-10-2020",
+   "actualDeliveryDate": "15-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "11-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 350
+}
+]
+}
+}
+]

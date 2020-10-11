@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AprajitaRetailsRemoteServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AprajitaRetailsWatcher", "AprajitaRetailsWatcher\AprajitaRetailsWatcher.csproj", "{E0709EC1-0DA4-458B-80BF-DDBB71EAD8E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AprajitaRetailsXMLUploader", "AprajitaRetailsXMLUploader\AprajitaRetailsXMLUploader.csproj", "{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -102,6 +104,18 @@ Global
 		{E0709EC1-0DA4-458B-80BF-DDBB71EAD8E3}.Release|iPhone.Build.0 = Release|Any CPU
 		{E0709EC1-0DA4-458B-80BF-DDBB71EAD8E3}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{E0709EC1-0DA4-458B-80BF-DDBB71EAD8E3}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Release|iPhone.Build.0 = Release|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{B5B31A93-9DAB-49B1-A9FF-0E9150EB5655}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

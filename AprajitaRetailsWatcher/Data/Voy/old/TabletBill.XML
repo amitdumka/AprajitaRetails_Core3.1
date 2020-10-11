@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<root>
+<bill>
+<type>SA</type>
+<bill_number>C33IN1800922</bill_number>
+<billing_time>23/10/2018 12:25:17 PM</billing_time>
+<bill_client_id>_GUID_</bill_client_id>
+<bill_store_id>JHC0006</bill_store_id>
+<bill_pos_id>ARVINDSTORE-PC</bill_pos_id>
+<bill_amount>1600</bill_amount>
+<bill_gross_amount>1600</bill_gross_amount>
+<bill_discount>0</bill_discount>
+<line_items>
+<line_item>
+<line_item_type>SA</line_item_type>
+<serial>1</serial>
+<item_code>SATU001RF34</item_code>
+<qty>1</qty>
+<rate>400</rate>
+<value>400</value>
+<discount_value>0</discount_value>
+<amount>390.47</amount>
+<description>Flat Frt Low Rise-Regular Fit</description>
+</line_item>
+<line_item>
+<line_item_type>SA</line_item_type>
+<serial>2</serial>
+<item_code>SATU001RF34</item_code>
+<qty>1</qty>
+<rate>400</rate>
+<value>400</value>
+<discount_value>0</discount_value>
+<amount>390.47</amount>
+<description>Flat Frt Low Rise-Regular Fit</description>
+</line_item>
+<line_item>
+<line_item_type>SA</line_item_type>
+<serial>3</serial>
+<item_code>SATU001RF34</item_code>
+<qty>1</qty>
+<rate>400</rate>
+<value>400</value>
+<discount_value>0</discount_value>
+<amount>390.47</amount>
+<description>Flat Frt Low Rise-Regular Fit</description>
+</line_item>
+<line_item>
+<line_item_type>SA</line_item_type>
+<serial>4</serial>
+<item_code>SATU001RF34</item_code>
+<qty>1</qty>
+<rate>400</rate>
+<value>400</value>
+<discount_value>0</discount_value>
+<amount>390.47</amount>
+<description>Flat Frt Low Rise-Regular Fit</description>
+</line_item>
+</line_items>
+<customer>
+<name>MUKUL KUMAR MUKUL KUMAR</name>
+<mobile>917992407534 </mobile>
+</customer>
+<PaymentMode>
+<PayMode_Details>
+<PayMode_Type_Details>CA</PayMode_Type_Details>
+<PayMode_Value>1600</PayMode_Value>
+</PayMode_Details>
+</PaymentMode>
+</bill>
+</root>

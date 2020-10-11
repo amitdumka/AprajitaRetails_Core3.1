@@ -1,0 +1,48 @@
+[{ "objOrderMaster": {
+   "orderNoId": "ARD0904",
+   "posOrderNo": "C33TS2000033",
+   "orderDate": "06/10/2020",
+   "storeId": "JHC0006",
+   "createdDate": "06/10/2020",
+   "customerName": "PINTU SINGH",
+   "customerContact": "0",
+   "objOrderDetail":
+[ 
+{
+   "orderNoId": "ARD0904",
+   "actualOrderNo": "ARD0904/1/KPK/1",
+   "serialNo": 1,
+   "subCategoryId": "KPK",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "09-10-2020",
+   "actualDeliveryDate": "10-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "06-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 650
+},
+{
+   "orderNoId": "ARD0904",
+   "actualOrderNo": "ARD0904/1/KPP/1",
+   "serialNo": 1,
+   "subCategoryId": "KPP",
+   "qtyno": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "09-10-2020",
+   "actualDeliveryDate": "10-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "06-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 650
+}
+]
+}
+}
+]

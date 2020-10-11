@@ -1,0 +1,31 @@
+[{ "objOrderMaster": {
+   "orderNoId": "ARDT0023",
+   "posOrderNo": "C33TS2000027",
+   "orderDate": "04/10/2020",
+   "storeId": "JHC0006",
+   "createdDate": "04/10/2020",
+   "customerName": "SUNIL KUMAR",
+   "customerContact": "0",
+   "objOrderDetail":
+[ 
+{
+   "orderNoId": "ARDT0023",
+   "actualOrderNo": "ARDT0023/1/SH/1",
+   "serialNo": 1,
+   "subCategoryId": "SH",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "03-10-2020",
+   "actualDeliveryDate": "04-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "04-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 350
+}
+]
+}
+}
+]

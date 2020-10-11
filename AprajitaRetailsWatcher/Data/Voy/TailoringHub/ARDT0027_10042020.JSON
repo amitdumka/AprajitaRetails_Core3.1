@@ -1,0 +1,48 @@
+[{ "objOrderMaster": {
+   "orderNoId": "ARDT0027",
+   "posOrderNo": "C33TS2000030",
+   "orderDate": "04/10/2020",
+   "storeId": "JHC0006",
+   "createdDate": "04/10/2020",
+   "customerName": "SUNIL KUMAR",
+   "customerContact": "0",
+   "objOrderDetail":
+[ 
+{
+   "orderNoId": "ARDT0027",
+   "actualOrderNo": "ARDT0027/1/JJ/1",
+   "serialNo": 1,
+   "subCategoryId": "JJ",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "11-10-2020",
+   "actualDeliveryDate": "12-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "08-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 2000
+},
+{
+   "orderNoId": "ARDT0027",
+   "actualOrderNo": "ARDT0027/2/SH/1",
+   "serialNo": 2,
+   "subCategoryId": "SH",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "11-10-2020",
+   "actualDeliveryDate": "12-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "08-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 350
+}
+]
+}
+}
+]

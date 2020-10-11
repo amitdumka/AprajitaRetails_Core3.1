@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<root>
+  <bill>
+    <type>REGULAR</type>
+    <bill_number>C33IN2000131</bill_number>
+    <billing_time>11/10/2020 13:44:21</billing_time>
+    <WalletPaymentId></WalletPaymentId>
+    <WalletPaymentWalletId></WalletPaymentWalletId>
+    <bill_client_id>_GUID_</bill_client_id>
+    <bill_store_id>JHC0006</bill_store_id>
+    <bill_amount>3195</bill_amount>
+    <bill_gross_amount>3195</bill_gross_amount>
+    <balancepoints_add>0</balancepoints_add>
+    <bill_discount>0</bill_discount>
+    <line_items>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>1</serial>
+        <item_code>T180028122</item_code>
+        <qty>1.5</qty>
+        <rate>1338</rate>
+        <value>2007</value>
+        <discount_value>0</discount_value>
+        <amount>1959.21</amount>
+        <description>Tresca DTR Syn</description>
+      </line_item>
+      <line_item>
+        <line_item_type>REGULAR</line_item_type>
+        <serial>2</serial>
+        <item_code>M60486101020</item_code>
+        <qty>1.8</qty>
+        <rate>660</rate>
+        <value>1188</value>
+        <discount_value>0</discount_value>
+        <amount>1159.71</amount>
+        <description>Tresca DTR Syn</description>
+      </line_item>
+    </line_items>
+    <customer>
+      <name>MD MD</name>
+      <mobile>919279940880 </mobile>
+    </customer>
+    <Custom_fields>
+      <field_details>
+        <field_name>Tailoring</field_name>
+        <tailoring_req>N</tailoring_req>
+      </field_details>
+    </Custom_fields>
+    <Payment_Mode>
+      <Payment_detail>
+        <payment>
+          <mode>CA</mode>
+          <value>3195</value>
+          <notes></notes>
+          <attributes>
+            <attribute>
+              <name></name>
+              <value></value>
+            </attribute>
+          </attributes>
+        </payment>
+      </Payment_detail>
+    </Payment_Mode>
+  </bill>
+</root>

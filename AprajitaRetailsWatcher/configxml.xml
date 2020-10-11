@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<aprajitaretails>
+  <filewatcher>
+    <info>
+      <version>2.0</version>
+      <name>AprajitaRetailsWatcher</name>
+    </info>
+    <settings>
+      
+      <folders>
+        <folder>c:\capliarry</folder>
+        <folder>d:\voyager\tabletbill</folder>
+      </folders>
+    </settings>
+  </filewatcher>
+</aprajitaretails>

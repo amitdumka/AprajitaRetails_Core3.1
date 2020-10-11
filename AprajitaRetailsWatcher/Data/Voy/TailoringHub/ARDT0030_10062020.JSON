@@ -1,0 +1,82 @@
+[{ "objOrderMaster": {
+   "orderNoId": "ARDT0030",
+   "posOrderNo": "C33TS2000034",
+   "orderDate": "06/10/2020",
+   "storeId": "JHC0006",
+   "createdDate": "06/10/2020",
+   "customerName": "B M BHAGAT",
+   "customerContact": "0",
+   "objOrderDetail":
+[ 
+{
+   "orderNoId": "ARDT0030",
+   "actualOrderNo": "ARDT0030/1/KPK/1",
+   "serialNo": 1,
+   "subCategoryId": "KPK",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "12-10-2020",
+   "actualDeliveryDate": "13-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "09-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 650
+},
+{
+   "orderNoId": "ARDT0030",
+   "actualOrderNo": "ARDT0030/1/KPP/1",
+   "serialNo": 1,
+   "subCategoryId": "KPP",
+   "qtyno": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "12-10-2020",
+   "actualDeliveryDate": "13-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "09-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 650
+},
+{
+   "orderNoId": "ARDT0030",
+   "actualOrderNo": "ARDT0030/2/KPK/1",
+   "serialNo": 2,
+   "subCategoryId": "KPK",
+   "qty": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "12-10-2020",
+   "actualDeliveryDate": "13-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "09-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 650
+},
+{
+   "orderNoId": "ARDT0030",
+   "actualOrderNo": "ARDT0030/2/KPP/1",
+   "serialNo": 2,
+   "subCategoryId": "KPP",
+   "qtyno": 1,
+   "productTypeId": 2,
+   "urgent": 0,
+   "premium": 0,
+   "storeDeliveryDate": "12-10-2020",
+   "actualDeliveryDate": "13-10-2020",
+   "StrToFacTAT": null,
+   "trialDate": "09-10-2020",
+   "roughTrial": 0,
+   "styleCode": null,
+   "tailoringCharge": 650
+}
+]
+}
+}
+]
