@@ -24,31 +24,38 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         }
 
 
-        // GET: api/<VoyBillController>
+        // GET: api/VoyBill
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<VoyBillController>/5
+        // GET api/VoyBill/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<VoyBillController>
+        // POST api/VoyBill
         [HttpPost]
-        public void Post([FromBody] string value)
+        public string Post([FromBody] string value)
         {
+            return value;
         }
-        // POST api/<VoyBillController>
+        // POST api/VoyBill
         [HttpPost]
         public void UploadInvoice([FromBody] root invoice)
         {
 
         }
+        [HttpPost]
+        public string UploadInvoice([FromBody] string data)
+        {
+            return data;
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServerReturn>> UploadInvoiceAsync([FromBody] root invoice)
         {
@@ -57,13 +64,13 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         }
 
 
-       // PUT api/<VoyBillController>/5
+       // PUT api/VoyBill/5
        [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<VoyBillController>/5
+        // DELETE api/VoyBill/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
