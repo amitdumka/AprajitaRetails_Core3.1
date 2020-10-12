@@ -87,7 +87,7 @@ namespace AprajitaRetails.Ops.Uploader
             foreach ( var item in bill.Payment_Mode.Payment_detail )
             {
                 VBPaymentDetail vB1 = new VBPaymentDetail { Amount = item.value, Mode = item.mode };
-                if ( String.IsNullOrEmpty ((string?) item.notes) )
+                if ( String.IsNullOrEmpty ((string) item.notes) )
                 {
                     vB1.Notes = "";
                 }

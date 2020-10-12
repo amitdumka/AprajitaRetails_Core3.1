@@ -7,35 +7,35 @@ namespace AprajitaRetails.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.DropTable (
-            //    name: "Apps");
-
-            ////migrationBuilder.DropTable (
-            ////    name: "BankTranscations");
-
-            ////migrationBuilder.DropTable (
-            ////    name: "ExpenseVochers");
+            migrationBuilder.DropTable (
+                name: "Apps");
 
             //migrationBuilder.DropTable (
-            //    name: "LedgerMasters");
-
-            ////migrationBuilder.DropTable (
-            ////    name: "PaymentVochers");
-
-            ////migrationBuilder.DropTable (
-            ////    name: "ReceiptVochers");
-
-            ////migrationBuilder.DropTable (
-            ////    name: "BankAccounts");
+            //    name: "BankTranscations");
 
             //migrationBuilder.DropTable (
-            //    name: "LedgerEntries");
+            //    name: "ExpenseVochers");
+
+            migrationBuilder.DropTable(
+                name: "LedgerMasters");
 
             //migrationBuilder.DropTable (
-            //    name: "Parties");
+            //    name: "PaymentVochers");
 
             //migrationBuilder.DropTable (
-            //    name: "LedgerTypes");
+            //    name: "ReceiptVochers");
+
+            //migrationBuilder.DropTable (
+            //    name: "BankAccounts");
+
+            migrationBuilder.DropTable(
+                name: "LedgerEntries");
+
+            migrationBuilder.DropTable(
+                name: "Parties");
+
+            migrationBuilder.DropTable(
+                name: "LedgerTypes");
 
 
 
