@@ -8,6 +8,7 @@ using AprajitaRetails.Areas.ToDo.Models;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Models;
 using AprajitaRetails.Models;
+using AprajitaRetails.Models.Voy;
 using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Data
@@ -275,5 +276,11 @@ namespace AprajitaRetails.Data
 
         public DbSet<Areas.Accountings.Models.BankAccount> BankAccounts { get; set; }
         public DbSet<Areas.Accountings.Models.BankTranscation> BankTranscations { get; set; }
+
+
+
+        public DbSet<VBInvoice> VBInvoices { get; set; }
+        public DbSet<VBPaymentDetail> VBPaymentDetails { get; set; }
+       public DbSet<VBLineItem> VBLineItems { get; set; }
     }
 }

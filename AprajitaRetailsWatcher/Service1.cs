@@ -28,7 +28,7 @@ namespace AprajitaRetailsWatcher
             }
             catch (Exception ex)
             {
-                BasicOps.Create_ErrorFile(ex);                
+                BasicOps.ErrorLog(ex);                
             }
         }
 
@@ -41,7 +41,7 @@ namespace AprajitaRetailsWatcher
             catch (Exception ex)
             {
 
-                BasicOps.Create_ErrorFile(ex);
+                BasicOps.ErrorLog(ex);
             }
         }
 
@@ -62,7 +62,7 @@ namespace AprajitaRetailsWatcher
             catch (Exception ex)
             {
 
-                BasicOps.Create_ErrorFile(ex);
+                BasicOps.ErrorLog(ex);
             }
 
         }
