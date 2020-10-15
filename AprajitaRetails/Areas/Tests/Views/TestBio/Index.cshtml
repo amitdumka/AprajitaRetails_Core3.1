@@ -4,6 +4,12 @@
 
 @*https://mdbootstrap.com/snippets/jquery/ascensus/84?action=full_screen_mode#js-tab-view*@
 
+<label>FileName</label>
+<input type="text" name="fileName" id="fileName" />
+<button class="btn btn-sm btn-primary"  onclick="UploadInvoice">Upload</button>
+
+
+
 @*<link rel='stylesheet' id='dashicons-css' href='https://mdbootstrap.com/wp-includes/css/dashicons.min.css?ver=5.5.1' type='text/css' media='all' />
     <link rel='stylesheet' id='admin-bar-css' href='https://mdbootstrap.com/wp-includes/css/admin-bar.min.css?ver=5.5.1' type='text/css' media='all' />
     <link rel='stylesheet' id='wp-block-library-css' href='https://mdbootstrap.com/wp-includes/css/dist/block-library/style.min.css?ver=5.5.1' type='text/css' media='all' />
@@ -1064,8 +1070,16 @@
     <p>@ViewBag.TIMEVALUE</p>
 </div>
 <script>
+
+    function UploadInvoice() {
+        var fileName
+    }
     $(document).ready(function () {
-      
+
+
+       
+
+
     // Material Select Initialization
     $(document).ready(function () {
         $('.mdb-select').material_select();
