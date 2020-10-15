@@ -40,12 +40,22 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
         // POST api/VoyBill
         [HttpPost]
-        public async Task<ActionResult<ServerReturn>> PostVoyBill([FromBody] root invoice)
+        public  ServerReturn PostVoyBill([FromBody] rootBill invoice)
         {
+        //    if (!ModelState.IsValid)
+        //        return BadRequest("Not a valid data");
 
-            return await VoyBillProcessor.ProcessVoyInvoiceXML (invoice, _context);
+            //var  x=HttpContext.Request.Body.Length;
+            rootBill b = invoice;
+            return new ServerReturn { Success = true, SuccessMessage="Got it......" };
+        //    return await VoyBillProcessor.ProcessVoyInvoiceXML (invoice, _context);
         }
-
+       // [HttpPost]
+        //public ServerReturn PostVoyBill([FromBody] string ValueName)
+        //{
+        //    ServerReturn s = new ServerReturn { Success=true, SuccessMessage=$"We got from you  is: {ValueName} "};
+        //    return s;
+        //}
 
         // PUT api/VoyBill/5
         [HttpPut ("{id}")]
