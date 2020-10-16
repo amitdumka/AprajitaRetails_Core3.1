@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AprajitaRetails.Data;
+using AprajitaRetails.Models.JsonData;
 using AprajitaRetails.Ops.Uploader;
 using AprajitaRetailsWatcher.Model.XMLData;
 using Microsoft.AspNetCore.Mvc;
@@ -40,23 +41,11 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
 
         // POST api/VoyBill
         [HttpPost]
-        public  ServerReturn PostVoyBill([FromBody] rootBill invoice)
+        public async Task<ServerReturn> PostVoyBillAsync([FromBody] Rootobject invoice)
         {
-        //    if (!ModelState.IsValid)
-        //        return BadRequest("Not a valid data");
+           return await VoyBillProcessor.ProcessVoyInvoiceXML (invoice.root, _context);
 
-            //var  x=HttpContext.Request.Body.Length;
-            rootBill b = invoice;
-            return new ServerReturn { Success = true, SuccessMessage="Got it......" };
-        //    return await VoyBillProcessor.ProcessVoyInvoiceXML (invoice, _context);
         }
-       // [HttpPost]
-        //public ServerReturn PostVoyBill([FromBody] string ValueName)
-        //{
-        //    ServerReturn s = new ServerReturn { Success=true, SuccessMessage=$"We got from you  is: {ValueName} "};
-        //    return s;
-        //}
-
         // PUT api/VoyBill/5
         [HttpPut ("{id}")]
         public void Put(int id, [FromBody] string value)

@@ -52,23 +52,23 @@ namespace AprajitaRetailsWatcher.Ops
             {
                 string filename = string.Empty;
 
-                if (!(Directory.Exists(destinationFolder) && Directory.Exists(sourceFolder)))
+                if ( !( Directory.Exists (destinationFolder) && Directory.Exists (sourceFolder) ) )
                     return;
-                string[] Templateexcelfile = Directory.GetFiles(sourceFolder);
-                foreach (string file in Templateexcelfile)
+                string [] Templateexcelfile = Directory.GetFiles (sourceFolder);
+                foreach ( string file in Templateexcelfile )
                 {
-                    if (Templateexcelfile[0].Contains("Template"))
+                    if ( Templateexcelfile [0].Contains ("Template") )
                     {
-                        filename = System.IO.Path.GetFileName(file);
-                        destinationFolder = System.IO.Path.Combine(destinationFolder, filename.Replace(".xml", DateTime.Now.ToUniversalTime().ToString()) + ".xml");
-                        System.IO.File.Copy(file, destinationFolder, true);
+                        filename = System.IO.Path.GetFileName (file);
+                        destinationFolder = System.IO.Path.Combine (destinationFolder, filename.Replace (".xml", DateTime.Now.ToUniversalTime ().ToString ()) + ".xml");
+                        System.IO.File.Copy (file, destinationFolder, true);
                     }
                 }
 
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                ErrorLog(ex);
+                ErrorLog (ex);
             }
 
         }
@@ -79,27 +79,27 @@ namespace AprajitaRetailsWatcher.Ops
         public static void ErrorLog(Exception exx)
         {
             StreamWriter SW;
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
+            if ( !File.Exists (Path.Combine (Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location), "txt_" + DateTime.Now.ToString ("yyyyMMdd") + ".txt")) )
             {
-                SW = File.CreateText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt"));
-                SW.Close();
+                SW = File.CreateText (Path.Combine (Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location), "txt_" + DateTime.Now.ToString ("yyyyMMdd") + ".txt"));
+                SW.Close ();
             }
-            using (SW = File.AppendText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
+            using ( SW = File.AppendText (Path.Combine (Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location), "txt_" + DateTime.Now.ToString ("yyyyMMdd") + ".txt")) )
             {
-                string[] str = new string[] { exx.Message==null?"":exx.Message.ToString(), exx.StackTrace==null?"":exx.StackTrace.ToString(),
+                string [] str = new string [] { exx.Message==null?"":exx.Message.ToString(), exx.StackTrace==null?"":exx.StackTrace.ToString(),
             exx.InnerException==null?"":exx.InnerException.ToString()};
-                for (int i = 0; i < str.Length; i++)
+                for ( int i = 0 ; i < str.Length ; i++ )
                 {
-                    SW.Write("\r\n\n");
-                    if (str[i] == str[0])
-                        SW.WriteLine("Exception Message:" + str[i]);
-                    else if (str[i] == str[1])
-                        SW.WriteLine("StackTrace:" + str[i]);
-                    else if (str[i] == str[2])
-                        SW.WriteLine("InnerException:" + str[i]);
+                    SW.Write ("\r\n\n");
+                    if ( str [i] == str [0] )
+                        SW.WriteLine ("Exception Message:" + str [i]);
+                    else if ( str [i] == str [1] )
+                        SW.WriteLine ("StackTrace:" + str [i]);
+                    else if ( str [i] == str [2] )
+                        SW.WriteLine ("InnerException:" + str [i]);
                 }
 
-                SW.Close();
+                SW.Close ();
             }
         }
 
@@ -108,20 +108,20 @@ namespace AprajitaRetailsWatcher.Ops
         {
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if ( Directory.Exists (FileInfos.LogFolder) )
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
-                if (!File.Exists(fileName))
+                fileName = System.IO.Path.Combine (FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString ("yyyyMMdd") + ".txt");
+                if ( !File.Exists (fileName) )
                 {
-                    SW = File.CreateText(fileName);
-                    SW.Close();
+                    SW = File.CreateText (fileName);
+                    SW.Close ();
                 }
             }
-            using (SW = File.AppendText(fileName))
+            using ( SW = File.AppendText (fileName) )
             {
-                SW.Write("\r\n\n");
-                SW.WriteLine($"FileInfo:({InputFileName}) changes at  " + DateTime.Now.ToString("dd-MM-yyyy H:mm:ss"));
-                SW.Close();
+                SW.Write ("\r\n\n");
+                SW.WriteLine ($"FileInfo:({InputFileName}) changes at  " + DateTime.Now.ToString ("dd-MM-yyyy H:mm:ss"));
+                SW.Close ();
             }
         }
 
@@ -129,20 +129,20 @@ namespace AprajitaRetailsWatcher.Ops
         {
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if ( Directory.Exists (FileInfos.LogFolder) )
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
-                if (!File.Exists(fileName))
+                fileName = System.IO.Path.Combine (FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString ("yyyyMMdd") + ".txt");
+                if ( !File.Exists (fileName) )
                 {
-                    SW = File.CreateText(fileName);
-                    SW.Close();
+                    SW = File.CreateText (fileName);
+                    SW.Close ();
                 }
             }
-            using (SW = File.AppendText(fileName))
+            using ( SW = File.AppendText (fileName) )
             {
-                SW.Write("\r\n");
-                SW.WriteLine(DateTime.Now.ToString("dd-MM-yyyy H:mm:ss") + $" : {msg}");
-                SW.Close();
+                SW.Write ("\r\n");
+                SW.WriteLine (DateTime.Now.ToString ("dd-MM-yyyy H:mm:ss") + $" : {msg}");
+                SW.Close ();
             }
         }
         /// </summary>
@@ -153,28 +153,28 @@ namespace AprajitaRetailsWatcher.Ops
 
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if ( Directory.Exists (FileInfos.LogFolder) )
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
-                if (!File.Exists(fileName))
+                fileName = System.IO.Path.Combine (FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString ("yyyyMMdd") + ".txt");
+                if ( !File.Exists (fileName) )
                 {
-                    SW = File.CreateText(fileName);
-                    SW.Close();
+                    SW = File.CreateText (fileName);
+                    SW.Close ();
                 }
             }
-            using (SW = File.AppendText(fileName))
+            using ( SW = File.AppendText (fileName) )
             {
-                if (isStop)
+                if ( isStop )
                 {
-                    SW.Write("\r\n\n");
-                    SW.WriteLine("Service Stopped at: " + DateTime.Now.ToString("dd-MM-yyyy H:mm:ss"));
-                    SW.Close();
+                    SW.Write ("\r\n\n");
+                    SW.WriteLine ("Service Stopped at: " + DateTime.Now.ToString ("dd-MM-yyyy H:mm:ss"));
+                    SW.Close ();
                 }
                 else
                 {
-                    SW.Write("\r\n\n");
-                    SW.WriteLine("Service Stared at: " + DateTime.Now.ToString("dd-MM-yyyy H:mm:ss"));
-                    SW.Close();
+                    SW.Write ("\r\n\n");
+                    SW.WriteLine ("Service Stared at: " + DateTime.Now.ToString ("dd-MM-yyyy H:mm:ss"));
+                    SW.Close ();
                 }
 
             }
@@ -184,13 +184,13 @@ namespace AprajitaRetailsWatcher.Ops
         {
             // Get the subdirectories for the specified directory.'  
             bool IsFileExist = false;
-            DirectoryInfo dir = new DirectoryInfo(FullPath);
-            if (!dir.Exists)
+            DirectoryInfo dir = new DirectoryInfo (FullPath);
+            if ( !dir.Exists )
                 IsFileExist = false;
             else
             {
-                string FileFullPath = Path.Combine(FullPath, FileName);
-                if (File.Exists(FileFullPath))
+                string FileFullPath = Path.Combine (FullPath, FileName);
+                if ( File.Exists (FileFullPath) )
                     IsFileExist = true;
             }
             return IsFileExist;
@@ -219,36 +219,36 @@ namespace AprajitaRetailsWatcher.Ops
         {
             // Now we can read the serialized book ...  
             System.Xml.Serialization.XmlSerializer reader =
-                new System.Xml.Serialization.XmlSerializer(typeof(root));
-            System.IO.StreamReader file = new System.IO.StreamReader(
+                new System.Xml.Serialization.XmlSerializer (typeof (root));
+            System.IO.StreamReader file = new System.IO.StreamReader (
                 filename);
-            root data = (root)reader.Deserialize(file);
-            file.Close();
+            root data = (root) reader.Deserialize (file);
+            file.Close ();
             return data;
         }
         public static void ObjectToXml(root data, string fileName)
         {
-            var writer = new System.Xml.Serialization.XmlSerializer(typeof(root));
-            var wfile = new System.IO.StreamWriter(Path.Combine(FileInfos.LogFolder, fileName));
-            writer.Serialize(wfile, data);
-            wfile.Close();
+            var writer = new System.Xml.Serialization.XmlSerializer (typeof (root));
+            var wfile = new System.IO.StreamWriter (Path.Combine (FileInfos.LogFolder, fileName));
+            writer.Serialize (wfile, data);
+            wfile.Close ();
         }
         public static void SyncData(root data)
         {
-            using (var client = new HttpClient())
+            using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri(FileInfos.LocalURi);
+                client.BaseAddress = new Uri (FileInfos.LocalURi);
 
-                var postTask = client.PostAsXmlAsync<root>(FileInfos.ActionName, data);
+                var postTask = client.PostAsXmlAsync<root> (FileInfos.ActionName, data);
 
-                postTask.Wait();
+                postTask.Wait ();
 
                 var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
+                if ( result.IsSuccessStatusCode )
                 {
 
-                    var readTask = result.Content.ReadAsAsync<ServerReturn>();
-                    readTask.Wait();
+                    var readTask = result.Content.ReadAsAsync<ServerReturn> ();
+                    readTask.Wait ();
 
                     var insertedStudent = readTask.Result;
 
@@ -269,41 +269,41 @@ namespace AprajitaRetailsWatcher.Ops
         {
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if ( Directory.Exists (FileInfos.LogFolder) )
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
-                if (!File.Exists(fileName))
+                fileName = System.IO.Path.Combine (FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString ("yyyyMMdd") + ".txt");
+                if ( !File.Exists (fileName) )
                 {
-                    SW = File.CreateText(fileName);
-                    SW.Close();
+                    SW = File.CreateText (fileName);
+                    SW.Close ();
                 }
             }
-            using (SW = File.AppendText(fileName))
+            using ( SW = File.AppendText (fileName) )
             {
-                SW.Write("\r\n\n");
-                SW.Write($"\n Added At {DateTime.Now.ToString()}\n\n");
-                SW.WriteLine(jsonData);
-                SW.WriteLine("End of Data============================================>");
-                SW.Close();
+                SW.Write ("\r\n\n");
+                SW.Write ($"\n Added At {DateTime.Now.ToString ()}\n\n");
+                SW.WriteLine (jsonData);
+                SW.WriteLine ("End of Data============================================>");
+                SW.Close ();
             }
         }
         public static string XmlToJson(string fileName)
         {
             try
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(fileName);
+                XmlDocument doc = new XmlDocument ();
+                doc.Load (fileName);
 
 
-                string json = JsonConvert.SerializeXmlNode(doc);
+                string json = JsonConvert.SerializeXmlNode (doc);
 
                 return json;
 
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
 
-                BasicOps.ErrorLog(ex);
+                BasicOps.ErrorLog (ex);
                 return "Error";
             }
         }
@@ -312,20 +312,20 @@ namespace AprajitaRetailsWatcher.Ops
         {
 
 
-            using (var client = new HttpClient())
+            using ( var client = new HttpClient () )
             {
-                client.BaseAddress = new Uri(FileInfos.LocalURi);
+                client.BaseAddress = new Uri (FileInfos.LocalURi);
 
-                var postTask = client.PostAsJsonAsync<root>("UploadInvoice", data);
+                var postTask = client.PostAsJsonAsync<root> ("UploadInvoice", data);
 
-                postTask.Wait();
+                postTask.Wait ();
 
                 var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
+                if ( result.IsSuccessStatusCode )
                 {
 
-                    var readTask = result.Content.ReadAsAsync<ServerReturn>();
-                    readTask.Wait();
+                    var readTask = result.Content.ReadAsAsync<ServerReturn> ();
+                    readTask.Wait ();
 
                     var insertedStudent = readTask.Result;
 
@@ -341,3 +341,4 @@ namespace AprajitaRetailsWatcher.Ops
 
     }
 }
+

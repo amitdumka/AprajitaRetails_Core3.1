@@ -1,69 +1,148 @@
-{
-  "?xml": { "@version": "1.0" },
-  "root": {
-    "bill": {
-      "type": "REGULAR",
-      "bill_number": "C33IN2000131",
-      "billing_time": "11/10/2020 13:44:21",
-      "WalletPaymentId": "",
-      "WalletPaymentWalletId": "",
-      "bill_client_id": "_GUID_",
-      "bill_store_id": "JHC0006",
-      "bill_amount": "3195",
-      "bill_gross_amount": "3195",
-      "balancepoints_add": "0",
-      "bill_discount": "0",
-      "line_items": {
-        "line_item": [
-          {
-            "line_item_type": "REGULAR",
-            "serial": "1",
-            "item_code": "T180028122",
-            "qty": "1.5",
-            "rate": "1338",
-            "value": "2007",
-            "discount_value": "0",
-            "amount": "1959.21",
-            "description": "Tresca DTR Syn"
-          },
-          {
-            "line_item_type": "REGULAR",
-            "serial": "2",
-            "item_code": "M60486101020",
-            "qty": "1.8",
-            "rate": "660",
-            "value": "1188",
-            "discount_value": "0",
-            "amount": "1159.71",
-            "description": "Tresca DTR Syn"
+[
+  {
+    "?xml": { "@version": "1.0" },
+    "root": {
+      "bill": {
+        "type": "REGULAR",
+        "bill_number": "C33IN2000131",
+        "billing_time": "11/10/2020 13:44:21",
+        "WalletPaymentId": "",
+        "WalletPaymentWalletId": "",
+        "bill_client_id": "_GUID_",
+        "bill_store_id": "JHC0006",
+        "bill_amount": "3195",
+        "bill_gross_amount": "3195",
+        "balancepoints_add": "0",
+        "bill_discount": "0",
+        "line_items": {
+          "line_item": [
+            {
+              "line_item_type": "REGULAR",
+              "serial": "1",
+              "item_code": "T180028122",
+              "qty": "1.5",
+              "rate": "1338",
+              "value": "2007",
+              "discount_value": "0",
+              "amount": "1959.21",
+              "description": "Tresca DTR Syn"
+            },
+            {
+              "line_item_type": "REGULAR",
+              "serial": "2",
+              "item_code": "M60486101020",
+              "qty": "1.8",
+              "rate": "660",
+              "value": "1188",
+              "discount_value": "0",
+              "amount": "1159.71",
+              "description": "Tresca DTR Syn"
+            }
+          ]
+        },
+        "customer": {
+          "name": "MD MD",
+          "mobile": "919279940880 "
+        },
+        "Custom_fields": {
+          "field_details": {
+            "field_name": "Tailoring",
+            "tailoring_req": "N"
           }
-        ]
-      },
-      "customer": {
-        "name": "MD MD",
-        "mobile": "919279940880 "
-      },
-      "Custom_fields": {
-        "field_details": {
-          "field_name": "Tailoring",
-          "tailoring_req": "N"
-        }
-      },
-      "Payment_Mode": {
-        "Payment_detail": {
-          "payment": {
-            "mode": "CA",
-            "value": "3195",
-            "notes": "",
-            "attributes": {
-              "attribute": {
-                "name": "",
-                "value": ""
+        },
+        "Payment_Mode": {
+          "Payment_detail": {
+            "payment": {
+              "mode": "CA",
+              "value": "3195",
+              "notes": "",
+              "attributes": {
+                "attribute": {
+                  "name": "",
+                  "value": ""
+                }
               }
             }
           }
         }
       }
     }
+  },
+
+  {
+    "?xml": { "@version": "1.0" },
+    "root": {
+      "bill": {
+        "type": "REGULAR",
+        "bill_number": "C33IN2000131",
+        "billing_time": "11/10/2020 13:44:21",
+        "WalletPaymentId": "",
+        "WalletPaymentWalletId": "",
+        "bill_client_id": "_GUID_",
+        "bill_store_id": "JHC0006",
+        "bill_amount": "3195",
+        "bill_gross_amount": "3195",
+        "balancepoints_add": "0",
+        "bill_discount": "0",
+        "line_items": {
+          "line_item": [
+            {
+              "line_item_type": "REGULAR",
+              "serial": "1",
+              "item_code": "T180028122",
+              "qty": "1.5",
+              "rate": "1338",
+              "value": "2007",
+              "discount_value": "0",
+              "amount": "1959.21",
+              "description": "Tresca DTR Syn"
+            },
+            {
+              "line_item_type": "REGULAR",
+              "serial": "2",
+              "item_code": "M60486101020",
+              "qty": "1.8",
+              "rate": "660",
+              "value": "1188",
+              "discount_value": "0",
+              "amount": "1159.71",
+              "description": "Tresca DTR Syn"
+            }
+          ]
+        },
+        "customer": {
+          "name": "MD MD",
+          "mobile": "919279940880 "
+        },
+        "Custom_fields": {
+          "field_details": {
+            "field_name": "Tailoring",
+            "tailoring_req": "N"
+          }
+        },
+        "Payment_Mode": {
+          "Payment_detail": {
+            "payment": [
+              {
+                "mode": "CA",
+                "value": "3195",
+                "notes": "",
+                "attributes": {
+                  "attribute": {
+                    "name": "",
+                    "value": ""
+                  }
+                }
+              },
+              {
+                "mode": "mw",
+                "value": "0.0"
+              }
+            ]
+          }
+        }
+      }
+    }
   }
-}
+
+]
