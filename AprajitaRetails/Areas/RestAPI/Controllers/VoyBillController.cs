@@ -29,33 +29,34 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string [] { "value1", "value2" };
+            return new string [] { "Get", "Get function not implemented. Use Post to Upload Bill" };
         }
 
-        // GET api/VoyBill/5
-        [HttpGet ("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/VoyBill/5
+        //[HttpGet ("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "Not Implemented";
+        //}
 
         // POST api/VoyBill
         [HttpPost]
-        public async Task<ServerReturn> PostVoyBillAsync([FromBody] Rootobject invoice)
+        public async Task<ServerReturn> PostVoyBillAsync([FromBody] Bill invoice)
         {
-           return await VoyBillProcessor.ProcessVoyInvoiceXML (invoice.root, _context);
+            
+           return await VoyBillProcessor.ProcessVoyInvoiceXML (invoice, _context);
 
         }
-        // PUT api/VoyBill/5
-        [HttpPut ("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/VoyBill/5
+        //[HttpPut ("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/VoyBill/5
-        [HttpDelete ("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/VoyBill/5
+        //[HttpDelete ("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

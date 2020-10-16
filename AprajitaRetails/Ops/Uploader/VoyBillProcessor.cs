@@ -22,21 +22,17 @@ namespace AprajitaRetails.Ops.Uploader
 
     public class VoyBillProcessor
     {
-
-        public static async Task<ServerReturn> ProcessVoyInvoiceXML(Root invoice, AprajitaRetailsContext db)
+        public static async Task<ServerReturn> ProcessVoyInvoiceXML(Bill invoice, AprajitaRetailsContext db)
         {
             ServerReturn @return = new ServerReturn { Error = false, Success = false, ErrorMessage = "", SuccessMessage = "" };
 
-            //@return.SuccessMessage = "Got it";
-            //return @return;
-
             try
             {
-                VBInvoice vBInvoice = ToSaleInvoice (invoice, db);
-                db.VBInvoices.Add (vBInvoice);
-                int crt = await db.SaveChangesAsync ();
+                VBInvoice vBInvoice = ToSaleInvoice(invoice, db);
+                db.VBInvoices.Add(vBInvoice);
+                int crt = await db.SaveChangesAsync();
 
-                if ( crt > 0 )
+                if (crt > 0)
                 {
                     @return.Success = true;
                     @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} on @{DateTime.Now}";
@@ -46,106 +42,61 @@ namespace AprajitaRetails.Ops.Uploader
                     @return.Error = true;
                     @return.ErrorMessage = "Failed to save the records";
                 }
-                MyMail.SendEmail ("Invoice Upload", JsonConvert.SerializeObject (vBInvoice), "amitnarayansah@gmail.com");
 
+               
+                MyMail.SendEmail("Invoice Upload", JsonConvert.SerializeObject(invoice), "amitnarayansah@gmail.com");
 
                 return @return;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 @return.Error = true;
-                @return.ErrorMessage = $"Error Occurred.#{ex.Message}";
-                MyMail.SendEmail ("Invoice Upload Error", @return.ErrorMessage, "amitnarayansah@gmail.com");
+                @return.ErrorMessage = $"Error Occurred.\t#{ex.Message}";
+                MyMail.SendEmail("Invoice Upload Error", @return.ErrorMessage, "amitnarayansah@gmail.com");
                 return @return;
-
             }
         }
-
-
-        public static async Task<ServerReturn> ProcessVoyInvoiceXML(root invoice, AprajitaRetailsContext db)
-        {
-            ServerReturn @return = new ServerReturn { Error = false, Success = false, ErrorMessage = "", SuccessMessage = "" };
-
-            try
-            {
-                VBInvoice vBInvoice = ToSaleInvoice (invoice, db);
-                db.VBInvoices.Add (vBInvoice);
-                int crt = await db.SaveChangesAsync ();
-
-                if ( crt > 0 )
-                {
-                    @return.Success = true;
-                    @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} on @{DateTime.Now}";
-                }
-                else
-                {
-                    @return.Error = true;
-                    @return.ErrorMessage = "Failed to save the records";
-                }
-                MyMail.SendEmail ("Invoice Upload", JsonConvert.SerializeObject (vBInvoice), "amitnarayansah@gmail.com");
-
-
-                return @return;
-            }
-            catch ( Exception  ex)
-            {
-                @return.Error = true;
-                @return.ErrorMessage = $"Error Occurred.#{ex.Message}";
-                MyMail.SendEmail ("Invoice Upload Error", @return.ErrorMessage, "amitnarayansah@gmail.com");
-                return @return;
-
-            }
-        }
-
-
-
         private static void AddSaleInvoice(AprajitaRetailsContext db)
         {
-
         }
 
-        private static VBInvoice ToSaleInvoice(Root invoice, AprajitaRetailsContext db)
+        private static VBInvoice ToSaleInvoice(Bill invoice, AprajitaRetailsContext db)
         {
-            
+            var bill = invoice;
 
-            var bill = invoice.bill;
-            
             VBInvoice vB = new VBInvoice
             {
-
                 InvoiceNumber = bill.bill_number,
                 BillType = bill.type,
-                Tailoring = IsTailoringBill (bill.Custom_fields.field_details.tailoring_req),
-                CustomerMobile = bill.customer.mobile.ToString (),
+                Tailoring = IsTailoringBill(bill.Custom_fields.field_details.tailoring_req),
+                CustomerMobile = bill.customer.mobile.ToString(),
                 CustomerName = bill.customer.name,
-                BillAmount = (decimal) bill.bill_amount,
-                BillGrossAmount = (decimal) bill.bill_gross_amount,
+                BillAmount = (decimal)bill.bill_amount,
+                BillGrossAmount = (decimal)bill.bill_gross_amount,
                 DiscountAmount = bill.bill_discount
-
             };
 
-            vB.OnDate = DateTime.Parse (bill.billing_time).Date;
-            vB.StoreId = GetStoreId (db, bill.bill_store_id);
+            vB.OnDate = DateTime.Parse(bill.billing_time).Date;
+            vB.StoreId = GetStoreId(db, bill.bill_store_id);
 
-            List<VBPaymentDetail> details = new List<VBPaymentDetail> ();
-            foreach ( var item in bill.Payment_Mode.Payment_detail.payment/* .Payment_Mode.Payment_detail*/ )
+            List<VBPaymentDetail> details = new List<VBPaymentDetail>();
+            foreach (var item in bill.Payment_Mode.Payment_detail.payment)
             {
                 VBPaymentDetail vB1 = new VBPaymentDetail { Amount = item.value, Mode = item.mode };
-                if ( String.IsNullOrEmpty ((string) item.notes) )
+                if (String.IsNullOrEmpty((string)item.notes))
                 {
                     vB1.Notes = "";
                 }
                 else
                 {
-                    vB1.Notes = item.notes.ToString ();
+                    vB1.Notes = item.notes.ToString();
                 }
-                details.Add (vB1);
-
+                details.Add(vB1);
             }
 
             vB.VBPaymentDetails = details;
-            List<VBLineItem> items = new List<VBLineItem> ();
-            foreach ( var item in bill.line_items.line_item )
+            List<VBLineItem> items = new List<VBLineItem>();
+            foreach (var item in bill.line_items.line_item)
             {
                 VBLineItem line = new VBLineItem
                 {
@@ -153,99 +104,36 @@ namespace AprajitaRetails.Ops.Uploader
                     DiscountAmount = item.discount_value,
                     ItemCode = item.item_code,
                     LineItemType = item.line_item_type,
-                    Qty = (double) item.qty,
+                    Qty = (double)item.qty,
                     Rate = item.rate,
-                    SerialNo = Int16.Parse( item.serial),
+                    SerialNo = Int16.Parse(item.serial),
                     LineTotalAmount = item.amount
-
                 };
-                items.Add (line);
+                items.Add(line);
             }
             vB.VBLineItems = items;
-
             return vB;
-
         }
-        private static VBInvoice ToSaleInvoice(root invoice, AprajitaRetailsContext db)
-        {
-            var bill = invoice.bill;
-            VBInvoice vB = new VBInvoice
-            {
 
-                InvoiceNumber = bill.bill_number,
-                BillType = bill.type,
-                Tailoring = IsTailoringBill (bill.Custom_fields.field_details.tailoring_req),
-                CustomerMobile = bill.customer.mobile.ToString (),
-                CustomerName = bill.customer.name,
-                BillAmount = (decimal) bill.bill_amount,
-                BillGrossAmount = (decimal) bill.bill_gross_amount,
-                DiscountAmount = bill.bill_discount
-
-            };
-
-            vB.OnDate = DateTime.Parse (bill.billing_time).Date;
-            vB.StoreId = GetStoreId (db, bill.bill_store_id);
-
-            List<VBPaymentDetail> details = new List<VBPaymentDetail> ();
-            foreach ( var item in bill.Payment_Mode.Payment_detail )
-            {
-                VBPaymentDetail vB1 = new VBPaymentDetail { Amount = item.value, Mode = item.mode };
-                if ( String.IsNullOrEmpty ((string) item.notes) )
-                {
-                    vB1.Notes = "";
-                }
-                else
-                {
-                    vB1.Notes = item.notes.ToString ();
-                }
-                details.Add (vB1);
-
-            }
-
-            vB.VBPaymentDetails = details;
-            List<VBLineItem> items = new List<VBLineItem> ();
-            foreach ( var item in bill.line_items )
-            {
-                VBLineItem line = new VBLineItem
-                {
-                    Amount = item.value,
-                    DiscountAmount = item.discount_value,
-                    ItemCode = item.item_code,
-                    LineItemType = item.line_item_type,
-                    Qty = (double) item.qty,
-                    Rate = item.rate,
-                    SerialNo = item.serial,
-                    LineTotalAmount = item.amount
-
-                };
-                items.Add (line);
-            }
-            vB.VBLineItems = items;
-
-            return vB;
-
-        }
         private static int GetStoreId(AprajitaRetailsContext db, string storeCode)
         {
-            if ( storeCode.Contains ("JHC") )
+            if (storeCode.Contains("JHC"))
             {
-                storeCode = storeCode.Replace ("JHC", "JH");
+                storeCode = storeCode.Replace("JHC", "JH");
             }
-            int id = db.Stores.Where (c => c.StoreCode == storeCode).Select (c => c.StoreId).FirstOrDefault ();
+            int id = db.Stores.Where(c => c.StoreCode == storeCode).Select(c => c.StoreId).FirstOrDefault();
             return id;
         }
 
         private static bool IsTailoringBill(string mode)
         {
-            if ( mode == "N" )
+            if (mode == "N")
                 return false;
-            else if ( mode == "Y" )
+            else if (mode == "Y")
                 return true;
             else
                 return false;
         }
-
-
 
         private static void AddDailySale(VBInvoice inv)
         {
@@ -264,7 +152,7 @@ namespace AprajitaRetails.Ops.Uploader
                 IsMatchedWithVOy = true
             };
 
-            // Here check for Payment mode and do 
+            // Here check for Payment mode and do
         }
     }
 }
