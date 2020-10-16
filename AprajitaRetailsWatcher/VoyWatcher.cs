@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
@@ -12,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace AprajitaRetailsWatcher
 {
-    public partial class Service1 : ServiceBase
+    public partial class VoyWatcher : ServiceBase
     {
-        public Service1()
+        public VoyWatcher()
         {
             InitializeComponent();
         }
@@ -28,7 +29,7 @@ namespace AprajitaRetailsWatcher
             }
             catch (Exception ex)
             {
-                BasicOps.ErrorLog(ex);                
+                BasicOps.ErrorLog(ex);
             }
         }
 
@@ -51,11 +52,17 @@ namespace AprajitaRetailsWatcher
             {
                 Thread.Sleep(70000);
                 //Then we need to check file is exist or not which is created.  
-                if (BasicOps. CheckFileExistance(FileInfos.LocationName1, e.Name))
+                if (BasicOps.CheckFileExistance(FileInfos.LocationName1, e.Name))
                 {
                     BasicOps.LogFileInfo(e.Name);
-                    BasicOps.CopyAllXMLFile(FileInfos.LocationName1, FileInfos.XMLFolder);
-                       
+                    // BasicOps.CopyAllXMLFile(FileInfos.LocationName1, FileInfos.XMLFolder);
+                    string fileName = BasicOps.CopyFile(Path.Combine(FileInfos.LocationName1, FileInfos.FileWatcherName1), FileInfos.XMLFolder);
+                    Task t = Task.Factory.StartNew(async () =>        {
+                        // task code here
+                        _ = await JsonUploader.UpLoadXMLFile(fileName);
+                    });
+                    
+
                 }
 
             }
@@ -69,12 +76,12 @@ namespace AprajitaRetailsWatcher
 
         private void FileWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
         {
-
+            FileWatcher_Changed(sender, e);
         }
 
         private void FileWatcher_Deleted(object sender, System.IO.FileSystemEventArgs e)
         {
-
+            // FileWatcher_Changed(sender, e);
         }
     }
 }

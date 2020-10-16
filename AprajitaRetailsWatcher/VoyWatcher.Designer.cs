@@ -1,6 +1,6 @@
 ﻿namespace AprajitaRetailsWatcher
 {
-    partial class Service1
+    partial class VoyWatcher
     {
         /// <summary> 
         /// Required designer variable.
@@ -40,7 +40,7 @@
             // 
             // Service1
             // 
-            this.ServiceName = "Service1";
+            this.ServiceName = "AprajitaRetailsWatcher";
             ((System.ComponentModel.ISupportInitialize)(this.fileWatcher)).EndInit();
 
         }

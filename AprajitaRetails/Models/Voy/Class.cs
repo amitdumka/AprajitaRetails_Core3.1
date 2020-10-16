@@ -1,13 +1,8 @@
-﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Models.Voy
 {
-   
-
     public class VBInvoice
     {
         public int VBInvoiceId { get; set; }
@@ -24,9 +19,8 @@ namespace AprajitaRetails.Models.Voy
         public string CustomerName { get; set; }
         public bool Tailoring { get; set; }
 
-        public ICollection< VBPaymentDetail> VBPaymentDetails { get; set; }
+        public ICollection<VBPaymentDetail> VBPaymentDetails { get; set; }
         public ICollection<VBLineItem> VBLineItems { get; set; }
-
     }
 
     public class VBPaymentDetail
@@ -54,20 +48,12 @@ namespace AprajitaRetails.Models.Voy
         public decimal LineTotalAmount { get; set; }
 
         public int VBInvoiceid { get; set; }
-        public  virtual VBInvoice Invoice { get; set; }
-
-
-
+        public virtual VBInvoice Invoice { get; set; }
     }
-   
 }
-
 
 namespace AprajitaRetails.Models.JsonData
 {
-
-
-
     public class Rootobject
     {
         public Xml xml { get; set; }
@@ -105,7 +91,7 @@ namespace AprajitaRetails.Models.JsonData
 
     public class Line_Items
     {
-        public Line_Item [] line_item { get; set; }
+        public Line_Item[] line_item { get; set; }
     }
 
     public class Line_Item
@@ -145,7 +131,7 @@ namespace AprajitaRetails.Models.JsonData
 
     public class Payment_Detail
     {
-        public Payment [] payment { get; set; }
+        public Payment[] payment { get; set; }
     }
 
     public class Payment
@@ -166,8 +152,4 @@ namespace AprajitaRetails.Models.JsonData
         public string name { get; set; }
         public string value { get; set; }
     }
-
 }
-
-
-

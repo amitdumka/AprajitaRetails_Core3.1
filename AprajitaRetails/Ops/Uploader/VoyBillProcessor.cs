@@ -3,7 +3,6 @@ using AprajitaRetails.Models;
 using AprajitaRetails.Models.JsonData;
 using AprajitaRetails.Models.Voy;
 using AprajitaRetails.Ops.TAS.Mails;
-using AprajitaRetailsWatcher.Model.XMLData;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
