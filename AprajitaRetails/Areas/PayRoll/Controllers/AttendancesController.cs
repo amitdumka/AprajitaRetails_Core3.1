@@ -173,7 +173,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         public IActionResult Create()
         {
             //TODO: fetch StoreId
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId && c.IsWorking), "EmployeeId", "StaffName");
             return PartialView();
         }
 
@@ -203,7 +203,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 new PayRollManager().ONInsertOrUpdate(_context, attendance, false, false);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId && c.IsWorking), "EmployeeId", "StaffName", attendance.EmployeeId);
             return PartialView(attendance);
         }
 
@@ -220,7 +220,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId && c.IsWorking), "EmployeeId", "StaffName", attendance.EmployeeId);
             return PartialView(attendance);
         }
 
@@ -269,7 +269,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.StoreId==StoreId), "EmployeeId", "StaffName", attendance.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.StoreId==StoreId && c.IsWorking), "EmployeeId", "StaffName", attendance.EmployeeId);
               return PartialView(attendance);
         }
 

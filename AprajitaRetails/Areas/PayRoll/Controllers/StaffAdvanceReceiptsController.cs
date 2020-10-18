@@ -17,6 +17,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
     public class StaffAdvanceReceiptsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
+        private readonly int StoreId = 1;
 
         public StaffAdvanceReceiptsController(AprajitaRetailsContext context)
         {
@@ -38,7 +39,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).OrderByDescending(c => c.ReceiptDate);
+            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).Where(c=>c.StoreId==StoreId).OrderByDescending(c => c.ReceiptDate);
 
             return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
@@ -67,7 +68,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: StaffAdvanceReceipts/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.IsWorking && c.StoreId==StoreId), "EmployeeId", "StaffName");
             return PartialView();
         }
 
@@ -82,13 +83,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
 
                 staffAdvanceReceipt.UserName = User.Identity.Name;
+                staffAdvanceReceipt.StoreId = StoreId;
                 _context.Add(staffAdvanceReceipt);
                 new PayRollManager().OnInsert(_context, staffAdvanceReceipt);
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.IsWorking && c.StoreId == StoreId), "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
             return PartialView(staffAdvanceReceipt);
         }
 
@@ -106,7 +108,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.IsWorking && c.StoreId == StoreId), "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
             return PartialView(staffAdvanceReceipt);
         }
 
@@ -128,6 +130,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 try
                 {
                     staffAdvanceReceipt.UserName = User.Identity.Name;
+                    staffAdvanceReceipt.StoreId = StoreId;
                     new PayRollManager().OnUpdate(_context, staffAdvanceReceipt);
                     _context.Update(staffAdvanceReceipt);
                     await _context.SaveChangesAsync();
@@ -145,7 +148,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.IsWorking && c.StoreId == StoreId), "EmployeeId", "StaffName", staffAdvanceReceipt.EmployeeId);
             return PartialView(staffAdvanceReceipt);
         }
 
