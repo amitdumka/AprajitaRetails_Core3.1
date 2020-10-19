@@ -76,6 +76,7 @@ namespace AprajitaRetailsWatcher.Ops
         {
             using (var client = new HttpClient())
             {
+                BasicOps.LogInfo ($"Info: Uploading Started....\n");
                 client.BaseAddress = new Uri(FileInfos.AppUri);
                 var result = await client.PostAsJsonAsync<Bill>(FileInfos.ActionName, data);
                 
@@ -114,9 +115,15 @@ namespace AprajitaRetailsWatcher.Ops
         public static Task<ServerReturn> UpLoadXMLFile(string fileName)
         {
             string data = XmlToJson(fileName);
+            BasicOps.LogInfo ("InvoiceData: \n" + data);
             Rootobject inv = JsonConvert.DeserializeObject<Rootobject>(data);
             return SendDataToServerAsync(inv.root.bill);
 
+        }
+        private static void ToObject(string data)
+        {
+
+            int loc = data.IndexOf ("line_item");
         }
     
     }

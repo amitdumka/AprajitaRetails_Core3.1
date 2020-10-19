@@ -17,19 +17,19 @@ namespace AprajitaRetailsWatcher
     {
         public VoyWatcher()
         {
-            InitializeComponent();
+            InitializeComponent ();
         }
 
-        protected override void OnStart(string[] args)
+        protected override void OnStart(string [] args)
         {
             try
             {
-                BasicOps.LogServiceStartStop(false);
+                BasicOps.LogServiceStartStop (false);
                 fileWatcher.Path = FileInfos.LocationName1;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                BasicOps.ErrorLog(ex);
+                BasicOps.ErrorLog (ex);
             }
         }
 
@@ -37,12 +37,12 @@ namespace AprajitaRetailsWatcher
         {
             try
             {
-                BasicOps.LogServiceStartStop(true);
+                BasicOps.LogServiceStartStop (true);
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
 
-                BasicOps.ErrorLog(ex);
+                BasicOps.ErrorLog (ex);
             }
         }
 
@@ -50,33 +50,35 @@ namespace AprajitaRetailsWatcher
         {
             try
             {
-                Thread.Sleep(70000);
+                Thread.Sleep (70000);
                 //Then we need to check file is exist or not which is created.  
-                if (BasicOps.CheckFileExistance(FileInfos.LocationName1, e.Name))
+                if ( BasicOps.CheckFileExistance (FileInfos.LocationName1, e.Name) )
                 {
-                    BasicOps.LogFileInfo(e.Name);
+                    BasicOps.LogFileInfo (e.Name);
                     // BasicOps.CopyAllXMLFile(FileInfos.LocationName1, FileInfos.XMLFolder);
-                    string fileName = BasicOps.CopyFile(Path.Combine(FileInfos.LocationName1, FileInfos.FileWatcherName1), FileInfos.XMLFolder);
-                    Task t = Task.Factory.StartNew(async () =>        {
-                        // task code here
-                        _ = await JsonUploader.UpLoadXMLFile(fileName);
-                    });
-                    
+                    string fileName = BasicOps.CopyFile (Path.Combine (FileInfos.LocationName1, FileInfos.FileWatcherName1), FileInfos.XMLFolder);
+                    // Task t = Task.Factory.StartNew(async () =>        {
+                    // task code here
+                    var data = JsonUploader.UpLoadXMLFile (fileName);
+                    data.Wait ();
+                    BasicOps.LogInfo ($"serverreturn\t success:{data.Result.SuccessMessage} \n error:{data.Result.ErrorMessage}");
+                    //});
+
 
                 }
 
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
 
-                BasicOps.ErrorLog(ex);
+                BasicOps.ErrorLog (ex);
             }
 
         }
 
         private void FileWatcher_Created(object sender, System.IO.FileSystemEventArgs e)
         {
-            FileWatcher_Changed(sender, e);
+            FileWatcher_Changed (sender, e);
         }
 
         private void FileWatcher_Deleted(object sender, System.IO.FileSystemEventArgs e)

@@ -1,0 +1,71 @@
+﻿@model AprajitaRetails.Models.EDC
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>EDC</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EDCId" />
+            <div class="form-group">
+                <label asp-for="TID" class="control-label"></label>
+                <input asp-for="TID" class="form-control" />
+                <span asp-validation-for="TID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EDCName" class="control-label"></label>
+                <input asp-for="EDCName" class="form-control" />
+                <span asp-validation-for="EDCName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountNumberId" class="control-label"></label>
+                <input asp-for="AccountNumberId" class="form-control" />
+                <span asp-validation-for="AccountNumberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsWorking" /> @Html.DisplayNameFor(model => model.IsWorking)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="MID" class="control-label"></label>
+                <input asp-for="MID" class="form-control" />
+                <span asp-validation-for="MID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remark" class="control-label"></label>
+                <input asp-for="Remark" class="form-control" />
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoreId" class="control-label"></label>
+                <select asp-for="StoreId" class="form-control" asp-items="ViewBag.StoreId"></select>
+                <span asp-validation-for="StoreId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -6,7 +6,9 @@ namespace AprajitaRetailsWatcher.Ops
 {
     public class FileInfos
     {
-        public const string LogFolder = "d:\\logFiles";
+        public const string BaseFolder = "d:\\aprajitaretails";
+        public const string LogFolder = "logFiles";
+        public const string ErrorFolder = "ErrorLog";
         public const string ServiceLogFileName = "ServiceLogs_";
         public const string FileWatcherName1 = "invoice.xml";
         public const string LocationName1 = "C:\\Capillary";
@@ -90,12 +92,12 @@ namespace AprajitaRetailsWatcher.Ops
         public static void ErrorLog(Exception exx)
         {
             StreamWriter SW;
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
+            if (!File.Exists(Path.Combine(FileInfos.BaseFolder,FileInfos.ErrorFolder, "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
             {
-                SW = File.CreateText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt"));
+                SW = File.CreateText(Path.Combine(FileInfos.BaseFolder, FileInfos.ErrorFolder, "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt"));
                 SW.Close();
             }
-            using (SW = File.AppendText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
+            using (SW = File.AppendText(Path.Combine(FileInfos.BaseFolder, FileInfos.ErrorFolder, "txt_" + DateTime.Now.ToString("yyyyMMdd") + ".txt")))
             {
                 string[] str = new string[] { exx.Message==null?"":exx.Message.ToString(), exx.StackTrace==null?"":exx.StackTrace.ToString(),
             exx.InnerException==null?"":exx.InnerException.ToString()};
@@ -118,9 +120,9 @@ namespace AprajitaRetailsWatcher.Ops
         {
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if (Directory.Exists(Path.Combine(FileInfos.BaseFolder, FileInfos.LogFolder)))
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+                fileName = System.IO.Path.Combine(FileInfos.BaseFolder, FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
                 if (!File.Exists(fileName))
                 {
                     SW = File.CreateText(fileName);
@@ -139,9 +141,9 @@ namespace AprajitaRetailsWatcher.Ops
         {
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if ( Directory.Exists (Path.Combine (FileInfos.BaseFolder, FileInfos.LogFolder)) )
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+                fileName = System.IO.Path.Combine(FileInfos.BaseFolder, FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
                 if (!File.Exists(fileName))
                 {
                     SW = File.CreateText(fileName);
@@ -163,9 +165,9 @@ namespace AprajitaRetailsWatcher.Ops
         {
             string fileName = string.Empty;
             StreamWriter SW;
-            if (Directory.Exists(FileInfos.LogFolder))
+            if ( Directory.Exists (Path.Combine (FileInfos.BaseFolder, FileInfos.LogFolder)) )
             {
-                fileName = System.IO.Path.Combine(FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
+                fileName = System.IO.Path.Combine(FileInfos.BaseFolder, FileInfos.LogFolder, FileInfos.ServiceLogFileName + DateTime.Now.ToString("yyyyMMdd") + ".txt");
                 if (!File.Exists(fileName))
                 {
                     SW = File.CreateText(fileName);
