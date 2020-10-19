@@ -3,6 +3,7 @@ using AprajitaRetails.Models;
 using AprajitaRetails.Models.JsonData;
 using AprajitaRetails.Models.Voy;
 using AprajitaRetails.Ops.TAS.Mails;
+using AprajitaRetails.Ops.Triggers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -35,11 +36,24 @@ namespace AprajitaRetails.Ops.Uploader
                 {
                     @return.Success = true;
                     @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} on @{DateTime.Now}";
+
+                    DailySale sale = AddDailySale(vBInvoice);
+                    db.DailySales.Add(sale);
+                    if (db.SaveChanges() >0)
+                    {
+                        @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} and DailySale also on @{DateTime.Now}";
+                        new SalesManager().OnInsert(db, sale);
+                    }
+                    else
+                    {
+                        @return.Error = true;
+                        @return.ErrorMessage = "Failed to save the DailySale Record!.";
+                    }
                 }
                 else
                 {
                     @return.Error = true;
-                    @return.ErrorMessage = "Failed to save the records";
+                    @return.ErrorMessage = "Failed to save the VBInvoice and DailySale record!.";
                 }
 
                
@@ -55,8 +69,10 @@ namespace AprajitaRetails.Ops.Uploader
                 return @return;
             }
         }
-        private static void AddSaleInvoice(AprajitaRetailsContext db)
+        private static void AddSaleInvoice(AprajitaRetailsContext db, VBInvoice inv)
         {
+           
+
         }
 
         private static VBInvoice ToSaleInvoice(Bill invoice, AprajitaRetailsContext db)
@@ -134,7 +150,7 @@ namespace AprajitaRetails.Ops.Uploader
                 return false;
         }
 
-        private static void AddDailySale(VBInvoice inv)
+        private static DailySale AddDailySale(VBInvoice inv)
         {
             DailySale sale = new DailySale
             {
@@ -147,9 +163,31 @@ namespace AprajitaRetails.Ops.Uploader
                 IsDue = false,
                 IsSaleReturn = false,
                 UserName = "AutoAdded",
-                Remarks = "Auto Added",
-                IsMatchedWithVOy = true
+                Remarks = "Auto Added # Enter Correct Salesman",
+                IsMatchedWithVOy = true, CashAmount=0, PayMode=PayMode.Cash, SalesmanId=3
             };
+
+            if (inv.BillType.Contains("RETURN"))
+            {
+                sale.IsSaleReturn = true;
+            }
+            var pd = inv.VBPaymentDetails.First();
+            if (pd.Mode == "CA")
+            {
+                sale.CashAmount = inv.BillGrossAmount;
+                sale.PayMode = PayMode.Cash;
+            }
+            else if (pd.Mode == "CRD")
+            {
+                sale.CashAmount = 0;
+                sale.PayMode = PayMode.Card;
+            }else if (pd.Mode == "MIX")
+            {
+                sale.CashAmount = 0;
+                sale.PayMode = PayMode.MixPayments;
+            }
+
+            return sale;
 
             // Here check for Payment mode and do
         }

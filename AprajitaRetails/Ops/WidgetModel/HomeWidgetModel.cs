@@ -46,6 +46,106 @@ namespace AprajitaRetails.Ops.WidgetModel
             return info;
         }
 
+        public static AccountsInfo GetAccoutingRecord(AprajitaRetailsContext db, int StoreId)
+        {
+            AccountsInfo info = new AccountsInfo();
+            CashInHand cih = db.CashInHands.Where(c => (c.CIHDate) == (DateTime.Today) && c.StoreId == StoreId).FirstOrDefault();
+
+            if (cih != null)
+            {
+                info.CashInHand = cih.InHand;
+                info.CashIn = cih.CashIn;
+                info.CashOut = cih.CashOut;
+                info.OpenningBal = cih.OpenningBalance;
+            }
+
+            CashInBank cib = db.CashInBanks.Where(c => (c.CIBDate) == (DateTime.Today) && c.StoreId == StoreId).FirstOrDefault();
+            if (cib != null)
+            {
+                info.CashToBank = cib.CashIn;
+                info.CashFromBank = cib.CashOut;
+                info.CashInBank = cib.InHand;
+            }
+
+            var CashExp = db.PettyCashExpenses.Where(c => (c.ExpDate) == (DateTime.Today) && c.StoreId == StoreId);
+            var CashPay = db.CashPayments.Where(c => (c.PaymentDate) == (DateTime.Today) && c.StoreId == StoreId);
+
+            if (CashExp != null)
+            {
+                info.TotalCashPayments = (decimal?)CashExp.Sum(c => (decimal?)c.Amount) ?? 0;
+            }
+            if (CashPay != null)
+            {
+                info.TotalCashPayments += (decimal?)CashPay.Sum(c => (decimal?)c.Amount) ?? 0;
+            }
+            return info;
+        }
+
+        public static List<EmpBasicInfo> GetEmpBasicInfo(AprajitaRetailsContext db)
+        {
+            var emps = db.Attendances.Include(c => c.Employee).
+                Where(c => c.AttDate == DateTime.Today && c.IsTailoring == false && (c.Status == AttUnit.Present || c.Status == AttUnit.Sunday)).OrderByDescending(c => c.Employee.StaffName);
+
+            var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
+
+            List<EmpBasicInfo> list = new List<EmpBasicInfo>();
+            foreach (var item in emps)
+            {
+                EmpBasicInfo info = new EmpBasicInfo
+                {
+                    EmpId = item.EmployeeId,
+                    Name = item.Employee.StaffName,
+                    IsSalesman = false,
+                    TotalSale = 0
+                };
+                if (item.Employee.Category == EmpType.Salesman)
+                    info.IsSalesman = true;
+                else if (totalSale != null && (item.Employee.Category == EmpType.Salesman /*|| item.Employee.Category == EmpType.StoreManager*/))
+                {
+                    var ts = totalSale.Where(c => c.StaffName == info.Name).ToList();
+                    info.TotalSale = (decimal?)ts.Sum(c => (decimal?)c.Amount) ?? 0;
+                }
+                list.Add(info);
+            }
+
+            return list;
+        }
+
+        public static List<EmpBasicInfo> GetEmpBasicInfo(AprajitaRetailsContext db, int StoreId)
+        {
+            var emps = db.Attendances.Include(c => c.Employee).
+                Where(c => c.StoreId == StoreId && c.AttDate == DateTime.Today && c.IsTailoring == false && (c.Status == AttUnit.Present || c.Status == AttUnit.Sunday)).OrderByDescending(c => c.Employee.StaffName);
+
+            var totalSale = db.DailySales.Include(c => c.Salesman).Where(c => c.StoreId == StoreId && c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month).Select(a => new { StaffName = a.Salesman.SalesmanName, a.Amount }).ToList();
+
+            List<EmpBasicInfo> list = new List<EmpBasicInfo>();
+            foreach (var item in emps)
+            {
+                EmpBasicInfo info = new EmpBasicInfo
+                {
+                    EmpId = item.EmployeeId,
+                    Name = item.Employee.StaffName,
+                    IsSalesman = false
+                };
+                if (item.Employee.Category == EmpType.Salesman)
+                    info.IsSalesman = true;
+
+                if (item.Employee.Category == EmpType.StoreManager)
+                {
+                    var ts = db.DailySales.Where(c => c.StoreId == StoreId && c.SaleDate.Year == DateTime.Today.Year && c.SaleDate.Month == DateTime.Today.Month).Select(a => new { a.Amount }).Sum(c => c.Amount);
+                    info.TotalSale = ts;
+                }
+                else if (totalSale != null && (item.Employee.Category == EmpType.Salesman /*|| item.Employee.Category == EmpType.StoreManager*/))
+                {
+                    var ts = totalSale.Where(c => c.StaffName == info.Name).ToList();
+                    info.TotalSale = (decimal?)ts.Sum(c => (decimal?)c.Amount) ?? 0;
+                }
+                list.Add(info);
+            }
+
+            return list;
+        }
+
         public static List<EmployeeInfo> GetEmpInfo(AprajitaRetailsContext db, bool WithTailor = false)
         {
             var emps = db.Attendances.Include(c => c.Employee).

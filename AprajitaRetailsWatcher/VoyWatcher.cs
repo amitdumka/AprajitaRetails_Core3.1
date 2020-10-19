@@ -56,12 +56,42 @@ namespace AprajitaRetailsWatcher
                 {
                     BasicOps.LogFileInfo (e.Name);
                     // BasicOps.CopyAllXMLFile(FileInfos.LocationName1, FileInfos.XMLFolder);
-                    string fileName = BasicOps.CopyFile (Path.Combine (FileInfos.LocationName1, FileInfos.FileWatcherName1), FileInfos.XMLFolder);
+                    string fileName = BasicOps.CopyBakFile (Path.Combine (FileInfos.LocationName1, FileInfos.FileWatcherName1), FileInfos.XMLFolder);
                     // Task t = Task.Factory.StartNew(async () =>        {
                     // task code here
                     var data = JsonUploader.UpLoadXMLFile (fileName);
                     data.Wait ();
                     BasicOps.LogInfo ($"serverreturn\t success:{data.Result.SuccessMessage} \n error:{data.Result.ErrorMessage}");
+                    if (data.Result.Error)
+                    {
+                        if (BasicOps.VerifyOrCreate(Path.Combine(FileInfos.BaseFolder + FileInfos.PendingInv)))
+                        {
+                            try
+                            {
+                                BasicOps.CopyFile(fileName, Path.Combine(FileInfos.BaseFolder + FileInfos.PendingInv));
+                                File.Delete(fileName);
+                            }
+                            catch (Exception ex)
+                            {
+                                BasicOps.ErrorLog(ex);
+                            }
+                        }
+                    }
+                    else if (data.Result.Success)
+                    {
+                        if (BasicOps.VerifyOrCreate(Path.Combine(FileInfos.BaseFolder + FileInfos.UploadedInv)))
+                        {
+                            try
+                            {
+                                BasicOps.CopyFile(fileName, Path.Combine(FileInfos.BaseFolder + FileInfos.UploadedInv));
+                                File.Delete(fileName);
+                            }
+                            catch(Exception ex)
+                            {
+                                BasicOps.ErrorLog(ex);
+                            }
+                        }
+                    }
                     //});
 
 

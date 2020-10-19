@@ -392,6 +392,7 @@
     <PackageReference Include="OpenTl.ClientApi" Version="0.7.97" />
     <PackageReference Include="PDFtoPrinter" Version="1.2.1" />
     <PackageReference Include="Quartz.AspNetCore" Version="3.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="OrchardCore.Localization.Core" Version="1.0.0-beta1-3383" />

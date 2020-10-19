@@ -53,11 +53,11 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                 return NotFound(true);
         }
         // GET: api/Attendances/5
-        [HttpGet("{id}")]
+        [HttpGet]
         public async Task<ActionResult<Attendance>> GetAttendance(int id, string userName)
         {
             // TODO: Check for UserName. if UserName and EmployeeId is Same then only provide Data. other Wise dont Send Data.
-            if(DBHelper.IsValidEmployee(_context,id,userName))
+            if (DBHelper.IsValidEmployee(_context, id, userName))
             {
                 var attendance = await _context.Attendances.FindAsync(id);
 
@@ -72,7 +72,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             {
                 return NotFound(true);
             }
-           
+
         }
 
         // PUT: api/Attendances/5

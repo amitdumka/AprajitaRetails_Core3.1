@@ -17,6 +17,8 @@ namespace AprajitaRetailsWatcher.Ops
         public const string AppUri = "https://aprajitaretails.in";
         public const string JsonFileName = "JsonData_";
         public const string ActionName = "api/VoyBill";
+        public const string UploadedInv = "uploaded";
+        public const string PendingInv = "pendingInvoice";
     }
 
     public class PathList
@@ -32,6 +34,52 @@ namespace AprajitaRetailsWatcher.Ops
 
     public class BasicOps
     {
+
+        public static  bool VerifyOrCreate(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                try
+                {
+                    Directory.CreateDirectory(path);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    BasicOps.ErrorLog(ex);
+                    return false;
+                }
+                
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static string CopyBakFile(string sourceFile, string destinationFolder)
+        {
+            try
+            {
+                string fileName = Path.GetFileName(sourceFile);
+                string nFileName = Path.GetFileNameWithoutExtension(sourceFile)+"_"+DateTime.Now.ToString("ddMMMMyyyyHHmmss")+Path.GetExtension(sourceFile);
+                string newFileName = Path.Combine(destinationFolder, nFileName);
+                FileInfo file = new FileInfo(sourceFile);
+                if (!(file.Exists && Directory.Exists(destinationFolder)))
+                    return sourceFile;
+                File.Copy(sourceFile, newFileName, true);
+                return newFileName;
+
+            }
+            catch (Exception ex)
+            {
+
+                ErrorLog(ex);
+                return sourceFile;
+            }
+        }
+
         /// <summary>
         ///  This method will copy a file to new destination
         /// </summary>
