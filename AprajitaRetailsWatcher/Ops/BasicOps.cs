@@ -14,7 +14,7 @@ namespace AprajitaRetailsWatcher.Ops
         public const string LocationName1 = "C:\\Capillary";
         public const string XMLFolder = "d:\\aprajitaretails\\newxml";
         public const string LocalURi = "https://localhost:4550";
-        public const string AppUri = "https://aprajitaretails.in";
+        public const string AppUri = "https://www.aprajitaretails.in";
         public const string JsonFileName = "JsonData_";
         public const string ActionName = "api/VoyBill";
         public const string UploadedInv = "uploaded";
@@ -32,6 +32,7 @@ namespace AprajitaRetailsWatcher.Ops
         public const string DataBasePath = @"D:\AprajitaRetails\Databases";
     }
 
+  
     public class BasicOps
     {
 

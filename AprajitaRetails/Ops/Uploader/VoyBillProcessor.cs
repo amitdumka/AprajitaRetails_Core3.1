@@ -28,27 +28,34 @@ namespace AprajitaRetails.Ops.Uploader
 
             try
             {
-                VBInvoice vBInvoice = ToSaleInvoice(invoice, db);
-                db.VBInvoices.Add(vBInvoice);
-                int crt = await db.SaveChangesAsync();
+                VBInvoice vBInvoice = ToSaleInvoice (invoice, db);
+                db.VBInvoices.Add (vBInvoice);
+                int crt = await db.SaveChangesAsync ();
 
-                if (crt > 0)
+                if ( crt > 0 )
                 {
                     @return.Success = true;
                     @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} on @{DateTime.Now}";
 
-                    DailySale sale = AddDailySale(vBInvoice);
-                    db.DailySales.Add(sale);
-                    if (db.SaveChanges() >0)
+                    int invNo = (int?) db.DailySales.Where (c => c.InvNo == vBInvoice.InvoiceNumber).Select (c => c.DailySaleId).FirstOrDefault () ?? 0;
+                    if ( invNo <= 0 )
                     {
-                        @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} and DailySale also on @{DateTime.Now}";
-                        new SalesManager().OnInsert(db, sale);
+
+                        DailySale sale = AddDailySale (vBInvoice);
+                        db.DailySales.Add (sale);
+                        if ( db.SaveChanges () > 0 )
+                        {
+                            @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} and DailySale also on @{DateTime.Now}";
+                            new SalesManager ().OnInsert (db, sale);
+                        }
+                        else
+                        {
+                            @return.Error = true;
+                            @return.ErrorMessage = "Failed to save the DailySale Record!.";
+                        }
                     }
-                    else
-                    {
-                        @return.Error = true;
-                        @return.ErrorMessage = "Failed to save the DailySale Record!.";
-                    }
+
+
                 }
                 else
                 {
@@ -56,22 +63,22 @@ namespace AprajitaRetails.Ops.Uploader
                     @return.ErrorMessage = "Failed to save the VBInvoice and DailySale record!.";
                 }
 
-               
-                MyMail.SendEmail("Invoice Upload", JsonConvert.SerializeObject(invoice), "amitnarayansah@gmail.com");
+
+                MyMail.SendEmail ("Invoice Upload", JsonConvert.SerializeObject (invoice), "amitnarayansah@gmail.com");
 
                 return @return;
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
                 @return.Error = true;
                 @return.ErrorMessage = $"Error Occurred.\t#{ex.Message}";
-                MyMail.SendEmail("Invoice Upload Error", @return.ErrorMessage, "amitnarayansah@gmail.com");
+                MyMail.SendEmail ("Invoice Upload Error", @return.ErrorMessage, "amitnarayansah@gmail.com");
                 return @return;
             }
         }
         private static void AddSaleInvoice(AprajitaRetailsContext db, VBInvoice inv)
         {
-           
+
 
         }
 
@@ -83,35 +90,35 @@ namespace AprajitaRetails.Ops.Uploader
             {
                 InvoiceNumber = bill.bill_number,
                 BillType = bill.type,
-                Tailoring = IsTailoringBill(bill.Custom_fields.field_details.tailoring_req),
-                CustomerMobile = bill.customer.mobile.ToString(),
+                Tailoring = IsTailoringBill (bill.Custom_fields.field_details.tailoring_req),
+                CustomerMobile = bill.customer.mobile.ToString (),
                 CustomerName = bill.customer.name,
-                BillAmount = (decimal)bill.bill_amount,
-                BillGrossAmount = (decimal)bill.bill_gross_amount,
+                BillAmount = (decimal) bill.bill_amount,
+                BillGrossAmount = (decimal) bill.bill_gross_amount,
                 DiscountAmount = bill.bill_discount
             };
 
-            vB.OnDate = DateTime.Parse(bill.billing_time).Date;
-            vB.StoreId = GetStoreId(db, bill.bill_store_id);
+            vB.OnDate = DateTime.Parse (bill.billing_time).Date;
+            vB.StoreId = GetStoreId (db, bill.bill_store_id);
 
-            List<VBPaymentDetail> details = new List<VBPaymentDetail>();
-            foreach (var item in bill.Payment_Mode.Payment_detail.payment)
+            List<VBPaymentDetail> details = new List<VBPaymentDetail> ();
+            foreach ( var item in bill.Payment_Mode.Payment_detail.payment )
             {
                 VBPaymentDetail vB1 = new VBPaymentDetail { Amount = item.value, Mode = item.mode };
-                if (String.IsNullOrEmpty((string)item.notes))
+                if ( String.IsNullOrEmpty ((string) item.notes) )
                 {
                     vB1.Notes = "";
                 }
                 else
                 {
-                    vB1.Notes = item.notes.ToString();
+                    vB1.Notes = item.notes.ToString ();
                 }
-                details.Add(vB1);
+                details.Add (vB1);
             }
 
             vB.VBPaymentDetails = details;
-            List<VBLineItem> items = new List<VBLineItem>();
-            foreach (var item in bill.line_items.line_item)
+            List<VBLineItem> items = new List<VBLineItem> ();
+            foreach ( var item in bill.line_items.line_item )
             {
                 VBLineItem line = new VBLineItem
                 {
@@ -119,12 +126,12 @@ namespace AprajitaRetails.Ops.Uploader
                     DiscountAmount = item.discount_value,
                     ItemCode = item.item_code,
                     LineItemType = item.line_item_type,
-                    Qty = (double)item.qty,
+                    Qty = (double) item.qty,
                     Rate = item.rate,
-                    SerialNo = Int16.Parse(item.serial),
+                    SerialNo = Int16.Parse (item.serial),
                     LineTotalAmount = item.amount
                 };
-                items.Add(line);
+                items.Add (line);
             }
             vB.VBLineItems = items;
             return vB;
@@ -132,19 +139,19 @@ namespace AprajitaRetails.Ops.Uploader
 
         private static int GetStoreId(AprajitaRetailsContext db, string storeCode)
         {
-            if (storeCode.Contains("JHC"))
+            if ( storeCode.Contains ("JHC") )
             {
-                storeCode = storeCode.Replace("JHC", "JH");
+                storeCode = storeCode.Replace ("JHC", "JH");
             }
-            int id = db.Stores.Where(c => c.StoreCode == storeCode).Select(c => c.StoreId).FirstOrDefault();
+            int id = db.Stores.Where (c => c.StoreCode == storeCode).Select (c => c.StoreId).FirstOrDefault ();
             return id;
         }
 
         private static bool IsTailoringBill(string mode)
         {
-            if (mode == "N")
+            if ( mode == "N" )
                 return false;
-            else if (mode == "Y")
+            else if ( mode == "Y" )
                 return true;
             else
                 return false;
@@ -164,24 +171,28 @@ namespace AprajitaRetails.Ops.Uploader
                 IsSaleReturn = false,
                 UserName = "AutoAdded",
                 Remarks = "Auto Added # Enter Correct Salesman",
-                IsMatchedWithVOy = true, CashAmount=0, PayMode=PayMode.Cash, SalesmanId=3
+                IsMatchedWithVOy = true,
+                CashAmount = 0,
+                PayMode = PayMode.Cash,
+                SalesmanId = 3
             };
 
-            if (inv.BillType.Contains("RETURN"))
+            if ( inv.BillType.Contains ("RETURN") )
             {
                 sale.IsSaleReturn = true;
             }
-            var pd = inv.VBPaymentDetails.First();
-            if (pd.Mode == "CA")
+            var pd = inv.VBPaymentDetails.First ();
+            if ( pd.Mode == "CA" )
             {
                 sale.CashAmount = inv.BillGrossAmount;
                 sale.PayMode = PayMode.Cash;
             }
-            else if (pd.Mode == "CRD")
+            else if ( pd.Mode == "CRD" )
             {
                 sale.CashAmount = 0;
                 sale.PayMode = PayMode.Card;
-            }else if (pd.Mode == "MIX")
+            }
+            else if ( pd.Mode == "MIX" )
             {
                 sale.CashAmount = 0;
                 sale.PayMode = PayMode.MixPayments;
