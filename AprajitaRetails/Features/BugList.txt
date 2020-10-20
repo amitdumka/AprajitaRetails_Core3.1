@@ -2,4 +2,13 @@
 4) daily sale cashinbank not update while in selecting card
 
 
+Chart in asp dot net core
+
+https://www.codeproject.com/Articles/1243682/Create-Cross-Platform-Charts-with-ASP-NET-Core-MVC
+
+https://www.danylkoweb.com/Blog/creating-charts-with-aspnet-core-LG
+
+https://www.c-sharpcorner.com/article/creating-charts-with-asp-net-core/
+
+https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/7-displaying-data-in-a-chart
 

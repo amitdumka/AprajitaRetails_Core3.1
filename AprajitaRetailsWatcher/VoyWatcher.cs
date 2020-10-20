@@ -64,11 +64,11 @@ namespace AprajitaRetailsWatcher
                     BasicOps.LogInfo ($"serverreturn\t success:{data.Result.SuccessMessage} \n error:{data.Result.ErrorMessage}");
                     if (data.Result.Error)
                     {
-                        if (BasicOps.VerifyOrCreate(Path.Combine(FileInfos.BaseFolder + FileInfos.PendingInv)))
+                        if (BasicOps.VerifyOrCreate(Path.Combine(FileInfos.BaseFolder , FileInfos.PendingInv)))
                         {
                             try
                             {
-                                BasicOps.CopyFile(fileName, Path.Combine(FileInfos.BaseFolder + FileInfos.PendingInv));
+                                BasicOps.CopyFile(fileName, Path.Combine(FileInfos.BaseFolder , FileInfos.PendingInv));
                                 File.Delete(fileName);
                             }
                             catch (Exception ex)
@@ -79,11 +79,11 @@ namespace AprajitaRetailsWatcher
                     }
                     else if (data.Result.Success)
                     {
-                        if (BasicOps.VerifyOrCreate(Path.Combine(FileInfos.BaseFolder + FileInfos.UploadedInv)))
+                        if (BasicOps.VerifyOrCreate(Path.Combine(FileInfos.BaseFolder , FileInfos.UploadedInv)))
                         {
                             try
                             {
-                                BasicOps.CopyFile(fileName, Path.Combine(FileInfos.BaseFolder + FileInfos.UploadedInv));
+                                BasicOps.CopyFile(fileName, Path.Combine(FileInfos.BaseFolder , FileInfos.UploadedInv));
                                 File.Delete(fileName);
                             }
                             catch(Exception ex)
