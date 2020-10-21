@@ -144,7 +144,7 @@ namespace AprajitaRetailsWatcher.Ops
             data = data.Insert(loc + 11, "[");
             int dloc = data.IndexOf("},", loc);
 
-            data = data.Insert(dloc - 1, "]");
+            data = data.Insert(dloc, "]");
             return data;
         }
 
