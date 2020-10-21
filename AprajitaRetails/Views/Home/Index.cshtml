@@ -9,16 +9,20 @@
     <p><a href="https://www.thearvindstore.com/" class="btn btn-outline-dark-green btn-lg">Learn more &raquo;</a></p>
 </div>
 <section>
-    <div class=" row mx-1">
-        <div class="col-md-4">
-            <vc:chartjs></vc:chartjs>
-
+    <div class="row card-deck  mb-4  mx-1">
+        <div class="card card-cascade wider col-md-4">
+            <vc:weeklysale></vc:weeklysale>
         </div>
-        <div class=" card-deck col-md-8">
-            <vc:chartjs></vc:chartjs>
-
+        <div class="card card-cascade wider col-md-4">
+            <vc:monthlysale></vc:monthlysale>
         </div>
+        <div class="card card-cascade wider col-md-4">
+            <vc:yearlysale></vc:yearlysale>
+        </div>
+
     </div>
+
+
     <!-- Grid row -->
     <div class="row mx-1">
 
@@ -26,82 +30,82 @@
         <div class="col-md-12">
 
             <!-- Card deck -->
-            <div class="card-deck">
+            <div class="card-deck  mb-4">
 
                 <!-- Card -->
-                @if(Model.BookingOverDues!=null && Model.BookingOverDues.Count > 0)
+                @if (Model.BookingOverDues != null && Model.BookingOverDues.Count > 0)
                 {
 
-                <div class="card mb-4">
+                    <div class="card card-cascade narrower mb-4">
 
-                    <!--Card image-->
-                    <div class="view overlay">
-                        @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
-                <a href="#!">
-                    <div class="mask rgba-white-slight"></div>
-                </a>*@
-                    </div>
+                        <!--Card image-->
+                        <div class="view overlay">
+                            @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
+                                <a href="#!">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>*@
+                        </div>
 
-                    <!--Card content-->
-                    <div class="card-body  text-center pb-0 px-0">
+                        <!--Card content-->
+                        <div class="card-body  text-center pb-0 px-0">
 
-                        <!--Title-->
-                        <h4 class="card-title text-warning">Warning Board </h4>
-                        <!--Text-->
-                        <p class="card-text">
-                            @if (Model.BookingOverDues != null && Context.User.Identity.IsAuthenticated)
-                            {
-                            <table class="table table-striped text-info table-sm">
-                                @{
-                                    var ctr = 0;
-                                }
-                                @foreach (var item in Model.BookingOverDues )
+                            <!--Title-->
+                            <h4 class="card-title text-warning">Warning Board </h4>
+                            <!--Text-->
+                            <p class="card-text">
+                                @if (Model.BookingOverDues != null && Context.User.Identity.IsAuthenticated)
                                 {
-                                    ctr++; 
-                                    <tr>
-                                        @*<td>@Html.DisplayNameFor(model => item.CustomerName)</td>
-                                        <td>@Html.DisplayFor(model => item.CustomerName)</td>*@
-                                    
-                                        <td>@Html.DisplayNameFor(model => item.SlipNo)</td>
-                                        <td>@Html.DisplayFor(model => item.SlipNo)</td>
-                                    @*</tr>
-                                    <tr>*@
-                                        <td>@Html.DisplayNameFor(model => item.NoDays)</td>
-                                        <td>@Html.DisplayFor(model => item.NoDays)</td>
-                                    </tr>
-                                    @*<tr>
-                                        <td>@Html.DisplayNameFor(model => item.DelveryDate)</td>
-                                        <td>@Html.DisplayFor(model => item.DelveryDate)</td>
-                                    </tr>*@
-                                    if (ctr > 3) break;
+                                    <table class="table table-striped text-info table-sm">
+                                        @{
+                                            var ctr = 0;
+                                        }
+                                        @foreach (var item in Model.BookingOverDues)
+                                        {
+                                            ctr++;
+                                            <tr>
+                                                @*<td>@Html.DisplayNameFor(model => item.CustomerName)</td>
+                                                    <td>@Html.DisplayFor(model => item.CustomerName)</td>*@
+
+                                                <td>@Html.DisplayNameFor(model => item.SlipNo)</td>
+                                                <td>@Html.DisplayFor(model => item.SlipNo)</td>
+                                                @*</tr>
+                                                    <tr>*@
+                                                <td>@Html.DisplayNameFor(model => item.NoDays)</td>
+                                                <td>@Html.DisplayFor(model => item.NoDays)</td>
+                                            </tr>
+                                            @*<tr>
+                                                    <td>@Html.DisplayNameFor(model => item.DelveryDate)</td>
+                                                    <td>@Html.DisplayFor(model => item.DelveryDate)</td>
+                                                </tr>*@
+                                            if (ctr > 3) break;
+                                        }
+
+                                    </table>
+                                }
+                                else
+                                {
+                                    <h5>  Sale Data (Registered Users Only).</h5>
                                 }
 
-                            </table>
-                            }
-                            else
-                            {
-                                <h5>  Sale Data (Registered Users Only).</h5>
-                            }
+                                <br />
+                            </p>
+                            <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                            @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
+                            @if (Context.User.Identity.IsAuthenticated)
+                            {<a class="btn btn-outline-default btn-md" href="Reports/BookingOverDue/Index">Details &raquo;</a>}
 
-                            <br />
-                        </p>
-                        <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                        @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
-                        @if (Context.User.Identity.IsAuthenticated)
-                        {<a class="btn btn-outline-default btn-md" href="Reports/BookingOverDue/Index">Details &raquo;</a>}
+                        </div>
 
                     </div>
-
-                </div>
                 }
-                <div class="card mb-4">
+                <div class="card card-cascade narrower mb-4">
 
                     <!--Card image-->
                     <div class="view overlay">
                         @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
-                <a href="#!">
-                    <div class="mask rgba-white-slight"></div>
-                </a>*@
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>*@
                     </div>
 
                     <!--Card content-->
@@ -152,9 +156,9 @@
                     <!--Card image-->
                     <div class="view overlay">
                         @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/14.jpg" alt="Card image cap">
-                <a href="#!">
-                    <div class="mask rgba-white-slight"></div>
-                </a>*@
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>*@
                     </div>
 
                     <!--Card content-->
@@ -174,7 +178,7 @@
                                         <td>@Html.DisplayNameFor(model => model.TailoringReport.TodayBooking) / @Html.DisplayNameFor(model => model.TailoringReport.TodayUnit)</td>
                                         <td>@Html.DisplayFor(model => model.TailoringReport.TodayBooking) / @Html.DisplayFor(model => model.TailoringReport.TodayUnit)</td>
 
-                                        
+
                                     </tr>
                                     <tr>
                                         <td>@Html.DisplayNameFor(model => model.TailoringReport.MonthlySale)</td>
@@ -183,7 +187,7 @@
                                         <td>@Html.DisplayNameFor(model => model.TailoringReport.MonthlyBooking)/@Html.DisplayNameFor(model => model.TailoringReport.MonthlyUnit)</td>
                                         <td>@Html.DisplayFor(model => model.TailoringReport.MonthlyBooking)/@Html.DisplayFor(model => model.TailoringReport.MonthlyUnit)</td>
 
-                                      
+
                                     </tr>
                                     <tr>
                                         <td>@Html.DisplayNameFor(model => model.TailoringReport.YearlySale)</td>
@@ -192,7 +196,7 @@
                                         <td>@Html.DisplayNameFor(model => model.TailoringReport.YearlyBooking)/@Html.DisplayNameFor(model => model.TailoringReport.YearlyUnit)</td>
                                         <td>@Html.DisplayFor(model => model.TailoringReport.YearlyBooking)/@Html.DisplayFor(model => model.TailoringReport.YearlyUnit)</td>
 
-                                       
+
                                     </tr>
                                 </table>
                             }
@@ -218,9 +222,9 @@
                     <!--Card image-->
                     <div class="view overlay">
                         @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg" alt="Card image cap">
-                <a href="#!">
-                    <div class="mask rgba-white-slight"></div>
-                </a>*@
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>*@
                     </div>
 
                     <!--Card content-->
@@ -237,7 +241,7 @@
                                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.OpenningBal)</td>
                                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.OpenningBal)</td>
                                         @*</tr>
-                                <tr>*@
+                                            <tr>*@
                                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInHand)</td>
                                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInHand)</td>
                                     </tr>
@@ -246,7 +250,7 @@
                                         <td>@Html.DisplayNameFor(model => model.AccountsInfo.CashIn)</td>
                                         <td>@Html.DisplayFor(model => model.AccountsInfo.CashIn)</td>
                                         @*</tr>
-                                <tr>*@
+                                            <tr>*@
                                         <td class="text-danger">@Html.DisplayNameFor(model => model.AccountsInfo.CashOut)</td>
                                         <td class="text-danger">@Html.DisplayFor(model => model.AccountsInfo.CashOut)</td>
                                     </tr>
@@ -262,7 +266,7 @@
                                         <td class="text-success">@Html.DisplayNameFor(model => model.AccountsInfo.CashInBank)</td>
                                         <td class="text-success">@Html.DisplayFor(model => model.AccountsInfo.CashInBank)</td>
                                         @*/tr>
-                                <tr>*@
+                                            <tr>*@
                                         <td class="text-primary">@Html.DisplayNameFor(model => model.AccountsInfo.CashToBank)</td>
                                         <td class="text-primary">@Html.DisplayFor(model => model.AccountsInfo.CashToBank)</td>
                                     </tr>

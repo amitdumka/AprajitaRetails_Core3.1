@@ -1,5 +1,8 @@
 ﻿namespace AprajitaRetails.Models
 {
+    /// <summary>
+    /// ChartJs: Data Structer
+    /// </summary>
     public class ChartJs
     {
         public string type { get; set; }
