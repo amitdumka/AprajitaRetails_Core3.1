@@ -28,8 +28,21 @@
     public class Options
     {
         public Scales scales { get; set; }
+        public Legend? legend { get; set; }
+        public Title? title { get; set; }
     }
 
+
+    public class Legend
+    {
+        public string Position { get; set; }
+    }
+
+    public class Title
+    {
+        public bool Display { get; set; }
+        public string Text { get; set; }
+    }
     public class Scales
     {
         public Yax [] yAxes { get; set; }
@@ -45,3 +58,5 @@
         public bool beginAtZero { get; set; }
     }
 }
+
+

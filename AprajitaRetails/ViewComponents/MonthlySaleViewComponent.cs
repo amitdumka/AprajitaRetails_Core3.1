@@ -114,4 +114,5 @@ namespace AprajitaRetails.ViewComponents
             return View(chartModel);
         }
     }
+
 }
