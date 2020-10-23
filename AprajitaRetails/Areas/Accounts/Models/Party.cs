@@ -184,6 +184,41 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public decimal AmountOut { get; set; }
     }
 
+    public enum RentType {WorkShop, Shop, Goods, Office, House, Others }
+
+    public class RentedLocation
+    {
+        public int RentedLocationId { get; set; }
+        public string PlaceName { get; set; }
+        public string Address { get; set; }
+        public DateTime OnDate { get; set; }
+        public DateTime? VacatedDate { get; set; }
+        public string City { get; set; }
+        public string OwnerName { get; set; }
+        public string MobileNo { get; set; }
+        public decimal RentAmount { get; set; }
+        public decimal AdvanceAmount { get; set; }
+        public bool IsRented { get; set; }
+        public RentType RentType { get; set; }
+
+    }
+
+
+    public class Rent
+    {
+        public int RentId { get; set; }
+        public int RentLocationId { get; set; }
+        public virtual RentedLocation Location { get; set; }
+        public RentType RentType { get; set; }
+        public DateTime OnDate { get; set; }
+        public string Period { get; set; }
+        public string Amount { get; set; }
+        public PaymentMode Mode { get; set; }
+        public string PaymentDetails { get; set; }
+        public string Remarks { get; set; }
+    }
+
+
 
    
 
