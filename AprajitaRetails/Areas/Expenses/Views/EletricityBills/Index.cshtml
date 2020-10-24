@@ -1,0 +1,83 @@
+﻿@model IEnumerable<AprajitaRetails.Areas.Accounts.Models.EletricityBill>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BillNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MeterReadingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentMeterReading)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrearAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NetDemand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Connection)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BillNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BillDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MeterReadingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentMeterReading)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrearAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NetDemand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Connection.ElectricityConnectionId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EletricityBillId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EletricityBillId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EletricityBillId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

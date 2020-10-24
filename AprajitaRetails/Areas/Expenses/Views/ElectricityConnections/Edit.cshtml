@@ -1,0 +1,101 @@
+﻿@model AprajitaRetails.Areas.Accounts.Models.ElectricityConnection
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ElectricityConnection</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ElectricityConnectionId" />
+            <div class="form-group">
+                <label asp-for="LocationName" class="control-label"></label>
+                <input asp-for="LocationName" class="form-control" />
+                <span asp-validation-for="LocationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConnectioName" class="control-label"></label>
+                <input asp-for="ConnectioName" class="form-control" />
+                <span asp-validation-for="ConnectioName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PinCode" class="control-label"></label>
+                <input asp-for="PinCode" class="form-control" />
+                <span asp-validation-for="PinCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConsumerNumber" class="control-label"></label>
+                <input asp-for="ConsumerNumber" class="form-control" />
+                <span asp-validation-for="ConsumerNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConusumerId" class="control-label"></label>
+                <input asp-for="ConusumerId" class="form-control" />
+                <span asp-validation-for="ConusumerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Connection" class="control-label"></label>
+                <select asp-for="Connection" class="form-control"></select>
+                <span asp-validation-for="Connection" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConnectinDate" class="control-label"></label>
+                <input asp-for="ConnectinDate" class="form-control" />
+                <span asp-validation-for="ConnectinDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisconnectionDate" class="control-label"></label>
+                <input asp-for="DisconnectionDate" class="form-control" />
+                <span asp-validation-for="DisconnectionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KVLoad" class="control-label"></label>
+                <input asp-for="KVLoad" class="form-control" />
+                <span asp-validation-for="KVLoad" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="OwnedMetter" /> @Html.DisplayNameFor(model => model.OwnedMetter)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalConnectionCharges" class="control-label"></label>
+                <input asp-for="TotalConnectionCharges" class="form-control" />
+                <span asp-validation-for="TotalConnectionCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecurityDeposit" class="control-label"></label>
+                <input asp-for="SecurityDeposit" class="form-control" />
+                <span asp-validation-for="SecurityDeposit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Remarks" class="control-label"></label>
+                <input asp-for="Remarks" class="form-control" />
+                <span asp-validation-for="Remarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
