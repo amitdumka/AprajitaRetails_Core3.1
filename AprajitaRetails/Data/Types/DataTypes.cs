@@ -11,6 +11,8 @@ public static class Constants
     public const string EMPID = "_EMPID";
     public const string USERNAME = "_UserName";
 }
+public enum ConnectionType { Commercial, Domestic, HighTension }
+public enum RentType { WorkShop, Shop, Goods, Office, House, Others }
 
 public enum Gender { Male, Female, TransGender }
 public enum Unit { Meters, Nos, Pcs, Packets, NoUnit }
