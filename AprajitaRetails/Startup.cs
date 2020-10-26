@@ -32,8 +32,8 @@ namespace AprajitaRetails
         {
             services.Configure<CookiePolicyOptions>(options =>
            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+               // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+               options.CheckConsentNeeded = context => true;
                options.MinimumSameSitePolicy = SameSiteMode.None;
            });
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -50,8 +50,8 @@ namespace AprajitaRetails
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest)
                 .AddRazorPagesOptions(options =>
                {
-                    //options.AllowAreas = true;
-                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                   //options.AllowAreas = true;
+                   options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
                });
 
@@ -67,7 +67,7 @@ namespace AprajitaRetails
             services.AddSession(options =>
            {
                options.IdleTimeout = TimeSpan.FromHours(4);//You can set Time
-                options.Cookie.HttpOnly = true;
+               options.Cookie.HttpOnly = true;
                options.Cookie.IsEssential = true;
                options.Cookie.Name = ".AprajitaRetails.Session";
            });

@@ -4,6 +4,8 @@
 2) Party Option for Payment, Expenses, Receipt
 3) Tailoring and Normal Stuff Combilned in one
 
+https://api.callmebot.com/whatsapp.php?phone=+917667178482&text=This+is+a+test+from+CallMeBot&apikey=1234567890
+
 
 /*
 https://getbootstrap.com/docs/4.0/components/input-group/
