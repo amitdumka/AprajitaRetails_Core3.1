@@ -2,13 +2,37 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav flex-grow-1">
+<ul class="navbar-nav  ml-auto nav-flex-icons" @*flex-grow-1*@>
 @if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hi, @User.Identity.Name!</a>
+{  <li class="nav-item"><a href="#"  class="nav-link text-danger"> Hi, @User.Identity.Name!</a></li>
+    <li class="nav-item avatar dropdown">
+        @*<a class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            Hi, @User.Identity.Name!
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded-circle z-depth-0"
+                 alt="avatar image" height="35">
+        </a>*@
+       
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-14.jpg" class="rounded-circle z-depth-0"
+                 alt="avatar image" height="35">
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-55">
+            <div class="dropdown-item">
+                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user red-text"></i> Profile </a>
+            </div>
+            <div class="dropdown-item">
+                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Manage/ChangePassword"><i class="fas fa-user-edit red-text"></i> Change Password</a>
+            </div>
+            <div class="dropdown-item">
+                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus red-text"></i> Add User</a>
+            </div>
+            @*<form class="dropdown-item form-inline form-sm m-0 " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="dropdown-item nav-link text-primary"><span class="red-text" data-feather="log-out"></span> LogOut </button>
+            </form>*@
+        </div>
     </li>
-    <li class="nav-item ">
+   <li class="nav-item ">
         <form  class="form-inline form-sm " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-dark btn-sm"><span  class="red-text" data-feather="log-out" ></span></button>
         </form>
@@ -16,9 +40,9 @@
 }
 else
 {
-    <li class="nav-item">
+    @*<li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
+    </li>*@
     <li class="nav-item">
         <a class="nav-link text-dark small" asp-area="Identity" asp-page="/Account/Login"><span class="text-white bg-primary " data-feather="log-in"></span> Login</a>
     </li>

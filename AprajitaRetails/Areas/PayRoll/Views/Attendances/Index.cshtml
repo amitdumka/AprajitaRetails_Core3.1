@@ -1,112 +1,152 @@
 ﻿@model PaginatedList<AprajitaRetails.Models.Attendance>
 
 @{
-    ViewData ["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 
 <h1 class="text-danger">Attendances</h1>
 
-<p class="btn-group btn-group-sm">
-    <a class="btn btn-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
-    <a class="btn btn-orange btn-sm" asp-action="Index" asp-route-id="">Today</a>
-    <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
-    <a class="btn btn-brown btn-sm" asp-action="Index" asp-route-id="102">Last Month</a>
-    <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
-</p>
 
-<div class="text-success">
-    <form method="get" asp-action="Index">
-        Date <input class="form-control-sm" type="date" name="OnDate" id="OnDate" /><button class="btn btn-amber btn-sm" type="submit" value="Get"><span data-feather="search"></span>Get</button>
-    </form> 
-</div>
-<div class="btn-group btn-group-sm">
-   
-    @foreach ( var item in ViewBag.YearList )
-    {
+<table class="table table-sm table-borderless table-responsive-sm">
+    <tr class="d-inline">
 
-        <a class="btn btn-outline-dark-green" asp-action="Index" asp-route-id=@item>@item</a>
+        <td class="btn-group btn-group-sm  " role="group">
+            <a class="btn btn-light-green btn-sm" asp-action="Create" id="create" data_modal="">Create</a>
+            <a class="btn btn-orange btn-sm" asp-action="Index" asp-route-id="">Today</a>
+            <a class="btn btn-cyan btn-sm" asp-action="Index" asp-route-id="100">Month</a>
+            <a class="btn btn-brown btn-sm" asp-action="Index" asp-route-id="102">Last Month</a>
+            <a class="btn btn-deep-orange btn-sm" asp-action="Index" asp-route-id="101">All</a>
+        </td>
+        <td class="btn-group btn-group-sm text-success m-0 p-0 " role="group">
+            
+                <form method="get" asp-action="Index">
+                    Date <input class="form-control-sm" type="date" name="OnDate" id="OnDate" /><button class="btn btn-amber btn-sm" type="submit" value="Get"><span data-feather="search"></span>Get</button>
+                </form>
+            
 
-    }
-</div>
-@if ( ViewBag.YearName != null )
-{
-   
-        <div class="btn-group btn-group-sm">
-            @*<select name="MonthName" id="mnt" asp-items="@new SelectList(ViewBag.MonthList,12)" class="select-dropdown" >
-                </select>*@
-            @foreach ( var item in ViewBag.MonthList )
+        </td>
+    </tr>
+    <tr>
+        <td class="btn-group btn-group-sm mb-2" role="group">
+
+            @foreach (var item in ViewBag.YearList)
             {
-                if ( item == "" )
-                {
-                    <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">All</a>
-                }
-                else
-                {
-                    <a class="btn btn-outline-deep-purple" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">@item</a>}
+
+                <a class="btn btn-outline-dark-green " asp-action="Index" asp-route-id=@item>@item</a>
+
             }
-        </div>
-   
-
-}
 
 
+            @if (ViewBag.YearName != null)
+            {
 
-<table class="table table-sm  table-hover table-striped table-bordered text-center">
-    <thead class="bg-success">
-        <tr>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Employee)*@Employee
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.AttDate)*@Date
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.EntryTime)*@ Entry Time
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Status)*@ Status
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Remarks)*@ Remarks
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody class="bg-white">
-        @foreach ( var item in Model )
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Employee.StaffName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AttDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EntryTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Remarks)
-                </td>
-                <td class="btn-group btn-group-sm">
-                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
-                    {
-                        <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
-                    }
+                <div class="btn-group btn-group-sm mr-5" role="group">
+                    <a class="btn btn-outline-default dropdown-toggle"href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Month<span class="caret"></span>
+                    </a>
+                    @*<div class="btn-group btn-group-sm">*@
+                    <div class="dropdown-menu">
+                        @foreach (var item in ViewBag.MonthList)
+                        {
+                            if (item == "")
+                            {
+                                <a class="dropdown-item" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">All</a>
+                                ////btn btn-sm btn - outline - deep - purple
+                            }
+                            else
+                            {
+                                <a class="dropdown-item" asp-action="Index" asp-route-id=@ViewBag.YearName asp-route-MonthName="@item">@item</a>
+                                //@*btn btn-sm btn-outline-deep-purple"*@
+                            }
+                        }
+                    </div>
+                </div>
 
-                    <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
-                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
-                    {
-                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal="">Delete</a>
-                    }
 
-                    <a class="btn btn-outline-default" asp-action="EmpDetails" asp-route-id="@item.AttendanceId" asp-route-ondate="@item.AttDate.Date.ToString("dd-MM-yyyy")" id="detail" data_modal="">List</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+
+            }
+
+        </td>
+        
+
+
+    </tr>
 </table>
-<partial name="_ModalPop" />
+
+
+
+<div class="row mt-1">
+    <div class="col-lg-8 col-md-12">
+
+
+        <div class="card  bg-light mb-15 h-auto">
+
+            <h4 class="card-header text-right deep-orange-text py-15">  Attendance(s)            </h4>
+
+            <div class="table-responsive">
+                <table class="table text-center table-bordered table-sm  table-hover table-striped  " @*  *@>
+                    <thead class="card-title cyan">
+                        <tr class="text-danger font-weight-bold">
+                            <th class="h5">
+                                @*@Html.DisplayNameFor(model => model.Employee)*@Employee
+                            </th>
+                            <th class="h5">
+                                @*@Html.DisplayNameFor(model => model.AttDate)*@Date
+                            </th>
+                            <th class="h5">
+                                @*@Html.DisplayNameFor(model => model.EntryTime)*@ Entry Time
+                            </th>
+                            <th class="h5">
+                                @*@Html.DisplayNameFor(model => model.Status)*@ Status
+                            </th>
+                            <th class="h5">
+                                @*@Html.DisplayNameFor(model => model.Remarks)*@ Remarks
+                            </th>
+                            <th class="h5"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="font-weight-bold teal-text">
+                                    @Html.DisplayFor(modelItem => item.Employee.StaffName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AttDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EntryTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Remarks)
+                                </td>
+                                <td class="btn-group btn-group-sm" role="group" aria-label="...">
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
+                                    {
+                                        <a class="btn btn-outline-amber" asp-action="Edit" asp-route-id="@item.AttendanceId" id="edit" data_modal="">Edit</a>
+                                    }
+
+                                    <a class="btn btn-outline-dark-green" asp-action="Details" asp-route-id="@item.AttendanceId" id="detail" data_modal="">Details</a>
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
+                                    {
+                                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.AttendanceId" id="delete" data_modal=""><i class="fa fa-trash text-black-50"></i> Delete </a>
+                                    }
+
+                                    <a class="btn btn-outline-default" asp-action="EmpDetails" asp-route-id="@item.AttendanceId" asp-route-ondate="@item.AttDate.Date.ToString("dd-MM-yyyy")" id="detail" data_modal="">List</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+        <partial name="_ModalPop" />
+    </div>
+</div>
+

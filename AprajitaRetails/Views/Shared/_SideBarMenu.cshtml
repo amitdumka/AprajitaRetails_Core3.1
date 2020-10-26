@@ -86,12 +86,12 @@
     }
 </style>
 
-<nav class="col-md-2 d-none d-md-block bg-light sidebar ">
+
+<nav class="col-md-2 d-none d-md-block bg-light sidebar " id="nav-side-bar">
     <div class="sidebar-sticky">
+        
         <ul class="nav flex-column">
-            @*<li class="nav-item">
-                    <a class="nav-link sidebar-font active " asp-area="" asp-controller="TestPrint" asp-action="Index">  <span data-feather="users"></span> Employee</a>
-                </li>*@
+
             <li class="nav-item">
                 <a class="nav-link sidebar-font active " asp-area="Payroll" asp-controller="Employees" asp-action="Index">  <span data-feather="users"></span> Employee</a>
             </li>
@@ -111,7 +111,7 @@
                     <li class="nav-item">
                         <a asp-area="Reports" asp-controller="EmpAttReport" asp-action="Index" class="nav-link  sidebar-font"> <span data-feather="book-open"></span>Employee</a>
                     </li>
-                   
+
                 </ul>
             </li>
 
@@ -169,7 +169,7 @@
                 <ul class="collapse list-unstyled" id="utilSubmenu">
                     <li class="nav-item">
                         <a asp-area="AddressBook" asp-action="Index" asp-controller="Contacts" class="nav-link sidebar-font"> <span data-feather="book-open"></span>Address Book</a>
-                    </li>                   
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">
@@ -266,7 +266,7 @@
             <li class="nav-item">
                 <a href="#NewAcc" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle"> <span data-feather="users"></span>Accountings</a>
                 <ul class="collapse list-unstyled" id="NewAcc">
-                   
+
                     <li class="nav-item">
                         <a asp-area="Accountings" asp-controller="Receipts" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Receipts</a>
                     </li>
@@ -276,7 +276,7 @@
                     <li class="nav-item">
                         <a asp-area="Accountings" asp-controller="Expenses" asp-action="Index" class="nav-link sidebar-font"> <span data-feather="check-square"></span>Expenses</a>
                     </li>
-                    
+
                 </ul>
             </li>
 
@@ -285,4 +285,21 @@
 </nav>
 
 
+<!--<form role="search" class="bd-search d-flex align-items-center">
+    <input type="search" class="form-control" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off" data-docs-version="4.4">
+    <button class="btn btn-link bd-search-docs-toggle d-md-none p-0 ml-3" type="button" data-toggle="collapse" data-target="#nav-side-bar" aria-controls="nav-side-bar"
+            aria-expanded="false" aria-label="Toggle docs navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+             role="img" focusable="false">
+            <title>Menu</title>
+            <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"
+                  d="M4 7h22M4 15h22M4 23h22" />
+        </svg>
+    </button>
+</form>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>-->
+    @*<script async src="https://cdn.carbonads.com/carbon.js?serve=CKYIKKJL&placement=getbootstrapcom" id="_carbonads_js"></script>*@
+<!--}-->
 

@@ -3,32 +3,36 @@
 @inject UserManager<IdentityUser> UserManager
 @inject ITodoItemService TodoService
 
-<br />
-<br />
-<h6 class="purple-text">To Do</h6>
-<a asp-action="Create" asp-area="ToDo" asp-controller="Todos" class="text-success small"><span data-feather="plus-circle"></span>Add</a>
-<h6 class="teal-text small">Recent:</h6>
-<ol>
-    @foreach ( var item in TodoService.GetRecentlyAddedItemsAsync(UserManager.GetUserAsync (User).Result).Result.ToList () )
+<div class="card">
+    <h5 class="card-header  purple-text">
+        To Do
+        <span class="float-right" aria-hidden="true"> <a asp-action="Create" asp-area="ToDo" asp-controller="Todos" class="mt-3 ml-3 text-success small"><span data-feather="plus-circle"></span></a></span>
+    </h5>
+    <div class="card-body">
+        <h6 class="card-title teal-text small">Recent:</h6>
+        <ol class="list-group list-group-flush">
+            @foreach (var item in TodoService.GetRecentlyAddedItemsAsync(UserManager.GetUserAsync(User).Result).Result.ToList())
 
-    {
-        <li class="font-small text-success"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id"> @item.Title</a></li>
-    }
-</ol>
-<h6 class="text-danger small">Due:</h6>
-<ol>
-    @foreach ( var item in TodoService.GetMonthlyItems(UserManager.GetUserAsync (User).Result, DateTime.Today.Month).Result.ToList () )
+            {
+                <li class="treeview-animated-list font-small text-success"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id"> @item.Title</a></li>
+            }
+        </ol>
+        <h6 class="card-title text-danger small mt-3">Due:</h6>
+        <ol class="list-group list-group-flush">
+            @foreach (var item in TodoService.GetMonthlyItems(UserManager.GetUserAsync(User).Result, DateTime.Today.Month).Result.ToList())
 
-    {
-        <li class="font-small blue-text"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id">@item.Title</a></li>
-    }
-</ol>
-<h6 class="text-danger small">Public:</h6>
-<ol>
-    @foreach ( var item in TodoService.GetIncompletePublicItemsAsync().Result.ToList () )
+            {
+                <li class="treeview-animated-list font-small blue-text"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id">@item.Title</a></li>
+            }
+        </ol>
+        <h6 class="card-title text-danger small mt-3">Public:</h6>
+        <ol class="list-group list-group-flush">
+            @foreach (var item in TodoService.GetIncompletePublicItemsAsync().Result.ToList())
 
-    {
-        <li class="font-small blue-text"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id">@item.Title</a></li>
-    }
-</ol>
+            {
+                <li class="treeview-animated-listfont-small blue-text"><a asp-action="Details" asp-area="ToDo" asp-controller="Todos" asp-route-id="@item.Id">@item.Title</a></li>
+            }
+        </ol>
+    </div>
+</div>
 

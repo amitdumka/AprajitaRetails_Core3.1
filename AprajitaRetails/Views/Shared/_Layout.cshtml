@@ -28,11 +28,12 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark fixed-top  default-color lighten-4 border-bottom box-shadow mb-1">
+        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark fixed-top  navbar-dark info-color lighten-1 border-bottom box-shadow mb-1">
+            <img src="~/AprajitaRetails.png" alt="AprajitaRetails" class="small" height="35" />
             <div class="container-fluid">
-                <a class="navbar-brand text-danger  text-monospace" asp-area="" asp-controller="Home" asp-action="Index">
-                    @*<img src="AprajitaRetails02.ico?text=Logo" alt="AprajitaRetails" class="small ">*@ AR
-                </a>
+                @*<a class="navbar-brand text-danger  text-monospace" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/AprajitaRetails02.png" alt="AprajitaRetails" class="small " height="35" />AR
+                </a>*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -43,14 +44,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @if ( Context.User.Identity.IsAuthenticated )
+                        @if (Context.User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item"><a class="nav-link text-dark" asp-area="Sales" asp-controller="DailySales" asp-action="Index">Daily Sale</a></li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</a>
                                 <div class="dropdown-menu " aria-labelledby="dropdown01">
-                                    @if ( Context.User.IsInRole ("Admin") )
+                                    @if (Context.User.IsInRole("Admin"))
                                     {
                                         <a class="dropdown-item text-dark" asp-area="Accountings" asp-controller="LedgerTypes" asp-action="Index">Ledger Type</a>
                                         <a class="dropdown-item text-dark" asp-area="Accountings" asp-controller="Parties" asp-action="Index">Parties</a>
@@ -66,7 +67,7 @@
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="TranscationModes" asp-action="Index">Trans Modes</a>
                                         <p role="separator" class="dropdown-divider"></p>
                                     }
-                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") )
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("StoreManager"))
                                     {
                                         <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
                                     }
@@ -102,7 +103,7 @@
                                     <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
                                     <p role="separator" class="dropdown-divider"></p>
 
-                                    @if ( Context.User.IsInRole ("Admin") )
+                                    @if (Context.User.IsInRole("Admin"))
                                     {
                                         <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
                                         <p role="separator" class="dropdown-divider"></p>
@@ -118,13 +119,13 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banking</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                                     <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankDeposits" asp-action="Index">Bank Deposits</a>
-                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("StoreManager") || Context.User.IsInRole("PowerUser"))
                                     {<p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="AccountNumbers" asp-action="Index">Accounts</a>
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="ChequesLogs" asp-action="Index">Cheques</a>
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankWithdrawals" asp-action="Index">Bank Withdrawals</a>
                                     }
-                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
                                     {<p role="separator" class="dropdown-divider"></p>
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankAccountInfoes" asp-action="Index">Bank Accounts</a>
                                         <a class="dropdown-item text-dark" asp-area="Banking" asp-controller="BankAccountSecurityInfoes" asp-action="Index">Account Security Info</a>
@@ -136,13 +137,13 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PayRoll</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("StoreManager") || Context.User.IsInRole("PowerUser"))
                                     {
                                         <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="Employees" asp-action="Index">Employee</a>
                                         <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="SalaryPayments" asp-action="Index">Salary</a>
                                         @*<a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvancePayments" asp-action="Index">Advance Payments</a>*@
                                         <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="StaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
-                                        @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("PowerUser") )
+                                        @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("PowerUser"))
                                         {<p role="separator" class="dropdown-divider"></p>
                                             <a class="dropdown-item text-dark" asp-area="PayRoll" asp-controller="CurrentSalaries" asp-action="Index">Current Salary</a>
                                         }
@@ -173,19 +174,19 @@
 
                                 </div>
                             </li>
-                            @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") || Context.User.IsInRole ("PowerUser") )
+                            @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("StoreManager") || Context.User.IsInRole("PowerUser"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                        @if ( Context.User.IsInRole ("Admin") )
+                                        @if (Context.User.IsInRole("Admin"))
                                         {
                                             <a class="dropdown-item text-dark" asp-area="Admin" asp-controller="Role" asp-action="Index">Role</a>
                                             <a class="dropdown-item text-dark" asp-area="Voyager" asp-controller="Stores" asp-action="Index">Stores</a>
                                             <a class="dropdown-item text-dark" asp-area="" asp-controller="EndOfDays" asp-action="Index">End Of Days List</a>
                                             <p role="separator" class="dropdown-divider"></p>
                                         }
-                                        @if ( Context.User.IsInRole ("PowerUser") || Context.User.IsInRole ("Admin") )
+                                        @if (Context.User.IsInRole("PowerUser") || Context.User.IsInRole("Admin"))
                                         {
                                             <a class="dropdown-item text-dark" asp-area="Accounts" asp-controller="SuspenseAccounts" asp-action="Index">Suspense Accounts</a>
                                             <a class="dropdown-item text-dark" asp-area="" asp-controller="IncomeExpensesReport" asp-action="Index">Income & Expense Report</a>
@@ -203,7 +204,7 @@
                                     </div>
                                 </li>
                             }
-                            @if ( Context.User.IsInRole ("Admin") )
+                            @if (Context.User.IsInRole("Admin"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Imports</a>
@@ -246,14 +247,14 @@
         </nav>
     </header>
     <div class="container-fluid">
-        @if ( Context.User.Identity.IsAuthenticated )
+        @if (Context.User.Identity.IsAuthenticated)
         {
             <div class="nav-scroller aqua-gradient-rgba shadow-sm " role="toolbar">
                 <nav class="nav nav-underline">
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                     <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">Daily Sale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
                     @*<a class="nav-link" href="#">Sale</a>
-                        <a class="nav-link" href="#">Purchase</a>*@
+        <a class="nav-link" href="#">Purchase</a>*@
                     <a class="nav-link" asp-area="Sales" asp-controller="ManualInvoice" asp-action="Index">Manual Bill</a>
                     <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendance</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
@@ -261,25 +262,28 @@
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringBookings" asp-action="Index">Booking</a>
                     <a class="nav-link" asp-area="Tailoring" asp-controller="TalioringDeliveries" asp-action="Index">Delivery</a>
                     @*<a class="nav-link" asp-area="AddressBook" asp-controller="Contacts" asp-action="Index">AddressBook</a>*@
-                    @if ( Context.User.IsInRole ("Admin") || Context.User.IsInRole ("StoreManager") )
+                    @if (Context.User.IsInRole("Admin") || Context.User.IsInRole("StoreManager"))
                     {
                         <a class="nav-link" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
                         <a class="nav-link " asp-area="Voyager" asp-controller="ArvindPayments" asp-action="Index">Arvind Payments</a>
                     }
+                   
                 </nav>
             </div>
         }
         <div class="row">
-            @if ( Context.User.Identity.IsAuthenticated )
-            {<partial name="_SideBarMenu" />}
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <partial name="_SideBarMenu" />
+            }
             <main role="main" class="col-md-9 ml-sm-auto col-lg-9 pt-3 px-4 pb-3">
                 @RenderBody()
             </main>
 
             <div class="col-md-1 d-none d-md-block bg-light border">
-                <div class="row flex-row row-cols-1 bg-white border">
-                    <p class="text-success small justify-content-center"> Message Board</p>
-                    <p>
+                <div class="row card flex-row row-cols-1 bg-white border">
+                    <p class="card-header text-success small justify-content-center"> Message Board</p>
+                    <p class="card-body">
                         <h7> Add Employee Email Id!</h7>
                         <ol class="small">
                             <li>Add Employee to get Payslip on Email</li>
@@ -291,21 +295,23 @@
                     </p>
                     @*<p class="text-danger"> Thought of Day:</p>*@
                 </div>
-                @*<div class="row row-cols-1 bg-white border">
-                        @if (Context.User.Identity.IsAuthenticated)
-                        {
-                            <partial name="TodoList" />
-                            <br />
-                        }
-                    </div>*@
-                <div class="row flex-row row-cols-1 bg-warning border">
+
+                <div class="row flex-row row-cols-1 bg-light border">
                     @*<div class="col-md-1 d-none d-md-block bg-light border">*@
-                    @if ( Context.User.Identity.IsAuthenticated )
+                    @if (Context.User.Identity.IsAuthenticated)
                     {
                         <partial name="TodoList" />
                         <br />
                     }
                 </div>
+                @*<div class="row flex-row row-cols-1 bg-light border">
+                        <div class="col-md-1 d-none d-md-block bg-light border">
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <partial name="_RightSideBar" />
+                            <br />
+                        }
+                    </div>*@
             </div>
 
         </div>
@@ -333,8 +339,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>*@
-    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    @*<script src="~/lib/signalr/dist/browser/signalr.js"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>*@
 
     @*<script src="~/js/chat.js"></script>*@
     <script>
