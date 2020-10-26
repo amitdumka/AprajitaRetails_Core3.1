@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 //using AprajitaRetails.Areas.ToDo.Contexts;
-using AprajitaRetails.Areas.ToDo.Interfaces;
 
 namespace AprajitaRetails.Areas.ToDo.Services
 {
@@ -23,7 +22,7 @@ namespace AprajitaRetails.Areas.ToDo.Services
             _message = sendGridMessage;
             _logger = logger;
 
-            _message.SetFrom (new EmailAddress ("noreply@amoraitis.todolist.com", "TodoList Team"));
+            _message.SetFrom(new EmailAddress("noreply@amoraitis.todolist.com", "TodoList Team"));
         }
 
         /// <summary>
@@ -32,23 +31,23 @@ namespace AprajitaRetails.Areas.ToDo.Services
         /// <exception cref="Exception"></exception>
         public async Task SendEmailAsync(string email, string subject, string message)
         {
-            _message.AddTo (new EmailAddress (email));
-            _message.AddContent (MimeType.Html, message);
-            _message.SetSubject (subject);
+            _message.AddTo(new EmailAddress(email));
+            _message.AddContent(MimeType.Html, message);
+            _message.SetSubject(subject);
 
             // An exception could be thrown in ISendGridClient.SendEmailAsync(), too
             // According to their documentation, they don't handle exceptions in the requests
             try
             {
-                var result = await _client.SendEmailAsync (_message);
-                if ( result.StatusCode != System.Net.HttpStatusCode.Accepted )
+                var result = await _client.SendEmailAsync(_message);
+                if (result.StatusCode != System.Net.HttpStatusCode.Accepted)
                 {
-                    _logger.LogError ("The email couldn't be sent.");
+                    _logger.LogError("The email couldn't be sent.");
                 }
             }
-            catch ( Exception exp )
+            catch (Exception exp)
             {
-                _logger.LogError (exp.Message);
+                _logger.LogError(exp.Message);
             }
 
         }

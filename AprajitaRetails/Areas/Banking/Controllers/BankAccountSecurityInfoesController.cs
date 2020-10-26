@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
     [Area("Banking")]
-    [Authorize (Roles = "Admin,PowerUser")]
+    [Authorize(Roles = "Admin,PowerUser")]
     public class BankAccountSecurityInfoesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -25,10 +24,10 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // GET: Banking/BankAccountSecurityInfoes
         public async Task<IActionResult> Index(int? id, string currentFilter, string searchString, string sortOrder, int? pageNumber)
         {
-            ViewData ["NameSortParm"] = String.IsNullOrEmpty (sortOrder) ? "name_desc" : "";
-            ViewData ["BankSortParm"] = sortOrder == "Bank" ? "Bank_desc" : "Bank";
-            
-            if ( searchString != null )
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["BankSortParm"] = sortOrder == "Bank" ? "Bank_desc" : "Bank";
+
+            if (searchString != null)
             {
                 pageNumber = 1;
             }
@@ -38,22 +37,22 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.AccountSecurityInfos.Include(b => b.BankAccountInfo).ThenInclude(b=>b.Bank).OrderBy(c=>c.BankAccountInfo.AccountHolder);
-            switch ( sortOrder )
+            var aprajitaRetailsContext = _context.AccountSecurityInfos.Include(b => b.BankAccountInfo).ThenInclude(b => b.Bank).OrderBy(c => c.BankAccountInfo.AccountHolder);
+            switch (sortOrder)
             {
-                case "name_desc":  aprajitaRetailsContext = aprajitaRetailsContext.OrderByDescending (c => c.BankAccountInfo.AccountHolder); break;
-                case "Bank":   aprajitaRetailsContext = aprajitaRetailsContext.OrderBy (c => c.BankAccountInfo.Bank.BankName); break;
+                case "name_desc": aprajitaRetailsContext = aprajitaRetailsContext.OrderByDescending(c => c.BankAccountInfo.AccountHolder); break;
+                case "Bank": aprajitaRetailsContext = aprajitaRetailsContext.OrderBy(c => c.BankAccountInfo.Bank.BankName); break;
                 case "Bank_desc":
-                    aprajitaRetailsContext = aprajitaRetailsContext.OrderByDescending (c => c.BankAccountInfo.Bank.BankName);
+                    aprajitaRetailsContext = aprajitaRetailsContext.OrderByDescending(c => c.BankAccountInfo.Bank.BankName);
                     break;
                 default:
-                    aprajitaRetailsContext = aprajitaRetailsContext.OrderBy (c => c.BankAccountInfo.AccountHolder);
+                    aprajitaRetailsContext = aprajitaRetailsContext.OrderBy(c => c.BankAccountInfo.AccountHolder);
                     break;
 
             }
-           // return View(await aprajitaRetailsContext.ToListAsync());
-           int pageSize = 10;
-            return View (await PaginatedList<BankAccountSecurityInfo>.CreateAsync (aprajitaRetailsContext.AsNoTracking (), pageNumber ?? 1, pageSize));
+            // return View(await aprajitaRetailsContext.ToListAsync());
+            int pageSize = 10;
+            return View(await PaginatedList<BankAccountSecurityInfo>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Banking/BankAccountSecurityInfoes/Details/5

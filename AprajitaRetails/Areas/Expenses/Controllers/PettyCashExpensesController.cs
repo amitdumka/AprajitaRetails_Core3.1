@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Expenses.Models;
+using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Areas.Expenses.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
-    [Area ("Expenses")]
+    [Area("Expenses")]
     [Authorize]
     public class PettyCashExpensesController : Controller
     {
@@ -37,10 +36,10 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
 
 
             ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.PettyCashExpenses.Include(p => p.PaidBy).OrderByDescending(c=>c.ExpDate);
+            var aprajitaRetailsContext = _context.PettyCashExpenses.Include(p => p.PaidBy).OrderByDescending(c => c.ExpDate);
 
             int pageSize = 10;
-           return View(await PaginatedList<PettyCashExpense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<PettyCashExpense>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
             //return View(await aprajitaRetailsContext.ToListAsync());
         }
@@ -88,11 +87,12 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", pettyCashExpense.EmployeeId);
-           return PartialView(pettyCashExpense);
+            return PartialView(pettyCashExpense);
         }
 
         // GET: PettyCashExpenses/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -105,7 +105,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", pettyCashExpense.EmployeeId);
-           return PartialView(pettyCashExpense);
+            return PartialView(pettyCashExpense);
         }
 
         // POST: PettyCashExpenses/Edit/5
@@ -113,7 +113,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("PettyCashExpenseId,ExpDate,Particulars,Amount,EmployeeId,PaidTo,Remarks")] PettyCashExpense pettyCashExpense)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("PettyCashExpenseId,ExpDate,Particulars,Amount,EmployeeId,PaidTo,Remarks")] PettyCashExpense pettyCashExpense)
         {
             if (id != pettyCashExpense.PettyCashExpenseId)
             {
@@ -144,11 +145,12 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "EmployeeId", "StaffName", pettyCashExpense.EmployeeId);
-           return PartialView(pettyCashExpense);
+            return PartialView(pettyCashExpense);
         }
 
         // GET: PettyCashExpenses/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -163,13 +165,14 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 return NotFound();
             }
 
-           return PartialView(pettyCashExpense);
+            return PartialView(pettyCashExpense);
         }
 
         // POST: PettyCashExpenses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var pettyCashExpense = await _context.PettyCashExpenses.FindAsync(id);
             new ExpenseManager().OnDelete(_context, pettyCashExpense);

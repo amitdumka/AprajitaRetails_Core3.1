@@ -1,8 +1,4 @@
-﻿using NodaTime.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 //using System.Data.Entity;
 //using TAS_AprajiataRetails.Models.Data;
 
@@ -129,7 +125,7 @@ namespace AprajitaRetails.Models.Helpers
 
         public static DateTime ToTimeZone(this DateTime onDate, string timeZone)
         {
-            if (String.IsNullOrEmpty(timeZone)) 
+            if (String.IsNullOrEmpty(timeZone))
                 return onDate;
             TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
             DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(onDate, TimeZoneInfo.Local, userTimeZone);
@@ -144,7 +140,7 @@ namespace AprajitaRetails.Models.Helpers
             DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(onDate, TimeZoneInfo.Local, INDIAN_ZONE);
             return userDateTimeOffset.DateTime;
         }
-       
+
         public static DateTime TodayInIST(this DateTime today)
         {
             //TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
@@ -153,7 +149,7 @@ namespace AprajitaRetails.Models.Helpers
         }
         public static DateTime NowInInIST(this DateTime now)
         {
-           // TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
+            // TimeZoneInfo userTimeZone = TimeZoneInfo.FindSystemTimeZoneById(ISTTimeZone);
             DateTimeOffset userDateTimeOffset = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, INDIAN_ZONE);
             return userDateTimeOffset.DateTime;
 

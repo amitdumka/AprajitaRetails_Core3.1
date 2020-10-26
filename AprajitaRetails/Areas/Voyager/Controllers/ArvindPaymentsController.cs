@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-
-using AprajitaRetails.Areas.Voyager.Models;
-using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
@@ -26,7 +22,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         // GET: Voyager/ArvindPayments
         public async Task<IActionResult> Index()
         {
-            return  View(await _context.ArvindPayments.ToListAsync());
+            return View(await _context.ArvindPayments.ToListAsync());
         }
 
         // GET: Voyager/ArvindPayments/Details/5
@@ -44,13 +40,13 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
                 return NotFound();
             }
 
-            return   PartialView(arvindPayment);
+            return PartialView(arvindPayment);
         }
 
         // GET: Voyager/ArvindPayments/Create
         public IActionResult Create()
         {
-            return  PartialView();
+            return PartialView();
         }
 
         // POST: Voyager/ArvindPayments/Create
@@ -66,7 +62,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return  PartialView(arvindPayment);
+            return PartialView(arvindPayment);
         }
 
         // GET: Voyager/ArvindPayments/Edit/5
@@ -82,7 +78,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
             {
                 return NotFound();
             }
-            return  PartialView(arvindPayment);
+            return PartialView(arvindPayment);
         }
 
         // POST: Voyager/ArvindPayments/Edit/5
@@ -117,7 +113,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return  PartialView(arvindPayment);
+            return PartialView(arvindPayment);
         }
 
         // GET: Voyager/ArvindPayments/Delete/5
@@ -135,7 +131,7 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
                 return NotFound();
             }
 
-            return  PartialView(arvindPayment);
+            return PartialView(arvindPayment);
         }
 
         // POST: Voyager/ArvindPayments/Delete/5

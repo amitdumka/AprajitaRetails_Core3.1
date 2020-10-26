@@ -1,10 +1,10 @@
-﻿using System;
+﻿//using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using AprajitaRetails.Areas.Voyager.Models;
+using System;
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-//using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Models
 {
@@ -14,7 +14,7 @@ namespace AprajitaRetails.Models
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "EOD Date")]
-       // [Index(IsUnique = true)]
+        // [Index(IsUnique = true)]
         public DateTime EOD_Date { get; set; }
 
         public float Shirting { get; set; }
@@ -30,7 +30,7 @@ namespace AprajitaRetails.Models
         [Display(Name = "Accessories")]
         public int Access { get; set; }
         [Display(Name = "Cash at Store")]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CashInHand { get; set; }
         //Version 3.0
         [DefaultValue(1)]
@@ -38,6 +38,6 @@ namespace AprajitaRetails.Models
         public virtual Store Store { get; set; }
     }
 
-   
+
 
 }

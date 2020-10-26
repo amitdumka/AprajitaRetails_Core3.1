@@ -43,15 +43,15 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
             string eAddress = "amitnarayansah@gmail.com, amit.dumka@gmail.com, thearvnindstoredumka@gmail.com, aprajitaretails.backoffice@gmail.com ";
             try
             {
-                var todayPresent = await db.Attendances.Include(c => c.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == DateTime.Today.Date).OrderBy(c => c.IsTailoring).OrderBy(c=>c.Status).ToListAsync();
-                var EmpList = await db.Employees.Where(c => c.IsWorking && c.StoreId == StoreId && c.Category!=EmpType.Owner).ToListAsync();
+                var todayPresent = await db.Attendances.Include(c => c.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == DateTime.Today.Date).OrderBy(c => c.IsTailoring).OrderBy(c => c.Status).ToListAsync();
+                var EmpList = await db.Employees.Where(c => c.IsWorking && c.StoreId == StoreId && c.Category != EmpType.Owner).ToListAsync();
                 int count = 0;
                 string EmailMsg = "List of Employee whose Attendance are marked.\n ";
                 foreach (var item in todayPresent)
                 {
                     count++;
-                    if(item.Status==AttUnit.Present || item.Status==AttUnit.HalfDay)
-                    EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)} and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
+                    if (item.Status == AttUnit.Present || item.Status == AttUnit.HalfDay)
+                        EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)} and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
                     else
                         EmailMsg += $"{count}#  {item.Employee.StaffName}  is  {GetAttUnitName(item.Status)}.\n and came at {item.EntryTime} {IsLate(item.EntryTime)}.\n";
                     EmpList.Remove(item.Employee);
@@ -116,12 +116,12 @@ namespace AprajitaRetails.Ops.CornJobs.JobHelpers
                 return "";
             }
         }
-    
+
         public static void GeneratePaySlip(AprajitaRetailsContext db)
         {
             new PaySlipGenerator().ProcessPaySlip(db);
         }
-    
-    
+
+
     }
 }

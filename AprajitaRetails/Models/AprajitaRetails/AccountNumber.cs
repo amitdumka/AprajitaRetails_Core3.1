@@ -1,6 +1,6 @@
 ﻿//using System.Data.Entity;
-using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
@@ -15,12 +15,12 @@ namespace AprajitaRetails.Models
         public Bank Bank { get; set; }
         [Display(Name = "Account Number")]
         public string Account { get; set; }
-        [Display (Name ="Account Type")]
+        [Display(Name = "Account Type")]
         public AccountType? AccountType { get; set; }
 
         public ICollection<BankDeposit> Deposits { get; set; }
         public ICollection<BankWithdrawal> Withdrawals { get; set; }
         public ICollection<BankStatement> BankStatements { get; set; }
     }
-    
+
 }

@@ -1,10 +1,7 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
-using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Expenses.Models
 {
@@ -178,12 +175,12 @@ namespace AprajitaRetails.Areas.Expenses.Models
             if (payment.PayMode == PaymentMode.Cash)
             {
 
-                CashTrigger.UpDateCashOutHand(db, payment.ExpDate,  payment.Amount);
+                CashTrigger.UpDateCashOutHand(db, payment.ExpDate, payment.Amount);
             }
             //TODO: in future make it more robust
             if (payment.PayMode != PaymentMode.Cash && payment.PayMode != PaymentMode.Others)
             {
-                CashTrigger.UpDateCashOutBank(db, payment.ExpDate,  payment.Amount);
+                CashTrigger.UpDateCashOutBank(db, payment.ExpDate, payment.Amount);
             }
             if (payment.PayMode == PaymentMode.Others)
             {

@@ -10,10 +10,10 @@ namespace AprajitaRetails.Areas.Accountings.Models
     public class LedgerType
     {
         public int LedgerTypeId { get; set; }
-        [Display(Name ="Name")]
-        public string LedgerNameType { get;  set; }
+        [Display(Name = "Name")]
+        public string LedgerNameType { get; set; }
         public LedgerCategory Category { get; set; }
-        public  string Remark { get; set; }
+        public string Remark { get; set; }
 
     }
 

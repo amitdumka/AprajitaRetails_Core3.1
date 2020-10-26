@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accounts.Models
 {
@@ -47,7 +44,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public LedgerCategory LedgerType { get; set; }
 
         public LedgerMaster LedgerMaster { get; set; }
-      //  public virtual ICollection<LedgerEntry> Ledgers { get; set; }
+        //  public virtual ICollection<LedgerEntry> Ledgers { get; set; }
         public virtual ICollection<BasicLedgerEntry> BasicLedgers { get; set; }
     }
 
@@ -172,7 +169,7 @@ namespace AprajitaRetails.Areas.Accounts.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date")]
         public DateTime EntryDate { get; set; }
-        [Display(Name ="On Account Off")]
+        [Display(Name = "On Account Off")]
         public LedgerEntryType EntryType { get; set; }
         public int ReferanceId { get; set; }
         public string Particulars { get; set; }
@@ -184,10 +181,10 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public decimal AmountOut { get; set; }
     }
 
-    
 
 
 
-   
+
+
 
 }

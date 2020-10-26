@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Data;
+using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Purchase.Models;
-
-using AprajitaRetails.Ops.Utility;
-using AprajitaRetails.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -37,17 +35,17 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
 
 
             ViewData["CurrentFilter"] = searchString;
-            
-            HelperUtil.IsSessionSet (HttpContext);
-            int storeid = HelperUtil.GetStoreID (HttpContext);
 
-            ViewData ["StoreID"] = storeid;
+            HelperUtil.IsSessionSet(HttpContext);
+            int storeid = HelperUtil.GetStoreID(HttpContext);
+
+            ViewData["StoreID"] = storeid;
             int pageSize = 10;
-            var AprajitaRetailsContext = _context.Stocks.Include(s => s.ProductItem).Where(c=>c.StoreId==storeid);
+            var AprajitaRetailsContext = _context.Stocks.Include(s => s.ProductItem).Where(c => c.StoreId == storeid);
 
             return View(await PaginatedList<Stock>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
-            
-            
+
+
         }
 
         // GET: Purchase/Stocks/Details/5
@@ -65,7 +63,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             {
                 return NotFound();
             }
-            
+
             return PartialView(stock);
         }
 
@@ -85,10 +83,10 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         {
             if (ModelState.IsValid)
             {
-                HelperUtil.IsSessionSet (HttpContext);
-                int storeid = HelperUtil.GetStoreID (HttpContext);
+                HelperUtil.IsSessionSet(HttpContext);
+                int storeid = HelperUtil.GetStoreID(HttpContext);
                 stock.StoreId = storeid;
-                
+
                 _context.Add(stock);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,7 +96,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/Stocks/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -119,7 +118,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("StockID,ProductItemId,Quantity,SaleQty,PurchaseQty,Unit")] Stock stock)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("StockID,ProductItemId,Quantity,SaleQty,PurchaseQty,Unit")] Stock stock)
         {
             if (id != stock.StockID)
             {
@@ -151,7 +151,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/Stocks/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -172,7 +173,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // POST: Purchase/Stocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var stock = await _context.Stocks.FindAsync(id);
             _context.Stocks.Remove(stock);

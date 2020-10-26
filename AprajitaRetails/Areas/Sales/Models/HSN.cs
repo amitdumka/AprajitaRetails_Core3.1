@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AprajitaRetails.Areas.Sales.Models.Views
 {
-    
+
 
 
     public class HSN

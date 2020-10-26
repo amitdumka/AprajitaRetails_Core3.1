@@ -18,9 +18,9 @@ namespace AprajitaRetails.Models
         public string ReferanceDetails { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "In Amount(+)")]
-      
+
         public decimal InAmount { get; set; }
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         [Display(Name = "Out Amount(-)")]
         public decimal OutAmount { get; set; }
         [Display(Name = "Is Cleared")]
@@ -31,6 +31,6 @@ namespace AprajitaRetails.Models
         public string ReviewBy { get; set; }
     }
 
-   
+
 
 }

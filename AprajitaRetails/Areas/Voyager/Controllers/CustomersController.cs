@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-using AprajitaRetails.Areas.Voyager.Models;
-using AprajitaRetails.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Voyager.Controllers
 {
@@ -79,7 +78,8 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         }
 
         // GET: Voyager/Customers/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -99,7 +99,8 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,Age,DateOfBirth,City,MobileNo,Gender,NoOfBills,TotalAmount,CreatedDate")] Customer customer)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId,FirstName,LastName,Age,DateOfBirth,City,MobileNo,Gender,NoOfBills,TotalAmount,CreatedDate")] Customer customer)
         {
             if (id != customer.CustomerId)
             {
@@ -130,7 +131,8 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         }
 
         // GET: Voyager/Customers/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -150,7 +152,8 @@ namespace AprajitaRetails.Areas.Voyager.Controllers
         // POST: Voyager/Customers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
             _context.Customers.Remove(customer);

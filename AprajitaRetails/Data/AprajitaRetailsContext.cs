@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using AprajitaRetails.Areas.Accounts.Models;
+﻿using AprajitaRetails.Areas.Accounts.Models;
 using AprajitaRetails.Areas.Admin.Models;
 using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Sales.Models;
@@ -11,6 +9,8 @@ using AprajitaRetails.Areas.Voyager.Models;
 using AprajitaRetails.Models;
 using AprajitaRetails.Models.Voy;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace AprajitaRetails.Data
 {

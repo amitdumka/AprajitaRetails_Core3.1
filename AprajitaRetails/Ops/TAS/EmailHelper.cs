@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.TAS
 {
@@ -77,7 +74,7 @@ namespace AprajitaRetails.Ops.TAS
 
 
 
-                using var message = new MailMessage (fromAddress, toAddress)
+                using var message = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = eMail.Subject,
                     Body = eMail.Body
@@ -89,7 +86,7 @@ namespace AprajitaRetails.Ops.TAS
                                          MediaTypeNames.Application.Octet);
                                     // your path may look like Server.MapPath("~/file.ABC")
                                     message.Attachments.Add(data);*/
-                smtp.Send (message);
+                smtp.Send(message);
                 return true;
 
 

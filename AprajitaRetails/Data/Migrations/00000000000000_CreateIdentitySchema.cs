@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace AprajitaRetails.Data.Migrations
 {

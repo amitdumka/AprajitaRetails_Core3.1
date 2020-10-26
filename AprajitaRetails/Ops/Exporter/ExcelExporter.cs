@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using AprajitaRetails.Areas.Uploader.Models;
+﻿using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Models.ViewModels;
 using OfficeOpenXml;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace AprajitaRetails.Ops.Exporter
 {
@@ -14,11 +14,11 @@ namespace AprajitaRetails.Ops.Exporter
         public static void CashInHandExporter(string fileName, List<CashInHand> inHandList, string name, int StoreId)
         {
             FileInfo file = new FileInfo(fileName);
-            
-           // if (!file.Directory.Exists) Directory.CreateDirectory(fileName); 
+
+            // if (!file.Directory.Exists) Directory.CreateDirectory(fileName); 
             using ExcelPackage package = new ExcelPackage(file);
             ExcelWorksheet worksheet2 = package.Workbook.Worksheets.Add(name);
-            
+
             worksheet2.Cells[1, 1].Value = "Date";
             worksheet2.Cells[1, 2].Value = "Opening Cash";
             worksheet2.Cells[1, 3].Value = "Cash-In";
@@ -43,7 +43,7 @@ namespace AprajitaRetails.Ops.Exporter
         public static void CashBookExporter(string fileName, List<CashBook> cashBooks, string name, int StoreId)
         {
             FileInfo file = new FileInfo(fileName);
-           // if (!file.Directory.Exists) Directory.CreateDirectory(fileName);
+            // if (!file.Directory.Exists) Directory.CreateDirectory(fileName);
             using ExcelPackage package = new ExcelPackage(file);
 
             ExcelWorksheet worksheet1 = package.Workbook.Worksheets.Add(name);

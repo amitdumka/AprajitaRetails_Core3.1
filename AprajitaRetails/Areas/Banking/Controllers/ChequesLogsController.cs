@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
-    [Area ("Banking")]
-    [Authorize (Roles = "Admin,PowerUser,StoreManager")]
+    [Area("Banking")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class ChequesLogsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -37,7 +35,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             return View(await PaginatedList<ChequesLog>.CreateAsync(_context.ChequesLogs.AsNoTracking(), pageNumber ?? 1, pageSize));
-           // return View(await _context.ChequesLogs.ToListAsync());
+            // return View(await _context.ChequesLogs.ToListAsync());
         }
 
         // GET: ChequesLogs/Details/5
@@ -55,13 +53,13 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(chequesLog);
+            return PartialView(chequesLog);
         }
 
         // GET: ChequesLogs/Create
         public IActionResult Create()
         {
-           return PartialView();
+            return PartialView();
         }
 
         // POST: ChequesLogs/Create
@@ -77,11 +75,12 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(chequesLog);
+            return PartialView(chequesLog);
         }
 
         // GET: ChequesLogs/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -93,7 +92,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-           return PartialView(chequesLog);
+            return PartialView(chequesLog);
         }
 
         // POST: ChequesLogs/Edit/5
@@ -101,7 +100,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ChequesLogId,BankName,AccountNumber,ChequesDate,DepositDate,ClearedDate,IssuedBy,IssuedTo,Amount,IsPDC,IsIssuedByAprajitaRetails,IsDepositedOnAprajitaRetails,Remarks")] ChequesLog chequesLog)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("ChequesLogId,BankName,AccountNumber,ChequesDate,DepositDate,ClearedDate,IssuedBy,IssuedTo,Amount,IsPDC,IsIssuedByAprajitaRetails,IsDepositedOnAprajitaRetails,Remarks")] ChequesLog chequesLog)
         {
             if (id != chequesLog.ChequesLogId)
             {
@@ -128,11 +128,12 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(chequesLog);
+            return PartialView(chequesLog);
         }
 
         // GET: ChequesLogs/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -146,13 +147,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(chequesLog);
+            return PartialView(chequesLog);
         }
 
         // POST: ChequesLogs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var chequesLog = await _context.ChequesLogs.FindAsync(id);
             _context.ChequesLogs.Remove(chequesLog);

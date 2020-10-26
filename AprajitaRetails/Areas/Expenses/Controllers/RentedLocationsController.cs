@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Areas.Accounts.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Accounts.Models;
-using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {

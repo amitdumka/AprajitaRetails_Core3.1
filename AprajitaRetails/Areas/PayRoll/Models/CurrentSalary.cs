@@ -18,7 +18,7 @@ namespace AprajitaRetails.Models
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal BasicSalary { get; set; }
 
-       //[DataType(DataType.Currency), Column(TypeName = "money")]
+        //[DataType(DataType.Currency), Column(TypeName = "money")]
         //public decimal SundaySalary { get; set; }
 
         [DataType(DataType.Currency), Column(TypeName = "money")]

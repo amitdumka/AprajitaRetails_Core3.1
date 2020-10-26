@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Areas.Uploader.Models;
+﻿using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -17,12 +15,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public PurchaseInWardUploaderController(AprajitaRetailsContext _db)
         {
             db = _db;
-         
+
         }
 
         public IActionResult Index()
         {
-         
+
             return View();
         }
 

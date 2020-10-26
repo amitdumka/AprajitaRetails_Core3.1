@@ -1,5 +1,4 @@
 ﻿using AprajitaRetails.Areas.Sales.Models.Views;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +25,7 @@ namespace AprajitaRetails.Areas.Voyager.Models
         [Display(Name = "Bill Count")]
         public int NoOfBills { set; get; }
         [Display(Name = "Purchase Amount")]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TotalAmount { set; get; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]

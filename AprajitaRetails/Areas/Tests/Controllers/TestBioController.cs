@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Models.Helpers;
 //using AprajitaRetails.Ops.Helpers.BioMetric;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using AprajitaRetails.Models.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AprajitaRetails.Areas.Tests.Controllers
 {
@@ -18,8 +17,8 @@ namespace AprajitaRetails.Areas.Tests.Controllers
             List<SelectListItem> items = new List<SelectListItem>();
             foreach (var timeZone in timeZones)
             {
-                items.Add(new SelectListItem() { Text = timeZone.Id + " # "+timeZone.DisplayName, Value=timeZone.Id });
-                
+                items.Add(new SelectListItem() { Text = timeZone.Id + " # " + timeZone.DisplayName, Value = timeZone.Id });
+
             }
             ViewBag.TimeZones = items;
 
@@ -32,14 +31,14 @@ namespace AprajitaRetails.Areas.Tests.Controllers
 
                 ViewBag.TIMEID = TIMEZONE;
                 ViewBag.TIMEZONENAME = timeZones.Where(c => c.Id == TIMEZONE).Select(c => c.DisplayName).FirstOrDefault();
-                ViewBag.TIMEVALUE = "IPDate:" + dt.ToString()+"/ OPDate: "+dt2.ToString();
+                ViewBag.TIMEVALUE = "IPDate:" + dt.ToString() + "/ OPDate: " + dt2.ToString();
 
             }
             else
             {
                 ViewBag.TIMEID = "Not Selected";
                 ViewBag.TIMEZONENAME = "";
-                ViewBag.TIMEVALUE = "LocalTime: " +DateTime.Now.ToString();
+                ViewBag.TIMEVALUE = "LocalTime: " + DateTime.Now.ToString();
 
             }
 

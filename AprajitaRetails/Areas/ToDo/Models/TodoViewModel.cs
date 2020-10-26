@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using AprajitaRetails.Areas.ToDo.Models;
+﻿using AprajitaRetails.Areas.ToDo.Models;
+using System.Collections.Generic;
 
 namespace TodoList.Web.Models
 {

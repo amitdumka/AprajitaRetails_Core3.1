@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using AprajitaRetails.Models.Helpers;
+using AprajitaRetails.Ops.Triggers;
+using Castle.Core.Internal;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Ops.Triggers;
-using AprajitaRetails.Models.Helpers;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using Castle.Core.Internal;
-using System.Runtime.Serialization;
+using System;
 using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -21,7 +19,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
     public class AttendancesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
-        private readonly int StoreId=1;  // TODO: default storeId
+        private readonly int StoreId = 1;  // TODO: default storeId
 
         public AttendancesController(AprajitaRetailsContext context)
         {
@@ -43,7 +41,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
 
             ViewData["CurrentFilter"] = searchString;
-            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today && c.StoreId==StoreId);
+            var aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.AttDate == DateTime.Today && c.StoreId == StoreId);
 
             var YearList = _context.Attendances.GroupBy(c => c.AttDate.Year).Select(c => c.Key).ToList();
             YearList.Sort();
@@ -52,9 +50,9 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewBag.MonthList = MonthList;
 
-            if ( OnDate != null )
+            if (OnDate != null)
             {
-                aprajitaRetailsContext   = _context.Attendances.Include (a => a.Employee).Where (c => c.StoreId == StoreId && c.AttDate.Date==OnDate.Value.Date).OrderByDescending (c => c.AttDate).ThenBy (c => c.EmployeeId);
+                aprajitaRetailsContext = _context.Attendances.Include(a => a.Employee).Where(c => c.StoreId == StoreId && c.AttDate.Date == OnDate.Value.Date).OrderByDescending(c => c.AttDate).ThenBy(c => c.EmployeeId);
             }
             else if (id == 101)
             {
@@ -215,7 +213,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-             var attendance = await _context.Attendances.FindAsync(id);
+            var attendance = await _context.Attendances.FindAsync(id);
             if (attendance == null)
             {
                 return NotFound();
@@ -237,14 +235,14 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
                     attendance.UserName = User.Identity.Name;
                     attendance.StoreId = StoreId;
-                    var eType = _context.Employees.Find (attendance.EmployeeId).Category;
-                    if ( eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster )
+                    var eType = _context.Employees.Find(attendance.EmployeeId).Category;
+                    if (eType == EmpType.Tailors || eType == EmpType.TailoringAssistance || eType == EmpType.TailorMaster)
                     {
                         attendance.IsTailoring = true;
                     }
@@ -269,8 +267,8 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.StoreId==StoreId && c.IsWorking), "EmployeeId", "StaffName", attendance.EmployeeId);
-              return PartialView(attendance);
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.StoreId == StoreId && c.IsWorking), "EmployeeId", "StaffName", attendance.EmployeeId);
+            return PartialView(attendance);
         }
 
         // GET: Attendances/Delete/5
@@ -281,16 +279,16 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             {
                 return NotFound();
             }
-             var attendance = await _context.Attendances
-                .Include(a => a.Employee)
-                .FirstOrDefaultAsync(m => m.AttendanceId == id);
+            var attendance = await _context.Attendances
+               .Include(a => a.Employee)
+               .FirstOrDefaultAsync(m => m.AttendanceId == id);
             if (attendance == null)
             {
                 return NotFound();
             }
-             return PartialView(attendance);
+            return PartialView(attendance);
         }
-         // POST: Attendances/Delete/5
+        // POST: Attendances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,PowerUser")]

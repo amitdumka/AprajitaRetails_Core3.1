@@ -1,5 +1,4 @@
 ﻿using AprajitaRetails.Areas.Voyager.Models;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

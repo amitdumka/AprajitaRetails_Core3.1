@@ -1,12 +1,8 @@
-﻿using AprajitaRetails.Areas.Accountings.Models;
-using AprajitaRetails.Data.Json;
+﻿using AprajitaRetails.Data.Json;
 using AprajitaRetails.Models;
-using Castle.Components.DictionaryAdapter;
 using Newtonsoft.Json;
-using Remotion.Mixins.Definitions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Areas.Uploader.Models

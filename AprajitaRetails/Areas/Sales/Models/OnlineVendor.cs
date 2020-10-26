@@ -13,7 +13,7 @@ namespace AprajitaRetails.Models
         public DateTime? OffDate { get; set; }
         public string Reason { get; set; }
         public ICollection<OnlineSale> OnlineSales { get; set; }
-       // public ICollection<OnlineSaleReturn> OnlineSaleReturns { get; set; }
+        // public ICollection<OnlineSaleReturn> OnlineSaleReturns { get; set; }
     }
 
 

@@ -1,11 +1,7 @@
 ﻿using AprajitaRetails.Data;
-using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Reports.Models
 {

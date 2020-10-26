@@ -1,11 +1,10 @@
-﻿using Org.BouncyCastle.Asn1.Mozilla;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Areas.Accounts.Models
 {
-   
+
 
     public class RentedLocation
     {
@@ -53,6 +52,6 @@ namespace AprajitaRetails.Areas.Accounts.Models
     }
 
 
-   
+
 
 }

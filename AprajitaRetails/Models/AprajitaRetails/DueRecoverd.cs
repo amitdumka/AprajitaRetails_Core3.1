@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using System;
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AprajitaRetails.Areas.Voyager.Models;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
@@ -18,10 +18,10 @@ namespace AprajitaRetails.Models
         public DateTime PaidDate { get; set; }
 
         public int DuesListId { get; set; }
-        public virtual DuesList DuesList {get;set;}
+        public virtual DuesList DuesList { get; set; }
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal AmountPaid { get; set; }
-        [Display(Name ="Is Partial Payment")]
+        [Display(Name = "Is Partial Payment")]
         public bool IsPartialPayment { get; set; }
         public PaymentMode Modes { get; set; }
         public string Remarks { get; set; }
@@ -35,6 +35,6 @@ namespace AprajitaRetails.Models
 
     }
 
-   
+
 
 }

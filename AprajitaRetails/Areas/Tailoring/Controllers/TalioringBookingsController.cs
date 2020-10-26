@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.Tailoring.Controllers
 {
-    [Area ("Tailoring")]
+    [Area("Tailoring")]
     [Authorize]
     public class TalioringBookingsController : Controller
     {
@@ -27,7 +25,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             if (vd != null)
                 return PartialView(await vd.ToListAsync());
-            else 
+            else
                 return NotFound();
         }
         // GET: TalioringBookings
@@ -45,8 +43,8 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprcontext = _context.TalioringBookings.OrderByDescending (c => c.BookingDate).ThenBy(c=>c.DeliveryDate);
-           return View(await PaginatedList<TalioringBooking>.CreateAsync(aprcontext.AsNoTracking(), pageNumber ?? 1, pageSize));
+            var aprcontext = _context.TalioringBookings.OrderByDescending(c => c.BookingDate).ThenBy(c => c.DeliveryDate);
+            return View(await PaginatedList<TalioringBooking>.CreateAsync(aprcontext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.TalioringBookings.ToListAsync());
         }
 
@@ -65,13 +63,13 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-           return PartialView(talioringBooking);
+            return PartialView(talioringBooking);
         }
 
         // GET: TalioringBookings/Create
         public IActionResult Create()
         {
-           return PartialView();
+            return PartialView();
         }
 
         // POST: TalioringBookings/Create
@@ -88,11 +86,12 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(talioringBooking);
+            return PartialView(talioringBooking);
         }
 
         // GET: TalioringBookings/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -104,7 +103,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
             {
                 return NotFound();
             }
-           return PartialView(talioringBooking);
+            return PartialView(talioringBooking);
         }
 
         // POST: TalioringBookings/Edit/5
@@ -112,7 +111,7 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Edit(int id, [Bind("TalioringBookingId,BookingDate,CustName,DeliveryDate,TryDate,BookingSlipNo,TotalAmount,TotalQty,ShirtQty,ShirtPrice,PantQty,PantPrice,CoatQty,CoatPrice,KurtaQty,KurtaPrice,BundiQty,BundiPrice,Others,OthersPrice,IsDelivered")] TalioringBooking talioringBooking)
         {
             if (id != talioringBooking.TalioringBookingId)
@@ -141,11 +140,11 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(talioringBooking);
+            return PartialView(talioringBooking);
         }
 
         // GET: TalioringBookings/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -160,13 +159,14 @@ namespace AprajitaRetails.Areas.Tailoring.Controllers
                 return NotFound();
             }
 
-           return PartialView(talioringBooking);
+            return PartialView(talioringBooking);
         }
 
         // POST: TalioringBookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var talioringBooking = await _context.TalioringBookings.FindAsync(id);
             _context.TalioringBookings.Remove(talioringBooking);

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using System;
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AprajitaRetails.Areas.Voyager.Models;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
@@ -39,6 +39,6 @@ namespace AprajitaRetails.Models
 
     }
 
-  
+
 
 }

@@ -1,11 +1,11 @@
 ﻿//using System.Data.Entity;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-using System.ComponentModel;
+using AprajitaRetails.Areas.Sales.Models.Views;
 //using AprajitaRetails.Areas.Voyager.Models;
 //using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using AprajitaRetails.Areas.Voyager.Models;
-using AprajitaRetails.Areas.Sales.Models.Views;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace AprajitaRetails.Models
 {
@@ -22,12 +22,12 @@ namespace AprajitaRetails.Models
         [DefaultValue(1)]
         public int? StoreId { get; set; }
         public virtual Store Store { get; set; }
-       // public int StoreLocationId { get; internal set; }
+        // public int StoreLocationId { get; internal set; }
 
         public int? EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
     }
 
-    
+
 
 }

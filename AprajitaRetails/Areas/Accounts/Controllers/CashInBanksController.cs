@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area ("Accounts")]
-    [Authorize (Roles = "Admin,PowerUser")]
+    [Area("Accounts")]
+    [Authorize(Roles = "Admin,PowerUser")]
     public class CashInBanksController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: CashInBanks
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            if ( searchString != null )
+            if (searchString != null)
             {
                 pageNumber = 1;
             }
@@ -32,35 +32,35 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 searchString = currentFilter;
             }
 
-            ViewData ["CurrentFilter"] = searchString;
+            ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.CashInBanks.Where(c=>c.StoreId==this.StoreCode).OrderByDescending (c => c.CIBDate).OrderByDescending (c => c.CIBDate);
-            return View (await PaginatedList<CashInBank>.CreateAsync (aprajitaRetailsContext.AsNoTracking (), pageNumber ?? 1, pageSize));
+            var aprajitaRetailsContext = _context.CashInBanks.Where(c => c.StoreId == this.StoreCode).OrderByDescending(c => c.CIBDate).OrderByDescending(c => c.CIBDate);
+            return View(await PaginatedList<CashInBank>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.CashInBanks.ToListAsync());
         }
 
         // GET: CashInBanks/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
             var cashInBank = await _context.CashInBanks
-                .FirstOrDefaultAsync (m => m.CashInBankId == id);
-            if ( cashInBank == null )
+                .FirstOrDefaultAsync(m => m.CashInBankId == id);
+            if (cashInBank == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            return PartialView (cashInBank);
+            return PartialView(cashInBank);
         }
 
         // GET: CashInBanks/Create
         public IActionResult Create()
         {
-            return PartialView ();
+            return PartialView();
         }
 
         // POST: CashInBanks/Create
@@ -68,33 +68,33 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("CashInBankId,CIBDate,OpenningBalance,ClosingBalance,CashIn,CashOut")] CashInBank cashInBank)
+        public async Task<IActionResult> Create([Bind("CashInBankId,CIBDate,OpenningBalance,ClosingBalance,CashIn,CashOut")] CashInBank cashInBank)
         {
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
-                cashInBank.StoreId =  this.StoreCode;
-                _context.Add (cashInBank);
-                await _context.SaveChangesAsync ();
-                return RedirectToAction (nameof (Index));
+                cashInBank.StoreId = this.StoreCode;
+                _context.Add(cashInBank);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            return PartialView (cashInBank);
+            return PartialView(cashInBank);
         }
 
         // GET: CashInBanks/Edit/5
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            var cashInBank = await _context.CashInBanks.FindAsync (id);
-            if ( cashInBank == null )
+            var cashInBank = await _context.CashInBanks.FindAsync(id);
+            if (cashInBank == null)
             {
-                return NotFound ();
+                return NotFound();
             }
-            return PartialView (cashInBank);
+            return PartialView(cashInBank);
         }
 
         // POST: CashInBanks/Edit/5
@@ -102,71 +102,71 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Admin,PowerUser")]
-        public async Task<IActionResult> Edit(int id, [Bind ("CashInBankId,CIBDate,OpenningBalance,ClosingBalance,CashIn,CashOut")] CashInBank cashInBank)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("CashInBankId,CIBDate,OpenningBalance,ClosingBalance,CashIn,CashOut")] CashInBank cashInBank)
         {
-            if ( id != cashInBank.CashInBankId )
+            if (id != cashInBank.CashInBankId)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update (cashInBank);
-                    await _context.SaveChangesAsync ();
+                    _context.Update(cashInBank);
+                    await _context.SaveChangesAsync();
                 }
-                catch ( DbUpdateConcurrencyException )
+                catch (DbUpdateConcurrencyException)
                 {
-                    if ( !CashInBankExists (cashInBank.CashInBankId) )
+                    if (!CashInBankExists(cashInBank.CashInBankId))
                     {
-                        return NotFound ();
+                        return NotFound();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction (nameof (Index));
+                return RedirectToAction(nameof(Index));
             }
-            return PartialView (cashInBank);
+            return PartialView(cashInBank);
         }
 
         // GET: CashInBanks/Delete/5
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
             var cashInBank = await _context.CashInBanks
-                .FirstOrDefaultAsync (m => m.CashInBankId == id);
-            if ( cashInBank == null )
+                .FirstOrDefaultAsync(m => m.CashInBankId == id);
+            if (cashInBank == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            return PartialView (cashInBank);
+            return PartialView(cashInBank);
         }
 
         // POST: CashInBanks/Delete/5
-        [HttpPost, ActionName ("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cashInBank = await _context.CashInBanks.FindAsync (id);
-            _context.CashInBanks.Remove (cashInBank);
-            await _context.SaveChangesAsync ();
-            return RedirectToAction (nameof (Index));
+            var cashInBank = await _context.CashInBanks.FindAsync(id);
+            _context.CashInBanks.Remove(cashInBank);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool CashInBankExists(int id)
         {
-            return _context.CashInBanks.Any (e => e.CashInBankId == id);
+            return _context.CashInBanks.Any(e => e.CashInBankId == id);
         }
     }
 }

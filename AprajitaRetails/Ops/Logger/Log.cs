@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AprajitaRetails.Ops.Logger
+﻿namespace AprajitaRetails.Ops.Logger
 {
     public static class Log
     {
@@ -11,7 +6,7 @@ namespace AprajitaRetails.Ops.Logger
         //public static void Error(string message, bool isMail = false, bool isTel = false) { }
         //public static void Warning(string message, bool isMail = false, bool isTel = false) { }
         //public static void Verbose(string message, bool isMail = false, bool isTel = false) { }
-       
+
     }
 
     public class TelLog { }

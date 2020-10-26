@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Models.ViewModels;
 using AprajitaRetails.Ops.Exporter;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AprajitaRetails.Ops.Utility
 {
@@ -22,13 +22,13 @@ namespace AprajitaRetails.Ops.Utility
         //StoreBased Action Reviewed
         public List<CashInHand> CashInHandCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate, int Store)
         {
-            IEnumerable<CashInHand> cashs = db.CashInHands.Where(c => c.CIHDate.Month == forDate.Month && c.CIHDate.Year==forDate.Year && c.StoreId == Store).OrderBy(c => c.CIHDate);
+            IEnumerable<CashInHand> cashs = db.CashInHands.Where(c => c.CIHDate.Month == forDate.Month && c.CIHDate.Year == forDate.Year && c.StoreId == Store).OrderBy(c => c.CIHDate);
 
             decimal cBal = 0;
 
             if (cashs != null && cashs.Any())
             {
-                cBal = GetClosingBalance(db, cashs.First().CIHDate.AddDays(-1),Store);
+                cBal = GetClosingBalance(db, cashs.First().CIHDate.AddDays(-1), Store);
 
                 if (cBal == 0)
                     cBal = cashs.First().OpenningBalance;
@@ -60,19 +60,19 @@ namespace AprajitaRetails.Ops.Utility
         {
             List<CashBook> cashBookList;
             if (IsDay)
-                cashBookList = GetDailyCashBook(db, date,Store);
+                cashBookList = GetDailyCashBook(db, date, Store);
             else
-                cashBookList = GetMontlyCashBook(db, date,Store);
+                cashBookList = GetMontlyCashBook(db, date, Store);
 
             ExcelExporter.CashBookExporter(fileName, cashBookList, "CashBook", Store);
 
-            List<CashInHand> InHandList = CreateCashInHands(db, cashBookList,Store);
+            List<CashInHand> InHandList = CreateCashInHands(db, cashBookList, Store);
 
             ExcelExporter.CashInHandExporter(fileName, InHandList, "New CashInhand", Store);
 
             InHandList = CashInHandCorrectionForMonth(db, date, Store);
 
-            ExcelExporter.CashInHandExporter(fileName, InHandList, "Updated CashInhand",Store);
+            ExcelExporter.CashInHandExporter(fileName, InHandList, "Updated CashInhand", Store);
             return cashBookList;
         }
 
@@ -106,7 +106,7 @@ namespace AprajitaRetails.Ops.Utility
             }
         }
         //StoreBased Action Reviewed
-        public List<CashBook> GetDailyCashBook(AprajitaRetailsContext db, DateTime date,int Store)
+        public List<CashBook> GetDailyCashBook(AprajitaRetailsContext db, DateTime date, int Store)
         {
             List<CashBook> book = new List<CashBook>();
 
@@ -131,7 +131,7 @@ namespace AprajitaRetails.Ops.Utility
             var dCashRec = db.CashReceipts.Where(c => (c.InwardDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.InwardDate);//ok
             var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.StoreId == Store && (c.ReceiptDate.Date) == (date.Date)).OrderBy(c => c.ReceiptDate);//ok
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => (c.DepoDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.DepoDate);
-           
+
             foreach (var item in dSale)
             {
                 CashBook b = new CashBook() { EDate = item.SaleDate, CashIn = item.Amount, Particulars = item.InvNo, CashOut = 0, CashBalance = 0 };
@@ -165,7 +165,7 @@ namespace AprajitaRetails.Ops.Utility
 
             var eCPay = db.CashPayments.Where(c => (c.PaymentDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.PaymentDate);//ok
             var ePay = db.Payments.Where(c => c.PayMode == PaymentMode.Cash && c.StoreId == Store && (c.PayDate.Date) == (date.Date)).OrderBy(c => c.PayDate.Date);
-//            var eStPay = db.StaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.StoreId == Store && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
+            //            var eStPay = db.StaffAdvancePayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.StoreId == Store && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
             var eSal = db.SalaryPayments.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.StoreId == Store && (c.PaymentDate.Date) == (date.Date)).OrderBy(c => c.PaymentDate);
             var eexp = db.Expenses.Where(c => c.PayMode == PaymentMode.Cash && (c.ExpDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.ExpDate);
             var eDepo = db.BankDeposits.Include(C => C.Account).Where(c => (c.DepoDate.Date) == (date.Date) && c.StoreId == Store).OrderBy(c => c.DepoDate);
@@ -232,8 +232,8 @@ namespace AprajitaRetails.Ops.Utility
             CashWork worker = new CashWork();
             try
             {
-                ColBal = worker.GetClosingBalance(db, oDate.AddDays(-1),Store);
-                OpnBal = (decimal?)db.CashInHands.Where(c => (c.CIHDate) == (oDate) && c.StoreId==Store).FirstOrDefault().OpenningBalance ?? 0;
+                ColBal = worker.GetClosingBalance(db, oDate.AddDays(-1), Store);
+                OpnBal = (decimal?)db.CashInHands.Where(c => (c.CIHDate) == (oDate) && c.StoreId == Store).FirstOrDefault().OpenningBalance ?? 0;
                 if (OpnBal != ColBal)
                     OpnBal = ColBal;
             }
@@ -243,12 +243,12 @@ namespace AprajitaRetails.Ops.Utility
             }
 
             //income
-            var dSale = db.DailySales.Where(c => c.PayMode == PayMode.Cash && c.SaleDate.Month == date.Month && c.SaleDate.Year == date.Year && c.StoreId==Store).OrderBy(c => c.SaleDate);
+            var dSale = db.DailySales.Where(c => c.PayMode == PayMode.Cash && c.SaleDate.Month == date.Month && c.SaleDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.SaleDate);
             var dRec = db.Receipts.Where(c => c.PayMode == PaymentMode.Cash && c.RecieptDate.Month == date.Month && c.RecieptDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.RecieptDate);
             var dCashRec = db.CashReceipts.Where(c => c.InwardDate.Month == date.Month && c.InwardDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.InwardDate);
             var dSRec = db.StaffAdvanceReceipts.Include(e => e.Employee).Where(c => c.PayMode == PayMode.Cash && c.ReceiptDate.Year == date.Year && c.ReceiptDate.Month == date.Month && c.StoreId == Store).OrderBy(c => c.ReceiptDate);
             var dWit = db.BankWithdrawals.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.DepoDate);
-           
+
             foreach (var item in dSale)
             {
                 CashBook b = new CashBook() { EDate = item.SaleDate, CashIn = item.Amount, Particulars = item.InvNo, CashOut = 0, CashBalance = 0 };
@@ -287,7 +287,7 @@ namespace AprajitaRetails.Ops.Utility
             var eDepo = db.BankDeposits.Include(C => C.Account).Where(c => c.DepoDate.Month == date.Month && c.DepoDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.DepoDate);
             var eDue = db.DuesLists.Include(e => e.DailySale).Where(c => c.IsRecovered == false && c.DailySale.SaleDate.Month == date.Month && c.DailySale.SaleDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.DailySale.SaleDate);
             var eCashEx = db.PettyCashExpenses.Where(c => c.ExpDate.Month == date.Month && c.ExpDate.Year == date.Year && c.StoreId == Store).OrderBy(c => c.ExpDate);
-           
+
             foreach (var item in eexp)
             {
                 CashBook b = new CashBook() { EDate = item.ExpDate, CashIn = 0, Particulars = item.Particulars, CashOut = item.Amount, CashBalance = 0 };
@@ -368,7 +368,8 @@ namespace AprajitaRetails.Ops.Utility
                     OpenningBalance = 0,
                     CashIn = 0,
                     CashOut = 0,
-                    ClosingBalance = 0, StoreId=Store
+                    ClosingBalance = 0,
+                    StoreId = Store
                 };
                 db.CashInHands.Add(first);
                 inHandList.Add(first);
@@ -421,7 +422,8 @@ namespace AprajitaRetails.Ops.Utility
                         OpenningBalance = 0,
                         CashIn = item.CashIn,
                         CashOut = item.CashOut,
-                        ClosingBalance = 0, StoreId=Store
+                        ClosingBalance = 0,
+                        StoreId = Store
                     };
                     startDate = item.EDate;
                 }
@@ -483,7 +485,7 @@ namespace AprajitaRetails.Ops.Utility
         /// <param name="date"></param>
         private void DeleteCashInHandForMonth(AprajitaRetailsContext db, DateTime date, int Store)
         {
-            var cih = db.CashInHands.Where(c => c.CIHDate.Month == date.Month && c.CIHDate.Year==date.Year && c.StoreId== Store);
+            var cih = db.CashInHands.Where(c => c.CIHDate.Month == date.Month && c.CIHDate.Year == date.Year && c.StoreId == Store);
             db.CashInHands.RemoveRange(cih);
             db.SaveChanges();
         }

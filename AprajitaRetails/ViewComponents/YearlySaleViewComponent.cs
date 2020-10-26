@@ -3,7 +3,6 @@ using AprajitaRetails.Models;
 using AprajitaRetails.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,11 +32,11 @@ namespace AprajitaRetails.ViewComponents
             saleData.Amount = new List<int>();
             foreach (var year in saleData.Year)
             {
-                saleData.Amount.Add( (int)db.DailySales.Where(c => c.SaleDate.Year == year).Sum(c => c.Amount));
+                saleData.Amount.Add((int)db.DailySales.Where(c => c.SaleDate.Year == year).Sum(c => c.Amount));
 
             }
 
-            
+
             return saleData;
         }
 
@@ -70,7 +69,7 @@ namespace AprajitaRetails.ViewComponents
                     "rgba(54, 162, 235, 0.2)",
                     "rgba(255, 203, 83, 0.2)",
                     "rgba(255, 159, 64, 0.2)" },
-                borderColor = new string[] { 
+                borderColor = new string[] {
                     "rgba(255, 99, 132, 1)",
                     "rgba(54, 162, 235, 1)",
                     "rgba(255, 206, 86, 1)",

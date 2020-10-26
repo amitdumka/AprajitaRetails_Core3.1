@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Models
 {
@@ -13,7 +9,7 @@ namespace AprajitaRetails.Models
     //Account Holder Account No 
     //CUSTOMER ID USERID  Password Tax Password Extra Password ATM CARD ATM PIN Exp Date CCV TIP ACCOUNT TYPE Account Balance Date    IFSCE Code
 
-   
+
 
     public class BankAccountInfo
     {
@@ -24,8 +20,8 @@ namespace AprajitaRetails.Models
         public virtual Bank Bank { get; set; }
         public string BranchName { get; set; }
         public string IFSCCode { get; set; }
-        public AccountType  AccountType { get; set; }
-        [Display(Name="Client Account")]
+        public AccountType AccountType { get; set; }
+        [Display(Name = "Client Account")]
         public bool IsClientAccount { get; set; }
         public virtual BankAccountSecurityInfo AccountSecurityInfo { get; set; }
 

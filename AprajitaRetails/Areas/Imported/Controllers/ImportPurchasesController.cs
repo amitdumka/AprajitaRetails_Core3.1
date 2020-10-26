@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Uploader.Models;
+using AprajitaRetails.Data;
+using AprajitaRetails.Ops.TAS;
+using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Data;
-using AprajitaRetails.Ops.Utility;
-using AprajitaRetails.Ops.TAS;
-using AprajitaRetails.Areas.Purchase.Models;
 using System;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Imported.Controllers
 {
@@ -60,7 +58,8 @@ namespace AprajitaRetails.Areas.Imported.Controllers
             {
                 vM = (IOrderedQueryable<ImportPurchase>)vM.Where(c => c.IsDataConsumed);
             }
-            else if (id != null && id == 101) {
+            else if (id != null && id == 101)
+            {
                 vM = (IOrderedQueryable<ImportPurchase>)vM.Where(c => !c.IsDataConsumed);
             }
 
@@ -196,11 +195,11 @@ namespace AprajitaRetails.Areas.Imported.Controllers
         {
             return _context.ImportPurchases.Any(e => e.ImportPurchaseId == id);
         }
-       
-        public IActionResult ProcessBill( string? GrnNo)
+
+        public IActionResult ProcessBill(string? GrnNo)
         {
             HelperUtil.IsSessionSet(HttpContext);
-            
+
             int StoreId = HelperUtil.GetStoreID(HttpContext);
             InventoryManger iManage = new InventoryManger(StoreId);
             int a = -1;
@@ -210,7 +209,7 @@ namespace AprajitaRetails.Areas.Imported.Controllers
                 if (a > 0)
                     return RedirectToAction("ProcessedPurchase", new { id = a, GRNNo = GrnNo });
             }
- 
+
             ViewBag.MessageHead = "No Product items added. Some error might has been occurred. Item(s)=" + a;
             return View();
 
@@ -224,7 +223,7 @@ namespace AprajitaRetails.Areas.Imported.Controllers
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }
-           
+
             else
             {
                 var dm = _context.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);

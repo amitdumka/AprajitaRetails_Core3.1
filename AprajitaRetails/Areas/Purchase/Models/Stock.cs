@@ -10,18 +10,18 @@ namespace AprajitaRetails.Areas.Purchase.Models
         [Display(Name = "Store")]
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
-         [Display(Name = "Product")]
+        [Display(Name = "Product")]
         public int ProductItemId { set; get; }
         public virtual ProductItem ProductItem { get; set; }
-         public double Quantity { set; get; }
+        public double Quantity { set; get; }
         [Display(Name = "Sale Qty")]
         public double SaleQty { get; set; }
         [Display(Name = "Purchase Qty")]
         public double PurchaseQty { get; set; }
         public Unit Units { get; set; }
 
-        
 
-     }
- 
+
+    }
+
 }

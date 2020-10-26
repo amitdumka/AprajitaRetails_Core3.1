@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Controllers
 {

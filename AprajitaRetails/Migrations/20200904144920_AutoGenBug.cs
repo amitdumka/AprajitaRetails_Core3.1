@@ -9,7 +9,7 @@ namespace AprajitaRetails.Migrations
             migrationBuilder.DropColumn(
                 name: "RegularInvoiceId",
                 table: "RegularInvoices");
-            
+
             migrationBuilder.DropColumn(
                 name: "PaymentDetailId",
                 table: "PaymentDetails");
@@ -18,16 +18,16 @@ namespace AprajitaRetails.Migrations
                 name: "RegularInvoiceId",
                 table: "RegularInvoices",
                 nullable: false)//,
-                //oldClrType: typeof(int),
-                //oldType: "int")
+                                //oldClrType: typeof(int),
+                                //oldType: "int")
                 .Annotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AddColumn<int>(
                 name: "PaymentDetailId",
                 table: "PaymentDetails",
                 nullable: false)//,
-                //oldClrType: typeof(int),
-                //oldType: "int")
+                                //oldClrType: typeof(int),
+                                //oldType: "int")
                 .Annotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AddColumn<int>(

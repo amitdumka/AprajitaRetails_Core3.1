@@ -18,6 +18,6 @@ namespace AprajitaRetails.Models
         public virtual Employee Employee { get; set; }
     }
 
-   
+
 
 }

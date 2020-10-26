@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace AprajitaRetails.Migrations
 {
@@ -7,7 +7,7 @@ namespace AprajitaRetails.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable (
+            migrationBuilder.DropTable(
                 name: "Apps");
 
             //migrationBuilder.DropTable (

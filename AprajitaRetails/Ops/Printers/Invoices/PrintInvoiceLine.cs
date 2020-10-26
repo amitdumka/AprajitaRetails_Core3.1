@@ -1,7 +1,7 @@
 ﻿
 namespace AprajitaRetails.Ops.Printers
 {
-    public sealed  class PrintInvoiceLine
+    public sealed class PrintInvoiceLine
     {
         public const string InvoiceTitle = "                 RETAIL INVOICE";
 
@@ -14,7 +14,7 @@ namespace AprajitaRetails.Ops.Printers
         public const string FooterLastMessage = "Visit Again";
 
         public const string DotedLine = "--------------------------------------------------\n";
-        
+
 
     }
 

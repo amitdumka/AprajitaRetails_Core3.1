@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace AprajitaRetails.Areas.Admin.Controllers
 {
@@ -26,7 +23,7 @@ namespace AprajitaRetails.Areas.Admin.Controllers
 
         public ActionResult MoveData()
         {
-            List<SalaryPayment> salaries = DataMover.MoveAdvancePaymentToSalary(context,StoreId);
+            List<SalaryPayment> salaries = DataMover.MoveAdvancePaymentToSalary(context, StoreId);
             return View(salaries);
 
         }

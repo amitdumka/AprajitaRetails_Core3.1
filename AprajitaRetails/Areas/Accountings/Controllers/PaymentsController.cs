@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Accountings.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Accountings.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accountings.Controllers
 {
     [Area("Accountings")]
-    [Authorize (Roles = "Admin,PowerUser,StoreManager")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class PaymentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;

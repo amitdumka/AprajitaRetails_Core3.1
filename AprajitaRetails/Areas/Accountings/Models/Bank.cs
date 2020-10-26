@@ -1,7 +1,5 @@
 ﻿using AprajitaRetails.Areas.Accountings.Models;
-using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Areas.Voyager.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +13,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
 {
     //Banking 
 
-    
+
     //public class Bank
     //{
     //    public int BankId { get; set; }

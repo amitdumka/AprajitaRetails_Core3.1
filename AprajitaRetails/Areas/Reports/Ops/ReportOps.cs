@@ -1,14 +1,9 @@
 ﻿using AprajitaRetails.Areas.Reports.Models;
-using AprajitaRetails.Areas.Sales.Controllers;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
-using AprajitaRetails.Models.Helpers;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
-using OpenTl.Schema.Channels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Reports.Ops
 {
@@ -121,10 +116,10 @@ namespace AprajitaRetails.Areas.Reports.Ops
             {
                 empFin.TotalSaleIncentive = SalryPaidList.Where(c => c.SalaryComponet == SalaryComponet.Incentive).Sum(c => c.Amount);
 
-                empFin.NoOfBill = db.DailySales.Where(c =>c.StoreId==emp.StoreId && c.SaleDate > sDate.AddDays(-1) && c.SaleDate < endDate.AddDays(1) && !c.IsManualBill && !c.IsSaleReturn && !c.IsTailoringBill).Select(c => new { c.Amount }).Count();
+                empFin.NoOfBill = db.DailySales.Where(c => c.StoreId == emp.StoreId && c.SaleDate > sDate.AddDays(-1) && c.SaleDate < endDate.AddDays(1) && !c.IsManualBill && !c.IsSaleReturn && !c.IsTailoringBill).Select(c => new { c.Amount }).Count();
                 empFin.TotalSale = db.DailySales.Where(c => c.StoreId == emp.StoreId && c.SaleDate > sDate.AddDays(-1) && c.SaleDate < endDate.AddDays(1) && !c.IsManualBill && !c.IsSaleReturn && !c.IsTailoringBill).Select(c => new { c.Amount }).Sum(c => c.Amount);
-                if(empFin.TotalSale >0 && empFin.NoOfBill >0)
-                empFin.AverageSale = empFin.TotalSale / empFin.NoOfBill;
+                if (empFin.TotalSale > 0 && empFin.NoOfBill > 0)
+                    empFin.AverageSale = empFin.TotalSale / empFin.NoOfBill;
             }
 
 
@@ -145,16 +140,20 @@ namespace AprajitaRetails.Areas.Reports.Ops
         public static List<BookingOverDue> GetTailoringBookingOverDue(AprajitaRetailsContext db)
         {
             DateTime date = DateTime.Today.AddDays(-11);
-            var list = db.TalioringBookings.Where(c =>!c.IsDelivered && c.DeliveryDate<date ).ToList();
+            var list = db.TalioringBookings.Where(c => !c.IsDelivered && c.DeliveryDate < date).ToList();
 
             List<BookingOverDue> DueList = new List<BookingOverDue>();
             foreach (var item in list)
             {
                 BookingOverDue overDue = new BookingOverDue
-                { BookingDate=item.BookingDate, BookingId=item.TalioringBookingId, DelveryDate=item.DeliveryDate, 
-                   Quantity=item.TotalQty, SlipNo= item.BookingSlipNo,
-                   CustomerName= item.CustName, 
-                   NoDays=(DateTime.Today.Date- item.DeliveryDate.Date).Days
+                {
+                    BookingDate = item.BookingDate,
+                    BookingId = item.TalioringBookingId,
+                    DelveryDate = item.DeliveryDate,
+                    Quantity = item.TotalQty,
+                    SlipNo = item.BookingSlipNo,
+                    CustomerName = item.CustName,
+                    NoDays = (DateTime.Today.Date - item.DeliveryDate.Date).Days
                 };
                 DueList.Add(overDue);
             }

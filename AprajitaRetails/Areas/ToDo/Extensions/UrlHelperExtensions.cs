@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using TodoList.Web.Controllers;
-
-namespace AprajitaRetails.Areas.ToDo.Extensions
+﻿namespace AprajitaRetails.Areas.ToDo.Extensions
 {
     //public static class UrlHelperExtensions
     //{

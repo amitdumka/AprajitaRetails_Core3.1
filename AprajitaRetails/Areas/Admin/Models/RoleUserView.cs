@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AprajitaRetails.Areas.Admin.Models
+﻿namespace AprajitaRetails.Areas.Admin.Models
 {
     public class RoleUserView
     {

@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AprajitaRetails.Areas.Reports.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AprajitaRetails.Models;
-using AprajitaRetails.Areas.Reports.Models;
 
 namespace AprajitaRetails.Models.ViewModels
 {

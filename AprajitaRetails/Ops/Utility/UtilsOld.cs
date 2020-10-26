@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace AprajitaRetails.Ops.Utility
 {
     // Utils Section 
     public class UtilsOld
     {
-      
+
         public static void CreateNextDayOpenningBalance(AprajitaRetailsContext db, DateTime date, bool saveit = false)
         {
             date = date.AddDays(1);// Next Day
@@ -336,7 +335,7 @@ namespace AprajitaRetails.Ops.Utility
 
             }
         }
-        
+
 
 
         /// <summary>
@@ -345,7 +344,7 @@ namespace AprajitaRetails.Ops.Utility
         /// <param name="db"></param>
         public static void JobOpeningClosingBalance(AprajitaRetailsContext db)
         {
-            
+
             {
                 UtilsOld.ProcessOpenningClosingBalance(db, DateTime.Today, false, true);
                 UtilsOld.ProcessOpenningClosingBalance(db, DateTime.Today, true, true);

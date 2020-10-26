@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Areas.ToDo.Interfaces;
+﻿using AprajitaRetails.Areas.ToDo.Interfaces;
 using AprajitaRetails.Ops.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +20,7 @@ namespace AprajitaRetails.Controllers
         public IActionResult TodoList()
         {
 
-            return View(new TodoManager().ListTodoItemAsync(_todoItemService,_signInManager, _userManager));
+            return View(new TodoManager().ListTodoItemAsync(_todoItemService, _signInManager, _userManager));
         }
     }
 }

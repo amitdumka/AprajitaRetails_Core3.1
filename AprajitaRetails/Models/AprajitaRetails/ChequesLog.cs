@@ -10,7 +10,7 @@ namespace AprajitaRetails.Models
     public class ChequesLog
     {
         public int ChequesLogId { get; set; }
-        [Display(Name ="Bank Name")]
+        [Display(Name = "Bank Name")]
         public string BankName { get; set; }
         [Display(Name = "Account No")]
         public string AccountNumber { get; set; }
@@ -41,5 +41,5 @@ namespace AprajitaRetails.Models
         public string UserName { get; set; }
     }
 
-  
+
 }

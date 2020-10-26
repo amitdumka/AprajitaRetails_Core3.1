@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Areas.Uploader.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using AprajitaRetails.Data;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using AprajitaRetails.Data.Json;
-using AprajitaRetails.Areas.Uploader.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -66,6 +62,6 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             return new JsonResult(Info);
 
         }
-       
+
     }
 }

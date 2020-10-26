@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Triggers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Ops.Triggers;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -38,7 +36,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
 
-            var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee).Where(c=>c.StoreId==StoreId).OrderByDescending(c => c.PaymentDate);
+            var aprajitaRetailsContext = _context.SalaryPayments.Include(s => s.Employee).Where(c => c.StoreId == StoreId).OrderByDescending(c => c.PaymentDate);
 
             int pageSize = 10;
             return View(await PaginatedList<SalaryPayment>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
@@ -67,7 +65,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: SalaryPayments/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.IsWorking  &&  c.StoreId==StoreId), "EmployeeId", "StaffName");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.IsWorking && c.StoreId == StoreId), "EmployeeId", "StaffName");
             return PartialView();
         }
 

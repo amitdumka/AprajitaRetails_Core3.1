@@ -10,8 +10,6 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Path = System.IO.Path;
 
 namespace AprajitaRetails.Ops.Printers.Reports
@@ -102,7 +100,7 @@ namespace AprajitaRetails.Ops.Printers.Reports
             {
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph((++count) + "")));
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.EDate.ToShortDateString())));
-                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.Particulars+"")));
+                table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.Particulars + "")));
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashIn.ToString("0.##"))));
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashOut.ToString("0.##"))));
                 table.AddCell(new Cell().SetTextAlignment(TextAlignment.CENTER).Add(new Paragraph(item.CashBalance.ToString("0.##"))));

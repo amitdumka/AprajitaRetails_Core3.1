@@ -5,12 +5,10 @@ using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Bot;
 using AprajitaRetails.Ops.Printers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.Triggers
 {
@@ -487,13 +485,16 @@ namespace AprajitaRetails.Ops.Triggers
                 TotalQty = totalQty,
                 TotalTaxAmount = totaltaxamt,
                 RoundOffAmount = roundoffamt,
-                PaymentDetail = pd, UserName = userName
+                PaymentDetail = pd,
+                UserName = userName
 
             };
             db.RegularInvoices.Add(Invoice);
             db.Stocks.UpdateRange(stockList);
-            InvoiceSaveReturn returnData = new InvoiceSaveReturn{
-                NoOfRecord= db.SaveChanges(), FileName="NotSaved"
+            InvoiceSaveReturn returnData = new InvoiceSaveReturn
+            {
+                NoOfRecord = db.SaveChanges(),
+                FileName = "NotSaved"
             };
             if (returnData.NoOfRecord > 0)
             {
@@ -501,14 +502,14 @@ namespace AprajitaRetails.Ops.Triggers
                 ReceiptDetails details = PrinterHelper.GetReceiptDetails(Invoice.InvoiceNo, Invoice.OnDate, DateTime.Now.ToShortTimeString(), sales.Name);
                 ReceiptItemTotal itemtotal = PrinterHelper.GetReceiptItemTotal(Invoice);
                 List<ReceiptItemDetails> itemDetailList = PrinterHelper.GetInvoiceDetails(db, itemList);
-              returnData.FileName= "/" + InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, false);
+                returnData.FileName = "/" + InvoicePrinter.PrintManaulInvoice(header, itemtotal, details, itemDetailList, false);
             }
             return returnData;
         }
 
         public InvoiceSaveReturn OnEdit(AprajitaRetailsContext db, EditOrderDTO sales, int StoreId = 1)
         {
-            Customer cust = db.Customers.Where(c=>c.MobileNo==sales.MobileNo).FirstOrDefault();
+            Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)
             {
                 string[] names = sales.Name.Split(" ");
@@ -544,16 +545,17 @@ namespace AprajitaRetails.Ops.Triggers
 
         }
 
-        public RegularSaleItem AddSaleItem(AprajitaRetailsContext db,SaleItemList saleitem , int StoreId = 1)
+        public RegularSaleItem AddSaleItem(AprajitaRetailsContext db, SaleItemList saleitem, int StoreId = 1)
         {
             ProductItem pItem = db.ProductItems.Include(c => c.Units).Where(c => c.Barcode == saleitem.BarCode).FirstOrDefault();
-            if(pItem==null) { }
+            if (pItem == null) { }
 
-            RegularSaleItem rSale = new RegularSaleItem {
-                BarCode=saleitem.BarCode 
+            RegularSaleItem rSale = new RegularSaleItem
+            {
+                BarCode = saleitem.BarCode
             };
             Stock stock = db.Stocks.Where(c => c.StoreId == StoreId && c.ProductItemId == rSale.ProductItemId).FirstOrDefault();
-            
+
             stock.SaleQty += rSale.Qty;
             stock.Quantity -= rSale.Qty;
             db.Stocks.Update(stock);

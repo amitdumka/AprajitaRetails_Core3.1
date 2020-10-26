@@ -1,7 +1,7 @@
-﻿using System;
+﻿using LinqToExcel.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using LinqToExcel.Attributes;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
@@ -17,7 +17,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public LedgerBy LedgerBy { get; set; }
         [Display(Name = "Ledger To")]
         public LedgerTo LedgerTo { get; set; }
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
         [Display(Name = "Voucher Type")]
         public VoucherType VoucherType { get; set; }
@@ -30,7 +30,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public int Id { get; set; }
         public string Barcode { get; set; }
         public string InvoiceNo { get; set; }
-        [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? OnDate { get; set; }
     }
 

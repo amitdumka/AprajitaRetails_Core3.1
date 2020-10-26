@@ -1,8 +1,8 @@
-﻿using System;
+﻿using AprajitaRetails.Areas.ToDo.Models;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AprajitaRetails.Areas.ToDo.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace AprajitaRetails.Areas.ToDo.Interfaces
 {

@@ -1,7 +1,7 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;    using System;
+using System;
 using System.Linq;
 
 namespace AprajitaRetails.Ops.Triggers
@@ -140,11 +140,11 @@ namespace AprajitaRetails.Ops.Triggers
         }
 
         //Suspense
-        public static void UpdateSuspenseAccount(AprajitaRetailsContext db, DateTime dateTime, decimal Amount, bool isOut, string referanceDetails,bool isUpdate,  bool saveit = false)
+        public static void UpdateSuspenseAccount(AprajitaRetailsContext db, DateTime dateTime, decimal Amount, bool isOut, string referanceDetails, bool isUpdate, bool saveit = false)
         {
             //Implement on Edit/Update so some thing can be done for that
             //TODO: Implement this urgent basis
-            throw  new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

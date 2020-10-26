@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Accountings.Models;
+using AprajitaRetails.Areas.Accountings.Ops;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Accountings.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Authorization;
-using AprajitaRetails.Areas.Accountings.Ops;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accountings.Controllers
 {
     [Area("Accountings")]
-    [Authorize (Roles = "Admin,PowerUser,StoreManager")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class PartiesController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -31,8 +29,8 @@ namespace AprajitaRetails.Areas.Accountings.Controllers
         }
         public async Task<IActionResult> LedgerEntries()
         {
-            var aprajitaRetailsContext = _context.LedgerEntries.Include (p => p.Party).ThenInclude(c=>c.LedgerType);
-            return View (await aprajitaRetailsContext.ToListAsync ());
+            var aprajitaRetailsContext = _context.LedgerEntries.Include(p => p.Party).ThenInclude(c => c.LedgerType);
+            return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: Accountings/Parties/Details/5
@@ -72,7 +70,7 @@ namespace AprajitaRetails.Areas.Accountings.Controllers
             {
                 _context.Add(party);
                 await _context.SaveChangesAsync();
-                AccountOperation.CreateLedgerMaster (_context, party);
+                AccountOperation.CreateLedgerMaster(_context, party);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["LedgerTypeId"] = new SelectList(_context.LedgerTypes, "LedgerTypeId", "LedgerNameType", party.LedgerTypeId);
@@ -114,7 +112,7 @@ namespace AprajitaRetails.Areas.Accountings.Controllers
                 {
                     _context.Update(party);
                     await _context.SaveChangesAsync();
-                    AccountOperation.UpdateLedgerMaster (_context, party);
+                    AccountOperation.UpdateLedgerMaster(_context, party);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

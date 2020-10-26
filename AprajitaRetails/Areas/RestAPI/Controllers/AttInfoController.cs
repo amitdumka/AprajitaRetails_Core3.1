@@ -1,12 +1,9 @@
-﻿using System;
+﻿using AprajitaRetails.Areas.RestAPI.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Areas.RestAPI.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.RestAPI.Controllers
 {
@@ -32,12 +29,12 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
         public string GetAtt(long id)
         {
             var usr = DBHelper.GetChatUser(db, id);
-           
+
             if (usr == null) return "You are authorize to use this service!.";
 
             if (usr.EmpType == EmpType.Owner || usr.EmpType == EmpType.StoreManager)
             {
-                var empList = db.Employees.Where(c => c.IsWorking  && c.Category!=EmpType.Owner).Select(c => new { c.EmployeeId, c.IsWorking, c.StaffName }).ToList();
+                var empList = db.Employees.Where(c => c.IsWorking && c.Category != EmpType.Owner).Select(c => new { c.EmployeeId, c.IsWorking, c.StaffName }).ToList();
                 if (empList != null)
                 {
                     string msg = "Attendances Info:\n";
@@ -55,7 +52,7 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
                     return msg;
                 }
                 else return "Failed to get Employee details";
-                
+
             }
             else
             {

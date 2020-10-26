@@ -1,7 +1,6 @@
 ﻿//using System.Data.Entity;
 //using TAS_AprajiataRetails.Models.Data;
 
-using AprajitaRetails.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -71,7 +70,7 @@ namespace AprajitaRetails.Models.Helpers
 
     public class DayMonthHelper
     {
-       // private EndofDayDetails ProcessEndOfDay(AprajitaRetailsContext db, EndOfDay day)
+        // private EndofDayDetails ProcessEndOfDay(AprajitaRetailsContext db, EndOfDay day)
         //{
 
         //    // Process opening & closing balance of day.
@@ -128,13 +127,13 @@ namespace AprajitaRetails.Models.Helpers
 
 
 
-       //     return details;
+        //     return details;
 
 
 
-       // }
+        // }
 
     }
-   
+
 
 }

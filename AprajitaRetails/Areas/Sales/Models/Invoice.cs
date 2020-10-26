@@ -1,13 +1,11 @@
-﻿using System;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Areas.Voyager.Models;
+using AprajitaRetails.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Areas.Voyager.Models;
-using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.Sales.Models.Views
 {
@@ -198,7 +196,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
     {
         public string Name { get; set; }
         public string InvoiceNo { get; set; }
-    
+
         [MinLength(10), MaxLength(15)]
         public string MobileNo { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true), Display(Name = "Sale Date")]
@@ -225,7 +223,7 @@ namespace AprajitaRetails.Areas.Sales.Models.Views
         public string CardNo { get; set; }
     }
 
-#endregion
+    #endregion
 
     //TODO: Need to generalized
 

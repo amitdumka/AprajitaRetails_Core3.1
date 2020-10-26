@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area ("Accounts")]
-    [Authorize(Roles ="Admin, PowerUser")]
+    [Area("Accounts")]
+    [Authorize(Roles = "Admin, PowerUser")]
     public class SuspenseAccountsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -34,7 +34,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaretailscontext = _context.Suspenses.OrderByDescending (c => c.EntryDate);
+            var aprajitaretailscontext = _context.Suspenses.OrderByDescending(c => c.EntryDate);
             return View(await PaginatedList<SuspenseAccount>.CreateAsync(aprajitaretailscontext.AsNoTracking(), pageNumber ?? 1, pageSize));
             //return View(await _context.Suspenses.ToListAsync());
         }
@@ -54,13 +54,13 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-           return PartialView(suspenseAccount);
+            return PartialView(suspenseAccount);
         }
 
         // GET: SuspenseAccounts/Create
         public IActionResult Create()
         {
-           return PartialView();
+            return PartialView();
         }
 
         // POST: SuspenseAccounts/Create
@@ -76,11 +76,12 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(suspenseAccount);
+            return PartialView(suspenseAccount);
         }
 
         // GET: SuspenseAccounts/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -92,7 +93,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             {
                 return NotFound();
             }
-           return PartialView(suspenseAccount);
+            return PartialView(suspenseAccount);
         }
 
         // POST: SuspenseAccounts/Edit/5
@@ -100,7 +101,8 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("SuspenseAccountId,EntryDate,ReferanceDetails,InAmount,OutAmount,IsCleared,ClearedDetails,ReviewBy")] SuspenseAccount suspenseAccount)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("SuspenseAccountId,EntryDate,ReferanceDetails,InAmount,OutAmount,IsCleared,ClearedDetails,ReviewBy")] SuspenseAccount suspenseAccount)
         {
             if (id != suspenseAccount.SuspenseAccountId)
             {
@@ -127,11 +129,12 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(suspenseAccount);
+            return PartialView(suspenseAccount);
         }
 
         // GET: SuspenseAccounts/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -145,13 +148,14 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                 return NotFound();
             }
 
-           return PartialView(suspenseAccount);
+            return PartialView(suspenseAccount);
         }
 
         // POST: SuspenseAccounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var suspenseAccount = await _context.Suspenses.FindAsync(id);
             _context.Suspenses.Remove(suspenseAccount);

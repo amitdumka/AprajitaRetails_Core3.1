@@ -1,13 +1,13 @@
 ﻿using AprajitaRetails.Areas.ToDo.Interfaces;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoList.Web.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Ops.Helpers
 {
@@ -17,7 +17,7 @@ namespace AprajitaRetails.Ops.Helpers
         public async Task<HomeViewModel> ListTodoItemAsync(ITodoItemService todoItemService, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager/*, IFileStorageService fileStorageService*/)
         {
             var currentUser = await userManager.GetUserAsync(signInManager.Context.User);
-            if (currentUser == null) 
+            if (currentUser == null)
                 return null;
             var currentDateTime = DateTime.Now;
             var calendar = new CalendarViewModel(currentDateTime.Month, currentDateTime.Year);

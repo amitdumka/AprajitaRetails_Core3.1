@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -19,11 +15,11 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
     public class ImportAttendanceController : Controller
     {
         private readonly AprajitaRetailsContext db;
-      
+
         public ImportAttendanceController(AprajitaRetailsContext con)
         {
             db = con;
-            
+
         }
         public IActionResult Index()
         {
@@ -58,19 +54,19 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
         public IActionResult UploadDataForEmp(IFormFile FileUpload, int EmployeeId)
         {
             ExcelUploaders uploader = new ExcelUploaders();
-                     
-            UploadReturn response = uploader.UploadAttendanceForEmp(db,FileUpload, EmployeeId);
+
+            UploadReturn response = uploader.UploadAttendanceForEmp(db, FileUpload, EmployeeId);
             ViewBag.Status = response.ToString();
             if (response == UploadReturn.Success)
             {
-                return RedirectToAction("ListUploadEmpWise", new { empId = EmployeeId } );
+                return RedirectToAction("ListUploadEmpWise", new { empId = EmployeeId });
             }
             return View();
         }
         public IActionResult ListUploadEmpWise(int empId)
         {
             // Try to get for emp id based. 
-            return View(db.Attendances.Include(a=>a.Employee).Include(a=>a.Store).Where(c=>c.EmployeeId==empId).ToList());
+            return View(db.Attendances.Include(a => a.Employee).Include(a => a.Store).Where(c => c.EmployeeId == empId).ToList());
         }
 
     }

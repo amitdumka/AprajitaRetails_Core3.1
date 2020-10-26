@@ -56,7 +56,7 @@ namespace AprajitaRetails.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Return Date")]
         public DateTime ReturnDate { get; set; }
-        
+
         [Display(Name = "Invoice No")]
         public string InvNo { get; set; }
 
@@ -71,7 +71,7 @@ namespace AprajitaRetails.Models
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal VoyagerAmount { get; set; }
-        
+
         public string Remarks { get; set; }
         [Display(Name = "Recived")]
         public bool IsRecived { get; set; }

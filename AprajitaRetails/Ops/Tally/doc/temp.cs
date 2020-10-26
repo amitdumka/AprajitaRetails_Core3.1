@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 //http://tallydll.com/
 namespace AprajitaRetails.Ops.Tally.doc
 {

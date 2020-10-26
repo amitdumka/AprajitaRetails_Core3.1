@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using AprajitaRetails.Areas.Accounts.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
-using AprajitaRetails.Areas.Accounts.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
-    [Area ("Accounts")]
+    [Area("Accounts")]
     [Authorize]
     public class ReceiptsController : Controller
     {
@@ -23,7 +23,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // GET: Receipts
         public async Task<IActionResult> Index(string currentFilter, string searchString, int? pageNumber)
         {
-            if ( searchString != null )
+            if (searchString != null)
             {
                 pageNumber = 1;
             }
@@ -33,35 +33,35 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             }
 
 
-            ViewData ["CurrentFilter"] = searchString;
+            ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaretailscontext = _context.Receipts.OrderByDescending (c => c.RecieptDate);
-            return View (await PaginatedList<Receipt>.CreateAsync (aprajitaretailscontext.AsNoTracking (), pageNumber ?? 1, pageSize));
+            var aprajitaretailscontext = _context.Receipts.OrderByDescending(c => c.RecieptDate);
+            return View(await PaginatedList<Receipt>.CreateAsync(aprajitaretailscontext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
         }
 
         // GET: Receipts/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
             var receipt = await _context.Receipts
-                .FirstOrDefaultAsync (m => m.ReceiptId == id);
-            if ( receipt == null )
+                .FirstOrDefaultAsync(m => m.ReceiptId == id);
+            if (receipt == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            return PartialView (receipt);
+            return PartialView(receipt);
         }
 
         // GET: Receipts/Create
         public IActionResult Create()
         {
-            return PartialView ();
+            return PartialView();
         }
 
         // POST: Receipts/Create
@@ -69,34 +69,34 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind ("ReceiptId,RecieptDate,ReceiptFrom,PayMode,ReceiptDetails,Amount,RecieptSlipNo,Remarks")] Receipt receipt)
+        public async Task<IActionResult> Create([Bind("ReceiptId,RecieptDate,ReceiptFrom,PayMode,ReceiptDetails,Amount,RecieptSlipNo,Remarks")] Receipt receipt)
         {
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 receipt.UserName = User.Identity.Name;
-                _context.Add (receipt);
-                new AccountsManager ().OnInsert (_context, receipt);
-                await _context.SaveChangesAsync ();
-                return RedirectToAction (nameof (Index));
+                _context.Add(receipt);
+                new AccountsManager().OnInsert(_context, receipt);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            return PartialView (receipt);
+            return PartialView(receipt);
         }
 
         // GET: Receipts/Edit/5
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Edit(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            var receipt = await _context.Receipts.FindAsync (id);
-            if ( receipt == null )
+            var receipt = await _context.Receipts.FindAsync(id);
+            if (receipt == null)
             {
-                return NotFound ();
+                return NotFound();
             }
-            return PartialView (receipt);
+            return PartialView(receipt);
         }
 
         // POST: Receipts/Edit/5
@@ -104,74 +104,74 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Admin,PowerUser")]
-        public async Task<IActionResult> Edit(int id, [Bind ("ReceiptId,RecieptDate,ReceiptFrom,PayMode,ReceiptDetails,Amount,RecieptSlipNo,Remarks")] Receipt receipt)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("ReceiptId,RecieptDate,ReceiptFrom,PayMode,ReceiptDetails,Amount,RecieptSlipNo,Remarks")] Receipt receipt)
         {
-            if ( id != receipt.ReceiptId )
+            if (id != receipt.ReceiptId)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            if ( ModelState.IsValid )
+            if (ModelState.IsValid)
             {
                 try
                 {
                     receipt.UserName = User.Identity.Name;
-                    new AccountsManager ().OnUpdate (_context, receipt);
-                    _context.Update (receipt);
-                    await _context.SaveChangesAsync ();
+                    new AccountsManager().OnUpdate(_context, receipt);
+                    _context.Update(receipt);
+                    await _context.SaveChangesAsync();
                 }
-                catch ( DbUpdateConcurrencyException )
+                catch (DbUpdateConcurrencyException)
                 {
-                    if ( !ReceiptExists (receipt.ReceiptId) )
+                    if (!ReceiptExists(receipt.ReceiptId))
                     {
-                        return NotFound ();
+                        return NotFound();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return RedirectToAction (nameof (Index));
+                return RedirectToAction(nameof(Index));
             }
-            return PartialView (receipt);
+            return PartialView(receipt);
         }
 
         // GET: Receipts/Delete/5
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> Delete(int? id)
         {
-            if ( id == null )
+            if (id == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
             var receipt = await _context.Receipts
-                .FirstOrDefaultAsync (m => m.ReceiptId == id);
-            if ( receipt == null )
+                .FirstOrDefaultAsync(m => m.ReceiptId == id);
+            if (receipt == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
-            return PartialView (receipt);
+            return PartialView(receipt);
         }
 
         // POST: Receipts/Delete/5
-        [HttpPost, ActionName ("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Admin,PowerUser")]
+        [Authorize(Roles = "Admin,PowerUser")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var receipt = await _context.Receipts.FindAsync (id);
-            new AccountsManager ().OnDelete (_context, receipt);
-            _context.Receipts.Remove (receipt);
-            await _context.SaveChangesAsync ();
-            return RedirectToAction (nameof (Index));
+            var receipt = await _context.Receipts.FindAsync(id);
+            new AccountsManager().OnDelete(_context, receipt);
+            _context.Receipts.Remove(receipt);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool ReceiptExists(int id)
         {
-            return _context.Receipts.Any (e => e.ReceiptId == id);
+            return _context.Receipts.Any(e => e.ReceiptId == id);
         }
     }
 }

@@ -2,10 +2,8 @@
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Triggers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Tailoring.Data
 {
@@ -218,14 +216,14 @@ namespace AprajitaRetails.Areas.Tailoring.Data
             }
         }
 
-        public void OnUpdateData(AprajitaRetailsContext db, TalioringDelivery delivery,bool isEdit, bool isDelete = false)
+        public void OnUpdateData(AprajitaRetailsContext db, TalioringDelivery delivery, bool isEdit, bool isDelete = false)
         {
             TalioringBooking booking = db.TalioringBookings.Find(delivery.TalioringBookingId);
             if (isEdit)
             {
                 if (booking != null)
                 {
-                    var oldId = db.TailoringDeliveries.Where(c => c.TalioringDeliveryId == delivery.TalioringDeliveryId).Select(c=>new {c.TalioringBookingId }).FirstOrDefault();
+                    var oldId = db.TailoringDeliveries.Where(c => c.TalioringDeliveryId == delivery.TalioringDeliveryId).Select(c => new { c.TalioringBookingId }).FirstOrDefault();
                     if (oldId.TalioringBookingId != delivery.TalioringBookingId)
                     {
                         TalioringBooking old = db.TalioringBookings.Find(oldId.TalioringBookingId);
@@ -251,7 +249,7 @@ namespace AprajitaRetails.Areas.Tailoring.Data
                     db.Entry(booking).State = EntityState.Modified;
                 }
             }
-            
+
 
         }
 

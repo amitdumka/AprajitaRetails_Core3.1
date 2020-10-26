@@ -32,7 +32,7 @@ namespace AprajitaRetails.ViewComponents
             sData.Amount = new List<int>();
             sData.MonthName = new List<string>();
 
-    
+
             int LastMonth = DateTime.Today.Month;
             for (int i = 1; i <= LastMonth; i++)
             {
@@ -78,7 +78,7 @@ namespace AprajitaRetails.ViewComponents
                     "rgba(75, 192, 192, 0.2)",
 
                 },
-                borderColor = new string[] { 
+                borderColor = new string[] {
                     "rgba(255, 99, 132, 1)",
                     "rgba(54, 162, 235, 1)",
                     "rgba(255, 206, 86, 1)",

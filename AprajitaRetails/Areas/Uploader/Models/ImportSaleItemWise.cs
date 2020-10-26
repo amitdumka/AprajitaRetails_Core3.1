@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using LinqToExcel.Attributes;
+using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel;
-using LinqToExcel.Attributes;
-using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {
@@ -71,7 +71,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public decimal Tax { get; set; } // Can be use for IGST
 
         [ExcelColumn("SGST Amt")]
-         [DataType(DataType.Currency), Column(TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal SGST { get; set; }
 
         [ExcelColumn("CGST Amt")]
@@ -93,7 +93,7 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public decimal BillAmnt { get; set; }
 
         [ExcelColumn("Payment Mode")]
-         [Display(Name = "Payment Type")]
+        [Display(Name = "Payment Type")]
         public string PaymentType { get; set; }
 
         [ExcelColumn("SalesMan Name")]
@@ -108,10 +108,10 @@ namespace AprajitaRetails.Areas.Uploader.Models
         public bool IsLocal { get; set; }
 
         public bool LP { get; set; }
-        
+
         //Store Based Started
         public int StoreId { get; set; }
         public virtual Store Store { get; set; }
-   
+
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
-using AprajitaRetails.Ops.Bot;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.Telegram;
+using System;
+using System.Linq;
 
 namespace AprajitaRetails.Ops.Bot
 {
@@ -15,23 +12,23 @@ namespace AprajitaRetails.Ops.Bot
         public string StaffName { get; set; }
         public static BotUser GetEmp(AprajitaRetailsContext db, int empId)
         {
-            if (!BotGini.IsGiniRunning() )
+            if (!BotGini.IsGiniRunning())
             {
-                Gini.Start ();
+                Gini.Start();
             }
 
-            BotUser emp = db.TelegramAuthUsers.Where (c => c.EmployeeId == empId).Select (c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId }).FirstOrDefault ();
+            BotUser emp = db.TelegramAuthUsers.Where(c => c.EmployeeId == empId).Select(c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId }).FirstOrDefault();
             return emp;
         }
         public static BotUser GetEmp(AprajitaRetailsContext db, int staffId, bool IsStaffId)
         {
-            if (!BotGini.IsGiniRunning() )
+            if (!BotGini.IsGiniRunning())
             {
-                Gini.Start ();
+                Gini.Start();
             }
-            string StaffName = db.Salesmen.Find (staffId).SalesmanName;
-            BotUser emp = db.TelegramAuthUsers.Where (c => c.TelegramUserName == StaffName).Select (c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId , StaffName=c.TelegramUserName}).FirstOrDefault ();
-            if ( emp == null )
+            string StaffName = db.Salesmen.Find(staffId).SalesmanName;
+            BotUser emp = db.TelegramAuthUsers.Where(c => c.TelegramUserName == StaffName).Select(c => new BotUser { MobileNo = c.MobileNo, ChatId = c.TelegramChatId, StaffName = c.TelegramUserName }).FirstOrDefault();
+            if (emp == null)
             {
                 emp = new BotUser { StaffName = StaffName };
             }
@@ -47,18 +44,18 @@ namespace AprajitaRetails.Ops.Bot
         public static async void NotifySale(AprajitaRetailsContext db, int staffId, decimal amount)
         {
             return;
-            var emp = BotUser.GetEmp (db, staffId, true);
-            if ( emp != null )
+            var emp = BotUser.GetEmp(db, staffId, true);
+            if (emp != null)
             {
                 string msg = $"({emp.StaffName}): You have made a Sale of Amount Rs. " + amount + " on date " + DateTime.Now;
-                await BotGini.SendMessage (emp.ChatId, msg);
-                await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
+                await BotGini.SendMessage(emp.ChatId, msg);
+                await BotGini.SendMessage(BotConfig.AmitKumarChatId, msg);
             }
             else
             {
                 string msg = $"{emp.StaffName} had made a Sale of Amount Rs. " + amount + " on date " + DateTime.Now;
-                
-                await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
+
+                await BotGini.SendMessage(BotConfig.AmitKumarChatId, msg);
             }
         }
     }
@@ -69,66 +66,49 @@ namespace AprajitaRetails.Ops.Bot
         public static async void NotifyStaffAttandance(AprajitaRetailsContext db, string StaffName, int empId, AttUnit status, string time)
         {
             return;
-            var emp = BotUser.GetEmp (db, empId);
-            
-            if ( emp != null )
+            var emp = BotUser.GetEmp(db, empId);
+
+            if (emp != null)
             {
                 string msg = "StaffName: " + StaffName + " is ";
-                if ( status == AttUnit.Present )
+                if (status == AttUnit.Present)
                     msg += "present and entry time  is " + time + ".";
-                else if ( status == AttUnit.Absent )
+                else if (status == AttUnit.Absent)
                     msg += "absent.";
-                else if ( status == AttUnit.HalfDay )
+                else if (status == AttUnit.HalfDay)
                     msg += "present and entry time is " + time + " and marked as Half day ";
-                else if ( status == AttUnit.Sunday )
+                else if (status == AttUnit.Sunday)
                     msg += "present and entry time is " + time + ", and Sunday is marked.";
                 msg += "    (Date:" + DateTime.Now + ").";
-                await BotGini.SendMessage (emp.ChatId, msg);
-                await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
+                await BotGini.SendMessage(emp.ChatId, msg);
+                await BotGini.SendMessage(BotConfig.AmitKumarChatId, msg);
             }
             else
             {
                 string msg = "StaffName: " + StaffName + " is ";
-                if ( status == AttUnit.Present )
+                if (status == AttUnit.Present)
                     msg += "present and entry time is " + time + ".";
-                else if ( status == AttUnit.Absent )
+                else if (status == AttUnit.Absent)
                     msg += "absent.";
-                else if ( status == AttUnit.HalfDay )
+                else if (status == AttUnit.HalfDay)
                     msg += "present and entry time is " + time + " and marked as Half day ";
-                else if ( status == AttUnit.Sunday )
+                else if (status == AttUnit.Sunday)
                     msg += "present and entry time is " + time + ", and Sunday is marked.";
                 msg += "    (Date:" + DateTime.Now + ").";
-                await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
+                await BotGini.SendMessage(BotConfig.AmitKumarChatId, msg);
             }
 
         }
 
-        public static async void NotifyStaffPayment(AprajitaRetailsContext db, string StaffName, int empId, decimal amount, string remarks , bool IsRec=false)
+        public static async void NotifyStaffPayment(AprajitaRetailsContext db, string StaffName, int empId, decimal amount, string remarks, bool IsRec = false)
         {
             return;
-            var emp = BotUser.GetEmp (db, empId);
+            var emp = BotUser.GetEmp(db, empId);
 
-            if ( emp != null )
+            if (emp != null)
             {
                 string msg = "";
-                if(IsRec )
-                {
-                     msg = "We had received from StaffName: " + StaffName + "of Amount: Rs. " + amount + "in respect to " + remarks + ". If you  found amount is not correct kindly report.";
-                }
-                else
-                {
-                    msg = "Payment is made to StaffName: " + StaffName + "of Amount: Rs. " + amount + "in respect to " + remarks + ". If you  found amount is not correct kindly report.";
-                }
-
-                msg += "    (Date:" + DateTime.Today.Date + ").";
-                await BotGini.SendMessage (emp.ChatId, msg);
-                await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
-
-            }
-            else
-            {
-                string msg = "";
-                if ( IsRec )
+                if (IsRec)
                 {
                     msg = "We had received from StaffName: " + StaffName + "of Amount: Rs. " + amount + "in respect to " + remarks + ". If you  found amount is not correct kindly report.";
                 }
@@ -138,8 +118,25 @@ namespace AprajitaRetails.Ops.Bot
                 }
 
                 msg += "    (Date:" + DateTime.Today.Date + ").";
-               
-                await BotGini.SendMessage (BotConfig.AmitKumarChatId, msg);
+                await BotGini.SendMessage(emp.ChatId, msg);
+                await BotGini.SendMessage(BotConfig.AmitKumarChatId, msg);
+
+            }
+            else
+            {
+                string msg = "";
+                if (IsRec)
+                {
+                    msg = "We had received from StaffName: " + StaffName + "of Amount: Rs. " + amount + "in respect to " + remarks + ". If you  found amount is not correct kindly report.";
+                }
+                else
+                {
+                    msg = "Payment is made to StaffName: " + StaffName + "of Amount: Rs. " + amount + "in respect to " + remarks + ". If you  found amount is not correct kindly report.";
+                }
+
+                msg += "    (Date:" + DateTime.Today.Date + ").";
+
+                await BotGini.SendMessage(BotConfig.AmitKumarChatId, msg);
             }
 
         }

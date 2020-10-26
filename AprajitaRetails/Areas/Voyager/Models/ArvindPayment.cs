@@ -8,10 +8,10 @@ namespace AprajitaRetails.Areas.Voyager.Models
     {
         public int ArvindPaymentId { get; set; }
         public ArvindAccount Arvind { get; set; }
-        [DataType (DataType.Date), DisplayFormat (DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OnDate { get; set; }
         public string InvoiceNo { get; set; }
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
         public string BankDetails { get; set; }
         public string Remarks { get; set; }

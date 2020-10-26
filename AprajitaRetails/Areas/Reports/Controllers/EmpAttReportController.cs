@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Reports.Controllers
 {
@@ -39,7 +36,7 @@ namespace AprajitaRetails.Areas.Reports.Controllers
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
             return View(await PaginatedList<Employee>.CreateAsync(_context.Employees.AsNoTracking(), pageNumber ?? 1, pageSize));
-            
+
         }
 
 
@@ -47,7 +44,7 @@ namespace AprajitaRetails.Areas.Reports.Controllers
         public ActionResult AttdDetails(int id, DateTime? JoinningDate, DateTime? LeavingDate)
         {
             DateTime sDate, eDate;
-            if (JoinningDate!=null && LeavingDate!= null)
+            if (JoinningDate != null && LeavingDate != null)
             {
                 sDate = JoinningDate.Value.Date; eDate = LeavingDate.Value.Date;
             }
@@ -55,7 +52,7 @@ namespace AprajitaRetails.Areas.Reports.Controllers
             {
                 sDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
                 eDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
-            } 
+            }
             var modelData = Reports.Ops.ReportOps.GetEmployeeAttendanceReport(_context, id, sDate, eDate);
             return View(modelData);
         }
@@ -65,7 +62,7 @@ namespace AprajitaRetails.Areas.Reports.Controllers
             DateTime sDate, eDate;
             if (JoinningDate != null && LeavingDate != null)
             {
-                sDate = JoinningDate.Value.Date; 
+                sDate = JoinningDate.Value.Date;
                 eDate = LeavingDate.Value.Date;
             }
             else
@@ -80,6 +77,6 @@ namespace AprajitaRetails.Areas.Reports.Controllers
         public ActionResult Create()
         {
             return View();
-        }       
+        }
     }
 }

@@ -1,20 +1,20 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using AprajitaRetails.Data;
-using Microsoft.Extensions.Configuration;
+﻿using AprajitaRetails.Areas.ToDo.Interfaces;
 using AprajitaRetails.Areas.ToDo.Services;
-using AprajitaRetails.Areas.ToDo.Interfaces;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NodaTime;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using Microsoft.EntityFrameworkCore;
-using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Razor;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using System.Globalization;
 
 
 namespace AprajitaRetails.Areas.ToDo.Extensions
@@ -23,17 +23,17 @@ namespace AprajitaRetails.Areas.ToDo.Extensions
     {
         public static void ConfigureLocalization(this IServiceCollection services)
         {
-            services.AddLocalization (opts => { opts.ResourcesPath = "Resources"; });
-            services.AddMvc ()
-                .AddViewLocalization (
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+            services.AddMvc()
+                .AddViewLocalization(
                     LanguageViewLocationExpanderFormat.Suffix,
                     opts => { opts.ResourcesPath = "Resources"; })
-                .AddDataAnnotationsLocalization ();
+                .AddDataAnnotationsLocalization();
         }
 
         public static void ConfigureSupportedCultures(this IServiceCollection services)
         {
-            services.Configure<RequestLocalizationOptions> (
+            services.Configure<RequestLocalizationOptions>(
                 opts =>
                 {
                     var supportedCultures = new List<CultureInfo>
@@ -43,7 +43,7 @@ namespace AprajitaRetails.Areas.ToDo.Extensions
                         new CultureInfo("hi-IN")
                     };
 
-                    opts.DefaultRequestCulture = new RequestCulture ("en-GB");
+                    opts.DefaultRequestCulture = new RequestCulture("en-GB");
 
                     // Formatting numbers, dates, etc.
                     opts.SupportedCultures = supportedCultures;
@@ -54,26 +54,26 @@ namespace AprajitaRetails.Areas.ToDo.Extensions
 
         public static void ConfigureCookiePolicy(this IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions> (options =>
-            {
+            services.Configure<CookiePolicyOptions>(options =>
+           {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+               options.MinimumSameSitePolicy = SameSiteMode.None;
+           });
         }
 
         public static void ConfigureEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddEntityFrameworkSqlServer ().AddDbContext<ApplicationDbContext> (options =>
-            {
-                options.UseSqlServer (configuration ["ConnectionStrings:Connection"], x => x.MigrationsAssembly ("TodoList.Data"));
-            });
+            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationDbContext>(options =>
+          {
+              options.UseSqlServer(configuration["ConnectionStrings:Connection"], x => x.MigrationsAssembly("TodoList.Data"));
+          });
         }
 
         public static void ConfigureSecurity(this IServiceCollection services)
         {
             // Angular's default header name for sending the XSRF token.
-            services.AddAntiforgery (options => options.HeaderName = "X-XSRF-TOKEN");
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
         }
 
         public static void ConfigureSocialAuthentication(this IServiceCollection services, IConfiguration config)
@@ -133,28 +133,28 @@ namespace AprajitaRetails.Areas.ToDo.Extensions
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<IdentityUser, IdentityRole> ()
-                .AddEntityFrameworkStores<ApplicationDbContext> ()
-                .AddDefaultTokenProviders ();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
         }
 
         public static void ConfigureStorage(this IServiceCollection services, IConfiguration configuration)
         {
-            var storageService = new LocalFileStorageService (configuration ["LocalFileStorageBasePath"]);
-            services.AddSingleton<IFileStorageService> (storageService);
+            var storageService = new LocalFileStorageService(configuration["LocalFileStorageBasePath"]);
+            services.AddSingleton<IFileStorageService>(storageService);
         }
 
         public static void ConfigureServices(this IServiceCollection services)
         {
-            services.AddSingleton<IClock> (SystemClock.Instance);
-            services.AddScoped<ITodoItemService, TodoItemService> ();
+            services.AddSingleton<IClock>(SystemClock.Instance);
+            services.AddScoped<ITodoItemService, TodoItemService>();
         }
 
         public static void ConfigureSendGrid(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<ISendGridClient> (new SendGridClient (configuration ["SendGrid:ServiceApiKey"]));
-            services.AddTransient<SendGridMessage, SendGridMessage> ();
-            services.AddTransient<IEmailSender, EmailSender> ();
+            services.AddSingleton<ISendGridClient>(new SendGridClient(configuration["SendGrid:ServiceApiKey"]));
+            services.AddTransient<SendGridMessage, SendGridMessage>();
+            services.AddTransient<IEmailSender, EmailSender>();
         }
     }
 }

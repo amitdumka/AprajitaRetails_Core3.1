@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Purchase.Models;
-using AprajitaRetails.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -37,7 +37,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             int pageSize = 10;
             var AprajitaRetailsContext = _context.ProductItems.Include(p => p.BrandName);
             return View(await PaginatedList<ProductItem>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
-           
+
             //return PartialView(await AprajitaRetailsContext.ToListAsync());
         }
 
@@ -85,7 +85,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/ProductItems/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -106,7 +107,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Unit")] ProductItem productItem)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("ProductItemId,Barcode,BrandId,StyleCode,ProductName,ItemDesc,Categorys,MRP,TaxRate,Cost,Size,Unit")] ProductItem productItem)
         {
             if (id != productItem.ProductItemId)
             {
@@ -138,7 +140,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/ProductItems/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -159,7 +162,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // POST: Purchase/ProductItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var productItem = await _context.ProductItems.FindAsync(id);
             _context.ProductItems.Remove(productItem);

@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Models
 {
-    
+
     public class Employee
     {
         public int EmployeeId { get; set; }
@@ -26,11 +26,11 @@ namespace AprajitaRetails.Models
 
         [Display(Name = "Working")]
         public bool IsWorking { get; set; }
-        [Display (Name ="Job Category")]
+        [Display(Name = "Job Category")]
         [DefaultValue(0)]
         public EmpType Category { get; set; }
         [DefaultValue(false)]
-        [Display(Name ="Tailoring Division")]
+        [Display(Name = "Tailoring Division")]
         public bool IsTailors { get; set; }
         [Display(Name = "eMail"), EmailAddress]
         public string? EMail { get; set; }
@@ -66,7 +66,8 @@ namespace AprajitaRetails.Models
 
     }
 
-    public class EmployeeUser {
+    public class EmployeeUser
+    {
         [Key]
         public int Id { get; set; }
         public int EmployeeId { get; set; }

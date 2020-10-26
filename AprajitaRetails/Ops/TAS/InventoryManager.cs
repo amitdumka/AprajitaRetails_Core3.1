@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AprajitaRetails.Areas.Purchase.Models;
+﻿using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Sales.Models.Views;
 using AprajitaRetails.Areas.Uploader.Models;
-
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AprajitaRetails.Ops.TAS
 {
@@ -240,7 +239,7 @@ namespace AprajitaRetails.Ops.TAS
         {
             try
             {
-                int ids = (int?)db.Suppliers.Where(c => c.SuppilerName == sup).Select(c=>c.SupplierID).FirstOrDefault() ?? -1;
+                int ids = (int?)db.Suppliers.Where(c => c.SuppilerName == sup).Select(c => c.SupplierID).FirstOrDefault() ?? -1;
                 if (ids > 0)
                     return ids;
                 else if (ids == -1)
@@ -316,7 +315,7 @@ namespace AprajitaRetails.Ops.TAS
         public int ProcessPurchaseInwardByYear(AprajitaRetailsContext db, int Year)
         {
             int ctr = 0;
-            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && c.GRNDate.Year==Year).OrderBy(c => c.InvoiceNo).ToList();
+            var data = db.ImportPurchases.Where(c => c.IsDataConsumed == false && c.StoreId == StoreID && c.GRNDate.Year == Year).OrderBy(c => c.InvoiceNo).ToList();
             if (data != null && data.Count > 0)
             {
                 ProductPurchase PurchasedProduct = null;
@@ -656,7 +655,7 @@ namespace AprajitaRetails.Ops.TAS
                         return taxType.PurchaseTaxTypeId;
                     }
                 }
-                else 
+                else
                 {
                     try
                     {

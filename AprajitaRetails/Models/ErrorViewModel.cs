@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Authorization;    using System;
-
 namespace AprajitaRetails.Models
 {
     public class ErrorViewModel
@@ -9,5 +7,5 @@ namespace AprajitaRetails.Models
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 
-    
+
 }

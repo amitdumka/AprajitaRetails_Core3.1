@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Purchase.Models;
-
-using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -39,7 +36,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             int pageSize = 10;
 
             return View(await PaginatedList<PurchaseTaxType>.CreateAsync(_context.PurchaseTaxTypes.AsNoTracking(), pageNumber ?? 1, pageSize));
-            
+
         }
 
         // GET: Purchase/PurchaseTaxTypes/Details/5
@@ -83,7 +80,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/PurchaseTaxTypes/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -103,7 +101,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("PurchaseTaxTypeId,TaxName,TaxType,CompositeRate")] PurchaseTaxType purchaseTaxType)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("PurchaseTaxTypeId,TaxName,TaxType,CompositeRate")] PurchaseTaxType purchaseTaxType)
         {
             if (id != purchaseTaxType.PurchaseTaxTypeId)
             {
@@ -134,7 +133,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         }
 
         // GET: Purchase/PurchaseTaxTypes/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -154,7 +154,8 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
         // POST: Purchase/PurchaseTaxTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var purchaseTaxType = await _context.PurchaseTaxTypes.FindAsync(id);
             _context.PurchaseTaxTypes.Remove(purchaseTaxType);

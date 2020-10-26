@@ -68,9 +68,9 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
                 //All
                 dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.StoreId == this.StoreCodeId).OrderByDescending(c => c.SaleDate).ThenByDescending(c => c.DailySaleId);
             }
-            else if ( id != null && id == 104 )
+            else if (id != null && id == 104)
             {
-                dailySales = db.DailySales.Include (d => d.Salesman).Where (c => c.SaleDate == DateTime.Today.AddDays(-1) && c.StoreId == this.StoreCodeId);
+                dailySales = db.DailySales.Include(d => d.Salesman).Where(c => c.SaleDate == DateTime.Today.AddDays(-1) && c.StoreId == this.StoreCodeId);
             }
             else if (id != null && id == 102)
             {
@@ -235,7 +235,7 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             return PartialView();
         }
 
-        public async Task<IActionResult> AddEditPaymentDetails( string InvNo)
+        public async Task<IActionResult> AddEditPaymentDetails(string InvNo)
         {
             ViewData["EDCId"] = new SelectList(db.CardMachine, "EDCId", "EDCName");
             if (String.IsNullOrEmpty(InvNo))
@@ -245,27 +245,27 @@ namespace AprajitaRetails.Sales.Expenses.Controllers
             else
             {
                 var paydetails = await db.CardTranscations.Where(c => c.InvoiceNumber == InvNo).FirstOrDefaultAsync();
-               
+
                 if (paydetails == null)
                 {
-                    return View(new EDCTranscation { OnDate = DateTime.Today.Date, InvoiceNumber=InvNo, StoreId = this.StoreCodeId });
+                    return View(new EDCTranscation { OnDate = DateTime.Today.Date, InvoiceNumber = InvNo, StoreId = this.StoreCodeId });
                 }
                 return View(paydetails);
             }
-            
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddEditPaymentDetails(int id, [Bind("Amount, InvoiceNumber, CardEndingNumber,  CardType, EDCId, EDCTranscationId, OnDate, StoreId")] EDCTranscation eDC)
         {
-           
+
             if (ModelState.IsValid)
             {
                 //Insert
                 if (eDC.EDCTranscationId == 0)
                 {
-                    
+
                     db.Add(eDC);
                     await db.SaveChangesAsync();
 

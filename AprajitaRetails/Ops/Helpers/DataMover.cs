@@ -1,11 +1,7 @@
-﻿using AprajitaRetails.Areas.Voyager.Models;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.Helpers
 {
@@ -150,19 +146,26 @@ namespace AprajitaRetails.Ops.Helpers
 
 
         //}
-    
-    
-        public static List<SalaryPayment>  MoveAdvancePaymentToSalary(AprajitaRetailsContext db, int StoreId = 1)
+
+
+        public static List<SalaryPayment> MoveAdvancePaymentToSalary(AprajitaRetailsContext db, int StoreId = 1)
         {
-           
-            var adv = db.StaffAdvancePayments.Where(c => c.StoreId == StoreId && (c.IsDataMoved==false || c.IsDataMoved==null)).ToList();
+
+            var adv = db.StaffAdvancePayments.Where(c => c.StoreId == StoreId && (c.IsDataMoved == false || c.IsDataMoved == null)).ToList();
             List<SalaryPayment> salaries = new List<SalaryPayment>();
             foreach (var item in adv)
             {
-                SalaryPayment salary = new SalaryPayment {
-                    StoreId=StoreId, Amount=item.Amount,  EmployeeId=item.EmployeeId, PaymentDate= item.PaymentDate, 
-                    PayMode=item.PayMode, UserName="System", SalaryComponet=SalaryComponet.Advance, Details=item.Details,
-                    SalaryMonth=item.PaymentDate.Date.Month+"/"+item.PaymentDate.Date.Year
+                SalaryPayment salary = new SalaryPayment
+                {
+                    StoreId = StoreId,
+                    Amount = item.Amount,
+                    EmployeeId = item.EmployeeId,
+                    PaymentDate = item.PaymentDate,
+                    PayMode = item.PayMode,
+                    UserName = "System",
+                    SalaryComponet = SalaryComponet.Advance,
+                    Details = item.Details,
+                    SalaryMonth = item.PaymentDate.Date.Month + "/" + item.PaymentDate.Date.Year
                 };
                 salaries.Add(salary);
                 item.IsDataMoved = true;
@@ -172,14 +175,14 @@ namespace AprajitaRetails.Ops.Helpers
             int ctr = db.SaveChanges();
             db.StaffAdvancePayments.UpdateRange(adv);
             int ctr2 = db.SaveChanges();
-           // if (ctr != ctr2) return null;
+            // if (ctr != ctr2) return null;
 
             return salaries;
 
 
 
         }
-    
-    
+
+
     }
 }

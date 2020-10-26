@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AprajitaRetails.Data;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -28,14 +27,14 @@ namespace AprajitaRetails.Ops.Bot.Telegram
 
         public void SetupGini(EventHandler<MessageEventArgs> OnMessageHandler = null)
         {
-            if ( botClient == null )
+            if (botClient == null)
             {
-                botClient = new TelegramBotClient (BotConfig.AccessToken);
-                var me = botClient.GetMeAsync ().Result;
-                Console.WriteLine ($"Hello, I am user {me.Id} and my name is {me.FirstName}.");
-                if ( OnMessageHandler == null )
+                botClient = new TelegramBotClient(BotConfig.AccessToken);
+                var me = botClient.GetMeAsync().Result;
+                Console.WriteLine($"Hello, I am user {me.Id} and my name is {me.FirstName}.");
+                if (OnMessageHandler == null)
                 {
-                    handler = new GiniHandler ();
+                    handler = new GiniHandler();
                     botClient.OnMessage += GiniHandler.OnMessageWithApi;
                 }
                 else
@@ -43,18 +42,18 @@ namespace AprajitaRetails.Ops.Bot.Telegram
             }
             else
             {
-                if ( OnMessageHandler == null )
+                if (OnMessageHandler == null)
                 {
-                    if ( handler == null )
+                    if (handler == null)
                     {
-                        handler = new GiniHandler ();
+                        handler = new GiniHandler();
                         botClient.OnMessage += GiniHandler.OnMessageWithApi;
                     }
                 }
                 else
                     botClient.OnMessage += OnMessageHandler;
             }
-            botClient.StartReceiving ();
+            botClient.StartReceiving();
         }
 
         /// <summary>
@@ -64,14 +63,14 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         /// <param name="message">Message to user</param>
         public static async Task SendMessage(long chatId, string message)
         {
-            await botClient.SendTextMessageAsync (chatId: chatId, text: message);
+            await botClient.SendTextMessageAsync(chatId: chatId, text: message);
 
-           
+
         }
         public static async Task AskLocationMessage(long chatId)
         {
-            await botClient.SendTextMessageAsync (chatId: chatId, text: "Share your contact & location",
-                       replyMarkup: new ReplyKeyboardMarkup (new [] {
+            await botClient.SendTextMessageAsync(chatId: chatId, text: "Share your contact & location",
+                       replyMarkup: new ReplyKeyboardMarkup(new[] {
                         new [] { KeyboardButton.WithRequestContact ("Share Contact") },
                         new [] { KeyboardButton.WithRequestLocation ("Share Location") } }
                        ));
@@ -84,24 +83,24 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         /// <param name="message">Message</param>
         public static async void SendMessage(List<long> chatIds, string message)
         {
-            foreach ( var chatId in chatIds )
+            foreach (var chatId in chatIds)
             {
-                await botClient.SendTextMessageAsync (chatId: chatId, text: message);
+                await botClient.SendTextMessageAsync(chatId: chatId, text: message);
             }
         }
 
         public void StopGini()
         {
-            if ( botClient != null )
+            if (botClient != null)
             {
-                botClient.StopReceiving ();
+                botClient.StopReceiving();
                 botClient = null;
             }
         }
 
         public static bool IsGiniRunning()
         {
-            if ( botClient == null || !botClient.IsReceiving || botClient.BotId <= 0 )
+            if (botClient == null || !botClient.IsReceiving || botClient.BotId <= 0)
                 return false;
             else
                 return true;
@@ -114,19 +113,19 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         private static BotGini bot;
         public static void Start()
         {
-            if ( bot == null )
+            if (bot == null)
             {
-                bot = new BotGini ();
-                bot.SetupGini ();
-                _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is started");
+                bot = new BotGini();
+                bot.SetupGini();
+                _ = BotGini.SendMessage(BotConfig.AmitKumarChatId, "Gini Service is started");
             }
             else
-                bot.SetupGini ();
+                bot.SetupGini();
         }
         public static void Stop()
         {
-            _ = BotGini.SendMessage (BotConfig.AmitKumarChatId, "Gini Service is stopping");
-            bot.StopGini ();
+            _ = BotGini.SendMessage(BotConfig.AmitKumarChatId, "Gini Service is stopping");
+            bot.StopGini();
         }
     }
 }

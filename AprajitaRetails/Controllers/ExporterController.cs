@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +15,7 @@ namespace AprajitaRetails.Controllers
         public IActionResult Index()
         {
             ViewBag.Message = XMLExporter.WriteToXML(_context);
-           return View();
+            return View();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AprajitaRetails.Areas.Voyager.Models;
-using Microsoft.AspNetCore.Authorization;    using System;
+using System;
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
@@ -36,6 +36,6 @@ namespace AprajitaRetails.Models
         public string UserName { get; set; }
     }
 
-   
+
 
 }

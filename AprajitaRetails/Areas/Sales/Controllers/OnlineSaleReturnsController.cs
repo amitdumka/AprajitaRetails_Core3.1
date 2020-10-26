@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Sales.Controllers
 {
@@ -37,7 +35,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             var onlineSaleReturn = await _context.OnlineSaleReturns
                 .Include(o => o.OnlineSale)
-               
+
                 .FirstOrDefaultAsync(m => m.OnlineSaleReturnId == id);
             if (onlineSaleReturn == null)
             {
@@ -51,7 +49,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
         public IActionResult Create()
         {
             ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo");
-           // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId");
+            // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId");
             return View();
         }
 
@@ -70,7 +68,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo", onlineSaleReturn.OnlineSaleId);
-           // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
+            // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
             return View(onlineSaleReturn);
         }
 
@@ -88,7 +86,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 return NotFound();
             }
             ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo", onlineSaleReturn.OnlineSaleId);
-           // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
+            // ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
             return View(onlineSaleReturn);
         }
 
@@ -126,7 +124,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["OnlineSaleId"] = new SelectList(_context.OnlineSale, "OnlineSaleId", "InvNo", onlineSaleReturn.OnlineSaleId);
-          //  ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
+            //  ViewData["OnlineVendorId"] = new SelectList(_context.OnlineVendor, "OnlineVendorId", "OnlineVendorId", onlineSaleReturn.OnlineVendorId);
             return View(onlineSaleReturn);
         }
 
@@ -140,7 +138,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
 
             var onlineSaleReturn = await _context.OnlineSaleReturns
                 .Include(o => o.OnlineSale)
-                
+
                 .FirstOrDefaultAsync(m => m.OnlineSaleReturnId == id);
             if (onlineSaleReturn == null)
             {

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Ops.Utility
 {
@@ -18,7 +17,7 @@ namespace AprajitaRetails.Ops.Utility
             UserName = RemoveWhiteSpace(UserName);
 
             EmployeeUser user = new EmployeeUser { EmployeeId = EmployeeId, IsWorking = true, UserName = UserName };
-             await db.EmployeeUsers.AddAsync(user);
+            await db.EmployeeUsers.AddAsync(user);
             return await db.SaveChangesAsync();
 
 

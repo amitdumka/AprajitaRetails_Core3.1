@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-//using zkemkeeper;
+﻿//using zkemkeeper;
 /*
  * https://stackoverflow.com/questions/31377437/zkemkeeper-dll-support-which-biometric-devices
  * https://usermanual.wiki/Document/Biometric20Device20SDK20Programmers20Guide.1906605638/help
@@ -75,7 +71,7 @@ using System.Threading.Tasks;
 //                if (bIsConnected == true)
 //                {
 //                    // MessageBox.Show("Device Connected Successfully");
-                    
+
 //                }
 //                else
 //                {

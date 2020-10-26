@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using AprajitaRetails.Ops.Utility;
-using AprajitaRetails.Data;
-using System;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models.ViewModels;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using AprajitaRetails.Ops.Printers.Reports;
 using AprajitaRetails.Ops.Exporter;
+using AprajitaRetails.Ops.Printers.Reports;
+using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace AprajitaRetails.Areas.Accounts.Controllers
 {
@@ -45,7 +43,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
                     ViewBag.Message = "Cash Book Correction  ";
 
                     if (ModeType == "MonthWise")
-                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, StoreId,false);
+                        cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, StoreId, false);
                     else
                         cashList = managerexporter.CorrectCashInHands(db, EDate.Value.Date, path, StoreId, true);
 
@@ -59,7 +57,7 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             if (EDate != null)
             {
                 if (ModeType == "MonthWise")
-                    cashList = manager.GetMontlyCashBook(db, EDate.Value.Date,StoreId);
+                    cashList = manager.GetMontlyCashBook(db, EDate.Value.Date, StoreId);
                 else
                     cashList = manager.GetDailyCashBook(db, EDate.Value.Date, StoreId);
             }
@@ -90,6 +88,6 @@ namespace AprajitaRetails.Areas.Accounts.Controllers
             else
                 return NotFound();
         }
-     
+
     }
 }

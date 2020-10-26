@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.IO;
-using iText.IO.Font;
-using iText.Kernel.Font;
+﻿using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using PDFtoPrinter;
+using System;
+using System.Collections.Generic;
+using System.Drawing.Printing;
 using Path = System.IO.Path;
 
 namespace AprajitaRetails.Ops.Printers
@@ -48,7 +46,7 @@ namespace AprajitaRetails.Ops.Printers
 
             try
             {
-                
+
                 string fName = "MInvoiceNo_" + details.BillNo.Substring(9) + ".pdf";
                 string fileName = Path.Combine("wwwroot", fName);
 
@@ -71,12 +69,12 @@ namespace AprajitaRetails.Ops.Printers
                 p.Add(header.StoreCity + "\n");
                 p.Add("Ph No: " + header.StorePhoneNo + "\n");
                 p.Add(header.StoreGST + "\n");
-                
+
                 pdfDoc.Add(p);
 
                 //Details
                 Paragraph ip = new Paragraph().SetFontSize(12);
-              
+
                 ip.Add(PrintInvoiceLine.DotedLine);
                 ip.AddTabStops(new TabStop(50));
                 ip.Add(" " + PrintInvoiceLine.InvoiceTitle + "\n");
@@ -85,19 +83,19 @@ namespace AprajitaRetails.Ops.Printers
                 ip.Add(details.BillNo + "\n");
                 ip.AddTabStops(new TabStop(30));
                 ip.Add("  " + details.BillDate + "\n");
-                ip.AddTabStops( new TabStop(30));
+                ip.AddTabStops(new TabStop(30));
                 ip.Add("  " + details.BillTime + "\n");
-                
+
 
                 ip.Add(details.CustomerName + "\n");
                 ip.Add(PrintInvoiceLine.DotedLine);
 
                 ip.Add(PrintInvoiceLine.ItemLineHeader1 + "\n");
                 ip.Add(PrintInvoiceLine.ItemLineHeader2 + "\n");
-                
+
                 ip.Add(PrintInvoiceLine.DotedLine);
-      
-               
+
+
                 double gstPrice = 0.00;
                 double basicPrice = 0.00;
                 string tab = "    ";

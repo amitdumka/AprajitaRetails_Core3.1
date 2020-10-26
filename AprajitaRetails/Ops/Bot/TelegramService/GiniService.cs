@@ -1,40 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
-using AprajitaRetails.Ops.Bot.Telegram;
+﻿using AprajitaRetails.Ops.Bot.Telegram;
 
 namespace AprajitaRetails.Ops.Bot.TelgramService
 {
     public interface IGiniService
     {
-         Gini Gini { get; }
-         bool IsRunning { get; set; }
+        Gini Gini { get; }
+        bool IsRunning { get; set; }
     }
     public class GiniService : IGiniService
     {
 
         public GiniService()
         {
-            if ( !IsRunning )
+            if (!IsRunning)
             {
-                Gini.Start ();
+                Gini.Start();
                 IsRunning = true;
             }
         }
 
         public void StartMe()
         {
-            if ( !IsRunning )
+            if (!IsRunning)
             {
-                Gini.Start ();
+                Gini.Start();
                 IsRunning = true;
             }
         }
         public void StopMe()
         {
-            Gini.Stop ();
+            Gini.Stop();
             IsRunning = false;
         }
         public Gini Gini { get; }

@@ -20,7 +20,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
         [Display(Name = "Payment Mode")]
         public PaymentMode PayMode { get; set; }
 
-        [Display(Name ="From Account")]
+        [Display(Name = "From Account")]
         public int? BankAccountId { get; set; }
         public virtual BankAccount FromAccount { get; set; }
 
@@ -38,13 +38,13 @@ namespace AprajitaRetails.Areas.Accountings.Models
         [Display(Name = "Leger")]
         public int? LedgerEnteryId { get; set; }
 
-        
-        [DefaultValue(false), Display(Name ="Cash")]
+
+        [DefaultValue(false), Display(Name = "Cash")]
         public bool IsCash { get; set; }
 
         [DefaultValue(1)]
         public int StoreId { get; set; }
-        
+
         public string UserName { get; set; }
 
         public virtual Party Party { get; set; }
@@ -56,7 +56,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
     public class Expense : BasicVoucher
     {
         public int ExpenseId { get; set; }
-        
+
         public string Particulars { get; set; }
 
         [Display(Name = "Paid To")]
@@ -71,10 +71,10 @@ namespace AprajitaRetails.Areas.Accountings.Models
     public class Payment : BasicVoucher
     {
         public int PaymentId { get; set; }
-        
+
         [Display(Name = "Paid To")]
         public new string PartyName { get; set; }
-        
+
         [Display(Name = "Payment Slip No")]
         public string PaymentSlipNo { get; set; }
 

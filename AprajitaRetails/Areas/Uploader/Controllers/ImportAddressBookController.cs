@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Uploader;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
-    [Area ("Uploader")]
+    [Area("Uploader")]
     [Authorize]
     public class ImportAddressBookController : Controller
     {
@@ -27,23 +23,23 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         public IActionResult UploadData(IFormFile FileUpload)
         {
-            ExcelUploaders uploader = new ExcelUploaders ();
-            UploadReturn response = uploader.UploadAddressBook (db,  FileUpload);
+            ExcelUploaders uploader = new ExcelUploaders();
+            UploadReturn response = uploader.UploadAddressBook(db, FileUpload);
 
-            ViewBag.Status = response.ToString ();
-            if ( response == UploadReturn.Success )
+            ViewBag.Status = response.ToString();
+            if (response == UploadReturn.Success)
             {
-                return RedirectToAction ("ListUpload");
+                return RedirectToAction("ListUpload");
             }
 
-            return View ();
+            return View();
         }
 
         public IActionResult ListUpload()
         {
 
-            return View (db.Contact.ToList());
-        }      
+            return View(db.Contact.ToList());
+        }
     }
 
 

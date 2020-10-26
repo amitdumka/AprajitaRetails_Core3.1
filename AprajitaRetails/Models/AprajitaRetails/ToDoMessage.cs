@@ -17,6 +17,6 @@ namespace AprajitaRetails.Models
         public bool IsOver { get; set; }
     }
 
-  
+
 
 }

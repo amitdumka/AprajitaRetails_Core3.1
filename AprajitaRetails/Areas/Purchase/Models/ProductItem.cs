@@ -16,9 +16,9 @@ namespace AprajitaRetails.Areas.Purchase.Models
         public int BrandId { get; set; }
         public virtual Brand BrandName { get; set; }
 
-        [Display(Name ="Style Code")]
+        [Display(Name = "Style Code")]
         public string StyleCode { get; set; }
-        [Display(Name ="Product Name")]
+        [Display(Name = "Product Name")]
         public string ProductName { get; set; }
         [Display(Name = "Item Desc")]
         public string ItemDesc { get; set; }
@@ -32,12 +32,12 @@ namespace AprajitaRetails.Areas.Purchase.Models
         [Display(Name = "Sub Category")]
         public Category ProductType { get; set; }
 
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal MRP { get; set; }
         [Display(Name = "Tax Rate")]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal TaxRate { get; set; }    // TODO:Need to Review in final Edition
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Cost { get; set; }
 
         public string? HSNCode { get; set; }

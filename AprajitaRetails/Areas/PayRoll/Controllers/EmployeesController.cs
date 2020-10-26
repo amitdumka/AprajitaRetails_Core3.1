@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
+﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -19,7 +16,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
     {
         private readonly AprajitaRetailsContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly int StoreId=1;//TODO: default
+        private readonly int StoreId = 1;//TODO: default
         public EmployeesController(AprajitaRetailsContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
@@ -39,7 +36,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
             }
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            return View(await PaginatedList<Employee>.CreateAsync(_context.Employees.Where(c=>c.StoreId==StoreId).OrderByDescending(c => c.IsWorking).AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<Employee>.CreateAsync(_context.Employees.Where(c => c.StoreId == StoreId).OrderByDescending(c => c.IsWorking).AsNoTracking(), pageNumber ?? 1, pageSize));
 
         }
         // GET: PayRoll/Employees/Details/5

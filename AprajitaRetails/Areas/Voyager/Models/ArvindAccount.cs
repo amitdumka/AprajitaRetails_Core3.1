@@ -1,3 +1,3 @@
 ﻿
-    public enum ArvindAccount { ArvindLimited, ALBL, AFL,Others}
+public enum ArvindAccount { ArvindLimited, ALBL, AFL, Others }
 

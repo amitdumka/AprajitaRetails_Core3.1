@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Areas.Purchase.Models;
+﻿using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Uploader.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.TAS;
@@ -12,6 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Uploader.Controllers
 {
@@ -35,8 +35,8 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         public IActionResult ViewList()
         {
-            var list = db.ImportSearches.ToList ();
-            return View (list);
+            var list = db.ImportSearches.ToList();
+            return View(list);
         }
 
         [HttpPost]
@@ -47,12 +47,12 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             bool IsVat = false;
             bool IsLocal = false;
 
-            if(StoreCode== "JH00100" )
+            if (StoreCode == "JH00100")
             {
-                UploadReturn response1 = uploader.UploadExcel (db, UploadType.Search, FileUpload, StoreCode, IsVat, IsLocal);
-                if ( response1 == UploadReturn.OKGen )
+                UploadReturn response1 = uploader.UploadExcel(db, UploadType.Search, FileUpload, StoreCode, IsVat, IsLocal);
+                if (response1 == UploadReturn.OKGen)
                 {
-                    return RedirectToAction ("ViewList");
+                    return RedirectToAction("ViewList");
                 }
             }
             if (BillType == "VAT")
@@ -119,15 +119,15 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             int StoreId = HelperUtil.GetStoreID(HttpContext);
             InventoryManger iManage = new InventoryManger(StoreId);
             int a = -1;
-           
-            if(id!=null && id== 888 && year!=null)
+
+            if (id != null && id == 888 && year != null)
             {
                 a = iManage.ProcessPurchaseInwardByYear(db, (int)year);
                 if (a > 0)
-                    return RedirectToAction("ProcessedPurchase", new { id = a, Year=year});
+                    return RedirectToAction("ProcessedPurchase", new { id = a, Year = year });
             }
-            
-            
+
+
             if (!String.IsNullOrEmpty(GrnNo))
             {
                 a = iManage.ProcessPurchaseInward(db, GrnNo);
@@ -147,11 +147,11 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
 
         }
 
-        public IActionResult ProcessedPurchase(int id, int? year,  DateTime? onDate, string GRNNo)
+        public IActionResult ProcessedPurchase(int id, int? year, DateTime? onDate, string GRNNo)
         {
             if (!String.IsNullOrEmpty(GRNNo))
             {
-                var dm = db.ProductPurchases.Include(c=>c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).Where(c => c.InWardNo == GRNNo);
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }
@@ -169,7 +169,7 @@ namespace AprajitaRetails.Areas.Uploader.Controllers
             }
             else
             {
-                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).OrderByDescending(c=>c.ProductPurchaseId).ThenBy(c=>c.InWardDate);
+                var dm = db.ProductPurchases.Include(c => c.Supplier).Include(c => c.PurchaseItems).OrderByDescending(c => c.ProductPurchaseId).ThenBy(c => c.InWardDate);
                 ViewBag.MessageHead = "Invoices added and No. Of Items Added are " + id;
                 return View(dm.ToList());
             }

@@ -25,10 +25,10 @@ namespace TodoList.Web.Controllers
             }
             else
             {
-                return RedirectToAction (nameof (AprajitaRetails.Controllers.HomeController.Index), "Home");
+                return RedirectToAction(nameof(AprajitaRetails.Controllers.HomeController.Index), "Home");
             }
-           // ViewData["Title"] = "Home";
-           // return View();
+            // ViewData["Title"] = "Home";
+            // return View();
         }
         public IActionResult Error()
         {

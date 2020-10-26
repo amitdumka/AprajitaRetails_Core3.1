@@ -1,5 +1,5 @@
-﻿using System.Net.Http;
-using System.Net;
+﻿using System.Net;
+using System.Net.Http;
 
 namespace AprajitaRetails.Ops.Bot.Telegram
 {
@@ -7,16 +7,16 @@ namespace AprajitaRetails.Ops.Bot.Telegram
     {
         static string Channel = "@AprajitaRetails";
         static string PublicChannel = "@TheArvindStoreDumka";
-       // static string Token = BotConfig.AccessToken;
+        // static string Token = BotConfig.AccessToken;
 
         public static bool SendToChannel(string message)
         {
-            using ( var httpClient = new HttpClient () )
+            using (var httpClient = new HttpClient())
             {
-                var res = httpClient.GetAsync (
+                var res = httpClient.GetAsync(
                     $"https://api.telegram.org/bot{BotConfig.AccessToken}/sendMessage?chat_id={Channel}&text={message}"
                     ).Result;
-                if ( res.StatusCode == HttpStatusCode.OK )
+                if (res.StatusCode == HttpStatusCode.OK)
                 { return true; }
                 else
                 { return false; }
@@ -24,12 +24,12 @@ namespace AprajitaRetails.Ops.Bot.Telegram
         }
         public static bool SendToPublicChannel(string message)
         {
-            using ( var httpClient = new HttpClient () )
+            using (var httpClient = new HttpClient())
             {
-                var res = httpClient.GetAsync (
+                var res = httpClient.GetAsync(
                     $"https://api.telegram.org/bot{BotConfig.AccessToken}/sendMessage?chat_id={PublicChannel}&text={message}"
                     ).Result;
-                if ( res.StatusCode == HttpStatusCode.OK )
+                if (res.StatusCode == HttpStatusCode.OK)
                 { return true; }
                 else
                 { return false; }

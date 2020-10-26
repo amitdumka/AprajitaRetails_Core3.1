@@ -25,15 +25,15 @@ public enum CardType { Visa, MasterCard, Mastro, Amex, Dinners, Rupay, }
 public enum LedgerCategory { Credit, Debit, Income, Expenses, Assests, Bank, Loan, Purchase, Sale, Vendor, Customer }
 public enum VPayMode { CA, DC, CC, Mix, Wal, CRD, OTH }
 // Aprajita Retails Context
-public enum PayMode { Cash, Card, RTGS, NEFT, IMPS, Wallets, Cheques, DemandDraft, Points, Others, Coupons, MixPayments,UPI };
-public enum PaymentMode { Cash, Card, RTGS, NEFT, IMPS, Wallets, Cheques, DemandDraft, Others,UPI };
+public enum PayMode { Cash, Card, RTGS, NEFT, IMPS, Wallets, Cheques, DemandDraft, Points, Others, Coupons, MixPayments, UPI };
+public enum PaymentMode { Cash, Card, RTGS, NEFT, IMPS, Wallets, Cheques, DemandDraft, Others, UPI };
 public enum AttUnit { Present, Absent, HalfDay, Sunday, Holiday, StoreClosed, SundayHoliday, SickLeave, PaidLeave, CasualLeave, OnLeave };
 public enum SalaryComponet { NetSalary, LastPcs, WOWBill, SundaySalary, Incentive, Others, Advance, PaidLeave, SickLeave }
 public enum BankPayMode { Cash, Card, Cheques, RTGS, NEFT, IMPS, Wallets, Others }
-public enum UploadType { Purchase, SaleRegister, SaleItemWise, InWard, Customer, Attendance,Search }
+public enum UploadType { Purchase, SaleRegister, SaleItemWise, InWard, Customer, Attendance, Search }
 
 
-public enum UploadReturn { Success, Error, FileNotFound, NotExcelType, ImportNotSupported ,OKGen}
+public enum UploadReturn { Success, Error, FileNotFound, NotExcelType, ImportNotSupported, OKGen }
 
 public enum EmpType { Salesman, StoreManager, HouseKeeping, Owner, Accounts, TailorMaster, Tailors, TailoringAssistance, Others }
 public enum TaxType { GST, SGST, CGST, IGST, VAT, CST }

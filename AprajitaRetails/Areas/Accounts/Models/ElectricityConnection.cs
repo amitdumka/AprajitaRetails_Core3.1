@@ -15,13 +15,13 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public string ConsumerNumber { get; set; }
         public string ConusumerId { get; set; }
         public ConnectionType Connection { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true), Display(Name = "Connection Date")]
         public DateTime ConnectinDate { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true), Display(Name = "Disconnection Date")]
         public DateTime? DisconnectionDate { get; set; }
-        
+
         public int KVLoad { get; set; }
         public bool OwnedMetter { get; set; }
 
@@ -31,9 +31,9 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public decimal SecurityDeposit { get; set; }
         public string Remarks { get; set; }
 
-    
+
     }
-  
+
 
     public class EletricityBill
     {
@@ -77,6 +77,6 @@ namespace AprajitaRetails.Areas.Accounts.Models
         public bool IsPartialPayment { get; set; }
         public bool IsBillCleared { get; set; }
 
-        
+
     }
 }

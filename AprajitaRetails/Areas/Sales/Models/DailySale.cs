@@ -1,9 +1,8 @@
-﻿using System;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AprajitaRetails.Areas.Voyager.Models;
-using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace AprajitaRetails.Models
 {
@@ -42,7 +41,7 @@ namespace AprajitaRetails.Models
         public bool IsMatchedWithVOy { get; set; }
 
         public int? EDCTranscationId { get; set; }
-        public virtual EDCTranscation EDCTranscation { get;set;}
+        public virtual EDCTranscation EDCTranscation { get; set; }
 
         public int? MixAndCouponPaymentId { get; set; }
         public virtual MixAndCouponPayment MixAndCouponPayment { get; set; }
@@ -50,7 +49,7 @@ namespace AprajitaRetails.Models
         //Version 3.0
         [DefaultValue(1)]
         public int? StoreId { get; set; }
-        public virtual Store Store {get;set;}
+        public virtual Store Store { get; set; }
         public string UserName { get; set; }
 
         public virtual CouponPayment CouponPayment { get; set; }
@@ -61,17 +60,17 @@ namespace AprajitaRetails.Models
     {
         public int CouponPaymentId { get; set; }
         public string CouponNumber { get; set; }
-        
+
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OnDate { get; set; }
-        
+
         public int DailySaleId { get; set; }
         public virtual DailySale DailySale { get; set; }
         public string InvoiceNumber { get; set; }
-        
+
         public string Remark { get; set; }
 
     }
@@ -82,14 +81,14 @@ namespace AprajitaRetails.Models
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal Amount { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OnDate { get; set; }
-        
+
         public int DailySaleId { get; set; }
         public virtual DailySale DailySale { get; set; }
         public string InvoiceNumber { get; set; }
-        
+
         public string Remark { get; set; }
     }
 
@@ -99,10 +98,10 @@ namespace AprajitaRetails.Models
         public int TID { get; set; }
         public string EDCName { get; set; }
         public int AccountNumberId { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
         public bool IsWorking { get; set; }
@@ -130,11 +129,11 @@ namespace AprajitaRetails.Models
 
     }
 
-   
+
     public class MixAndCouponPayment
     {
         public int MixAndCouponPaymentId { get; set; }
-       
+
         public string InvoiceNumber { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime OnDate { get; set; }

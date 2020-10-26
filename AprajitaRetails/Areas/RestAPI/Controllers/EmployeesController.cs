@@ -1,12 +1,10 @@
-﻿using System;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
 
 namespace AprajitaRetails.Areas.RestAPI.Controllers
 {
@@ -42,15 +40,15 @@ namespace AprajitaRetails.Areas.RestAPI.Controllers
             return employee;
         }
         // GET: api/Employees/5
-        [HttpGet ("{mobileNo}")]
+        [HttpGet("{mobileNo}")]
         public async Task<ActionResult<Employee>> GetEmployee(string mobileNo)
         {
-            var employee = await _context.Employees.Where (c => c.MobileNo == mobileNo).FirstOrDefaultAsync ();
+            var employee = await _context.Employees.Where(c => c.MobileNo == mobileNo).FirstOrDefaultAsync();
             ;
 
-            if ( employee == null )
+            if (employee == null)
             {
-                return NotFound ();
+                return NotFound();
             }
 
             return employee;

@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using AprajitaRetails.Ops.Triggers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
-using AprajitaRetails.Ops.Triggers;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.PayRoll.Controllers
 {
@@ -39,7 +37,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             int pageSize = 10;
-            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).Where(c=>c.StoreId==StoreId).OrderByDescending(c => c.ReceiptDate);
+            var aprajitaRetailsContext = _context.StaffAdvanceReceipts.Include(s => s.Employee).Where(c => c.StoreId == StoreId).OrderByDescending(c => c.ReceiptDate);
 
             return View(await PaginatedList<StaffAdvanceReceipt>.CreateAsync(aprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
@@ -68,7 +66,7 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         // GET: StaffAdvanceReceipts/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c=>c.IsWorking && c.StoreId==StoreId), "EmployeeId", "StaffName");
+            ViewData["EmployeeId"] = new SelectList(_context.Employees.Where(c => c.IsWorking && c.StoreId == StoreId), "EmployeeId", "StaffName");
             return PartialView();
         }
 

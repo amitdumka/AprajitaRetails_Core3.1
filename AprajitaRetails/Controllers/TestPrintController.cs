@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AprajitaRetails.Ops.Printers;
+﻿using AprajitaRetails.Ops.Printers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AprajitaRetails.Controllers

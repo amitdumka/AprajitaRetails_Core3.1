@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Purchase.Models;
+using AprajitaRetails.Data;
+using AprajitaRetails.Ops.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Purchase.Models;
-
-using AprajitaRetails.Ops.Utility;
-using AprajitaRetails.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Purchase.Controllers
 {
@@ -44,7 +41,7 @@ namespace AprajitaRetails.Areas.Purchase.Controllers
             // HelperUtil.IsSessionSet (HttpContext);
             // int storeid = HelperUtil.GetStoreID (HttpContext);
 
-            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c => c.StoreId == StoreID).OrderByDescending(c=>c.InWardNo).ThenBy(c=>c.PurchaseDate);
+            var AprajitaRetailsContext = _context.ProductPurchases.Include(p => p.Supplier).Where(c => c.StoreId == StoreID).OrderByDescending(c => c.InWardNo).ThenBy(c => c.PurchaseDate);
             return View(await PaginatedList<ProductPurchase>.CreateAsync(AprajitaRetailsContext.AsNoTracking(), pageNumber ?? 1, pageSize));
 
 

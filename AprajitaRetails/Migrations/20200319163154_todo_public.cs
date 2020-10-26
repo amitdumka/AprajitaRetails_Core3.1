@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace AprajitaRetails.Migrations
 {
@@ -12,7 +11,7 @@ namespace AprajitaRetails.Migrations
                 table: "Todo",
                 nullable: false,
                 defaultValue: false);
-           
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -20,7 +19,7 @@ namespace AprajitaRetails.Migrations
             migrationBuilder.DropColumn(
                 name: "IsPublic",
                 table: "Todo");
-          
+
         }
     }
 }

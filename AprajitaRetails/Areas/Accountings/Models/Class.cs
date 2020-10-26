@@ -1,8 +1,4 @@
 ﻿using AprajitaRetails.Data;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 /// <summary>
 /// Version 3.0
@@ -26,7 +22,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
     //    public string Narations { get; set; }
     //}
 
- 
+
     ////Payroll
 
     //public class BasicPayrollVocher
@@ -85,7 +81,7 @@ namespace AprajitaRetails.Areas.Accountings.Models
     //{
     //    public int AdvancePaymentId { get; set; }
     //}
-    
+
     //public class BankDeposit
     //{
     //    public int BankDepositId { get; set; }

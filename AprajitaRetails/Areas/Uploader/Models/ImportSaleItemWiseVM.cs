@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AprajitaRetails.Areas.Voyager.Models;
+using LinqToExcel.Attributes;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using System.ComponentModel;
-using LinqToExcel.Attributes;
-using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Areas.Uploader.Models
 {

@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 public enum FunctionName { Payment, Reciept, Expenses, CashExpenses, CashPayment, Booking, Delivery, Salary, AdvReciept, DuesReport, DailySale, ManualSale }
 
@@ -450,7 +449,7 @@ namespace AprajitaRetails.Areas.Reports.Data
                 worksheet2.Cells[row, 5].Value = item.SalaryMonth;
                 worksheet2.Cells[row, 6].Value = item.PayMode;
                 worksheet2.Cells[row, 7].Value = item.Amount;
-                
+
 
 
                 TotalAmount += item.Amount;

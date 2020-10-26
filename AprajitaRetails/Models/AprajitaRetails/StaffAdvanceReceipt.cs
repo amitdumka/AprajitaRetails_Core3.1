@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿//using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using AprajitaRetails.Areas.Voyager.Models;
+using System;
 using System.ComponentModel;
 //using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-//using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using AprajitaRetails.Areas.Voyager.Models;
 
 namespace AprajitaRetails.Models
 {

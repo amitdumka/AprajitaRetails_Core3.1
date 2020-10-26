@@ -1,117 +1,110 @@
-﻿using AprajitaRetails.Data;
-using Quartz;
-using Quartz.Listener;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace AprajitaRetails.Ops.CornJobs
+﻿namespace AprajitaRetails.Ops.CornJobs
 {
-    /// <summary>
-    /// This is Model Class.
-    /// https://www.quartz-scheduler.net/documentation/quartz-3.x/quick-start.html#trying-out-the-application-and-adding-jobs
-    /// </summary>
-    public class JobSchedular : SchedulerListenerSupport
-    {
-        private bool running;
-        private int errorCount;
+    ///// <summary>
+    ///// This is Model Class.
+    ///// https://www.quartz-scheduler.net/documentation/quartz-3.x/quick-start.html#trying-out-the-application-and-adding-jobs
+    ///// </summary>
+    //public class JobSchedular : SchedulerListenerSupport
+    //{
+    //    private bool running;
+    //    private int errorCount;
 
-        private Task<int> FunctionNameAsync(AprajitaRetailsContext context, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(-1);
-        }
+    //    private Task<int> FunctionNameAsync(AprajitaRetailsContext context, CancellationToken cancellationToken)
+    //    {
+    //        return Task.FromResult(-1);
+    //    }
 
-        public override Task SchedulerError(string msg, SchedulerException cause, CancellationToken cancellationToken = default)
-        {
-            errorCount++;
-            return Task.CompletedTask;
-        }
+    //    public override Task SchedulerError(string msg, SchedulerException cause, CancellationToken cancellationToken = default)
+    //    {
+    //        errorCount++;
+    //        return Task.CompletedTask;
+    //    }
 
-        public override Task SchedulerStarted(CancellationToken cancellationToken = default)
-        {
-            running = true;
-            return Task.CompletedTask;
-        }
+    //    public override Task SchedulerStarted(CancellationToken cancellationToken = default)
+    //    {
+    //        running = true;
+    //        return Task.CompletedTask;
+    //    }
 
-        public override Task SchedulerShutdown(CancellationToken cancellationToken = default)
-        {
-            running = false;
-            return Task.CompletedTask;
-        }
-    }
+    //    public override Task SchedulerShutdown(CancellationToken cancellationToken = default)
+    //    {
+    //        running = false;
+    //        return Task.CompletedTask;
+    //    }
+    //}
 
-    public sealed class ExampleJob : IJob, IDisposable
-    {
-        // private readonly ILogger<ExampleJob> logger;
+    //public sealed class ExampleJob : IJob, IDisposable
+    //{
+    //    // private readonly ILogger<ExampleJob> logger;
 
-        public ExampleJob(/*ILogger<ExampleJob> logger*/)
-        {
-            //this.logger = logger;
-        }
+    //    public ExampleJob(/*ILogger<ExampleJob> logger*/)
+    //    {
+    //        //this.logger = logger;
+    //    }
 
-        public async Task Execute(IJobExecutionContext context)
-        {
-            //logger.LogInformation(context.JobDetail.Key + " job executing, triggered by " + context.Trigger.Key);
-            await Task.Delay(TimeSpan.FromSeconds(1));
-        }
+    //    public async Task Execute(IJobExecutionContext context)
+    //    {
+    //        //logger.LogInformation(context.JobDetail.Key + " job executing, triggered by " + context.Trigger.Key);
+    //        await Task.Delay(TimeSpan.FromSeconds(1));
+    //    }
 
-        public void Dispose()
-        {
-            //logger.LogInformation("Example job disposing");
-        }
-    }
+    //    public void Dispose()
+    //    {
+    //        //logger.LogInformation("Example job disposing");
+    //    }
+    //}
 
-    public class SampleJobListener : JobListenerSupport
-    {
-        // private readonly ILogger<SampleJobListener> logger;
+    //public class SampleJobListener : JobListenerSupport
+    //{
+    //    // private readonly ILogger<SampleJobListener> logger;
 
-        public SampleJobListener(/*ILogger<SampleJobListener> logger*/)
-        {
-            // this.logger = logger;
-        }
+    //    public SampleJobListener(/*ILogger<SampleJobListener> logger*/)
+    //    {
+    //        // this.logger = logger;
+    //    }
 
-        public override string Name => "Sample Job Listener";
+    //    public override string Name => "Sample Job Listener";
 
-        public override Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default)
-        {
-            // logger.LogInformation("The job is about to be executed, prepare yourself!");
-            return Task.CompletedTask;
-        }
-    }
+    //    public override Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default)
+    //    {
+    //        // logger.LogInformation("The job is about to be executed, prepare yourself!");
+    //        return Task.CompletedTask;
+    //    }
+    //}
 
-    public class SampleTriggerListener : TriggerListenerSupport
-    {
-        //private readonly ILogger<SampleTriggerListener> logger;
+    //public class SampleTriggerListener : TriggerListenerSupport
+    //{
+    //    //private readonly ILogger<SampleTriggerListener> logger;
 
-        public SampleTriggerListener(/*ILogger<SampleTriggerListener> logger*/)
-        {
-            // this.logger = logger;
-        }
+    //    public SampleTriggerListener(/*ILogger<SampleTriggerListener> logger*/)
+    //    {
+    //        // this.logger = logger;
+    //    }
 
-        public override string Name => "Sample Trigger Listener";
+    //    public override string Name => "Sample Trigger Listener";
 
-        public override Task TriggerMisfired(ITrigger trigger, CancellationToken cancellationToken = default)
-        {
-            // logger.LogInformation("Observed trigger fire by trigger {TriggerKey}", trigger.Key);
-            return Task.CompletedTask;
-        }
-    }
+    //    public override Task TriggerMisfired(ITrigger trigger, CancellationToken cancellationToken = default)
+    //    {
+    //        // logger.LogInformation("Observed trigger fire by trigger {TriggerKey}", trigger.Key);
+    //        return Task.CompletedTask;
+    //    }
+    //}
 
-    public class SampleSchedulerListener : SchedulerListenerSupport
-    {
-        // private readonly ILogger<SampleSchedulerListener> logger;
+    //public class SampleSchedulerListener : SchedulerListenerSupport
+    //{
+    //    // private readonly ILogger<SampleSchedulerListener> logger;
 
-        public SampleSchedulerListener(/*ILogger<SampleSchedulerListener> logger*/)
-        {
-            // this.logger = logger;
-        }
+    //    public SampleSchedulerListener(/*ILogger<SampleSchedulerListener> logger*/)
+    //    {
+    //        // this.logger = logger;
+    //    }
 
-        public override Task SchedulerStarted(CancellationToken cancellationToken = default)
-        {
-            //  logger.LogInformation("Observed scheduler start");
-            return Task.CompletedTask;
-        }
-    }
+    //    public override Task SchedulerStarted(CancellationToken cancellationToken = default)
+    //    {
+    //        //  logger.LogInformation("Observed scheduler start");
+    //        return Task.CompletedTask;
+    //    }
+    //}
 }
 
 /*

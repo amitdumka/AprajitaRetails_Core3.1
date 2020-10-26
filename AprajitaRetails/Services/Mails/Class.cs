@@ -1,13 +1,13 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 using System;
-using Microsoft.Extensions.Options;
+using System.ComponentModel.DataAnnotations;
 //using WebApi.Helpers;
 using System.Globalization;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
 //https://jasonwatmore.com/post/2020/07/06/aspnet-core-3-boilerplate-api-with-email-sign-up-verification-authentication-forgot-password#app-settings-cs
 namespace AprajitaRetails.Services.Mails
 {
@@ -27,7 +27,7 @@ namespace AprajitaRetails.Services.Mails
     {
         [Key]
         public int Id { get; set; }
-       // public Account Account { get; set; }
+        // public Account Account { get; set; }
         public string Token { get; set; }
         public DateTime Expires { get; set; }
         public bool IsExpired => DateTime.UtcNow >= Expires;

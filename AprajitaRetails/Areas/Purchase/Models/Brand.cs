@@ -8,25 +8,25 @@ namespace AprajitaRetails.Areas.Purchase.Models
     public class Brand
     {
         public int BrandId { get; set; }
-        [Display (Name = "Brand")]
+        [Display(Name = "Brand")]
         public string BrandName { get; set; }
-        [Display (Name = "Brand Code")]
+        [Display(Name = "Brand Code")]
         public string BCode { get; set; }
     }
     public class Category
     {
         public int CategoryId { get; set; }
-        [Display (Name = "Category")]
+        [Display(Name = "Category")]
         public string CategoryName { get; set; }
-        [Display (Name = "Primary")]
+        [Display(Name = "Primary")]
         public bool IsPrimaryCategory { get; set; }
-        [Display (Name = "Secondary")]
+        [Display(Name = "Secondary")]
         public bool IsSecondaryCategory { get; set; }
     }
     public class Supplier
     {
         public int SupplierID { get; set; }
-        [Display (Name = "Supplier")]
+        [Display(Name = "Supplier")]
         public string SuppilerName { get; set; }
         public string Warehouse { get; set; }
         public ICollection<ProductPurchase> ProductPurchases { get; set; }
@@ -34,12 +34,12 @@ namespace AprajitaRetails.Areas.Purchase.Models
     public class PurchaseTaxType
     {
         public int PurchaseTaxTypeId { get; set; }
-        [Display (Name = "Tax")]
+        [Display(Name = "Tax")]
         public string TaxName { get; set; }
-        [Display (Name = "Tax Type")]
+        [Display(Name = "Tax Type")]
         public TaxType TaxType { get; set; }
-        [Display (Name = "Composite Rate")]
-        [DataType (DataType.Currency), Column (TypeName = "money")]
+        [Display(Name = "Composite Rate")]
+        [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal CompositeRate { get; set; }
         //Navigation
         public ICollection<PurchaseItem> PurchaseItems { get; set; }

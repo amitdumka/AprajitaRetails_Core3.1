@@ -1,7 +1,7 @@
 ﻿using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;    using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,24 +10,24 @@ namespace AprajitaRetails.Ops.Triggers
     public class CashWork
     {
         //StoreBased Action 
-        public void ProcessOpenningBalance(AprajitaRetailsContext db, DateTime date, int StoreId,  bool saveit = false)
+        public void ProcessOpenningBalance(AprajitaRetailsContext db, DateTime date, int StoreId, bool saveit = false)
         {
 
             CashInHand today;
-            today = db.CashInHands.Where(c => c.CIHDate.Date == date.Date && c.StoreId==StoreId).FirstOrDefault();
+            today = db.CashInHands.Where(c => c.CIHDate.Date == date.Date && c.StoreId == StoreId).FirstOrDefault();
 
             DateTime yDate = date.AddDays(-1);
             CashInHand yesterday = db.CashInHands.Where(c => c.CIHDate.Date.Date == yDate.Date.Date && c.StoreId == StoreId).FirstOrDefault();
             bool isNew = false;
             if (today == null)
             {
-                today = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = date, ClosingBalance = 0, OpenningBalance = 0, StoreId=StoreId };
+                today = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = date, ClosingBalance = 0, OpenningBalance = 0, StoreId = StoreId };
                 isNew = true;
             }
 
             if (yesterday == null)
             {
-                yesterday = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = yDate, ClosingBalance = 0, OpenningBalance = 0, StoreId=StoreId };
+                yesterday = new CashInHand() { CashIn = 0, CashOut = 0, CIHDate = yDate, ClosingBalance = 0, OpenningBalance = 0, StoreId = StoreId };
                 today.OpenningBalance = 0;
                 today.ClosingBalance = today.OpenningBalance + today.CashIn - today.CashOut;
                 db.CashInHands.Add(yesterday);
@@ -78,13 +78,13 @@ namespace AprajitaRetails.Ops.Triggers
             bool isNew = false;
             if (today == null)
             {
-                today = new CashInBank() { CashIn = 0, CashOut = 0, CIBDate = date, ClosingBalance = 0, OpenningBalance = 0 , StoreId=StoreId};
+                today = new CashInBank() { CashIn = 0, CashOut = 0, CIBDate = date, ClosingBalance = 0, OpenningBalance = 0, StoreId = StoreId };
                 isNew = true;
             }
 
             if (yesterday == null)
             {
-                yesterday = new CashInBank() { CashIn = 0, CashOut = 0, CIBDate = yDate, ClosingBalance = 0, OpenningBalance = 0, StoreId=StoreId };
+                yesterday = new CashInBank() { CashIn = 0, CashOut = 0, CIBDate = yDate, ClosingBalance = 0, OpenningBalance = 0, StoreId = StoreId };
                 today.OpenningBalance = 0;
                 today.ClosingBalance = today.OpenningBalance + today.CashIn - today.CashOut;
                 db.CashInBanks.Add(yesterday);
@@ -126,26 +126,26 @@ namespace AprajitaRetails.Ops.Triggers
             }
         }
         //StoreBased Action
-        public void JobOpeningClosingBalance(AprajitaRetailsContext db,int StoreId)
+        public void JobOpeningClosingBalance(AprajitaRetailsContext db, int StoreId)
         {
-            ProcessOpenningBalance(db, DateTime.Today,StoreId, true);
+            ProcessOpenningBalance(db, DateTime.Today, StoreId, true);
             ProcessClosingBalance(db, DateTime.Today, StoreId, true);
             ProcessBankOpenningBalance(db, DateTime.Today, StoreId, true);
             ProcessBankClosingBalance(db, DateTime.Today, StoreId, true);
         }
         //StoreBased Action
-        public void CreateNextDayOpenningBalance(AprajitaRetailsContext db, DateTime date,int StoreId, bool saveit = false)
+        public void CreateNextDayOpenningBalance(AprajitaRetailsContext db, DateTime date, int StoreId, bool saveit = false)
         {
             date = date.AddDays(1);// Next Day
             ProcessOpenningBalance(db, date, StoreId, saveit); //TODO: many lines is repeating so create inline call or make new function
-            ProcessBankOpenningBalance(db, date,StoreId, saveit);//TODO: many lines is repeating so create inline call or make new function
+            ProcessBankOpenningBalance(db, date, StoreId, saveit);//TODO: many lines is repeating so create inline call or make new function
         }
         //StoreBased Action
-        public decimal GetClosingBalance(AprajitaRetailsContext db, DateTime forDate, int StoreId,  bool IsBank = false)
+        public decimal GetClosingBalance(AprajitaRetailsContext db, DateTime forDate, int StoreId, bool IsBank = false)
         {
             if (IsBank)
             {
-                var bal = db.CashInBanks.Where(c => c.CIBDate.Date == forDate.Date && c.StoreId==StoreId).Select(c => new { c.CashIn, c.CashOut, c.OpenningBalance }).FirstOrDefault();
+                var bal = db.CashInBanks.Where(c => c.CIBDate.Date == forDate.Date && c.StoreId == StoreId).Select(c => new { c.CashIn, c.CashOut, c.OpenningBalance }).FirstOrDefault();
                 if (bal != null)
                 {
                     return (bal.OpenningBalance + bal.CashIn - bal.CashOut);
@@ -176,9 +176,9 @@ namespace AprajitaRetails.Ops.Triggers
 
             decimal cBal = 0;
 
-            if (cashs != null && cashs.Any () )
+            if (cashs != null && cashs.Any())
             {
-                cBal = GetClosingBalance(db, cashs.First().CIHDate.AddDays(-1),StoreId);
+                cBal = GetClosingBalance(db, cashs.First().CIHDate.AddDays(-1), StoreId);
                 if (cBal == 0)
                     cBal = cashs.First().OpenningBalance;
 
@@ -210,11 +210,11 @@ namespace AprajitaRetails.Ops.Triggers
         //StoreBased Action
         public void CashInBankCorrectionForMonth(AprajitaRetailsContext db, DateTime forDate, int StoreId)
         {
-            IEnumerable<CashInBank> cashs = db.CashInBanks.Where(c => c.CIBDate.Month == forDate.Month && c.CIBDate.Year==forDate.Year && c.StoreId == StoreId).OrderBy(c => c.CIBDate);
+            IEnumerable<CashInBank> cashs = db.CashInBanks.Where(c => c.CIBDate.Month == forDate.Month && c.CIBDate.Year == forDate.Year && c.StoreId == StoreId).OrderBy(c => c.CIBDate);
 
             decimal cBal = 0;
 
-            if (cashs != null && cashs.Any () )
+            if (cashs != null && cashs.Any())
             {
                 cBal = GetClosingBalance(db, cashs.First().CIBDate, StoreId);
                 if (cBal == 0)

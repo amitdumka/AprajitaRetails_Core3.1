@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Data;
+using AprajitaRetails.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Data;
-using AprajitaRetails.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Banking.Controllers
 {
-    [Area ("Banking")]
-      [Authorize(Roles ="Admin,PowerUser,StoreManager")]
+    [Area("Banking")]
+    [Authorize(Roles = "Admin,PowerUser,StoreManager")]
     public class BanksController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -54,13 +54,13 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(bank);
+            return PartialView(bank);
         }
 
         // GET: Banks/Create
         public IActionResult Create()
         {
-           return PartialView();
+            return PartialView();
         }
 
         // POST: Banks/Create
@@ -76,11 +76,12 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(bank);
+            return PartialView(bank);
         }
 
         // GET: Banks/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -92,7 +93,7 @@ namespace AprajitaRetails.Areas.Banking.Controllers
             {
                 return NotFound();
             }
-           return PartialView(bank);
+            return PartialView(bank);
         }
 
         // POST: Banks/Edit/5
@@ -100,7 +101,8 @@ namespace AprajitaRetails.Areas.Banking.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("BankId,BankName")] Bank bank)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("BankId,BankName")] Bank bank)
         {
             if (id != bank.BankId)
             {
@@ -127,11 +129,12 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-           return PartialView(bank);
+            return PartialView(bank);
         }
 
         // GET: Banks/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -145,13 +148,14 @@ namespace AprajitaRetails.Areas.Banking.Controllers
                 return NotFound();
             }
 
-           return PartialView(bank);
+            return PartialView(bank);
         }
 
         // POST: Banks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var bank = await _context.Banks.FindAsync(id);
             _context.Banks.Remove(bank);

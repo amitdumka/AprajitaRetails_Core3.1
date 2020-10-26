@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,13 +16,13 @@ namespace AprajitaRetails.Models
 
         public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
-        
+
         public int? CurrentSalaryId { get; set; }
         public virtual CurrentSalary CurrentSalary { get; set; }
 
         [DataType(DataType.Currency), Column(TypeName = "money")]
         public decimal BasicSalary { get; set; }
-        
+
         public int NoOfDaysPresent { get; set; }
 
         [DataType(DataType.Currency), Column(TypeName = "money")]

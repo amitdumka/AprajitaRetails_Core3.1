@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.Sales.Data
 {
@@ -12,23 +11,26 @@ namespace AprajitaRetails.Areas.Sales.Data
     {
         public static InvoiceDetails GetInvoiceData(AprajitaRetailsContext db, int id)
         {
-            var inv = db.RegularInvoices.Include(c => c.Customer).Include(c => c.PaymentDetail).ThenInclude(c => c.CardDetail).Where(c=>c.RegularInvoiceId==id).FirstOrDefault();
+            var inv = db.RegularInvoices.Include(c => c.Customer).Include(c => c.PaymentDetail).ThenInclude(c => c.CardDetail).Where(c => c.RegularInvoiceId == id).FirstOrDefault();
             if (inv == null) { return null; }
-            var saleitem = db.RegularSaleItems.Include(c=>c.Salesman).Include(c => c.ProductItem).Where(c => c.InvoiceNo == inv.InvoiceNo).ToList();
+            var saleitem = db.RegularSaleItems.Include(c => c.Salesman).Include(c => c.ProductItem).Where(c => c.InvoiceNo == inv.InvoiceNo).ToList();
 
-            InvoiceDetails iDetails = new InvoiceDetails {
-                Invoice=SaleInvoiceView.CopyTo(inv,saleitem),Error="OK", Msg="Data Present"
+            InvoiceDetails iDetails = new InvoiceDetails
+            {
+                Invoice = SaleInvoiceView.CopyTo(inv, saleitem),
+                Error = "OK",
+                Msg = "Data Present"
             };
 
             if (iDetails.Invoice.PaymentMode == "Card") iDetails.IsCardPayment = true; else iDetails.IsCardPayment = false;
 
             return iDetails;
-            
+
         }
 
 
     }
-   public class InvoiceDetails
+    public class InvoiceDetails
     {
         public SaleInvoiceView Invoice;
         public bool IsCardPayment;
@@ -64,7 +66,7 @@ namespace AprajitaRetails.Areas.Sales.Data
         public string CardType;
         public string AuthCode;
 
-        public static SaleInvoiceView CopyTo(RegularInvoice inv , List<RegularSaleItem> sItems)
+        public static SaleInvoiceView CopyTo(RegularInvoice inv, List<RegularSaleItem> sItems)
         {
             List<SaleItemView> saleItems = new List<SaleItemView>();
             foreach (var item in sItems)
@@ -76,7 +78,8 @@ namespace AprajitaRetails.Areas.Sales.Data
                     MRP = item.MRP,
                     Qty = item.Qty,
                     ProductName = item.ProductItem.ProductName,
-                    SmCode = item.Salesman.SalesmanName, Units="Pcs/Mtrs"
+                    SmCode = item.Salesman.SalesmanName,
+                    Units = "Pcs/Mtrs"
                 };
                 saleItems.Add(si);
                 //TODO: add unit name
@@ -110,7 +113,7 @@ namespace AprajitaRetails.Areas.Sales.Data
             }
 
             return vm;
-        
+
         }
     }
 

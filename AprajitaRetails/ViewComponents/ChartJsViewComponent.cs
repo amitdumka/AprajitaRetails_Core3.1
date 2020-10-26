@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace AprajitaRetails.ViewComponents
 {
-    [ViewComponent (Name = "chartjs")]
+    [ViewComponent(Name = "chartjs")]
     public class ChartJsViewComponent : ViewComponent
     {
         private readonly AprajitaRetailsContext db;
@@ -64,18 +64,18 @@ namespace AprajitaRetails.ViewComponents
                 }
             }";
 
-            var chart = JsonConvert.DeserializeObject<ChartJs> (chartData);
+            var chart = JsonConvert.DeserializeObject<ChartJs>(chartData);
 
             var chartModel = new ChartJsViewModel
             {
                 Chart = chart,
-                ChartJson = JsonConvert.SerializeObject (chart, new JsonSerializerSettings
+                ChartJson = JsonConvert.SerializeObject(chart, new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 })
             };
 
-            return View (chartModel);
+            return View(chartModel);
         }
     }
 }

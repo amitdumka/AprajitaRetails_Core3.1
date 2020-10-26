@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 //    | +----------- min(0 - 59)
 //   +------------- sec(0 - 59)
 
-namespace AprajitaRetails.Ops.CornJobs.Jobs
+namespace AprajitaRetails.Ops.CornJobs
 {
     public class CronJobService : BackgroundService
     {
@@ -55,7 +55,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
             _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence(DateTime.Now);
             _nextRunForPaySlip = _scheduleForPaySlip.GetNextOccurrence(DateTime.Now);
-          //  MyMail.SendEmail($"CronJob Service Creation. {DateTime.Now.ToString()}", $" Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
+            //  MyMail.SendEmail($"CronJob Service Creation. {DateTime.Now.ToString()}", $" Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -77,7 +77,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
                         }
 
                         _nextRun = _schedule.GetNextOccurrence(DateTime.Now);
-                        MyMail.SendEmail("CronJob Service Execution of AttandenceChecker ", $"Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
+                        // MyMail.SendEmail("CronJob Service Execution of AttandenceChecker ", $"Attendance Checker on {_nextRun.ToString()}.", "amitnarayansah@gmail.com");
                     }
                     await Task.Delay(50000, stoppingToken); //5 seconds delay
 
@@ -91,7 +91,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
                         }
 
                         _nextRunForCashCorrection = _scheduleForCashCorrection.GetNextOccurrence(DateTime.Now);
-                        MyMail.SendEmail("CronJob Service Execution of Cash Correction ", $"Cash Correction  on {_nextRunForCashCorrection.ToString()}.", "amitnarayansah@gmail.com");
+                        // MyMail.SendEmail("CronJob Service Execution of Cash Correction ", $"Cash Correction  on {_nextRunForCashCorrection.ToString()}.", "amitnarayansah@gmail.com");
                     }
                     await Task.Delay(50000, stoppingToken); //5 seconds delay
 
@@ -106,7 +106,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
                         }
 
                         _nextRunForPaySlip = _scheduleForPaySlip.GetNextOccurrence(DateTime.Now);
-                        MyMail.SendEmail("CronJob Service Execution of PaySlip  ", $"PaySlip   on {_nextRunForPaySlip.ToString()}.", "amitnarayansah@gmail.com");
+                        // MyMail.SendEmail("CronJob Service Execution of PaySlip  ", $"PaySlip   on {_nextRunForPaySlip.ToString()}.", "amitnarayansah@gmail.com");
                     }
                     await Task.Delay(50000, stoppingToken); //5 seconds delay
                 }
@@ -115,7 +115,7 @@ namespace AprajitaRetails.Ops.CornJobs.Jobs
             catch (Exception ex)
             {
                 MyMail.SendEmail($"Error On Cron Serive Ex . {DateTime.Now.ToString()}", $"Error Occured!.Msg= {ex.Message}\n Inner Exp= {ex.InnerException}\n Stack Tracce= {ex.StackTrace} ", "amitnarayansah@gmail.com");
-              
+
             }
         }
     }

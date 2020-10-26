@@ -42,7 +42,7 @@ namespace AprajitaRetails.Ops.Uploader
                 {
                     @return.Success = true;
                     @return.SuccessMessage = $"Record Added Successful.#InvoiceId={vBInvoice.VBInvoiceId} on @{DateTime.Now}";
-                   
+
                     AddUpdateCustomer(db, invoice, vBInvoice.StoreId);
 
                     int invNo = (int?)db.DailySales.Where(c => c.InvNo == vBInvoice.InvoiceNumber).Select(c => c.DailySaleId).FirstOrDefault() ?? 0;
@@ -222,7 +222,8 @@ namespace AprajitaRetails.Ops.Uploader
             var cust = Invo.customer;
 
             var customer = db.Customers.Where(c => c.MobileNo == cust.mobile).FirstOrDefault();
-            if (customer != null) {
+            if (customer != null)
+            {
 
                 customer.TotalAmount += Invo.bill_gross_amount;
                 customer.NoOfBills++;

@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using AprajitaRetails.Areas.Uploader.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AprajitaRetails.Areas.Uploader.Models;
-using AprajitaRetails.Data;
 
 namespace AprajitaRetails.Areas.Imported.Controllers
 {
@@ -68,7 +66,8 @@ namespace AprajitaRetails.Areas.Imported.Controllers
         }
 
         // GET: Uploader/ImportInWards/Edit/5
-         [Authorize(Roles = "Admin,PowerUser")] public async Task<IActionResult> Edit(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -88,7 +87,8 @@ namespace AprajitaRetails.Areas.Imported.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "Admin,PowerUser")]     public async Task<IActionResult> Edit(int id, [Bind("ImportInWardId,InWardNo,InWardDate,InvoiceNo,InvoiceDate,PartyName,TotalQty,TotalMRPValue,TotalCost,ImportDate")] ImportInWard importInWard)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Edit(int id, [Bind("ImportInWardId,InWardNo,InWardDate,InvoiceNo,InvoiceDate,PartyName,TotalQty,TotalMRPValue,TotalCost,ImportDate")] ImportInWard importInWard)
         {
             if (id != importInWard.ImportInWardId)
             {
@@ -119,7 +119,8 @@ namespace AprajitaRetails.Areas.Imported.Controllers
         }
 
         // GET: Uploader/ImportInWards/Delete/5
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> Delete(int? id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -139,7 +140,8 @@ namespace AprajitaRetails.Areas.Imported.Controllers
         // POST: Uploader/ImportInWards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-         [Authorize (Roles = "Admin,PowerUser")]   public async Task<IActionResult> DeleteConfirmed(int id)
+        [Authorize(Roles = "Admin,PowerUser")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var importInWard = await _context.ImportInWards.FindAsync(id);
             _context.ImportInWards.Remove(importInWard);

@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AprajitaRetails.Areas.Reports.Ops;
 using AprajitaRetails.Data;
-
 using AprajitaRetails.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using AprajitaRetails.Areas.Reports.Ops;
+using System;
 
 namespace AprajitaRetails.Controllers
 {
@@ -24,7 +20,7 @@ namespace AprajitaRetails.Controllers
             DateTime onDate = DateTime.Today;
             if (ondate != null)
             {
-                onDate = ondate??DateTime.Today;
+                onDate = ondate ?? DateTime.Today;
             }
 
             IncomeExpensesReport ierData;
@@ -32,18 +28,19 @@ namespace AprajitaRetails.Controllers
             if (id == 1)
             {
 
-                ierData =dM.GetDailyReport(_context, onDate);
-            }else if (id == 7)
+                ierData = dM.GetDailyReport(_context, onDate);
+            }
+            else if (id == 7)
             {
-                ierData =dM.GetWeeklyReport(_context);
+                ierData = dM.GetWeeklyReport(_context);
             }
             else if (id == 30)
             {
-                ierData =dM.GetMonthlyReport(_context, onDate);
+                ierData = dM.GetMonthlyReport(_context, onDate);
             }
             else if (id == 365)
             {
-                ierData =dM.GetYearlyReport(_context, onDate);
+                ierData = dM.GetYearlyReport(_context, onDate);
             }
             else if (id == 600)
             {
@@ -54,21 +51,22 @@ namespace AprajitaRetails.Controllers
                 ierData = dM.GetDailyReport(_context, onDate);
             }
 
-           return View(ierData);
+            return View(ierData);
         }
 
         public IActionResult IEReport()
         {
             IEReport dM = new IEReport();
-            IERVM data = new IERVM { 
+            IERVM data = new IERVM
+            {
 
-                CurrentWeek=dM.GetWeeklyReport(_context),
-                Monthly=dM.GetMonthlyReport(_context,DateTime.Today), 
-                Today=dM.GetDailyReport(_context,DateTime.Today),
-                Yearly=dM.GetYearlyReport(_context, DateTime.Today)
+                CurrentWeek = dM.GetWeeklyReport(_context),
+                Monthly = dM.GetMonthlyReport(_context, DateTime.Today),
+                Today = dM.GetDailyReport(_context, DateTime.Today),
+                Yearly = dM.GetYearlyReport(_context, DateTime.Today)
             };
 
-           return View(data);
+            return View(data);
         }
 
     }

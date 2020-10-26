@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace AprajitaRetails.Areas.ToDo.Extensions
 {
@@ -8,8 +8,8 @@ namespace AprajitaRetails.Areas.ToDo.Extensions
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
         {
-            return emailSender.SendEmailAsync (email, "Confirm your email",
-                $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode (link)}'>link</a>");
+            return emailSender.SendEmailAsync(email, "Confirm your email",
+                $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
         }
     }
 }
