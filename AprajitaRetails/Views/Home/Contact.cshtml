@@ -1,19 +1,132 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+@*<h2>@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>
 
-<address>
-    The Arvind Store, Dumka
-    Bhagalpur Road, Dumka<br />
-    Near TATA Showroom. Dumka, Jharkhand 814101<br />
-    <abbr title="Phone">P:</abbr>
-   06434-224461
-</address>
+    <address>
+        The Arvind Store, Dumka
+        Bhagalpur Road, Dumka<br />
+        Near TATA Showroom. Dumka, Jharkhand 814101<br />
+        <abbr title="Phone">P:</abbr>
+       06434-224461
+    </address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:thearvindstoredumka@gmail.com">thearvindstoredumka@gmail.com</a><br />
-    <strong>Admin:</strong> <a href="mailto:amitnarayansah@gmail.com">amitnarayansah@gmail.com</a><br />
-    <strong>Locate Us: </strong><a href="https://www.thearvindstore.com/store-locator/store-locator/">Click to Visit</a><br />
-</address>
+    <address>
+        <strong>Support:</strong>   <a href="mailto:thearvindstoredumka@gmail.com">thearvindstoredumka@gmail.com</a><br />
+        <strong>Admin:</strong> <a href="mailto:amitnarayansah@gmail.com">amitnarayansah@gmail.com</a><br />
+        <strong>Locate Us: </strong><a href="https://www.thearvindstore.com/store-locator/store-locator/">Click to Visit</a><br />
+    </address>*@
+
+<div class="container my-5 py-5 z-depth-1">
+
+
+    <!--Section: Content-->
+    <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+
+        <style>
+            .map-container {
+                height: 200px;
+                position: relative;
+            }
+
+                .map-container iframe {
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                }
+        </style>
+
+        <!--Google map-->
+        <div id="map-container-google-1" class="z-depth-1 map-container mb-5">
+            @*<iframe src="Arvind+Fashion+Possibilities+-+Near+Tata+Showroom,+Dumka&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                    style="border:0" allowfullscreen></iframe>*@
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7274.68111747111!2d87.24682672658727!3d24.264832718376063!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f0b7b12f9def97%3A0x13000983f7a74f7c!2sArvind%20Fashion%20Possibilities%20-%20Near%20Tata%20Showroom%2C%20Dumka!5e0!3m2!1sen!2sin!4v1603801642241!5m2!1sen!2sin"
+                    width="600" height="450" frameborder="0" style="border:0;" allowfullscreen aria-hidden="false" ></iframe>
+        </div>
+        <!--Google Maps-->
+        <!--Grid row-->
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-lg-5 col-md-12 mb-0 mb-md-0">
+
+                <h3 class="font-weight-bold">Contact Us</h3>
+
+                <p class="text-muted">
+                  We are The Arvind Store FOFO Store. We deals in Fabrics, Readmade garments and Custom Tailoring. We have many brands in our Store like USPA, FM, Arrow,
+                    TrueBlue, Arvind Ready To Wear, Tresca, Primante, etc. . 
+                </p>
+
+                <p><span class="font-weight-bold mr-2">Email:</span> <a href="mailto:thearvindstoredumka@gmail.com">thearvindstoredumka@gmail.com</a></p>
+                <p><span  class="font-weight-bold mr-2">Admin:</span><a href="mailto:amitnarayansah@gmail.com">amitnarayansah@gmail.com</a></p>
+                <p><span class="font-weight-bold mr-2">Phone:</span><a href="">+91-6434-224461</a></p>
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-lg-7 col-md-12 mb-4 mb-md-0">
+
+                <!--Grid row-->
+                <div class="row">
+
+                    <!--Grid column-->
+                    <div class="col-md-6">
+
+                        <!-- Material outline input -->
+                        <div class="md-form md-outline mb-0">
+                            <input type="text" id="form-first-name" class="form-control">
+                            <label for="form-first-name">First name</label>
+                        </div>
+
+                    </div>
+                    <!--Grid column-->
+                    <!--Grid column-->
+                    <div class="col-md-6">
+
+                        <!-- Material outline input -->
+                        <div class="md-form md-outline mb-0">
+                            <input type="text" id="form-last-name" class="form-control">
+                            <label for="form-last-name">Last name</label>
+                        </div>
+
+                    </div>
+                    <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+                <!-- Material outline input -->
+                <div class="md-form md-outline mt-3">
+                    <input type="email" id="form-email" class="form-control">
+                    <label for="form-email">E-mail</label>
+                </div>
+
+                <!-- Material outline input -->
+                <div class="md-form md-outline">
+                    <input type="text" id="form-subject" class="form-control">
+                    <label for="form-subject">Subject</label>
+                </div>
+
+                <!--Material textarea-->
+                <div class="md-form md-outline mb-3">
+                    <textarea id="form-message" class="md-textarea form-control" rows="3"></textarea>
+                    <label for="form-message">How we can help?</label>
+                </div>
+
+                <button type="submit" class="btn btn-info btn-sm ml-0">Submit<i class="far fa-paper-plane ml-2"></i></button>
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+
+    </section>
+    <!--Section: Content-->
+
+
+</div>
+

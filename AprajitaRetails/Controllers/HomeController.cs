@@ -61,5 +61,9 @@ namespace AprajitaRetails.Controllers
         {
             return View();
         }
+        public IActionResult OurTeams()
+        {
+            return View();
+        }
     }
 }
