@@ -1,48 +1,91 @@
-﻿@page
+﻿
+@page
 @model LoginModel
+    <style>
+        .form-elegant .font-small {
+            font-size: 0.8rem;
+        }
 
+        .form-elegant .z-depth-1a {
+            -webkit-box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+            box-shadow: 0 2px 5px 0 rgba(55, 161, 255, 0.26), 0 4px 12px 0 rgba(121, 155, 254, 0.25);
+        }
+
+        .form-elegant .z-depth-1-half,
+        .form-elegant .btn:hover {
+            -webkit-box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+            box-shadow: 0 5px 11px 0 rgba(85, 182, 255, 0.28), 0 4px 15px 0 rgba(36, 133, 255, 0.15);
+        }
+    </style>
 @{
     ViewData["Title"] = "Log in";
 }
 
 @*<h2>@ViewData["Title"]: Aprajita Retails, Dumka</h2>*@
+
 <div class="row">
     <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <section class="form-elegant">
+            
+            <div class="card">
+                <!--Header-->
+                <div class="text-center">
+                    <h3 class="blue-text mt-2 mb-3"><strong>Sign in</strong></h3>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <div class="card-body mx-4">
+                    <form id="account" method="post">
+                        <h6>(Use a local account to log in).</h6>
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="md-form input-with-pre-icon">
+                            <i class="fas fa-user prefix"></i>
+                            <label asp-for="Input.Email"></label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="md-form  input-with-pre-icon pb-3">
+                            <i class="fas fa-lock prefix"></i>
+                            <label asp-for="Input.Password"></label>
+                            <input asp-for="Input.Password" class="form-control" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            <p class="font-small blue-text d-flex justify-content-end">
+                                Forgot  <a id="forgot-password" asp-page="./ForgotPassword" class="blue-text ml-1">
+                                    Password?
+                                </a>
+                            </p>
+                        </div>
+                        <div class="form-group" >
+                            <div class="form-check custom-checkbox">
+                                <label asp-for="Input.RememberMe">
+                                    <input asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        
+
+                        <div class="text-center mb-3 mt-5">
+                            <button type="submit" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Sign in</button>
+                        </div>
+                        @*<div class="form-group">
+                            <p>
+                                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                            </p>
+                            <p>
+                                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                            </p>
+                        </div>*@
+                    </form>
+
                 </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+
+                <!--Footer-->
+                <div class="modal-footer mx-5 pt-3 mb-1">
+                    <p class="font-small grey-text d-flex justify-content-end">
+                        Not a member?<a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="blue-text ml-1">Sign Up</a>
                     </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
                 </div>
-            </form>
+            </div>
         </section>
     </div>
     <div class="col-md-6 col-md-offset-2 invisible">

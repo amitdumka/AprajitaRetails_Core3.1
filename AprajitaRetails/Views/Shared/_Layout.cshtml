@@ -23,6 +23,9 @@
     @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">*@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" type="image/x-icon" class="flaticon-groom" />
+    @*<link rel="stylesheet" href='https://cdn.jsdelivr.net/npm@mdi/font@4.7.95/css/materialdesignicons.min.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">*@
+
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
 
@@ -32,8 +35,8 @@
             <img src="~/AprajitaRetails.png" alt="AprajitaRetails" class="small" height="35" />
             <div class="container-fluid">
                 @*<a class="navbar-brand text-danger  text-monospace" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/AprajitaRetails02.png" alt="AprajitaRetails" class="small " height="35" />AR
-                </a>*@
+                        <img src="~/AprajitaRetails02.png" alt="AprajitaRetails" class="small " height="35" />AR
+                    </a>*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -254,7 +257,7 @@
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                     <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">Daily Sale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
                     @*<a class="nav-link" href="#">Sale</a>
-        <a class="nav-link" href="#">Purchase</a>*@
+                        <a class="nav-link" href="#">Purchase</a>*@
                     <a class="nav-link" asp-area="Sales" asp-controller="ManualInvoice" asp-action="Index">Manual Bill</a>
                     <a class="nav-link" asp-area="PayRoll" asp-controller="Attendances" asp-action="Index">Attendance</a>
                     <a class="nav-link" asp-area="Expenses" asp-controller="PettyCashExpenses" asp-action="Index">Cash Expenses</a>
@@ -267,7 +270,7 @@
                         <a class="nav-link" asp-area="Accounts" asp-controller="CashBook" asp-action="Index">CashBook</a>
                         <a class="nav-link " asp-area="Voyager" asp-controller="ArvindPayments" asp-action="Index">Arvind Payments</a>
                     }
-                   
+
                 </nav>
             </div>
         }
@@ -342,7 +345,7 @@
     @*<script src="~/lib/signalr/dist/browser/signalr.js"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     @*<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>*@
-
+    <script src="https://kit.fontawesome.com/da2377c38b.js" crossorigin="anonymous"></script>
     @*<script src="~/js/chat.js"></script>*@
     <script>
         (function () {

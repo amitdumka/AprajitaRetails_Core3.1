@@ -19,8 +19,13 @@ namespace AprajitaRetails.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task<LocalRedirectResult> OnGetAsync()
         {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            
+                return LocalRedirect("/Home");
+            
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)

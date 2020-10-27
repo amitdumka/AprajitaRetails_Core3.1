@@ -19,13 +19,16 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary" aria-labelledby="navbarDropdownMenuLink-55">
             <div class="dropdown-item">
-                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user red-text"></i> Profile </a>
+                <a class="dropdown-item text-info" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user"></i> Profile </a>
             </div>
             <div class="dropdown-item">
-                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Manage/ChangePassword"><i class="fas fa-user-edit red-text"></i> Change Password</a>
+                <a class="dropdown-item text-success" asp-area="Identity" asp-page="/Account/Manage/ChangePassword"><i class="fas fa-user-edit "></i> Change Password</a>
             </div>
             <div class="dropdown-item">
-                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus red-text"></i> Add User</a>
+                <a class="dropdown-item text-primary" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus "></i> Add User</a>
+            </div>
+            <div class="dropdown-item">
+                <a class="dropdown-item text-warning" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"> <i class="fa fa-sign-out"></i>LogOut</a>
             </div>
             @*<form class="dropdown-item form-inline form-sm m-0 " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="dropdown-item nav-link text-primary"><span class="red-text" data-feather="log-out"></span> LogOut </button>
@@ -34,7 +37,7 @@
     </li>
    <li class="nav-item ">
         <form  class="form-inline form-sm " asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark btn-sm"><span  class="red-text" data-feather="log-out" ></span></button>
+            <button  type="submit" class="nav-link btn btn-link text-dark btn-sm"><i class="fa fa-sign-out red-text fa-lg"></i></button>
         </form>
     </li>
 }
