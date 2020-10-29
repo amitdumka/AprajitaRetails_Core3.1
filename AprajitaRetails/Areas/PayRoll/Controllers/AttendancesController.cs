@@ -2,6 +2,7 @@
 using AprajitaRetails.Models;
 using AprajitaRetails.Models.Helpers;
 using AprajitaRetails.Ops.Triggers;
+using AprajitaRetails.Ops.Validation;
 using Castle.Core.Internal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -182,9 +183,17 @@ namespace AprajitaRetails.Areas.PayRoll.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AttendanceId,EmployeeId,AttDate,EntryTime,Status,Remarks")] Attendance attendance)
         {
+            ViewBag.ErrorMessage = "";
             //TODO: Fetch StoreID from session. 
             if (ModelState.IsValid)
             {
+                if ( DBValidation.AttendanceDuplicateCheck (_context, attendance) )
+                {
+                    ViewBag.ErrorMessage = "Attendance already added!.";
+                    ViewData ["EmployeeId"] = new SelectList (_context.Employees.Where (c => c.StoreId == StoreId && c.IsWorking), "EmployeeId", "StaffName", attendance.EmployeeId);
+                    return PartialView (attendance);
+                }
+
                 attendance.StoreId = StoreId;
                 attendance.UserName = User.Identity.Name;
                 var eType = _context.Employees.Find(attendance.EmployeeId).Category;

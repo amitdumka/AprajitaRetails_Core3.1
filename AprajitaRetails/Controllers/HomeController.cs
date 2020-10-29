@@ -2,6 +2,7 @@
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
 using AprajitaRetails.Models.ViewModels;
+using AprajitaRetails.Ops.TAS.Mails;
 using AprajitaRetails.Ops.WidgetModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -46,6 +47,15 @@ namespace AprajitaRetails.Controllers
         {
             ViewBag.Message = "Contact Us.";
             return View();
+        }
+
+        public JsonResult ContactUs([FromBody]ContactUsVM data)
+        {
+
+            MyMail.SendEmail (data.Subject,$"Email:{data.EmailId}\n Message: {data.Message}","amitnarayansah@.com");
+
+            return Json ("OK");
+            
         }
         public IActionResult Privacy()
         {

@@ -6,6 +6,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AprajitaRetails.Models.ViewModels
 {
+
+    public class ContactUsVM
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EmailId { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+    }
+
     public class ManaulSaleReport
     {
         public decimal DailySale { get; set; }

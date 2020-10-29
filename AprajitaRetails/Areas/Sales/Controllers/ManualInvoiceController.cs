@@ -81,7 +81,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 logger.LogError($"ManualInvoice:GetInvoiceDetails # {errMsg}!");
                 return Json(new { Msg = errMsg, Error = "true" });
             }
-            retunDetails.Msg = "Data is loaded successfuly";
+            retunDetails.Msg = "Data is loaded successfully";
             retunDetails.Error = "OK";
             return Json(retunDetails);
         }
