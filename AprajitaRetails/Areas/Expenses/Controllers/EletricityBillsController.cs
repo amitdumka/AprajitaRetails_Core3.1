@@ -47,7 +47,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // GET: Expenses/EletricityBills/Create
         public IActionResult Create()
         {
-            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ElectricityConnectionId");
+            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ConnectioName");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ElectricityConnectionId", eletricityBill.ElectricityConnectionId);
+            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ConnectioName", eletricityBill.ElectricityConnectionId);
             return View(eletricityBill);
         }
 
@@ -81,7 +81,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
-            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ElectricityConnectionId", eletricityBill.ElectricityConnectionId);
+            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ConnectioName", eletricityBill.ElectricityConnectionId);
             return View(eletricityBill);
         }
 
@@ -117,7 +117,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ElectricityConnectionId", eletricityBill.ElectricityConnectionId);
+            ViewData["ElectricityConnectionId"] = new SelectList(_context.ElectricityConnections, "ElectricityConnectionId", "ConnectioName", eletricityBill.ElectricityConnectionId);
             return View(eletricityBill);
         }
 

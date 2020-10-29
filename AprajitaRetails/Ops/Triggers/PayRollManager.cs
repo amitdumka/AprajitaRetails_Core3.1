@@ -16,9 +16,9 @@ namespace AprajitaRetails.Ops.Triggers
                 if (!isDeleted && !isUpdated)
                 {
                     var sName = db.Employees.Find(attendance.EmployeeId).StaffName;
-                    if (attendance.Status != AttUnit.Present || attendance.Status != AttUnit.Sunday || attendance.Status != AttUnit.SundayHoliday)
+                    if (attendance.Status != AttUnit.Present && attendance.Status != AttUnit.Sunday && attendance.Status != AttUnit.SundayHoliday)
                     {
-                        MyMail.SendEmail(sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
+                        MyMail.SendEmail("Att(+):\t"+sName + " Attendance Report status.", sName + " is not present and current status is " + attendance.Status + " on date " + attendance.AttDate, "amitnarayansah@gmail.com");
                     }
 
                     HRMBot.NotifyStaffAttandance(db, sName, attendance.AttendanceId, attendance.Status, attendance.EntryTime);

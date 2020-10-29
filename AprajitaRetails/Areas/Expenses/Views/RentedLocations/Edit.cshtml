@@ -65,7 +65,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="RentType" class="control-label"></label>
-                <select asp-for="RentType" class="form-control"></select>
+                <select asp-for="RentType" class="form-control"  asp-items="Html.GetEnumSelectList<RentType>()"></select>
                 <span asp-validation-for="RentType" class="text-danger"></span>
             </div>
             <div class="form-group">

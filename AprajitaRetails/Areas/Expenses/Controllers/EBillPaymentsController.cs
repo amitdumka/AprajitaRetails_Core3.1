@@ -47,7 +47,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // GET: Expenses/EBillPayments/Create
         public IActionResult Create()
         {
-            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "EletricityBillId");
+            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "BillNumber");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "EletricityBillId", eBillPayment.EletricityBillId);
+            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "BillNumber", eBillPayment.EletricityBillId);
             return View(eBillPayment);
         }
 
@@ -81,7 +81,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
-            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "EletricityBillId", eBillPayment.EletricityBillId);
+            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "BillNumber", eBillPayment.EletricityBillId);
             return View(eBillPayment);
         }
 
@@ -117,7 +117,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "EletricityBillId", eBillPayment.EletricityBillId);
+            ViewData["EletricityBillId"] = new SelectList(_context.EletricityBills, "EletricityBillId", "BillNumber", eBillPayment.EletricityBillId);
             return View(eBillPayment);
         }
 
