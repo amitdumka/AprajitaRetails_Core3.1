@@ -9,8 +9,48 @@
     <Import_RootNamespace>AprajitaRetails.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\AccountInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\AccountNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\BankDeposit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\BankWithdrawal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\CashDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\CashInBank.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\CashInHand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\CashPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\CashReceipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\ChequesLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\DueRecoverd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\DuesList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\EndOfDay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\Expense.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\LedgerHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\MonthEnd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\Payment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\PettyCashExpense.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\Receipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\SalaryPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\Salesman.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\StaffAdvancePayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\StaffAdvanceReceipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\SuspenseAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\TableList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\TelegramAuthUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\ToDoMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\TranscationMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ArvindAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ArvindPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Customer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Store.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TailorAttendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TailoringEmployee.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TailoringSalaryPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TailoringStaffAdvancePayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TailoringStaffAdvanceReceipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TalioringBooking.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TalioringDelivery.cs" />
   </ItemGroup>
 </Project>
