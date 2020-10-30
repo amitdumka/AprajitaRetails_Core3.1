@@ -9,10 +9,217 @@
     <Import_RootNamespace>AprajitaRetails.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ApplicationDbContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\AprajitaRetailsContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Json\JsonToObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs">
+      <DependentUpon>00000000000000_CreateIdentitySchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Migrations\ApplicationDbContextModelSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Types\DataTypes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200121212405_InitialCreate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200121212405_InitialCreate.Designer.cs">
+      <DependentUpon>20200121212405_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200121215506_defaultSeedAdded.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200121215506_defaultSeedAdded.Designer.cs">
+      <DependentUpon>20200121215506_defaultSeedAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200124182828_DailySale_matchwithyoy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200124182828_DailySale_matchwithyoy.Designer.cs">
+      <DependentUpon>20200124182828_DailySale_matchwithyoy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200202212414_chatHub.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200202212414_chatHub.Designer.cs">
+      <DependentUpon>20200202212414_chatHub.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200203145928_chatHub_userid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200203145928_chatHub_userid.Designer.cs">
+      <DependentUpon>20200203145928_chatHub_userid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200205200657_Emp_Category_add.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200205200657_Emp_Category_add.Designer.cs">
+      <DependentUpon>20200205200657_Emp_Category_add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200205211558_CurSal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200205211558_CurSal.Designer.cs">
+      <DependentUpon>20200205211558_CurSal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200217094913_AddressBook.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200217094913_AddressBook.Designer.cs">
+      <DependentUpon>20200217094913_AddressBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200217111311_AddressBook_null.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200217111311_AddressBook_null.Designer.cs">
+      <DependentUpon>20200217111311_AddressBook_null.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200221191017_Telegram.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200221191017_Telegram.Designer.cs">
+      <DependentUpon>20200221191017_Telegram.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200226045900_Todomessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200226045900_Todomessage.Designer.cs">
+      <DependentUpon>20200226045900_Todomessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200226051232_Todomessage_date.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200226051232_Todomessage_date.Designer.cs">
+      <DependentUpon>20200226051232_Todomessage_date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200305123023_cashDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200305123023_cashDetails.Designer.cs">
+      <DependentUpon>20200305123023_cashDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200306105132_TODO_New.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200306105132_TODO_New.Designer.cs">
+      <DependentUpon>20200306105132_TODO_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200318073845_BankAccInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200318073845_BankAccInfo.Designer.cs">
+      <DependentUpon>20200318073845_BankAccInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200319163154_todo_public.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200319163154_todo_public.Designer.cs">
+      <DependentUpon>20200319163154_todo_public.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200809155251_DBUnity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200809155251_DBUnity.Designer.cs">
+      <DependentUpon>20200809155251_DBUnity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200812080710_BookEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200812080710_BookEntry.Designer.cs">
+      <DependentUpon>20200812080710_BookEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200812085516_BookEntry_Date.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200812085516_BookEntry_Date.Designer.cs">
+      <DependentUpon>20200812085516_BookEntry_Date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200818184733_OnlineSaleReturns.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200818184733_OnlineSaleReturns.Designer.cs">
+      <DependentUpon>20200818184733_OnlineSaleReturns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200901100424_PaymentDetailsAdd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200901100424_PaymentDetailsAdd.Designer.cs">
+      <DependentUpon>20200901100424_PaymentDetailsAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200901101525_bugfxed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200901101525_bugfxed.Designer.cs">
+      <DependentUpon>20200901101525_bugfxed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200901101954_bugfxed2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200901101954_bugfxed2.Designer.cs">
+      <DependentUpon>20200901101954_bugfxed2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200902145457_PayRemove.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200902145457_PayRemove.Designer.cs">
+      <DependentUpon>20200902145457_PayRemove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200902160958_RegularInvoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200902160958_RegularInvoice.Designer.cs">
+      <DependentUpon>20200902160958_RegularInvoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200902165239_InvCust.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200902165239_InvCust.Designer.cs">
+      <DependentUpon>20200902165239_InvCust.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200904081023_SaleTax.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200904081023_SaleTax.Designer.cs">
+      <DependentUpon>20200904081023_SaleTax.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200904144920_AutoGenBug.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200904144920_AutoGenBug.Designer.cs">
+      <DependentUpon>20200904144920_AutoGenBug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200906134239_HSNCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200906134239_HSNCode.Designer.cs">
+      <DependentUpon>20200906134239_HSNCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200911080458_RegisterUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200911080458_RegisterUser.Designer.cs">
+      <DependentUpon>20200911080458_RegisterUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200912063556_staffadvMove.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200912063556_staffadvMove.Designer.cs">
+      <DependentUpon>20200912063556_staffadvMove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200921162306_EmpUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200921162306_EmpUser.Designer.cs">
+      <DependentUpon>20200921162306_EmpUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200924155452_SalesmanSalary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200924155452_SalesmanSalary.Designer.cs">
+      <DependentUpon>20200924155452_SalesmanSalary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200925104316_Emp_Email.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200925104316_Emp_Email.Designer.cs">
+      <DependentUpon>20200925104316_Emp_Email.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200925124201_istailor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200925124201_istailor.Designer.cs">
+      <DependentUpon>20200925124201_istailor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200926091015_EmpDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200926091015_EmpDetails.Designer.cs">
+      <DependentUpon>20200926091015_EmpDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200927075036_BankSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200927075036_BankSystem.Designer.cs">
+      <DependentUpon>20200927075036_BankSystem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200927172258_BankSetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200927172258_BankSetting.Designer.cs">
+      <DependentUpon>20200927172258_BankSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200928094625_LP.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200928094625_LP.Designer.cs">
+      <DependentUpon>20200928094625_LP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200928140056_EDCPayments.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200928140056_EDCPayments.Designer.cs">
+      <DependentUpon>20200928140056_EDCPayments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200928140848_EDCPaymentsFix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200928140848_EDCPaymentsFix.Designer.cs">
+      <DependentUpon>20200928140848_EDCPaymentsFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200929151838_testingCM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20200929151838_testingCM.Designer.cs">
+      <DependentUpon>20200929151838_testingCM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201005123451_purchasesearch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201005123451_purchasesearch.Designer.cs">
+      <DependentUpon>20201005123451_purchasesearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201006085142_removeParty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201006085142_removeParty.Designer.cs">
+      <DependentUpon>20201006085142_removeParty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201007080850_Newaccounting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201007080850_Newaccounting.Designer.cs">
+      <DependentUpon>20201007080850_Newaccounting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201012082642_voybill.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201012082642_voybill.Designer.cs">
+      <DependentUpon>20201012082642_voybill.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201024101313_RentElec.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201024101313_RentElec.Designer.cs">
+      <DependentUpon>20201024101313_RentElec.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201024144319_RentElecFix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201024144319_RentElecFix.Designer.cs">
+      <DependentUpon>20201024144319_RentElecFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201024145007_RentElecFix2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\20201024145007_RentElecFix2.Designer.cs">
+      <DependentUpon>20201024145007_RentElecFix2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\AprajitaRetailsContextModelSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\temp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Migrations\VoyagerContextModelSnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\AccountInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\AccountNumber.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AprajitaRetails\BankDeposit.cs" />
@@ -44,6 +251,84 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\ArvindAccount.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ArvindPayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Customer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\AccountInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\AccountNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\AccountsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\AppInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ArvindAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ArvindPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Attendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Bank.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\BankDeposit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\BankWithdrawal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\BasicVoucher.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\BookEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Brand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\CashDetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\CashInBank.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\CashInHand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\CashPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\CashReceipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ChequesLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Class.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Contacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\CurrentSalary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Customer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\DailySale.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\DueRecoverd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\DuesList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ElectricityConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Employee.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\EndOfDay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Expense.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\HSN.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ImportInWards.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ImportPurchase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ImportSaleItemWise.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ImportSaleItemWiseVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ImportSaleRegister.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\InputData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Invoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\LedgerEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\LedgerHead.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\LedgerMaster.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\LedgerType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\MonthEnd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\OnlineSale.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\OnlineVendor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Party (2).cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Party.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Payment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\PaySlip.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\PettyCashExpense.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ProductItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ProductPurchase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\PurchaseItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Receipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\RegisteredUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\RentedLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ReturnInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\RoleUserView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\SalaryPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\SaleInvoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Salesman.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\StaffAdvancePayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\StaffAdvanceReceipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Stock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\Store.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\StoreLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\SuspenseAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TableList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TailorAttendance.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TailoringEmployee.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TailoringSalaryPayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TailoringStaffAdvancePayment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TailoringStaffAdvanceReceipt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TalioringBooking.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TalioringDelivery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TelegramAuthUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\ToDoMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Mo\TranscationMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Store.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TailorAttendance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TailoringEmployee.cs" />
@@ -52,5 +337,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\TailoringStaffAdvanceReceipt.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TalioringBooking.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TalioringDelivery.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Data\SqlClearQuery.sql" />
   </ItemGroup>
 </Project>
