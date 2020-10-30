@@ -32,7 +32,8 @@ namespace AprajitaRetails.Areas.Accounts.Models
     public class Rent
     {
         public int RentId { get; set; }
-        public int RentLocationId { get; set; }
+        [Display(Name ="Location")]
+        public int RentedLocationId { get; set; }
         public virtual RentedLocation Location { get; set; }
         public RentType RentType { get; set; }
 

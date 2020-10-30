@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RentLocationId)
+                @Html.DisplayNameFor(model => model.RentedLocationId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RentType)
@@ -43,7 +43,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RentLocationId)
+                @Html.DisplayFor(modelItem => item.Location.PlaceName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RentType)

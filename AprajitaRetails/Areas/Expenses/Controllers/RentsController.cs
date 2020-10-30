@@ -52,7 +52,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RentId,RentLocationId,RentType,OnDate,Period,Amount,Mode,PaymentDetails,Remarks")] Rent rent)
+        public async Task<IActionResult> Create([Bind("RentId,RentedLocationId,RentType,OnDate,Period,Amount,Mode,PaymentDetails,Remarks")] Rent rent)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RentId,RentLocationId,RentType,OnDate,Period,Amount,Mode,PaymentDetails,Remarks")] Rent rent)
+        public async Task<IActionResult> Edit(int id, [Bind("RentId,RentedLocationId,RentType,OnDate,Period,Amount,Mode,PaymentDetails,Remarks")] Rent rent)
         {
             if (id != rent.RentId)
             {
