@@ -13,3 +13,12 @@ https://www.c-sharpcorner.com/article/creating-charts-with-asp-net-core/
 https://docs.microsoft.com/en-us/aspnet/web-pages/overview/data/7-displaying-data-in-a-chart
 
   https://themeforest.net/item/aspstudio-net-core-31-mvc-bootstrap-4-admin-template/26633718?gclid=CjwKCAjw8-78BRA0EiwAFUw8LODmvSZ65SgqBE5Gy_rpKdfNEuYZvPs3fmdiHflNSvLad7GFNkhlIxoCvsAQAvD_BwE
+
+
+  Install-Package Grid.AspNetCore.Mvc -Version 1.0.0
+
+  Install-Package jQWidgets.AspNetCore.Mvc.Bootstrap.TagHelpers -Version 2.0.0
+
+  https://remixicon.com/
+
+  <i class="ri-pencil-fill"></i>
