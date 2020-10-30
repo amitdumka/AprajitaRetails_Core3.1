@@ -1,13 +1,18 @@
-﻿using AprajitaRetails.Areas.Accounts.Models;
-using AprajitaRetails.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using AprajitaRetails.Areas.Accounts.Models;
+using AprajitaRetails.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AprajitaRetails.Areas.Expenses.Controllers
 {
     [Area("Expenses")]
+    [Authorize]
     public class RentsController : Controller
     {
         private readonly AprajitaRetailsContext _context;
@@ -20,7 +25,8 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // GET: Expenses/Rents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Rents.ToListAsync());
+            var aprajitaRetailsContext = _context.Rents.Include(r => r.Location);
+            return View(await aprajitaRetailsContext.ToListAsync());
         }
 
         // GET: Expenses/Rents/Details/5
@@ -32,6 +38,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             }
 
             var rent = await _context.Rents
+                .Include(r => r.Location)
                 .FirstOrDefaultAsync(m => m.RentId == id);
             if (rent == null)
             {
@@ -44,6 +51,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
         // GET: Expenses/Rents/Create
         public IActionResult Create()
         {
+            ViewData["RentedLocationId"] = new SelectList(_context.RentedLocations, "RentedLocationId", "PlaceName");
             return View();
         }
 
@@ -60,6 +68,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RentedLocationId"] = new SelectList(_context.RentedLocations, "RentedLocationId", "PlaceName", rent.RentedLocationId);
             return View(rent);
         }
 
@@ -76,6 +85,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             {
                 return NotFound();
             }
+            ViewData["RentedLocationId"] = new SelectList(_context.RentedLocations, "RentedLocationId", "PlaceName", rent.RentedLocationId);
             return View(rent);
         }
 
@@ -111,6 +121,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RentedLocationId"] = new SelectList(_context.RentedLocations, "RentedLocationId", "PlaceName", rent.RentedLocationId);
             return View(rent);
         }
 
@@ -123,6 +134,7 @@ namespace AprajitaRetails.Areas.Expenses.Controllers
             }
 
             var rent = await _context.Rents
+                .Include(r => r.Location)
                 .FirstOrDefaultAsync(m => m.RentId == id);
             if (rent == null)
             {
