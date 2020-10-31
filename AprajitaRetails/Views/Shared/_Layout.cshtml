@@ -24,7 +24,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="shortcut icon" type="image/x-icon" class="flaticon-groom" />
     @*<link rel="stylesheet" href='https://cdn.jsdelivr.net/npm@mdi/font@4.7.95/css/materialdesignicons.min.css'>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">*@
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">*@
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
 
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -107,15 +108,15 @@
                                     <p role="separator" class="dropdown-divider"></p>
 
                                     @*@if (Context.User.IsInRole("Admin"))
-                                    {
-                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
-                                        <p role="separator" class="dropdown-divider"></p>
-                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
-                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
-                                        <p role="separator" class="dropdown-divider"></p>
-                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
-                                        <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
-                                    }*@
+                                        {
+                                            <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailorAttendances" asp-action="Index">Attendances</a>
+                                            <p role="separator" class="dropdown-divider"></p>
+                                            <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringEmployees" asp-action="Index">Tailors</a>
+                                            <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringSalaryPayments" asp-action="Index">Salary</a>
+                                            <p role="separator" class="dropdown-divider"></p>
+                                            <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvancePayments" asp-action="Index">Advance Payments</a>
+                                            <a class="dropdown-item text-dark" asp-area="Tailoring" asp-controller="TailoringStaffAdvanceReceipts" asp-action="Index">Advance Receipts</a>
+                                        }*@
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -347,6 +348,7 @@
     @*<script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>*@
     <script src="https://kit.fontawesome.com/da2377c38b.js" crossorigin="anonymous"></script>
     @*<script src="~/js/chat.js"></script>*@
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <script>
         (function () {
             'use strict'
