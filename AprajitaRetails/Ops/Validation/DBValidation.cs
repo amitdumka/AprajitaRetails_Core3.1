@@ -18,11 +18,14 @@ namespace AprajitaRetails.Ops.Validation
         /// <returns></returns>
         public static bool AttendanceDuplicateCheck(AprajitaRetailsContext db, Attendance att)
         {
-            int flag = (int?) db.Attendances.Where (c => c.EmployeeId == att.EmployeeId && c.AttDate == c.AttDate).Select (c => c.AttendanceId).FirstOrDefault () ?? 0;
-            if ( flag > 0 )
+            var d =  db.Attendances.Where (c =>c.AttDate == att.AttDate && c.EmployeeId == att.EmployeeId).Select(c=> new { c.AttendanceId }).FirstOrDefault ();
+            
+            if ( d != null )
                 return true;
             else
-                return false;
+                return false; 
+
+           
 
         }
     }
