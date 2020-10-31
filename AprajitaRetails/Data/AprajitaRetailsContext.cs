@@ -1,5 +1,6 @@
 ﻿using AprajitaRetails.Areas.Accounts.Models;
 using AprajitaRetails.Areas.Admin.Models;
+using AprajitaRetails.Areas.Chat.Models;
 using AprajitaRetails.Areas.Purchase.Models;
 using AprajitaRetails.Areas.Sales.Models;
 using AprajitaRetails.Areas.Sales.Models.Views;
@@ -176,7 +177,7 @@ namespace AprajitaRetails.Data
         public DbSet<AprajitaRetails.Models.ViewModels.IncomeExpensesReport> IncomeExpensesReport { get; set; }
         public DbSet<AprajitaRetails.Areas.AddressBook.Models.Contact> Contact { get; set; }
 
-        // public DbSet<Message> Messages { get; set; }
+         public DbSet<Message> Messages { get; set; }
 
         public DbSet<TelegramAuthUser> TelegramAuthUsers { get; set; }
         public DbSet<ToDoMessage> ToDoMessages { get; set; }

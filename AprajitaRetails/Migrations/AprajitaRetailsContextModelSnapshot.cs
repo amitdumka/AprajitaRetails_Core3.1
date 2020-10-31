@@ -723,6 +723,31 @@ namespace AprajitaRetails.Migrations
                     b.ToTable("RegisteredUsers");
                 });
 
+            modelBuilder.Entity("AprajitaRetails.Areas.Chat.Models.Message", b =>
+                {
+                    b.Property<int>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("When")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MessageId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("AprajitaRetails.Areas.Purchase.Models.Brand", b =>
                 {
                     b.Property<int>("BrandId")

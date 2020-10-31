@@ -1,3 +1,4 @@
+using AprajitaRetails.Areas.Chat.Models.Hubs;
 using AprajitaRetails.Areas.ToDo.Extensions;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.TelgramService;
@@ -71,7 +72,7 @@ namespace AprajitaRetails
                options.Cookie.IsEssential = true;
                options.Cookie.Name = ".AprajitaRetails.Session";
            });
-            // services.AddSignalR ();
+           // services.AddSignalR ();
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
@@ -160,6 +161,7 @@ namespace AprajitaRetails
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+              //  endpoints.MapHub<ChatHub> ("/Chat/ARChat/Index");
             });
         }
     }

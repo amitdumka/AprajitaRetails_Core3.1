@@ -1,25 +1,26 @@
-﻿using Microsoft.AspNetCore.Authorization;    using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using AprajitaRetails.Areas.Chat.Models;
 using AprajitaRetails.Data;
 using AprajitaRetails.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AprajitaRetails.Areas.Chat.Controllers
 {
+    //https://www.youtube.com/watch?v=RUZLIh4Vo20
+    //https://www.youtube.com/watch?v=5iN1jhr6yQI
+
     [Authorize]
     [Area ("Chat")]
+
     public class ARChatController : Controller
     {
-        public readonly ApplicationDbContext _context;
-        public readonly AprajitaRetailsContext aprajitaRetailsContext;
-        public readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
+        private readonly AprajitaRetailsContext aprajitaRetailsContext;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public ARChatController(AprajitaRetailsContext arCon, ApplicationDbContext context, UserManager<IdentityUser> userManger)
         {
@@ -57,10 +58,5 @@ namespace AprajitaRetails.Areas.Chat.Controllers
             return View (new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-
-       
-       
-        
     }
 }
