@@ -1,4 +1,3 @@
-using AprajitaRetails.Areas.Chat.Models.Hubs;
 using AprajitaRetails.Areas.ToDo.Extensions;
 using AprajitaRetails.Data;
 using AprajitaRetails.Ops.Bot.TelgramService;
@@ -17,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+
 //using Quartz;
 
 namespace AprajitaRetails
@@ -27,22 +27,26 @@ namespace AprajitaRetails
         {
             Configuration = configuration;
         }
+
         public IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
-           {
+            {
                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                options.CheckConsentNeeded = context => true;
                options.MinimumSameSitePolicy = SameSiteMode.None;
-           });
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AprajitaRetailsContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("AprajitaRetailsConnection")));
+
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
@@ -63,7 +67,6 @@ namespace AprajitaRetails
                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
            });
 
-
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
            {
@@ -72,9 +75,10 @@ namespace AprajitaRetails
                options.Cookie.IsEssential = true;
                options.Cookie.Name = ".AprajitaRetails.Session";
            });
-           // services.AddSignalR ();
+            // services.AddSignalR ();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
             services.AddPortableObjectLocalization();
             services.Configure<RequestLocalizationOptions>(options =>
@@ -90,9 +94,12 @@ namespace AprajitaRetails
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
+
             services.AddApplicationInsightsTelemetry();
             services.AddSingleton<IGiniService, GiniService>();
+
             services.AddControllers().AddNewtonsoftJson();
+
             services.ConfigureLocalization();
             services.ConfigureSupportedCultures();
             services.ConfigureCookiePolicy();
@@ -118,6 +125,7 @@ namespace AprajitaRetails
             //    options.WaitForJobsToComplete = true;
             //});
         }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -132,9 +140,6 @@ namespace AprajitaRetails
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-
-
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -161,7 +166,7 @@ namespace AprajitaRetails
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-              //  endpoints.MapHub<ChatHub> ("/Chat/ARChat/Index");
+                //  endpoints.MapHub<ChatHub> ("/Chat/ARChat/Index");
             });
         }
     }
