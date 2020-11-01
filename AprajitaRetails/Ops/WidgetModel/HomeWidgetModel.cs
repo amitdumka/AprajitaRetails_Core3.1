@@ -195,7 +195,7 @@ namespace AprajitaRetails.Ops.WidgetModel
                         TotalSale = 0
                     };
 
-                    if (item.Status == AttUnit.Present)
+                    if (item.Status == AttUnit.Present || item.Status==AttUnit.Sunday)
                         info.Present = "Present";
                     else
                         info.Present = "Absent";
