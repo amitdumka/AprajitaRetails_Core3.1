@@ -251,7 +251,8 @@ namespace AprajitaRetails.Ops.WidgetModel
                     infoList.Add(info);
                 }
             }
-            return infoList;
+            return infoList.OrderBy(x => x.IsSalesman).ToList();
+           // return infoList;
         }
 
         public static TailoringReport GetTailoringReport(AprajitaRetailsContext db)

@@ -11,13 +11,16 @@
 <section>
 
     <div class="row card-deck  mb-4  mx-1">
-        <div class="card card-cascade wider col-md-8">
-            <vc:weeklysale></vc:weeklysale>
+       
+        <div class="card card-cascade wider col-md-6">
+            <vc:staffsale></vc:staffsale>
         </div>
-
 
     </div>
     <div class="row card-deck  mb-4  mx-1">
+        <div class="card card-cascade wider col-md-4">
+            <vc:weeklysale></vc:weeklysale>
+        </div>
         <div class="card card-cascade wider col-md-4">
             <vc:monthlysale></vc:monthlysale>
         </div>
@@ -25,9 +28,7 @@
         <div class="card card-cascade wider col-md-4">
             <vc:yearlysale></vc:yearlysale>
         </div>
-        <div class="card card-cascade wider col-md-4">
-            <vc:staffsale></vc:staffsale>
-        </div>
+
 
     </div>
     <div class="card-deck  mb-4">
@@ -98,7 +99,7 @@
 
             </div>
         }
-      
+
         <!-- Card -->
     </div>
 
@@ -112,16 +113,9 @@
             <div class="card-deck  mb-4">
 
                 <!-- Card -->
-                
+
                 <div class="card card-cascade narrower mb-4">
 
-                    <!--Card image-->
-                    @*<div class="view overlay">
-                        <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap">
-                            <a href="#!">
-                                <div class="mask rgba-white-slight"></div>
-                            </a>
-                    </div>*@
                     <div class="card-header text-center">
                         <!--Title-->
                         <h4 class="card-title text-default">Sale Record </h4>
@@ -156,6 +150,9 @@
 
                             <br />
                         </p>
+                       
+                    </div>
+                    <div  class="card-footer text-right">
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
                         @if (Context.User.Identity.IsAuthenticated)
@@ -168,19 +165,19 @@
                 <!-- Card -->
                 <!-- Card -->
 
-                <div class="card  card-cascade wider mb-4">
+                <div class="card  card-cascade narrower mb-4">
 
                     <!--Card image-->
                     <div class="card-header text-center">
                         <!--Title-->
                         <h4 class="card-title dark-green-ic">Tailoring</h4>
-                       
+
                     </div>
 
                     <!--Card content-->
                     <div class="card-body card-body-cascade text-center pb-0 px-0">
 
-                       
+
                         <!--Text-->
                         <p class="card-text">
                             @if (Model.TailoringReport != null && Context.User.Identity.IsAuthenticated)
@@ -220,6 +217,9 @@
                                 <h5>  Tailoring Data (Registered Users Only).</h5>
                             }
                         </p>
+                       
+                    </div>
+                    <div class="card-footer text-right">
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
                         @if (Context.User.Identity.IsAuthenticated)
@@ -233,16 +233,10 @@
                 <!-- Card -->
 
                 <div class="card  card-cascade wider mb-4">
-
                     <!--Card image-->
-                    <div class="card-header text-center card-header-pills">
-                        @*<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg" alt="Card image cap">
-        <a href="#!">
-            <div class="mask rgba-white-slight"></div>
-        </a>*@
+                    <div class="card-header text-center">
                         <!--Title-->
                         <h4 class="card-title amber-text">Accounting</h4>
-
                     </div>
 
                     <!--Card content-->
@@ -296,11 +290,14 @@
 
                             }
                         </p>
+                       
+
+                    </div>
+                    <div class="card-footer text-right">
                         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                         @*<button type="button" class="btn btn-outline-default btn-md">Read more</button>*@
                         @if (Context.User.Identity.IsAuthenticated)
                         {<a class="btn btn-outline-default btn-md" href="AccountsDetails/">Detail &raquo;</a>}
-
                     </div>
 
                 </div>
