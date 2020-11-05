@@ -32,7 +32,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark fixed-top  navbar-dark info-color lighten-1 border-bottom box-shadow mb-1">
+        <nav class="navbar navbar-expand-sm   navbar-toggleable-sm navbar-dark fixed-top  navbar-dark cyan lighten-1 border-bottom shadow mb-1">
             <img src="~/AprajitaRetails.png" alt="AprajitaRetails" class="small" height="35" />
             <div class="container-fluid">
                 @*<a class="navbar-brand text-danger  text-monospace" asp-area="" asp-controller="Home" asp-action="Index">
@@ -253,7 +253,7 @@
     <div class="container-fluid">
         @if (Context.User.Identity.IsAuthenticated)
         {
-            <div class="nav-scroller aqua-gradient-rgba shadow-sm " role="toolbar">
+            <div class="nav-scroller aqua-gradient-rgba  shadow mb-2 " role="toolbar">
                 <nav class="nav nav-underline">
                     <a class="nav-link active" href="#"> <span data-feather="home"></span>Dashboard</a>
                     <a class="nav-link purple-text" asp-area="Sales" asp-controller="DailySales" asp-action="Index">Daily Sale <span class="badge badge-pill bg-dark align-text-bottom">@ViewBag.SaleData</span></a>
