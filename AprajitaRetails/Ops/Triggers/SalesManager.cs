@@ -507,7 +507,7 @@ namespace AprajitaRetails.Ops.Triggers
             return returnData;
         }
 
-        public InvoiceSaveReturn OnEdit(AprajitaRetailsContext db, EditOrderDTO sales, int StoreId = 1)
+        public InvoiceSaveReturn OnEdit(AprajitaRetailsContext db, EditOrderDTO sales)
         {
             Customer cust = db.Customers.Where(c => c.MobileNo == sales.MobileNo).FirstOrDefault();
             if (cust == null)

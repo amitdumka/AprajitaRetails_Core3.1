@@ -27,12 +27,13 @@ namespace AprajitaRetails.Areas.Sales.Controllers
     {
         private readonly AprajitaRetailsContext aprajitaContext;
         private readonly int StoreId = 1; //TODO: Fixed now
-        private readonly UserManager<IdentityUser> UserManager;
-        private readonly ILogger<ManualInvoiceController> logger;
+       // private readonly UserManager<IdentityUser> UserManager;
+        private readonly ILogger<ManualInvoiceController> _logger;
 
-        public ManualInvoiceController(AprajitaRetailsContext aCtx, UserManager<IdentityUser> userManager, ILogger<ManualInvoiceController> logger)
+        public ManualInvoiceController(AprajitaRetailsContext aCtx /*,UserManager<IdentityUser> userManager,*/ ,ILogger<ManualInvoiceController> logger)
         {
-            aprajitaContext = aCtx; UserManager = userManager;
+            aprajitaContext = aCtx;// UserManager = userManager;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -63,26 +64,32 @@ namespace AprajitaRetails.Areas.Sales.Controllers
             return File(fileName, "application/pdf");
         }
 
+        //TODO: Make as much Json Function based on API or can be push to API . So It Can be used in Mobile app/ where ever API call be uniform.
+
         [HttpGet]
         public JsonResult GetInvoiceDetails(int? id)
         {
-            string errMsg = "Error!";
+            string errMsg;// = "Error!";
             InvoiceDetails retunDetails;
             if (id == null)
             {
                 errMsg = "Kindly send Invoice No!";
-                logger.LogError("ManualInvoice:GetInvoiceDetails # Id is Null!");
+                _logger.LogError("ManualInvoice:GetInvoiceDetails # Id is Null!");
                 return Json(new { Msg = errMsg, Error = "true" });
             }
+
             retunDetails = SaleHelper.GetInvoiceData(aprajitaContext, (int)id);
+            
             if (retunDetails == null)
             {
                 errMsg = "Invoice Number Not found!";
-                logger.LogError($"ManualInvoice:GetInvoiceDetails # {errMsg}!");
+                _logger.LogError($"ManualInvoice:GetInvoiceDetails # {errMsg}!");
                 return Json(new { Msg = errMsg, Error = "true" });
             }
+            
             retunDetails.Msg = "Data is loaded successfully";
             retunDetails.Error = "OK";
+            
             return Json(retunDetails);
         }
 
@@ -104,7 +111,7 @@ namespace AprajitaRetails.Areas.Sales.Controllers
                 }
                 else
                 {
-                    var pItem2 = new { MRP = pItem.MRP, ProductName = pItem.ProductName, TaxRate = pItem.TaxRate, Units = Enum.GetName(typeof(Unit), Int32.Parse(pItem.Units)) };
+                    var pItem2 = new { pItem.MRP, pItem.ProductName, pItem.TaxRate, Units = Enum.GetName(typeof(Unit), Int32.Parse(pItem.Units)) };
                     // pItem.Unit = Enum.GetName(typeof(Unit), Int32.Parse( pItem.Unit));
                     return new JsonResult(pItem2);
                 }
